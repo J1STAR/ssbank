@@ -83,7 +83,7 @@ function sendLogin() {
 		  </tr>
 		  <tr align="center" height="65" > 
 		      <td>
-		        <button type="button" onclick="sendLogin();" class="btnConfirm">로그인</button>
+		        <button type="button" onclick="sendLogin();" class="btnConfirm">로그인22222222222222</button>
 		      </td>
 		  </tr>
 
