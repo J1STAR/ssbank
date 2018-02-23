@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="member">
+
+	<select id="readMember" parameterType="String" resultType="com.ssb.member.Member">
+		SELECT userId,userName,userPwd,enabled,created_date,modify_date,last_login,TO_CHAR(birth, 'YYYY-MM-DD') birth,gender,tel,address,investmentScore 
+		FROM member
+		WHERE userId=#{userId}
+	</select>
+	
+	<update id="updateLastLogin" parameterType="String">
+		UPDATE member SET last_login = SYSDATE
+		FROM member
+		WHERE userId = #{userId}
+	</update>
+	
+	<insert id="insertMember" parameterType="com.ssb.member.Member">
+		INSERT INTO member
+		(userId, userName, userPwd,address ,gender,birth,tel ) VALUES
+		(#{userId},#{userName},#{userPwd},#{address},#{gender},#{birth},#{tel})
+	</insert>
+	
+	<update id="updateMember" parameterType="com.ssb.member.Member">
+		UPDATE member SET  userPwd =#{userPwd},address=#{address} ,gender=#{gender},birth=#{birth},tel=#{tel}
+		WHERE  userId =#{userId}
+	</update>
+	
+	<update id="updateMemberEnabled" parameterType="map">
+        UPDATE member SET enabled=#{enabled}
+               WHERE userId=#{userId}
+    </update>
+    
+    <delete id="deleteMember" parameterType="String">
+    	DELETE FROM member WHERE userId=#{userId}
+    </delete>
+    
+    <!-- 권한테이블 -->
+    <insert id="insertAuthority" parameterType="com.ssb.member.Member">
+	    INSERT INTO memberAuthority(userId, authority)
+	        VALUES (#{userId}, #{authority})
+	</insert>
+	
+	<select id="listAuthority" parameterType="String" resultType="com.ssb.member.Member">
+	    SELECT userId, authority
+	        FROM memberAuthority WHERE userId=#{userId}
+	</select>
+	
+	<update id="updateAuthority" parameterType="map">
+	     UPDATE memberAuthority SET authority=#{authority}
+	         WHERE userId=#{userId} AND authority=#{oldAuthority}
+	</update>
+</mapper>

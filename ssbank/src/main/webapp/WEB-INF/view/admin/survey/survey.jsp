@@ -1,0 +1,290 @@
+<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page trimDirectiveWhitespaces="true" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%
+   String cp = request.getContextPath();
+%>
+
+<style type="text/css">
+input:-moz-read-only { /* For Firefox */
+    border:1px solid #999999;
+    padding:3px 5px 5px;
+    border-radius:4px;
+    background-color:#ffffff;
+    font-family:"Malgun Gothic", "맑은 고딕", NanumGothic, 나눔고딕, 돋움, sans-serif;
+}
+
+input:read-only { 
+    border:1px solid #999999;
+    padding:3px 5px 5px;
+    border-radius:4px;
+    background-color:#ffffff;
+    font-family:"Malgun Gothic", "맑은 고딕", NanumGothic, 나눔고딕, 돋움, sans-serif;
+}
+.bbtn {
+    color:#ffffff;
+    font-weight:500;
+    font-family:"Malgun Gothic", "맑은 고딕", NanumGothic, 나눔고딕, 돋움, sans-serif;
+    border:1px solid #2f3741;
+    background-color:#424951;
+    text-align:center;
+    padding:3px 10px 5px;
+    border-radius:4px;    
+    
+}
+.bbtn:hover {
+    font-family: "Malgun Gothic", "맑은 고딕", NanumGothic, 나눔고딕, 돋움, sans-serif;
+    background-image:none; background: #333; border-color: #333;
+    color:#ffffff;
+    font-weight: normal;
+}
+</style>
+<script type="text/javascript">
+    $(function() {
+        $("input[name=startDay]").datepicker();
+        $("input[name=endDay]").datepicker();
+        
+        $("input[name=target]").click(function(){
+        	if($(this).val()==3) {
+        		$("#btnMemberRole").prop("disabled", false);
+        	} else {
+        		$("#btnMemberRole").prop("disabled", true);
+        	}
+        });
+        
+        $("input[name=accessType]").click(function(){
+        	if($(this).val()==2) {
+        		$("#pwdInputLayout").show();
+        		$("input[name=pwd]").focus();
+        	} else {
+        		$("#pwdInputLayout").hide();
+        	}
+        });
+    });
+
+	// 두날짜 크기 비교
+	function isDateCompare(startDay, endDay) {
+		if(! startDay || ! endDay || startDay.length!=10 || endDay.length!=10)
+			return false;
+		
+        var startDayArr = startDay.split('-');
+        var endDayArr = endDay.split('-');
+        
+        if(startDayArr.length!=3 || endDayArr.length!=3)
+        	return false;
+                 
+        var startDayCompare = new Date(startDayArr[0], startDayArr[1], startDayArr[2]);
+        var endDayCompare = new Date(endDayArr[0], endDayArr[1], endDayArr[2]);
+         
+        if(startDayCompare.getTime() > endDayCompare.getTime())
+            return false;
+        
+        return true;
+	}
+	
+	// 설문 등록 및 수정 완료
+    function sendSurvey() {
+        var f = document.surveyForm;
+        
+        if(! $.trim(f.subject.value)) {
+        	alert("설문 제목은 필수 입니다.");
+        	f.subject.focus();
+        	return;
+        }
+        
+        if(! isDateCompare(f.startDay.value, f.endDay.value)) {
+        	alert("날짜는 필수 이며 시작일은 종료일보다 클수 없습니다.");
+        	f.startDay.focus();
+        	return;
+        }
+        
+        if(f.target.value==3 && !f.memberRole.value) {
+        	alert("설문에 응답할 회원등급을 선택하세요.");
+        	return;
+        }
+        
+        if(f.accessType.value==2 && $.trim(f.pwd.value).length<4 || $.trim(f.pwd.value).length>10) {
+        	alert("비밀번호는 4~10자 사이 입니다.");
+        	f.pwd.focus();
+        	return;
+        }
+
+   		f.action="<%=cp%>/admin/survey/survey";
+        f.submit();
+    }
+    
+	// 설문 삭제
+    function deleteSurvey(surveyNum) {
+    	var url="<%=cp%>/admin/survey/surveyDelete?surveyNum="+surveyNum+"&page=${page}";
+    	
+    	if(! confirm("설문을 삭제 하시 겠습니까 ? "))
+    		return;
+    	
+    	location.href=url;
+    }
+</script>
+
+<div class="body-container" style="width: 700px;">
+    <div class="body-title">
+        <h3><span style="font-family: Webdings">2</span> 설문 ${mode=="insert"?"등록":"수정" } </h3>
+    </div>
+    
+    <div>
+        <div style="width: 100%; margin: 20px auto 0px; border: 1px #777777 solid; padding: 15px; box-sizing: border-box;">
+            <div style="clear:both; height: 25px;">
+	            <div style="float: left;"><b>| 기본설정</b></div>
+	            <div style="float: right;">
+	                 <c:if test="${mode=='update'}">
+	                     <button type="button" class="btn" onclick="deleteSurvey('${dto.surveyNum}');">삭제</button>
+	                 </c:if>
+	                 <button type="button" class="btn" onclick="javascript:location.href='<%=cp%>/admin/survey/list?page=${page}';">리스트</button>
+	            </div>
+            </div>
+            
+			<form name="surveyForm" method="post">
+			  <table style="width: 100%; margin: 10px auto 0px; border-spacing: 0px; border-collapse: collapse;">
+			  <tr align="left" height="45" style="border-top: 1px solid #777777; border-bottom: 1px solid #cccccc;"> 
+			      <td width="100" bgcolor="#eeeeee" style="text-align: center;">설문제목</td>
+			      <td style="padding-left:10px;"> 
+			        <input type="text" name="subject" maxlength="100" class="boxTF" style="width: 95%;" value="${dto.subject}">
+			      </td>
+			  </tr>
+
+			  <tr align="left" height="45" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;"> 
+			      <td width="100" bgcolor="#eeeeee" style="text-align: center;">설문기간</td>
+			      <td style="padding-left:10px;"> 
+			            <input type="text" name="startDay" readonly="readonly" value="${dto.startDay}">
+			            ~
+			            <input type="text" name="endDay" readonly="readonly" value="${dto.endDay}">
+			      </td>
+			  </tr>
+			  
+			  <c:if test="${mode=='update'}">
+				  <tr align="left" height="45" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;"> 
+				      <td width="100" bgcolor="#eeeeee" style="text-align: center;">작성자</td>
+				      <td style="padding-left:10px;"> 
+				            ${dto.userName}(${dto.userId})
+				      </td>
+				  </tr>
+			  </c:if>
+			
+			  <tr align="left" style="border-bottom: 1px solid #cccccc;"> 
+			      <td width="100" bgcolor="#eeeeee" style="text-align: center; padding-top:5px;" valign="top">설문목적</td>
+			      <td valign="top" style="padding:5px 0px 5px 10px;"> 
+			        <textarea name="content" rows="12" class="boxTA" style="width: 95%; height: 60px;">${dto.content}</textarea>
+			      </td>
+			  </tr>
+			  
+			  <tr align="left" height="95" style="border-bottom: 1px solid #cccccc;"> 
+			      <td width="100" bgcolor="#eeeeee" style="text-align: center;">참여대상</td>
+			      <td style="padding-left:10px;">
+			          <p style="height: 27px; line-height: 27px;"><input type="radio" name="target" id="target1" value="1" value="1" ${dto.target==1 ? "checked='checked'":"" }>&nbsp;<label for="target1">전체(회원+비회원)</label></p>
+			          <p style="height: 27px; line-height: 27px;"><input type="radio" name="target" id="target2" value="2" ${dto.target==2 || mode=='insert' ? "checked='checked'":"" }>&nbsp;<label for="target2">회원전용</label></p> 
+			          <p style="height: 27px; line-height: 27px;">
+			             <input type="radio" name="target" id="target3" value="3" ${dto.target==3 ? "checked='checked'":"" }>&nbsp;<label for="target3">특정회원등급</label>&nbsp;&nbsp;
+			             <button type="button" class="btn" id="btnMemberRole" ${dto.target!=3 || mode=='insert' ? "disabled='disabled'":"" }>등급선택</button>
+			             <input type="hidden" name="memberRole" value="${dto.memberRole}">
+		              </p>
+			      </td>
+			  </tr>
+
+			  <tr align="left" height="60" style="border-bottom: 1px solid #cccccc;"> 
+			      <td width="100" bgcolor="#eeeeee" style="text-align: center;">접근제한</td>
+			      <td style="padding-left:10px;">
+			          <p style="height: 30px;">
+			              <span style="display: inline-block; height: 30px; line-height: 30px;">
+			                  <input type="radio" name="accessType" id="accessType1" value="1" ${dto.accessType==1 || mode=='insert' ? "checked='checked'":"" }>&nbsp;<label for="accessType1">없음</label>&nbsp;&nbsp;
+			                  <input type="radio" name="accessType" id="accessType2" value="2" ${dto.accessType==2 ? "checked='checked'":"" }>&nbsp;<label for="accessType2">있음</label>&nbsp;&nbsp;
+			              </span>
+			              <span id="pwdInputLayout" style="${dto.accessType==1 || mode=='insert' ? 'display: none;':'display: inline-block;'}">
+			                     비밀번호 : <input type="text" name="pwd" class="boxTF" value="${dto.pwd}"> 
+			              </span>
+			          </p> 
+			          <p class="help-block">접근제한 "있음"은 비밀번호를 알고 있는 경우만 설문에 응답할 수 있습니다.</p>
+			      </td>
+			  </tr>
+			
+			  <tr align="left" height="60" style="border-bottom: 1px solid #cccccc;"> 
+			      <td width="100" bgcolor="#eeeeee" style="text-align: center;">응답검증</td>
+			      <td style="padding-left:10px;">
+			         <p>
+				          <input type="radio" name="verificationType" id="verificationType1" value="1" ${dto.verificationType==1 ? "checked='checked'":"" } ${surveyCount>0?"readonly='readonly'":"" }>&nbsp;<label for="verificationType1">없음</label>&nbsp;&nbsp; 
+				          <input type="radio" name="verificationType" id="verificationType2" value="2" ${dto.verificationType==2 || mode=='insert' ? "checked='checked'":"" }>&nbsp;<label for="verificationType2" ${surveyCount>0?"readonly='readonly'":"" }>아이디</label>&nbsp;&nbsp;
+				          <input type="radio" name="verificationType" id="verificationType3" value="3" ${dto.verificationType==3 ? "checked='checked'":"" }>&nbsp;<label for="verificationType3" ${surveyCount>0?"readonly='readonly'":"" }>이메일</label>&nbsp;&nbsp; 
+				          <input type="radio" name="verificationType" id="verificationType4" value="4" ${dto.verificationType==4 ? "checked='checked'":"" }>&nbsp;<label for="verificationType4" ${surveyCount>0?"readonly='readonly'":"" }>IP</label>&nbsp;&nbsp; 
+				          <input type="radio" name="verificationType" id="verificationType5" value="5" ${dto.verificationType==5 ? "checked='checked'":"" }>&nbsp;<label for="verificationType5" ${surveyCount>0?"readonly='readonly'":"" }>임시번호</label>
+			          </p>
+			          <p class="help-block">응답 중복 및 응답자 확인을 위해 사용하며 응답자가 존재하면 변경 불가능합니다.</p>
+			      </td>
+			  </tr>
+
+			  <tr align="left" height="60" style="border-bottom: 1px solid #cccccc;"> 
+			      <td width="100" bgcolor="#eeeeee" style="text-align: center;">결과보기</td>
+			      <td style="padding-left:10px;">
+			          <p>
+			              <input type="radio" name="resultType" id="resultType1" value="1" ${dto.resultType==1 || mode=='insert' ? "checked='checked'":"" }>&nbsp;<label for="resultType1">미지원</label>&nbsp;&nbsp;
+			              <input type="radio" name="resultType" id="resultType2" value="2" ${dto.resultType==2 ? "checked='checked'":"" }>&nbsp;<label for="resultType2">지원</label>
+			          </p> 
+			          <p class="help-block">설문참가자에게 설문 결과보기 지원여부를 설정 합니다.</p>
+			      </td>
+			  </tr>
+			
+			  <tr align="left" height="60" style="border-bottom: 1px solid #cccccc;"> 
+			      <td width="100" bgcolor="#eeeeee" style="text-align: center;">페이지</td>
+			      <td style="padding-left:10px;">
+			          <p>
+			              <input type="radio" name="answerPage" id="answerPage1" value="1" ${dto.answerPage==1 || mode=='insert' ? "checked='checked'":"" }>&nbsp;<label for="answerPage1">이동안함</label>&nbsp;&nbsp;
+			              <input type="radio" name="answerPage" id="answerPage2" value="2" ${dto.answerPage==2 ? "checked='checked'":"" }>&nbsp;<label for="answerPage2">이동</label>
+			          </p> 
+			          <p class="help-block">답변을 기준으로 다음 질문에 대한 페이지 이동여부를 지정합니다.</p>
+			      </td>
+			  </tr>
+			  
+			  <c:if test="${mode=='update'}">
+				  <tr align="left" height="45" style="border-bottom: 1px solid #cccccc;">
+				      <td width="100" bgcolor="#eeeeee" style="text-align: center;">응답자수</td>
+				      <td style="padding-left:10px;">
+				          <p>${surveyCount}</p> 
+				      </td>
+				  </tr>
+
+				  <tr align="left" height="45" style="border-bottom: 1px solid #cccccc;">
+				      <td width="100" bgcolor="#eeeeee" style="text-align: center;">등록일</td>
+				      <td style="padding-left:10px;">
+				          <p>${dto.created}</p> 
+				      </td>
+				  </tr>
+			  </c:if>
+
+			  <tr align="left" height="45" style="border-bottom: 1px solid #777777;"> 
+			      <td width="100" bgcolor="#eeeeee" style="text-align: center;">상태</td>
+			      <td style="padding-left:10px;">
+			          <p>
+			              <input type="radio" name="stateType" id="stateType1" value="1" ${mode=="insert" ? "disabled='disabled'":""} ${dto.stateType==1 ? "checked='checked'":"" }>&nbsp;<label for="stateType1">진행</label>&nbsp;&nbsp;
+			              <input type="radio" name="stateType" id="stateType2" value="2" ${dto.stateType==2 || mode=='insert' ? "checked='checked'":"" }>&nbsp;<label for="stateType2">대기</label>&nbsp;&nbsp;
+			          </p> 
+			          <p class="help-block">상태가 "대기"인 경우 클라이언트 화면에 출력되지 않습니다.</p>
+			      </td>
+			  </tr>
+			  
+			  <tr align="right" height="40">
+			      <td width="100" style="padding-top: 10px;">
+			             &nbsp;
+			      </td>
+			      <td style="padding-top: 10px;">
+			          <c:if test="${mode=='update'}">
+			          	   <input type="hidden" name="surveyNum" value="${dto.surveyNum}">
+			          </c:if>
+			          <input type="hidden" name="page" value="${page}">
+			          <input type="hidden" name="mode" value="${mode}">
+			          <button type="button" class="bbtn" onclick="sendSurvey();">${mode=="update"?"수정완료":"등록하기" }</button> 
+			      </td>
+			  </tr>
+			  
+			  </table>
+			</form>
+		</div>
+			
+    </div>
+</div>
