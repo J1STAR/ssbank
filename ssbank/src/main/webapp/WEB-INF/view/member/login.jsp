@@ -103,3 +103,39 @@ function sendLogin() {
 		</form>           
 	</div>
 </div>
+<section class="main-recommand">
+	<h2>쌍용은행 <span>추천상품</span></h2>
+	<section class="recommand-visual">
+		<div class="owl-carousel owl-theme slider">
+			<div class="item item-01">
+				<ul>
+					<li>쌍용뱅크 입출금 통장</li>
+					<li>까다로운 계좌개설도</li>
+					<li>정말 손쉽게</li>
+					<li>연 0.10%</li>
+				</ul>
+				<a href="#">더 알아보기</a>
+			</div>
+			<div class="item item-02">
+				<ul>
+					<li>쌍용뱅크 정기예금</li>
+					<li>실시간 이자로</li>	
+					<li>돈모으는 재미가 쏠쏠</li>	
+					<li>연 2.20%</li>	
+					<li>(12개월기준)</li>	
+				</ul>
+				<a href="#">더 알아보기</a>
+			</div>
+			<div class="item item-03">
+				<ul>
+					<li>쌍용뱅크 전월세보증금 대출</li>
+					<li>전월세 보증금도</li>
+					<li>정말 간편하게</li>
+					<li>연 2.82%</li>
+					<li>(최저)</li>
+				</ul>
+				<a href="#">더 알아보기</a>
+			</div>
+		</div>
+	</section>
+</section>
