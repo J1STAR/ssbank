@@ -89,33 +89,33 @@ public class LoanController {
 	
 	
 	//계좌 엑셀 다운로드
-		@RequestMapping(value="/financial/account/excel")
-		public View excelDownload(Map<String, Object> model,@RequestParam int memberIdx) {
-			String filename ="account.xls";
-			String sheetName = "계좌목록";
-			
-			//내려받을 목록리스트
-			List<String> columnLabels = new ArrayList<>();
-			//내려받을 목록값
-			List<Object[]> columnValues = new ArrayList<>();
-			
-			//내려받을 것들 목룍리스트
-			columnLabels.add("계좌번호");
-			
-			
-			/*//내려받을 값 넣는 처리
-			Map<String, Object> map = new HashMap<>();
-			map.put("memberIdx", memberIdx);
-			//List<Account> list = service.listAllAccount(map);
-			for(Account dto :list) {
-				columnValues.add(new Object[] {});
-			}*/
-			
-			model.put("filename", filename);
-			model.put("sheetName", sheetName);
-			model.put("columnLabels", columnLabels);
-			model.put("columnValues", columnValues);
-			
-			return excel;
-		}
+	@RequestMapping(value="/financial/loan/excel")
+	public View excelDownload(Map<String, Object> model,@RequestParam int memberIdx) {
+		String filename ="account.xls";
+		String sheetName = "계좌목록";
+		
+		//내려받을 목록리스트
+		List<String> columnLabels = new ArrayList<>();
+		//내려받을 목록값
+		List<Object[]> columnValues = new ArrayList<>();
+		
+		//내려받을 것들 목룍리스트
+		columnLabels.add("계좌번호");
+		
+		
+		/*//내려받을 값 넣는 처리
+		Map<String, Object> map = new HashMap<>();
+		map.put("memberIdx", memberIdx);
+		//List<Account> list = service.listAllAccount(map);
+		for(Account dto :list) {
+			columnValues.add(new Object[] {});
+		}*/
+		
+		model.put("filename", filename);
+		model.put("sheetName", sheetName);
+		model.put("columnLabels", columnLabels);
+		model.put("columnValues", columnValues);
+		
+		return excel;
+	}
 }
