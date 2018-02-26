@@ -9,9 +9,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>예금/계좌조회</title>
+<title>예금 조회</title>
 </head>
 <body>
+
+${list}
 
 </body>
 </html>

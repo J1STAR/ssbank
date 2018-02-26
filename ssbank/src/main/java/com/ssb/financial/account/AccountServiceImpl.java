@@ -19,7 +19,7 @@ public class AccountServiceImpl implements AccountService {
 	public List<Account> listAllAccount(Map<String, Object> map) {
 		List<Account> list = null;
 		try {
-			
+			list = dao.selectList("account.listAllAccount",map);
 		} catch (Exception e) {
 		}
 		return list;
@@ -45,35 +45,7 @@ public class AccountServiceImpl implements AccountService {
 		return dto;
 	}
 
-	@Override
-	public int insertSaveAccount(Account dto) {
-		int result = 0;
-		try {
-
-		} catch (Exception e) {
-		}
-		return result;
-	}
-
-	@Override
-	public int deleteSaveAccount(Map<String, Object> map) {
-		int result = 0;
-		try {
-
-		} catch (Exception e) {
-		}
-		return result;
-	}
-
-	@Override
-	public int deleteCheckSaveAccount(Map<String, Object> map) {
-		int result = 0;
-		try {
-
-		} catch (Exception e) {
-		}
-		return result;
-	}
+	
 	
 	//적금
 	@Override
@@ -104,6 +76,57 @@ public class AccountServiceImpl implements AccountService {
 		} catch (Exception e) {
 		}
 		return dto;
+	}
+
+	@Override
+	public int insertAccount(Account dto) {
+		int result=0;
+		try {
+			result = dao.insertData("account.insertAccount",dto);
+		} catch (Exception e) {
+		}
+		return result;
+	}
+
+	
+
+	@Override
+	public int insertSavingAccount(Account dto) {
+		int result=0;
+		try {
+
+		} catch (Exception e) {
+		}
+		return result;
+	}
+
+	@Override
+	public int deleteSavingAccount(Map<String, Object> map) {
+		int result=0;
+		try {
+
+		} catch (Exception e) {
+		}
+		return result;
+	}
+
+	@Override
+	public int deleteCheckSavingAccount(Map<String, Object> map) {
+		int result=0;
+		try {
+
+		} catch (Exception e) {
+		}
+		return result;
+	}
+	@Override
+	public int deleteAccount(Map<String, Object> map) {
+		int result=0;
+		try {
+
+		} catch (Exception e) {
+		}
+		return result;
 	}
 
 }

@@ -8,6 +8,7 @@
    FROM account a
    JOIN product p on a.productId = p.productId
    JOIN transaction t ON a.accountNo = t.accountNo
+   WHERE memberIdx = #{memberIdx}
  </select>
 
 </mapper>

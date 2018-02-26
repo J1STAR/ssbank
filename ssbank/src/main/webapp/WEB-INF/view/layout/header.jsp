@@ -16,19 +16,19 @@
 							<ul>
 								<li><a href="#">조회</a></li>
 								<li><a href="#">이체</a></li>
-								<li><a href="#">금융상품</a></li>
+								<li><a href="<%=cp%>/financial/account/fds">금융상품</a></li>
 								<li><a href="#">기타금융</a></li>
 								<li><a href="#">외환</a></li>
 								<li><a href="#">사용자관리</a></li>
 							</ul>
 						</li>
-						<li class="depth-one"><a href="#">금융상품</a>
+						<li class="depth-one"><a href="<%=cp%>/financial/account/fds">금융상품</a>
 							<ul>
-								<li><a href="#">예금/신탁</a></li>
-								<li><a href="#">대출</a></li>
-								<li><a href="#">상품안내</a></li>
-								<li><a href="#">펀드</a></li>
-								<li><a href="#">상품상담</a></li>
+								<li><a href="<%=cp%>/financial/account/fds">예금/신탁</a></li>
+								<li><a href="<%=cp%>/financial/loan/las">대출</a></li>
+								<li><a href="<%=cp%>/financial/product/lsm">상품안내</a></li>
+								<li><a href="<%=cp%>/financial/fund/nfp">펀드</a></li>
+								<li><a href="<%=cp%>/financial/counsel/cpc">상품상담</a></li>
 							</ul>
 						</li>
 						<li class="depth-one"><a href="#">가계부</a>
