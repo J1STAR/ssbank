@@ -20,7 +20,7 @@ public class MemberServiceImpl implements MemberService {
 		try {
 			dto = dao.selectOne("member.readMember", userId);
 			
-			//이메일,전화번호 나누는 작업
+			/*//이메일,전화번호 나누는 작업
 			if (dto != null) {
 				if (dto.getEmail() != null) {
 					String[] s = dto.getEmail().split("@");
@@ -33,7 +33,7 @@ public class MemberServiceImpl implements MemberService {
 					dto.setTel2(s[1]);
 					dto.setTel3(s[1]);
 				}
-			}
+			}*/
 		} catch (Exception e) {
 		}
 		return dto;
@@ -63,7 +63,7 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public void updateMamber(Member dto) throws Exception {
+	public void updateMember(Member dto) throws Exception {
 		try {
 			//이메일 합치기
 			if(dto.getEmail()!=null &&dto.getEmail1().length() !=0){
@@ -79,7 +79,7 @@ public class MemberServiceImpl implements MemberService {
 					}
 				}
 			}
-			dao.updateData("member.updateMamber",dto);
+			dao.updateData("member.updateMember",dto);
 		} catch (Exception e) {
 			throw e;
 		}
@@ -159,7 +159,7 @@ public class MemberServiceImpl implements MemberService {
 	public int updateLastLogin(String userId) {
 		int result =0;
 		try {
-			result = dao.updateData("member.updateLatLogin",userId);
+			result = dao.updateData("member.updateLastLogin",userId);
 		} catch (Exception e) {
 		}
 		return result;

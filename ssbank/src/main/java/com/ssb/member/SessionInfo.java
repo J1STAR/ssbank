@@ -4,6 +4,7 @@ public class SessionInfo {
 	private String userId;
 	private String userName;
 	private int memberLevel;
+	private int memberIdx;
 	
 	public String getUserId() {
 		return userId;
@@ -22,6 +23,12 @@ public class SessionInfo {
 	}
 	public void setMemberLevel(int memberLevel) {
 		this.memberLevel = memberLevel;
+	}
+	public int getMemberIdx() {
+		return memberIdx;
+	}
+	public void setMemberIdx(int memberIdx) {
+		this.memberIdx = memberIdx;
 	}
 	
 	

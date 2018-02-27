@@ -13,6 +13,21 @@ public class Member {
 	private String authority;
 	private String created_date, modify_date, last_login;
 	private int investmentScore;
+	private int memberIdx;
+	
+	
+	public String getCreated_date() {
+		return created_date;
+	}
+	public void setCreated_date(String created_date) {
+		this.created_date = created_date;
+	}
+	public int getMemberIdx() {
+		return memberIdx;
+	}
+	public void setMemberIdx(int memberIdx) {
+		this.memberIdx = memberIdx;
+	}
 	public String getUserId() {
 		return userId;
 	}

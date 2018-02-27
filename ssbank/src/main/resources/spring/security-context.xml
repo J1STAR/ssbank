@@ -35,12 +35,10 @@
 	         <!-- admin -->
 		    <intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')" />
 		    
-			<intercept-url pattern="/customer/notice/created" access="hasRole('ROLE_ADMIN')"/>
-			<intercept-url pattern="/customer/notice/update" access="hasRole('ROLE_ADMIN')"/>
-			<intercept-url pattern="/customer/notice/delete" access="hasRole('ROLE_ADMIN')"/>
+			
 			
 	         <!-- 모든 페이지 -->
-	        <intercept-url pattern="/**" access="hasRole('ROLE_USER')" />
+	        <intercept-url pattern="/**" access="hasAnyRole('ROLE_USER','ROLE_ADMIN')" />
 
 	        <!--  사용자 정의 로그인 폼  -->
 	        <form-login login-page="/member/login"
@@ -75,7 +73,7 @@
      <jdbc-user-service 
          data-source-ref="dataSource"
          id="userService"
-         users-by-username-query="SELECT userId AS username, userPwd AS password, enabled FROM member WHERE userId=?"
+         users-by-username-query="SELECT userId AS username, userPwd AS password,status AS enabled FROM member WHERE userId=?"
          authorities-by-username-query="SELECT userId AS username, authority AS authority FROM memberAuthority WHERE userId=?"/>
     
 	<authentication-manager>

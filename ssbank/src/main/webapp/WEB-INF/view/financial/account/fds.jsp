@@ -9,9 +9,20 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>계좌조회</title>
 </head>
 <body>
+<!-- 예금 -->
+<c:forEach var="deposit" items="${deposit}">
+	상품명 : ${deposit.productName}<br>
+	계좌번호 :${deposit.accountNo}<br>
+	잔액 : ${deposit.balance}<br>
+	마지막거래일 :${deposit.lastTrDate}<br>
+	이율 :${deposit.interestRate}<br>
+</c:forEach>
+
+<!-- 적금 -->
+
 
 </body>
 </html>

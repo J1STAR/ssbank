@@ -3,12 +3,19 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="account">
 
- <select id="listAllAccount" parameterType="map" resultType="com.ssb.financial.account.Account">
-   SELECT productName,a.accountNo,balance 
-   FROM account a
-   JOIN product p on a.productId = p.productId
-   JOIN transaction t ON a.accountNo = t.accountNo
-   WHERE memberIdx = #{memberIdx}
+ <select id="depositlistAllAccount" parameterType="map" resultType="com.ssb.financial.account.Account">
+ SELECT * FROM (
+        SELECT productName,a.accountNo,balance,TO_CHAR(trDate,'YYYY-MM-DD')lastTrDate,interestRate
+        FROM account a
+        JOIN product p on a.productIdx = p.productIdx
+        JOIN depositProduct d ON d.productIdx = a.productIdx
+        JOIN transaction t ON a.accountNo = t.accountNo
+        WHERE memberIdx = 6
+        ORDER BY trDate DESC
+    )WHERE ROWNUM =1;
+ </select>
+ <select id="savinglistAllAccount" parameterType="map" resultType="com.ssb.financial.account.Account">
+ 
  </select>
 
 </mapper>
