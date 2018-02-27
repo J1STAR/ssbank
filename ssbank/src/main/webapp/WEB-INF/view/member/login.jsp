@@ -83,7 +83,7 @@ function sendLogin() {
 		  </tr>
 		  <tr align="center" height="65" > 
 		      <td>
-		        <button type="button" onclick="sendLogin();" class="btnConfirm">로그인22222222222222</button>
+		        <button type="button" onclick="sendLogin();" class="btnConfirm">로그인</button>
 		      </td>
 		  </tr>
 
@@ -91,7 +91,7 @@ function sendLogin() {
 		      <td>
 		       		<a href="<%=cp%>/">아이디찾기</a>&nbsp;&nbsp;&nbsp;
 		       		<a href="<%=cp%>/">패스워드찾기</a>&nbsp;&nbsp;&nbsp;
-		       		<a href="<%=cp%>/member/member">회원가입</a>
+		       		<a href="<%=cp%>/member/member-0001">회원가입</a>
 		      </td>
 		  </tr>
 		  

@@ -4,7 +4,7 @@
 <mapper namespace="member">
 
 	<select id="readMember" parameterType="String" resultType="com.ssb.member.Member">
-		SELECT userId,userName,userPwd,enabled,created_date,modify_date,last_login,TO_CHAR(birth, 'YYYY-MM-DD') birth,gender,tel,address,investmentScore 
+		SELECT userId,userPwd,createDate,lastLogin 
 		FROM member
 		WHERE userId=#{userId}
 	</select>

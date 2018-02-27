@@ -3,8 +3,10 @@ package com.ssb.member;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -29,6 +31,38 @@ public class MemberController {
 		return ".member.login";
 	}
 	
+	@RequestMapping(value="/member/member-{stage}", method=RequestMethod.GET)
+	public String memberForm(@PathVariable String stage, Model model) {
+		
+		model.addAttribute("mode", "created");
+		return ".member.mbj-"+stage;
+	}
+	
+	@RequestMapping(value="/member/memberJoin", method=RequestMethod.POST)
+	public String memberSubmit(Member dto, Model model) {
+		// 패스워드 암호화
+		ShaPasswordEncoder passwordEncoder=new ShaPasswordEncoder(256);
+		String hashed=passwordEncoder.encodePassword(dto.getUserPwd(), null);
+		dto.setUserPwd(hashed);
+		
+		try {
+			service.insertMember(dto);
+		}catch(Exception e) {
+			model.addAttribute("message", "회원가입이 실패했습니다. 다른 아이디로 다시 가입하시기 바랍니다.");
+			model.addAttribute("mode", "created");
+			return ".member.mbj-0002";
+		}
+		
+		StringBuffer sb=new StringBuffer();
+		sb.append(dto.getUserName()+ "님의 회원 가입이 정상적으로 처리되었습니다.<br>");
+		sb.append("메인화면으로 이동하여 로그인 하시기 바랍니다.<br>");
+		
+		model.addAttribute("message", sb.toString());
+		model.addAttribute("title", "회원가입");
+		
+		return ".member.mbj-0003";
+	}
+	
 	@RequestMapping(value="/member/noAuthorized")
 	public String noAuthorized() {
 		// 접근 오서라이제이션(Authorization:권한)이 없는 경우
@@ -43,7 +77,4 @@ public class MemberController {
 		return ".member.expired";
 	}
 	
-
-	
-
 }

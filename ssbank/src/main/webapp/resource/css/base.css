@@ -14,75 +14,25 @@ blockquote, q {quotes:none}
 blockquote:before, blockquote:after,q:before, q:after {content:'';content:none}
 input,select,textarea,button {font-size:100%;vertical-align:middle}
 button {border:0 none;background-color:transparent;cursor:pointer}
-table {border-collapse:collapse;border-spacing:0}
+table {border-spacing:0;}
 body {-webkit-text-size-adjust:none} /* 뷰표트 변환시 폰트크기 자동확대 방지 */
-input[type='text'],input[type='password'],input[type='submit'],input[type='search'] {-webkit-appearance:none; border-radius:0}
+input[type='text'],input[type='password'],input[type='submit'],input[type='search'],input[type='date'],textarea {border: 1px solid #b7bbd1; padding: 5px 7px 4px; font-weight: 700; background-color: #fff; -webkit-appearance:none; border-radius:0}
+input[readonly], textarea[readonly] {background-color: #f3f4f8;}
 input[type='checkbox'] {-webkit-appearance:none;border:0 none;outline: none;}
 button,input[type='button'],input[type='submit'],input[type='reset'],input[type='file'] {-webkit-appearance:button; border-radius:0}
 input[type='search']::-webkit-search-cancel-button {-webkit-appearance:none}
 body {background:#fff}
-body,th,td,input,select,textarea,button {font-size:14px;line-height:1.5;font-family: 'Noto Sans KR', 'Roboto', sans-serif; color:#373737} /* color값은 디자인가이드에 맞게사용 */
-a {color:#373737;text-decoration:none}
+body,th,td,input,select,textarea,button {font-size:14px;line-height:1.5;font-family: 'nanumS', sans-serif; color:#333} /* color값은 디자인가이드에 맞게사용 */
+input[type='password']{font-family: dotum;}
+a {color:#333;text-decoration:none}
 a:active, a:hover {text-decoration:none}
 address,caption,cite,code,dfn,em,var {font-style:normal;font-weight:normal}
 img{width: 100%;}
-.blind,legend,caption{width:0px; height:0px; position:absolute; overflow:hidden; font-size:0px; line-height:0px; z-index:-1; visibility:hidden;}
-
-
-
-/*uniform*/
-/*div.uploader,div.uploader span.action,div.button,div.button span,div.selector,div.selector span,div.checker span,div.radio span {background-image: url("../images/common/uniform-sprite.png");background-repeat: no-repeat;-webkit-font-smoothing: antialiased;}
-div.selector,div.checker,div.button,div.radio,div.uploader {display: -moz-inline-box;display: inline-block;*display: inline;zoom: 1;vertical-align: middle;}
-div.selector:focus,div.checker:focus,div.button:focus,div.radio:focus,div.uploader:focus {outline: 0;}
-div.selector,div.radio,div.checker,div.uploader,div.button {margin: 0;padding: 0;}
-div.selector *,div.radio *,div.checker *,div.uploader *,div.button * {margin: 0;padding: 0;}
-
-div.checker input {-moz-appearance: none;-webkit-appearance: none;}
-div.selector {position: relative;padding: 0 0 0 15px;height: 45px;line-height: 45px;vertical-align: top;background-position: right -62px;color: #9a9a9a; overflow: hidden;border: 1px solid #d3d3d3; box-sizing: border-box;}
-div.selector span {display: block;padding-right: 30px;width: 100%;height: 45px;line-height: 45px;text-overflow: ellipsis;box-sizing: border-box;background-position: right -31px;white-space: nowrap;cursor: pointer;overflow: hidden;}
-div.selector.fixedWidth {width: 190px;}
-div.selector.fixedWidth span {width: 155px;}
-div.selector select {opacity: 0;filter: alpha(opacity=0);-moz-opacity: 0;border: none;background: none;position: absolute;height: 100%;top: 0px;left: 0px;width: 100% !important;padding-left: 8px;padding-right: 30px;box-sizing: border-box;}*/
-
-div.checker {position: relative;width: 30px;height: 30px;line-height: 30px;}
-div.checker span, div.checker input {width: 30px;height: 30px;line-height: 30px;}
-div.checker span {display: -moz-inline-box;display: inline-block;*display: inline;zoom: 1;text-align: center;background-position: 0 0;}
-div.checker span.checked {background-position: -30px 0;}
-div.checker input {opacity: 0;filter: alpha(opacity=0);-moz-opacity: 0;border: none;background: none;display: -moz-inline-box;display: inline-block;*display: inline;zoom: 1;}
-.checkbox-wrap.type2 div.checker span{background-position: 0 -30px;}
-.checkbox-wrap.type2 div.checker span.checked {background-position: -30px -30px;}
-
-
-div.radio {margin-right: 0;position: relative;width: 26px;height: 26px;line-height: 26px;}
-div.radio span, div.radio input {width: 26px;height: 26px;line-height: 26px;}
-div.radio span {display: -moz-inline-box;display: inline-block;*display: inline;zoom: 1;text-align: center;background-position: -60px 0;}
-div.radio span.checked {background-position: -86px 0;}
-div.radio input {opacity: 0;filter: alpha(opacity=0);-moz-opacity: 0;border: none;background: none;display: -moz-inline-box;display: inline-block;*display: inline;zoom: 1;text-align: center;vertical-align: top;}
-
-
-
-/* INPUT & TEXTAREA */
-input.uniform-input, select.uniform-multiselect, textarea.uniform {font-size: 14px;font-weight: normal;color: #777;border-top: solid 1px #636365;border-left: solid 1px #636365;border-bottom: solid 1px #636365;border-right: solid 1px #636365;-webkit-border-radius: 3px;-moz-border-radius: 3px;border-radius: 3px;}
-input.uniform-input.hover, input.uniform-input.focus, select.uniform-multiselect.hover, select.uniform-multiselect.focus, textarea.uniform.hover, textarea.uniform.focus {-webkit-box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.3);-moz-box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.3);box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.3);border-color: #999;}
-
-/* PRESENTATION */
-
-/* Select */
-/*div.selector {font-size: 14px;}
-div.selector span {color: #9a9a9a;}
-div.selector select {font-size: 14px;}
-div.selector.disabled span,
-div.selector.disabled.active span {color: #bbb;}
-div.checker {margin-right: 5px;}
-div.radio {vertical-align: middle;}*/
-
-/* uploader */
-div.uploader {*zoom: 1;background: none; height: 45px;min-width: 180px;cursor: pointer;position: relative;overflow: hidden;}
-div.uploader:after {display: block;content: '';clear: both;}
-div.uploader input {opacity: 0;filter: alpha(opacity=0);-moz-opacity: 0;border: none;background: none;position: absolute;top: 0;right: 0;float: right;cursor: default;width: 100%;height: 100%; padding: 0}
-div.uploader span.action {height: 41px;line-height: 41px;width: 130px; padding-right: 20px;text-align: center; float: right;display: inline;overflow: hidden; cursor: pointer; background: #ffffff url("../images/common/ico_file.png") 98px center no-repeat; border: 2px solid #6e6e6e; }
-div.uploader span.filename {text-overflow: ellipsis;display: block;overflow: hidden;white-space: nowrap;float: left;cursor: default;height: 43px;line-height: 43px;padding: 0 15px;border: 1px #d3d3d3 solid; margin-right: 10px;}
+.blind,legend,caption{width:0px; height:0px; text-indent:-100000px; font-size:0; overflow:hidden; line-height:0px; z-index:-1; visibility:hidden;}
+label{cursor: pointer;}
 
 
 select{border: 0 none;-webkit-appearance: none;border-radius: 0;-webkit-border-radius: 0;}
 select:invalid{color: #d4d4d4;}
+
+

@@ -1,137 +1,205 @@
 package com.ssb.member;
 
 public class Member {
-	private String userId;
-	private String userName;
+	
+	private int memberIdx;
+	private int branchIdx;
+	
+	// Member
+	private String userId, email1, email2;
 	private String userPwd;
-	private String gender;
-	private String email,email1,email2;
-	private String tel,tel1,tel2,tel3;
+	private String createDate, lastLogin;
+	
+	// MemberInfo
+	private String userName, lastName, firstName;
 	private String birth;
-	private String address,add1,add2;
-	private int enabled; //계정상태확인
+	private String addr1, addr2;
+	private String zipCode;
+	private String tel, tel1, tel2, tel3;
+	private int investScore;
+	
+	// MemberInfo2
+	private String ssn;
+	
+	// MemberAuthority
 	private String authority;
-	private String created_date, modify_date, last_login;
-	private int investmentScore;
+
+	public int getMemberIdx() {
+		return memberIdx;
+	}
+
+	public void setMemberIdx(int memberIdx) {
+		this.memberIdx = memberIdx;
+	}
+
+	public int getBranchIdx() {
+		return branchIdx;
+	}
+
+	public void setBranchIdx(int branchIdx) {
+		this.branchIdx = branchIdx;
+	}
+
 	public String getUserId() {
 		return userId;
 	}
+
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}
-	public String getUserName() {
-		return userName;
-	}
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
+
 	public String getUserPwd() {
 		return userPwd;
 	}
+
 	public void setUserPwd(String userPwd) {
 		this.userPwd = userPwd;
 	}
-	public String getGender() {
-		return gender;
+
+	public String getCreateDate() {
+		return createDate;
 	}
-	public void setGender(String gender) {
-		this.gender = gender;
+
+	public void setCreateDate(String createDate) {
+		this.createDate = createDate;
 	}
-	public String getEmail() {
-		return email;
+
+	public String getLastLogin() {
+		return lastLogin;
 	}
-	public void setEmail(String email) {
-		this.email = email;
+
+	public void setLastLogin(String lastLogin) {
+		this.lastLogin = lastLogin;
 	}
-	public String getEmail1() {
-		return email1;
+
+	public String getLastName() {
+		return lastName;
 	}
-	public void setEmail1(String email1) {
-		this.email1 = email1;
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
-	public String getEmail2() {
-		return email2;
+
+	public String getFirstName() {
+		return firstName;
 	}
-	public void setEmail2(String email2) {
-		this.email2 = email2;
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
 	}
-	public String getTel() {
-		return tel;
-	}
-	public void setTel(String tel) {
-		this.tel = tel;
-	}
-	public String getTel1() {
-		return tel1;
-	}
-	public void setTel1(String tel1) {
-		this.tel1 = tel1;
-	}
-	public String getTel2() {
-		return tel2;
-	}
-	public void setTel2(String tel2) {
-		this.tel2 = tel2;
-	}
-	public String getTel3() {
-		return tel3;
-	}
-	public void setTel3(String tel3) {
-		this.tel3 = tel3;
-	}
+
 	public String getBirth() {
 		return birth;
 	}
+
 	public void setBirth(String birth) {
 		this.birth = birth;
 	}
-	public String getAddress() {
-		return address;
+
+	public String getAddr1() {
+		return addr1;
 	}
-	public void setAddress(String address) {
-		this.address = address;
+
+	public void setAddr1(String addr1) {
+		this.addr1 = addr1;
 	}
-	public String getAdd1() {
-		return add1;
+
+	public String getAddr2() {
+		return addr2;
 	}
-	public void setAdd1(String add1) {
-		this.add1 = add1;
+
+	public void setAddr2(String addr2) {
+		this.addr2 = addr2;
 	}
-	public String getAdd2() {
-		return add2;
+
+	public String getZipCode() {
+		return zipCode;
 	}
-	public void setAdd2(String add2) {
-		this.add2 = add2;
+
+	public void setZipCode(String zipCode) {
+		this.zipCode = zipCode;
 	}
-	public int getEnabled() {
-		return enabled;
+
+	public String getTel() {
+		return tel;
 	}
-	public void setEnabled(int enabled) {
-		this.enabled = enabled;
+
+	public void setTel(String tel) {
+		this.tel = tel;
 	}
+
+	public int getInvestScore() {
+		return investScore;
+	}
+
+	public void setInvestScore(int investScore) {
+		this.investScore = investScore;
+	}
+
+	public String getSsn() {
+		return ssn;
+	}
+
+	public void setSsn(String ssn) {
+		this.ssn = ssn;
+	}
+
 	public String getAuthority() {
 		return authority;
 	}
+
 	public void setAuthority(String authority) {
 		this.authority = authority;
 	}
-	public String getModify_date() {
-		return modify_date;
+
+	public String getEmail1() {
+		return email1;
 	}
-	public void setModify_date(String modify_date) {
-		this.modify_date = modify_date;
+
+	public void setEmail1(String email1) {
+		this.email1 = email1;
 	}
-	public String getLast_login() {
-		return last_login;
+
+	public String getEmail2() {
+		return email2;
 	}
-	public void setLast_login(String last_login) {
-		this.last_login = last_login;
+
+	public void setEmail2(String email2) {
+		this.email2 = email2;
 	}
-	public int getInvestmentScore() {
-		return investmentScore;
+
+	public String getTel1() {
+		return tel1;
 	}
-	public void setInvestmentScore(int investmentScore) {
-		this.investmentScore = investmentScore;
+
+	public void setTel1(String tel1) {
+		this.tel1 = tel1;
 	}
+
+	public String getTel2() {
+		return tel2;
+	}
+
+	public void setTel2(String tel2) {
+		this.tel2 = tel2;
+	}
+
+	public String getTel3() {
+		return tel3;
+	}
+
+	public void setTel3(String tel3) {
+		this.tel3 = tel3;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+	
+	
 	
 }

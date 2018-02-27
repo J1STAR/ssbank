@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.ssb.common.dao.CommonDAO;
 
-@Service("member.MmmberService")
+@Service("member.MemberService")
 public class MemberServiceImpl implements MemberService {
 	@Autowired
 	private CommonDAO dao;
@@ -22,8 +22,8 @@ public class MemberServiceImpl implements MemberService {
 			
 			//이메일,전화번호 나누는 작업
 			if (dto != null) {
-				if (dto.getEmail() != null) {
-					String[] s = dto.getEmail().split("@");
+				if (dto.getUserId() != null) {
+					String[] s = dto.getUserId().split("@");
 					dto.setEmail1(s[0]);
 					dto.setEmail2(s[1]);
 				}
@@ -43,9 +43,9 @@ public class MemberServiceImpl implements MemberService {
 	public void insertMember(Member dto) throws Exception {
 		try {
 			//이메일 합치기
-			if(dto.getEmail()!=null &&dto.getEmail1().length() !=0){
+			if(dto.getUserId()!=null &&dto.getEmail1().length() !=0){
 				if(dto.getEmail2() !=null && dto.getEmail2().length() !=0) {
-					dto.setEmail(dto.getEmail1()+"@"+dto.getEmail2());
+					dto.setUserId(dto.getEmail1()+"@"+dto.getEmail2());
 				}
 			}
 			//전화번호 합치기
@@ -66,9 +66,9 @@ public class MemberServiceImpl implements MemberService {
 	public void updateMamber(Member dto) throws Exception {
 		try {
 			//이메일 합치기
-			if(dto.getEmail()!=null &&dto.getEmail1().length() !=0){
+			if(dto.getUserId()!=null &&dto.getEmail1().length() !=0){
 				if(dto.getEmail2() !=null && dto.getEmail2().length() !=0) {
-					dto.setEmail(dto.getEmail1()+"@"+dto.getEmail2());
+					dto.setUserId(dto.getEmail1()+"@"+dto.getEmail2());
 				}
 			}
 			//전화번호 합치기

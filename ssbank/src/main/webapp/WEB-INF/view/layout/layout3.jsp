@@ -21,34 +21,36 @@
 <link rel="stylesheet" href="<%=cp%>/resource/css/common.css" media="all" type="text/css">
 <link rel="stylesheet" href="<%=cp%>/resource/css/layout.css" media="all" type="text/css">
 
+
 <link rel="stylesheet" href="<%=cp%>/resource/jquery/css/smoothness/jquery-ui.min.css" type="text/css">
 <script type="text/javascript" src="<%=cp%>/resource/jquery/js/jquery-1.12.4.min.js"></script>
 <script type="text/javascript" src="<%=cp%>/resource/js/common.js"></script>
 <script type="text/javascript" src="<%=cp%>/resource/js/owl.carousel.js"></script>
 <script type="text/javascript" src="<%=cp%>/resource/js/util.js"></script>
+<script type="text/javascript" src="<%=cp%>/resource/jquery/js/jquery-ui.min.js"></script>
+<script type="text/javascript" src="<%=cp%>/resource/jquery/js/jquery.ui.datepicker-ko.js"></script>
+
+<%-- <link rel="stylesheet" href="<%=cp%>/resource/css/bootstrap.min.css"> --%>
+<%-- <script type="text/javascript" src="<%=cp%>/resource/js/bootstrap.min.js"></script> --%>
 
 </head>
 
 <body>
 
-<div id="wrap" class="main">
+<div id="wrap">	
 	<div class="header">
 	    <tiles:insertAttribute name="header"/>
 	</div>
-		
-	<section class="container">
-		<div class="content">
-	   		<tiles:insertAttribute name="body"/>
-	   	</div>
-	</section>
 	
+	<section class="container">
+   		<tiles:insertAttribute name="body"/>
+	</section>
+
 	<div class="footer">
 	    <tiles:insertAttribute name="footer"/>
 	</div>
 </div>
 
-<script type="text/javascript" src="<%=cp%>/resource/jquery/js/jquery-ui.min.js"></script>
-<script type="text/javascript" src="<%=cp%>/resource/jquery/js/jquery.ui.datepicker-ko.js"></script>
 <script>
 	$(document).ready(function() {
 		$('.main-visual .slider').owlCarousel({
