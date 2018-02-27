@@ -4,14 +4,13 @@
 <mapper namespace="member">
 
 	<select id="readMember" parameterType="String" resultType="com.ssb.member.Member">
-		SELECT userId,userPwd,createDate,lastLogin 
+		SELECT userId,memberIdx,userPwd,status,createdate,lastlogin
 		FROM member
 		WHERE userId=#{userId}
 	</select>
 	
 	<update id="updateLastLogin" parameterType="String">
-		UPDATE member SET last_login = SYSDATE
-		FROM member
+		UPDATE member SET lastlogin = SYSDATE
 		WHERE userId = #{userId}
 	</update>
 	

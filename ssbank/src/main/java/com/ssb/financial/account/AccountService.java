@@ -12,7 +12,9 @@ import java.util.Map;
 
 public interface AccountService {
 	
-	public List<Account> listAllAccount(Map<String , Object> map); 
+	public List<Account> depositlistAllAccount(Map<String , Object> map); 
+	public List<Account> savinglistAllAccount(Map<String , Object> map); 
+	
 	public List<Account> listOneAccount(Map<String , Object> map);
 	public Account detailAccount(int accountNo);
 	public int insertAccount(Account dto);

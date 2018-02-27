@@ -35,12 +35,10 @@
 	         <!-- admin -->
 		    <intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')" />
 		    
-			<intercept-url pattern="/customer/notice/created" access="hasRole('ROLE_ADMIN')"/>
-			<intercept-url pattern="/customer/notice/update" access="hasRole('ROLE_ADMIN')"/>
-			<intercept-url pattern="/customer/notice/delete" access="hasRole('ROLE_ADMIN')"/>
+			
 			
 	         <!-- 모든 페이지 -->
-	        <intercept-url pattern="/**" access="hasRole('ROLE_USER')" />
+	        <intercept-url pattern="/**" access="hasAnyRole('ROLE_USER','ROLE_ADMIN')" />
 
 	        <!--  사용자 정의 로그인 폼  -->
 	        <form-login login-page="/member/login"

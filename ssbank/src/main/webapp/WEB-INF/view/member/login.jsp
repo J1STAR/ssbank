@@ -66,7 +66,7 @@ function sendLogin() {
 		  <tr align="center" height="60"> 
 		      <td> 
                 <label for="userId" id="lblUserId" class="lbl" >아이디</label>
-		        <input type="text" name="userId" id="userId" class="loginTF" maxlength="15"
+		        <input type="text" name="userId" id="userId" class="loginTF" maxlength="100"
 		                   tabindex="1"
                            onfocus="document.getElementById('lblUserId').style.display='none';"
                            onblur="bgLabel(this, 'lblUserId');">

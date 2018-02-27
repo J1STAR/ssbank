@@ -9,11 +9,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>예금 조회</title>
+<title>예금 신규</title>
 </head>
 <body>
 
-${list}
+
 
 </body>
 </html>

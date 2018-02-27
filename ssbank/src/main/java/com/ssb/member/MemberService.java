@@ -9,7 +9,7 @@ public interface MemberService {
 	
 	public void insertMember(Member dto) throws Exception;
 	
-	public void updateMamber(Member dto) throws Exception;
+	public void updateMember(Member dto) throws Exception;
 	public int updateLastLogin(String userId);
 	
 	public int updateEnabled(String userId);

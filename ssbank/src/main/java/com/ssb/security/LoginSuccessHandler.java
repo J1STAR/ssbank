@@ -34,10 +34,11 @@ public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessH
 		memberService.updateLastLogin(authentication.getName());
 		
 		// 로그인 정보 저장
-		Member member=memberService.readMember(authentication.getName());
+		Member member = memberService.readMember(authentication.getName());
 		SessionInfo info=new SessionInfo();
 		info.setUserId(member.getUserId());
 		info.setUserName(member.getUserName());
+		info.setMemberIdx(member.getMemberIdx());
 		
 		session.setAttribute("member", info);	
 

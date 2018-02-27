@@ -14,12 +14,22 @@ public class AccountServiceImpl implements AccountService {
 	@Autowired
 	private CommonDAO dao;
 	
-	//예금
+	//예금 리스트 전부
 	@Override
-	public List<Account> listAllAccount(Map<String, Object> map) {
+	public List<Account> depositlistAllAccount(Map<String, Object> map) {
 		List<Account> list = null;
 		try {
-			list = dao.selectList("account.listAllAccount",map);
+			list = dao.selectList("account.depositlistAllAccount",map);
+		} catch (Exception e) {
+		}
+		return list;
+	}
+	
+	@Override
+	public List<Account> savinglistAllAccount(Map<String, Object> map) {
+		List<Account> list = null;
+		try {
+			list = dao.selectList("account.savinglistAllAccount",map);
 		} catch (Exception e) {
 		}
 		return list;
@@ -128,5 +138,7 @@ public class AccountServiceImpl implements AccountService {
 		}
 		return result;
 	}
+
+	
 
 }

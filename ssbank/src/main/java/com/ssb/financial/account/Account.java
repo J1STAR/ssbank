@@ -1,5 +1,34 @@
 package com.ssb.financial.account;
-
+/*
+ *  userId   		-- userId(Email)
+	memberIdx       -- 회원번호
+	userPwd        -- 비밀번호
+	createDate      -- 계정생성일
+	lastLogin       -- 마지막 로그인
+	status          -- 계정상태
+	--계좌
+	accountNo  VARCHAR2(16)  NOT NULL, -- 계좌번호
+	memberIdx  NUMBER        NULL,     -- 회원번호
+	branchIdx  NUMBER        NULL,     -- 지점코드
+	productIdx NUMBER        NULL,     -- 상품코드
+	empIdx     VARCHAR2(32)  NULL,     -- 직원코드
+	accountPwd VARCHAR2(100) NULL,     -- 계좌 비밀번호
+	createDate DATE          NULL,     -- 계좌생성일
+	status     NUMBER(1)     NULL      -- 계좌 상태
+	--예금
+	productIdx   NUMBER      NOT NULL, -- 상품코드
+	interestRate NUMBER(5,2) NULL      -- 이율
+	--적금
+	productIdx   NUMBER       NOT NULL, -- 상품코드
+	productType  VARCHAR2(16) NULL,     -- 상품타입
+	entryDate    DATE         NULL,     -- 가입기간
+	monthly      NUMBER       NULL,     -- 월 납입금액
+	interest     NUMBER(4,2)  NULL,     -- 기본 이율
+	vipInterest  NUMBER(4,2)  NULL,     -- 우대이율
+	savingType   VARCHAR2(16) NULL,     -- 저축방법
+	interestType VARCHAR2(16) NULL,     -- 이자지급방식
+	tax          NUMBER(4,2)  NULL      -- 과세
+ */
 public class Account {
 	//예금/적금조회
 	private String accountNo;
@@ -7,7 +36,7 @@ public class Account {
 	private int branchIdx,productIdx,interestRate,status,defaultInterest,vipInterest,tax,monthlyAmount;
 	private String productName,productDetail,productType;
 	private String createDate,entryDate,userId,accountPwd,savingType,interestType;
-	
+	private String lastTrDate;
 	//신규
 	private int memberIdx;
 	private String lastName,firstName,birth;
@@ -177,6 +206,12 @@ public class Account {
 	}
 	public void setTel(int tel) {
 		this.tel = tel;
+	}
+	public String getLastTrDate() {
+		return lastTrDate;
+	}
+	public void setLastTrDate(String lastTrDate) {
+		this.lastTrDate = lastTrDate;
 	}
 	
 	
