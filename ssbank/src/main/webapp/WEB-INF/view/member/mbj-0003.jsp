@@ -56,7 +56,7 @@
 		</table>
 	</div>
 	<div class="btn-area">
-		<a href="../main/main.html" class="btn-type-blue1 big">메인으로 이동</a>
+		<a href="/" class="btn-type-blue1 big">메인으로 이동</a>
 	</div>
 </div>
 <!-- //jsp body 영역 -->

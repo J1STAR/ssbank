@@ -1,18 +1,31 @@
 package com.ssb.member;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.ssb.member.Member;
+
+@SessionAttributes("memberDto")
 @Controller("member.memberController")
 public class MemberController {
+	
+	@ModelAttribute("memberDto")
+	public Member command() {
+		return new Member();
+	}
 	
 	@Autowired
 	private MemberService service;
@@ -40,6 +53,7 @@ public class MemberController {
 	
 	@RequestMapping(value="/member/memberJoin", method=RequestMethod.POST)
 	public String memberSubmit(Member dto, Model model) {
+		
 		// 패스워드 암호화
 		ShaPasswordEncoder passwordEncoder=new ShaPasswordEncoder(256);
 		String hashed=passwordEncoder.encodePassword(dto.getUserPwd(), null);
@@ -49,7 +63,6 @@ public class MemberController {
 			service.insertMember(dto);
 		}catch(Exception e) {
 			model.addAttribute("message", "회원가입이 실패했습니다. 다른 아이디로 다시 가입하시기 바랍니다.");
-			model.addAttribute("mode", "created");
 			return ".member.mbj-0002";
 		}
 		
@@ -58,22 +71,21 @@ public class MemberController {
 		sb.append("메인화면으로 이동하여 로그인 하시기 바랍니다.<br>");
 		
 		model.addAttribute("message", sb.toString());
-		model.addAttribute("title", "회원가입");
 		
 		return ".member.mbj-0003";
 	}
 	
 	@RequestMapping(value="/member/noAuthorized")
 	public String noAuthorized() {
-		// 접근 오서라이제이션(Authorization:권한)이 없는 경우
 		
+		// 접근 오서라이제이션(Authorization:권한)이 없는 경우
 		return ".member.noAuthorized";
 	}
 	
 	@RequestMapping(value="/member/expired")
 	public String expired() {
-		// 세션이 만료 된 경우
 		
+		// 세션이 만료 된 경우
 		return ".member.expired";
 	}
 	
