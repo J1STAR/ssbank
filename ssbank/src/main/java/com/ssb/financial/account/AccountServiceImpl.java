@@ -44,6 +44,17 @@ public class AccountServiceImpl implements AccountService {
 		}
 		return list;
 	}
+	
+	@Override
+	public Account newAccountMember(int memberIdx) {
+		Account dto = null;
+		try {
+			dto = dao.selectOne("account.newAccountMember",memberIdx);
+			dto.setName(dto.getLastName()+dto.getFirstName());
+		} catch (Exception e) {
+		}
+		return dto;
+	}
 
 	@Override
 	public Account detailAccount(int accountNo) {
@@ -138,6 +149,8 @@ public class AccountServiceImpl implements AccountService {
 		}
 		return result;
 	}
+
+	
 
 	
 

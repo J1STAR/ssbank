@@ -47,8 +47,22 @@ public class AccountController {
 	}
 	
 	//예금 신규
-	@RequestMapping(value="/financial/account/{stage}",method=RequestMethod.GET)
-	public String newAccountForm(@PathVariable String stage,@RequestParam int memberIdx) {
+	@RequestMapping(value="/financial/account/fdn{stage}",method=RequestMethod.GET)
+	public String newAccountForm(@PathVariable String stage,
+			HttpSession session,Model model) {
+		
+		SessionInfo info =(SessionInfo) session.getAttribute("member");
+		//로그인한 멤버 회원 정보 --0002에 이동시 같이 가야 함
+		Account in = service.newAccountMember(info.getMemberIdx());
+		System.out.println(in.toString());
+		if(stage.equals("0002")) {
+		model.addAttribute("info",in);
+		}
+		return ".financial.account.fdn-"+stage;
+	}
+	//신규 입력폼
+	@RequestMapping(value="/financial/account/fdn{stage}",method=RequestMethod.POST)
+	public String newAccountForm(@RequestParam String stage) {
 		
 		return ".financial.account.fdn-"+stage;
 	}
@@ -74,29 +88,35 @@ public class AccountController {
 	
 	//대출 엑셀 다운로드
 	@RequestMapping(value="/financial/account/excel")
-	public View excelDownload(Map<String, Object> model,@RequestParam int memberIdx) {
+	public View excelDownload(Map<String, Object> model,HttpSession session) {
 		String filename ="account.xls";
 		String sheetName = "계좌목록";
-		
 		//내려받을 목록리스트
 		List<String> columnLabels = new ArrayList<>();
 		//내려받을 목록값
 		List<Object[]> columnValues = new ArrayList<>();
 		
 		//내려받을 것들 목룍리스트
+		columnLabels.add("상품명");
 		columnLabels.add("계좌번호");
+		columnLabels.add("이율");
+		columnLabels.add("만기일/최근거래일");
+		columnLabels.add("잔액");
 		
 		
 		//내려받을 값 넣는 처리
+		SessionInfo info =(SessionInfo) session.getAttribute("member");
 		Map<String, Object> map = new HashMap<>();
-		map.put("memberIdx", memberIdx);
+		map.put("memberIdx", info.getMemberIdx());
 		List<Account> deposit = service.depositlistAllAccount(map);
 		List<Account> saving = service.savinglistAllAccount(map);
 		for(Account dep :deposit) {
-			columnValues.add(new Object[] {});
+			columnValues.add(new Object[] {dep.getProductName(),dep.getAccountNo(),dep.getInterestRate(),
+					dep.getLastTrDate(),dep.getBalance()});
 		}
-		for(Account save :saving) {
-			columnValues.add(new Object[] {});
+		for(Account sav :saving) {
+			columnValues.add(new Object[] {sav.getProductName(),sav.getAccountNo(),sav.getInterest(),
+					sav.getLastTrDate(),sav.getBalance()});
 		}
 		
 		model.put("filename", filename);

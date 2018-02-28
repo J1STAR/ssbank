@@ -14,8 +14,8 @@ public interface AccountService {
 	
 	public List<Account> depositlistAllAccount(Map<String , Object> map); 
 	public List<Account> savinglistAllAccount(Map<String , Object> map); 
-	
 	public List<Account> listOneAccount(Map<String , Object> map);
+	public Account newAccountMember(int memberIdx);
 	public Account detailAccount(int accountNo);
 	public int insertAccount(Account dto);
 	public int deleteAccount(Map<String , Object> map);
