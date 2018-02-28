@@ -4,7 +4,6 @@
 <%
    String cp = request.getContextPath();
 %>
-<%=cp %>
 	<div class="content main">
 		<section class="main-visual">
 			<div class="owl-carousel owl-theme slider">

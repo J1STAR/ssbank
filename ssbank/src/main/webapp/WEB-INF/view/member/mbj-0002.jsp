@@ -5,170 +5,277 @@
 <%
 	String cp = request.getContextPath();
 %>
-
 <div class="content">
 	<!-- jsp body 영역 -->
 	<h1>개인회원가입</h1>
-	<div class="page-con">
-		<div class="step-area">
-			<ol>
-				<li>
-					<span class="step-num">1</span>
-					<span class="step-name">이용약관동의</span>
-				</li>
-				<li class="active">
-					<span class="step-num">2</span>
-					<span class="step-name">정보입력</span>
-				</li>
-				<li>
-					<span class="step-num">3</span>
-					<span class="step-name">가입완료</span>
-				</li>
-			</ol>
+	<form name="entryInfo" method="post">
+		<div class="page-con">
+			<div class="step-area">
+				<ol>
+					<li>
+						<span class="step-num">1</span>
+						<span class="step-name">이용약관동의</span>
+					</li>
+					<li class="active">
+						<span class="step-num">2</span>
+						<span class="step-name">정보입력</span>
+					</li>
+					<li>
+						<span class="step-num">3</span>
+						<span class="step-name">가입완료</span>
+					</li>
+				</ol>
+			</div>
+			<div class="box-blue-area">
+				<dl>
+					<dt>안내 및 유의사항</dt>	
+					<dd>
+						<ul>
+							<li>입력하신 개인정보는 본인확인용으로 사용되며, 회원가입 완료 전까지 저장되지 않습니다.</li>
+							<li>이메일 정보는 회원가입 본인인증 및 비밀번호 찾기 시 사용되오니 반드시 유효한 이메일 주소를 입력하여 주시기 바랍니다.</li>
+						</ul>
+					</dd>
+				</dl>
+			</div>
+			<h2>정보입력</h2>
+			<div class="table-wrap">
+				
+				<table class="table-verti">
+					<caption>회원가입 정보입력</caption>
+					<colgroup>
+						<col style="width:20%;"/>
+						<col style="width:*;"/>
+					</colgroup>
+					<tbody>
+						<tr>
+							<th scope="col">성 / 이름</th>
+							<td scope="col"><input type="text" name="lastName" class=""> / <input type="text" name="firstName" class=""></td>
+						</tr>
+						<tr>
+							<th>이메일</th>
+							<td>
+								<input type="text" name="email1" class="">
+								<span>@</span>
+								<input type="text" name="email2" class="">
+								<div class="item-select">
+									<select name="item-select-email">
+										<option>직접입력</option>
+										<option>naver.com</option>
+										<option>gmail.com</option>
+										<option>hanmail.com</option>
+									</select>
+								</div>
+								<span class="check-false">이미 존재하는 이메일입니다.</span>
+								<span class="check-true">가입가능한 이메일입니다.</span>
+							</td>
+						</tr>
+						<tr>
+							<th>주소</th>
+							<td>
+								<input type="text" id="zip" name="zipCode" class="" style="width: 80px;" maxlength="5" readonly>
+								<a href="#" id="btnPostCode" class="btn-type-gray medium" onclick="daumPostcode();">우편번호 찾기</a><br>
+								<input type="text" id="addr1" name="addr1" class="" style="width: 100%; margin-top: 8px;">
+								<input type="text" id="addr2" name="addr2" class="" style="width: 100%; margin-top: 8px;">
+							</td>
+						</tr>
+						<tr>
+							<th>비밀번호</th>
+							<td><input type="password" name="userPwd" class=""></td>
+						</tr>
+						<tr>
+							<th>비밀번호 확인</th>
+							<td>
+								<input type="password" name="userPwd-confirm" class="">
+								<span class="check-false">비밀번호 불일치</span>
+								<span class="check-true">비밀번호 일치</span>
+							</td>
+						</tr>
+						<tr>
+							<th>생년월일</th>
+							<td><input type="text" class="" id="date" name="birth"></td>
+						</tr>
+						<tr>
+							<th>휴대폰</th>
+							<td>
+								<div class="item-select">
+									<select name="tel1">
+										<option value="">선택</option>
+										<option value="010">010</option>
+										<option value="011">011</option>
+										<option value="016">016</option>
+										<option value="017">017</option>
+										<option value="018">018</option>
+										<option value="019">019</option>
+									</select>
+								</div>
+								<span> - </span>
+								<input type="text" name="tel2" class="" style="width: 120px;" maxlength="4">
+								<span> - </span>
+								<input type="text" name="tel3" class="" style="width: 120px;" maxlength="4">
+								<!-- <div class="item-checkbox">
+									<input type="checkbox" id="mbj0002-03">
+									<label for="mbj0002-03">없음</label>
+								</div>
+								<span><em>* 휴대폰 없으신 분은 '없음' 선택</em></span> -->
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="btn-area">
+			    <a href="javascript:history.back()" class="btn-type-gray1 big">취소</a>
+			    <a href="" id="memberJoin" class="btn-type-blue1 big">확인</a>
+			</div>
 		</div>
-		<div class="box-blue-area">
-			<dl>
-				<dt>안내 및 유의사항</dt>	
-				<dd>
-					<ul>
-						<li>입력하신 개인정보는 본인확인용으로 사용되며, 회원가입 완료 전까지 저장되지 않습니다.</li>
-						<li>이메일 정보는 회원가입 본인인증 및 비밀번호 찾기 시 사용되오니 반드시 유효한 이메일 주소를 입력하여 주시기 바랍니다.</li>
-					</ul>
-				</dd>
-			</dl>
-		</div>
-		<h2>정보입력</h2>
-		<div class="table-wrap">
-			<table class="data-table">
-				<caption>회원가입 정보입력</caption>
-				<colgroup>
-					<col style="width:20%;"/>
-					<col style="width:*;"/>
-				</colgroup>
-				<tbody>
-					<tr>
-						<th scope="col">성 / 이름</th>
-						<td scope="col"><input type="text" name="lastName" class=""> / <input type="text" name="firstName" class=""></td>
-					</tr>
-					<tr>
-						<th>이메일</th>
-						<td>
-							<input type="text" name="email1" class="">
-							<span>@</span>
-							<input type="text" name="email2" class="">
-							<div class="item-select">
-								<select name="item-select-email" id="">
-									<option>직접입력</option>
-									<option>naver.com</option>
-									<option>gmail.com</option>
-									<option>hanmail.com</option>
-								</select>
-							</div>
-							<span class="check-false">이미 존재하는 이메일입니다.</span>
-							<span class="check-true">가입가능한 이메일입니다.</span>
-						</td>
-					</tr>
-					<tr>
-						<th>주소</th>
-						<td>
-							<input type="text" id="zip" name="zipCode" class="" style="width: 80px;" maxlength="5" readonly>
-							<a href="#" class="btn-type-gray medium" onclick="daumPostcode();">우편번호 찾기</a><br>
-							<input type="text" id="addr1" name="addr1" class="" style="width: 100%; margin-top: 8px;">
-							<input type="text" id="addr2" name="addr2" class="" style="width: 100%; margin-top: 8px;">
-						</td>
-					</tr>
-					<tr>
-						<th>비밀번호</th>
-						<td><input type="password" name="userPwd" class=""></td>
-					</tr>
-					<tr>
-						<th>비밀번호 확인</th>
-						<td><input type="password" name="userPwd-confirm" class=""></td>
-					</tr>
-					<tr>
-						<th>생년월일</th>
-						<td><input type="text" class="" id="date" name="birth"></td>
-					</tr>
-					<tr>
-						<th>휴대폰</th>
-						<td>
-							<div class="item-select">
-								<select name="tel1" id="">
-									<option>선택</option>
-									<option>010</option>
-									<option>011</option>
-									<option>016</option>
-									<option>017</option>
-									<option>018</option>
-									<option>019</option>
-								</select>
-							</div>
-							<span> - </span>
-							<input type="text" name="tel2" class="" style="width: 120px;" maxlength="4">
-							<span> - </span>
-							<input type="text" name="tel3" class="" style="width: 120px;" maxlength="4">
-							<div class="item-checkbox">
-								<input type="checkbox" id="mbj0002-03">
-								<label for="mbj0002-03">없음</label>
-							</div>
-							<span><em>* 휴대폰 없으신 분은 '없음' 선택</em></span>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-		<div class="btn-area">
-			<a href="javascript:history.back()" class="btn-type-gray1 big">이전</a>
-			<a id="memberJoin" class="btn-type-blue1 big">확인</a>
-		</div>
-	</div>
+	</form>
 	<!-- //jsp body 영역 -->
 </div>
 
 
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script>	
+var lastName = $("input[name=lastName]");
+var firstName = $("input[name=firstName]");
+var email1 = $("input[name=email1]");
+var email2 = $("input[name=email2]");
+var zipCode = $("input[name=zipCode]");
+var addr1 = $("input[name=addr1]");
+var addr2 = $("input[name=addr2]");
+var userPwd = $("input[name=userPwd]");
+var userPwdConfirm = $("input[name=userPwd-confirm]");
+var birth = $("input[name=birth]");
+var tel1 = $("select[name=tel1]");
+var tel2 = $("input[name=tel2]");
+var tel3 = $("input[name=tel3]");
 
 $(function(){
-	$("#memberJoin").click(function(){
+	
+	$("#memberJoin").click(function(event){
+		event.preventDefault();
 		
-		var lastName = $.trim($("input[name=lastName]").val());
-		var firstName = $.trim($("input[name=firstName]").val());
-		var userId = $.trim($("input[name=email1]").val()).concat("@",$.trim($("input[name=email2]").val()));
-		var zipCode = $.trim($("input[name=zipCode]").val());
-		var addr1 = $.trim("input[name=addr1]").val());
-		var addr2 = $.trim("input[name=addr2]").val());
-		var birth = $.trim("input[name=birth]").val());
-		var tel = $.trim($("input[name=tel1]").val()).concat($.trim($("input[name=tel2]").val()),$.trim($("input[name=email3]").val()));
-		
-		var query = "lastName="+lastName+
-					"&firstName="+firstName+
-					"&userId="+userId+
-					"&zipCode="+zipCode+
-					"&addr1="+addr1+
-					"&addr2="+addr2+
-					"&birth="+birth+
-					"&tel="+tel;
-		
-		var url = "<%=cp%>/member/memberJoin";
-		
-		$.ajax({
-			type		: "POST",
-			data		: query,
-			dataType	: "json",
-			url		: url,
-			success	: function(data){
-				if(data.result == "success"){
-					
-				}
-			},
-			error	: function(e){
-				console.log(e.responseText);
+		if(validInfoCheck()){
+			var form = document.entryInfo;
+			
+			var mode = "${mode}";
+			if(mode == "created"){
+				form.action = "<%=cp%>/member/memberJoin";
+			} else {
+				
 			}
-		});
+			form.submit();
+		}
+	});
+	
+	/* 입력한 비밀번호와 입력한 확인용 비밀번호 비교 */
+	userPwdConfirm.keyup(function(){
+		if(userPwd.val() == userPwdConfirm.val()){
+			$(this).parent().find('.check-false').hide();
+			$(this).parent().find('.check-true').show();
+			$(this).css("border-color", 'blue');
+		} else {
+			$(this).parent().find('.check-false').show();
+			$(this).parent().find('.check-true').hide();
+			$(this).css("border-color", 'red');
+		}
 	});
 });
 
+function validInfoCheck(){
+
+	if(! lastName.val().trim()){
+		alert("성이 입력되지 않았습니다.");
+		lastName.focus();
+		return false;
+	}
+	
+	if(! firstName.val().trim()){
+		alert("이름이 입력되지 않았습니다.");
+		firstName.focus();
+		return false;
+	}
+	
+	if(! email1.val().trim() || ! email2.val().trim()){
+		alert("이메일이 입력되지 않았습니다.");
+		if(! email1.val().trim()){
+			email1.focus();
+			return false;
+		}
+			
+		
+		if(! email2.val().trim()){
+			email2.focus();
+			return false;
+		}
+	}
+	
+	if(! zipCode.val().trim() || ! addr1.val().trim()){
+		alert("주소가 입력되지 않았습니다.");
+		
+		if(! zipCode.val().trim()){
+			$("#btnPostCode").focus();
+			return false;
+		}
+			
+		
+		if(! addr1.val().trim()){
+			addr1.focus();
+			return false;
+		}
+	}
+	
+	if(! addr2.val().trim()){
+		alert("주소가 입력되지 않았습니다.");
+		if(! addr2.val().trim())
+			addr2.focus();
+		
+		return false;
+	}
+	
+	if(! userPwd.val().trim()){
+		alert("비밀번호가 입력되지 않았습니다.");
+		if(! userPwd.val().trim())
+			userPwd.focus();
+		
+		return false;
+	}
+	
+	if(! userPwdConfirm.val().trim()){
+		alert("확인용 비밀번호가 입력되지 않았습니다.");
+		if(! userPwdConfirm.val().trim())
+			userPwdConfirm.focus();
+		
+		return false;
+	}
+	
+	if(! birth.val().trim()){
+		alert("생일이 입력되지 않았습니다.");
+		if(! birth.val().trim())
+			birth.focus();
+		
+		return false;
+	}
+	
+	if(! tel1.select().val() || ! tel2.val().trim() || ! tel3.val().trim()){
+		alert("연락처가 입력되지 않았습니다.");
+		
+		if(! tel1.val().trim()){
+			tel1.focus();
+			return false;
+		}
+			
+		if(! tel2.val().trim()){
+			tel2.focus();
+			return false;
+		}
+		
+		if(! tel3.val().trim()){
+			tel3.focus();
+			return false;
+		}
+	}
+	
+	return true;
+}
 
 
 

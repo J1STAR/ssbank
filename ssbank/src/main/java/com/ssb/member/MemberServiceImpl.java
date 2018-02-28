@@ -42,17 +42,18 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public void insertMember(Member dto) throws Exception {
 		try {
-			//이메일 합치기
-			if(dto.getUserId()!=null &&dto.getEmail1().length() !=0){
+			//이메일
+			if(dto.getEmail1()!=null &&dto.getEmail1().length() !=0){
 				if(dto.getEmail2() !=null && dto.getEmail2().length() !=0) {
 					dto.setUserId(dto.getEmail1()+"@"+dto.getEmail2());
 				}
 			}
-			//전화번호 합치기
+			
+			//전화번호
 			if(dto.getTel1() !=null &&dto.getTel1().length()!=0) {
 				if(dto.getTel2() !=null &&dto.getTel2().length()!=0) {
 					if(dto.getTel3() !=null &&dto.getTel3().length()!=0) {
-						dto.setTel(dto.getTel1()+"-"+dto.getTel2()+"-"+dto.getTel2());
+						dto.setTel(dto.getTel1()+"-"+dto.getTel2()+"-"+dto.getTel3());
 					}
 				}
 			}

@@ -13,12 +13,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 
 import com.ssb.member.Member;
 
-@SessionAttributes("memberDto")
 @Controller("member.memberController")
 public class MemberController {
 	
@@ -67,10 +65,12 @@ public class MemberController {
 		}
 		
 		StringBuffer sb=new StringBuffer();
+		dto.setUserName(dto.getLastName() + dto.getFirstName());
 		sb.append(dto.getUserName()+ "님의 회원 가입이 정상적으로 처리되었습니다.<br>");
 		sb.append("메인화면으로 이동하여 로그인 하시기 바랍니다.<br>");
 		
 		model.addAttribute("message", sb.toString());
+		model.addAttribute("dto", dto);
 		
 		return ".member.mbj-0003";
 	}

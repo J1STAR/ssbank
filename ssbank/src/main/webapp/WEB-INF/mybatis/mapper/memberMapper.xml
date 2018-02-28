@@ -14,10 +14,22 @@
 		WHERE userId = #{userId}
 	</update>
 	
-	<insert id="insertMember" parameterType="com.ssb.member.Member">
-		INSERT INTO member
-		(userId, userName, userPwd,address ,gender,birth,tel ) VALUES
-		(#{userId},#{userName},#{userPwd},#{address},#{gender},#{birth},#{tel})
+	<insert id="insertMember" parameterType="com.ssb.member.Member"
+		statementType="CALLABLE"
+		useGeneratedKeys="false">
+		{
+			CALL pInsertMember(
+				#{lastName, jdbcType=VARCHAR, mode=IN},
+				#{firstName, jdbcType=VARCHAR, mode=IN},
+				#{birth, jdbcType=VARCHAR, mode=IN},
+				#{addr1, jdbcType=VARCHAR, mode=IN},
+				#{addr2, jdbcType=VARCHAR, mode=IN},
+				#{zipCode, jdbcType=VARCHAR, mode=IN},
+				#{tel, jdbcType=VARCHAR, mode=IN},
+				#{userId, jdbcType=VARCHAR, mode=IN},
+				#{userPwd, jdbcType=VARCHAR, mode=IN}
+			)
+		}
 	</insert>
 	
 	<update id="updateMember" parameterType="com.ssb.member.Member">

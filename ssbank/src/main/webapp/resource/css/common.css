@@ -282,6 +282,7 @@ h2 {margin-top: 40px; margin-bottom: 10px; font-size: 18px; font-family: 'NanumS
 .box-complete-area dd li {position: relative; color: #333; padding: 5px; }
 
 /* 테이블 - 기본형의 인라인 요소 */
+.table-wrap input {outline: none;}
 .table-wrap input + a {margin-left: 3px;}
 .table-wrap a + a {margin-left: 3px;}
 .table-wrap input + .item-select {margin-left: 3px;}
@@ -306,7 +307,7 @@ h2 {margin-top: 40px; margin-bottom: 10px; font-size: 18px; font-family: 'NanumS
 .table-wrap .table-verti tfoot {}
 .table-wrap .table-verti tfoot th {}
 .table-wrap .table-verti tfoot td {}
-.table-wrap .table-verti .check-true {display: inline-block; color: #387cd1; padding-left: 10px;}
+.table-wrap .table-verti .check-true {display: none; color: #387cd1; padding-left: 10px;}
 .table-wrap .table-verti .check-false {display: none; color: red; padding-left: 10px;}
 
 	/* 화면가운데 절반 */
