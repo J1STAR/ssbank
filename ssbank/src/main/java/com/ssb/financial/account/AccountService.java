@@ -12,19 +12,24 @@ import java.util.Map;
 
 public interface AccountService {
 	
+	//계좌리스트
 	public List<Account> depositlistAllAccount(Map<String , Object> map); 
 	public List<Account> savinglistAllAccount(Map<String , Object> map); 
-	public List<Account> listOneAccount(Map<String , Object> map);
-	public Account newAccountMember(int memberIdx);
-	public Account detailAccount(int accountNo);
-	public int insertAccount(Account dto);
-	public int deleteAccount(Map<String , Object> map);
+	public Account detailDepositAccount(String accountNo);
+	public Account detailSavingAccount(String accountNo);
+	public Account deTotalBalance(Map<String, Object>map);
+	public Account saTotalBalance(Map<String, Object>map);
 	
-	public List<Account>  listAllSavingsProduct(Map<String, Object> map);
-	public List<Account>  listOneSavingsProduct(Map<String, Object> map);
-	public Account detailSavingProduct(int accountNo);
-	public int insertSavingAccount(Account dto);
-	public int deleteSavingAccount(Map<String, Object> map);
-	public int deleteCheckSavingAccount(Map<String, Object> map);
+	
+	
+	public Account newAccountMember(int memberIdx);
+	public int insertAccount(Account dto);
+	
+	//해지
+	public int deleteAccount(Map<String , Object> map);
+	public List<Account> myAccount(Map<String, Object>map);
+	public Account accountBalance(Map<String, Object>map);
+	
+	
 
 }

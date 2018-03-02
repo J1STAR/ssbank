@@ -7,35 +7,95 @@
 		resultType="com.ssb.financial.account.Account">
 		SELECT * FROM (
 		SELECT
-		productName,a.accountNo,balance,TO_CHAR(trDate,'YYYY-MM-DD')lastTrDate,interestRate
+		productName,p.productIdx,a.accountNo,balance,TO_CHAR(trDate,'YYYY-MM-DD')lastTrDate,interestRate
 		FROM account a
 		JOIN product p on a.productIdx = p.productIdx
-		JOIN depositProduct d ON d.productIdx = a.productIdx
-		JOIN transaction t ON a.accountNo = t.accountNo
+		JOIN
+		depositProduct d ON d.productIdx = a.productIdx
+		JOIN transaction t ON
+		a.accountNo = t.accountNo
 		WHERE memberIdx = #{memberIdx}
-		ORDER BY trDate DESC
+		ORDER BY trDate
+		DESC
 		)WHERE ROWNUM =1
 	</select>
+
 	<select id="savinglistAllAccount" parameterType="map"
 		resultType="com.ssb.financial.account.Account">
 		SELECT * FROM (
 		SELECT
-		productName,a.accountNo,balance,TO_CHAR(trDate,'YYYY-MM-DD')lastTrDate,interest
+		productName,p.productIdx,a.accountNo,balance,TO_CHAR(trDate,'YYYY-MM-DD')lastTrDate,interest
 		FROM account a
 		JOIN product p on a.productIdx = p.productIdx
-		JOIN savingsProduct s ON s.productIdx = a.productIdx
-		JOIN transaction t ON a.accountNo = t.accountNo
+		JOIN
+		savingsProduct s ON s.productIdx = a.productIdx
+		JOIN transaction t ON
+		a.accountNo = t.accountNo
 		WHERE memberIdx = #{memberIdx}
-		ORDER BY trDate DESC
+		ORDER BY trDate
+		DESC
 		)WHERE ROWNUM =1
 	</select>
+	<!-- 계좌 상세보기 -->
+	<select id="detailDepositAccount" parameterType="String"
+		resultType="com.ssb.financial.account.Account">
+		SELECT
+		a.accountNo,a.createDate,d.interestRate,p.productName,p.productDetail
+		FROM account a
+		JOIN depositProduct d ON a.productIdx = d.productIdx
+		JOIN product p ON a.productIdx = p.productIdx
+		WHERE a.ACCOUNTNO =
+		#{accountNo}
 
+	</select>
+	<select id="detailSavingAccount" parameterType="String"
+		resultType="com.ssb.financial.account.Account">
+		SELECT
+		a.accountNo,a.createDate,p.productName,p.productDetail,productType,entryDate,monthly,interest,vipInterest,savingType,interestType,tax
+		FROM account a
+		JOIN savingsProduct s ON a.productIdx = s.productIdx
+		JOIN product p ON a.productIdx = p.productIdx
+		WHERE a.ACCOUNTNO
+		=#{accountNo}
+	</select>
+
+	<!-- 계좌 신규가입 시 가져오는 정보 -->
 	<select id="newAccountMember" parameterType="map"
 		resultType="com.ssb.financial.account.Account">
 		SELECT lastName,firstName,addr1,addr2,zipcode,tel,userid
 		FROM member m
 		JOIN memberinfo i ON m.memberidx=i.memberidx
-		WHERE m.memberidx= #{memberIdx}
+		WHERE
+		m.memberidx= #{memberIdx}
 	</select>
+	<!-- 예금/적금 총 잔액 -->
+	<select id="deTotalBalance" parameterType="map"
+		resultType="com.ssb.financial.account.Account">
+		SELECT SUM(balance)totBal
+		FROM transaction t
+		JOIN account a
+		ON t.accountNo = a.accountNo
+		JOIN depositProduct d ON a.productIdx =
+		d.productIdx
+		WHERE memberIdx=#{memberIdx}
+	</select>
+	<select id="saTotalBalance" parameterType="map"
+		resultType="com.ssb.financial.account.Account">
+		SELECT SUM(balance) totBal
+		FROM transaction t
+		JOIN account a ON t.accountNo = a.accountNo
+		JOIN savingsProduct s ON a.productIdx = s.productIdx
+		WHERE memberIdx=#{memberIdx}
+	</select>
+	
+	<select id="myAccount" parameterType="map" resultType="com.ssb.financial.account.Account">
+		SELECT accountNo FROM account WHERE memberIdx= #{memberIdx}
+	</select>
+	<select id="accountBalance" parameterType="map" resultType="com.ssb.financial.account.Account">
+		SELECT a.accountNo,balance FROM account a JOIN transaction t ON a.accountNo=t.accountNo 
+		WHERE a.accountNo = #{accountNo}
+	</select>
+
+
 
 </mapper>
