@@ -1,7 +1,5 @@
 package com.ssb.member;
 
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -13,7 +11,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.support.SessionStatus;
 
 import com.ssb.member.Member;
 
