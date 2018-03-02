@@ -6,6 +6,17 @@
 	String cp=request.getContextPath();
 %>
 
+<script>
+function deDetail(account){
+	var url = "<%=cp%>/financial/account/deDetail?accountNo="+account;
+	location.href=url;
+}
+function saDetail(account){
+	var url="<%=cp%>/financial/account/saDetail?accountNo="+account;
+	location.href=url;
+}
+
+</script>
 <div class="content">
 
 <h1>계좌조회</h1>
@@ -32,13 +43,13 @@
         </thead>
         <tfoot>
             <th colspan="4">입/출금계좌 총잔액</th>
-            <td colspan="2">9,999,990원</td>
+            <td colspan="2">${deTot.totBal}원</td>
         </tfoot>
         <tbody>
         	<c:forEach var="deposit" items="${deposit}">
             <tr>
                 <td>${deposit.productName}</td>
-                <td>${deposit.accountNo}</td>
+                <td><a href="javascript:deDetail('${deposit.accountNo}');">${deposit.accountNo}</a></td>
                 <td>${deposit.interestRate}</td>
                 <td>${deposit.lastTrDate}</td>
                 <td>${deposit.balance}</td>
@@ -73,18 +84,18 @@
         </thead>
         <tfoot>
             <th colspan="4">입/출금계좌 총잔액</th>
-            <td colspan="2">9,999,990원</td>
+            <td colspan="2">${saTot.totBal}원</td>
         </tfoot>
         <tbody>
         	<c:forEach var="saving" items="${saving}">
             <tr>
                 <td>${saving.productName }</td>
-                <td>${saving.accountNo }</td>
+                <td><a href="javascript:saDetail('${saving.accountNo }')">${saving.accountNo }</a></td>
                 <td>${saving.interest }</td>
                 <td>${saving.lastTrDate }</td>
                 <td>${saving.balance }</td>
                 <td>
-                    <a href="#" class="btn-type-gray medium">조회</a>
+                    <a href="#')" class="btn-type-gray medium">조회</a>
                     <a href="#" class="btn-type-blue1 medium">이체</a>
                 </td>
             </tr>

@@ -59,9 +59,16 @@
 		</nav>
 		<div class="lnb-wrap">
 			<ul>
-				<li><a href="<%=cp%>/member/login">로그인</a></li>
-				<li><a href="<%=cp%>/member/logout">로그아웃</a></li>
-				<li><a href="<%=cp%>/member/member-0001">회원가입</a></li>
+				<c:choose>
+					<c:when test="${sessionScope.member eq null}">
+						<li><a href="<%=cp%>/member/login">로그인</a></li>
+						<li><a href="<%=cp%>/member/member-0001">회원가입</a></li>
+					</c:when>
+					<c:otherwise>
+						<li>${sessionScope.member.userName }님 환영합니다.</li>
+						<li><a href="<%=cp%>/member/logout">로그아웃</a></li>
+					</c:otherwise>
+				</c:choose>
 				<li><a href="#" class="btn-mypage"><span class="blind">mypage</span></a></li>
 			</ul>
 		</div>

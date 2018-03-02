@@ -55,6 +55,6 @@
 </div>
 
 <div class="btn-area">
-    <a href="javascript:location.href='<%=cp%>/financial/account" class="btn-type-gray1 big">완료</a>
+    <a onclick="javascript:location.href='<%=cp%>/financial/account';" class="btn-type-gray1 big">완료</a>
 </div>
 </div>

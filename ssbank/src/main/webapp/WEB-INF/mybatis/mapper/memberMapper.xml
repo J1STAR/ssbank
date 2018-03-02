@@ -4,9 +4,10 @@
 <mapper namespace="member">
 
 	<select id="readMember" parameterType="String" resultType="com.ssb.member.Member">
-		SELECT userId, memberIdx, userPwd, status, createDate, lastLogin
-		FROM member
-		WHERE userId=#{userId}
+		SELECT userId, m.memberIdx, lastName, firstName, userPwd, status, createDate, lastLogin
+		FROM member m
+   		LEFT OUTER JOIN memberInfo i ON m.MEMBERIDX = i.MEMBERIDX
+		WHERE userId = #{userId}
 	</select>
 	
 	<update id="updateLastLogin" parameterType="String">

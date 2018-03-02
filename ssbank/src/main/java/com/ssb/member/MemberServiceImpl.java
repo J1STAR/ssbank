@@ -20,20 +20,6 @@ public class MemberServiceImpl implements MemberService {
 		try {
 			dto = dao.selectOne("member.readMember", userId);
 			
-			/*//이메일,전화번호 나누는 작업
-			if (dto != null) {
-				if (dto.getUserId() != null) {
-					String[] s = dto.getUserId().split("@");
-					dto.setEmail1(s[0]);
-					dto.setEmail2(s[1]);
-				}
-				if (dto.getTel() != null) {
-					String[] s = dto.getTel().split("-");
-					dto.setTel1(s[0]);
-					dto.setTel2(s[1]);
-					dto.setTel3(s[1]);
-				}
-			}*/
 		} catch (Exception e) {
 		}
 		return dto;
