@@ -65,7 +65,7 @@
 						<li><a href="<%=cp%>/member/member-0001">회원가입</a></li>
 					</c:when>
 					<c:otherwise>
-						<li><strong>${sessionScope.member.userName }</strong>님 환영합니다.</li>
+						<li>${sessionScope.member.userName }님 환영합니다.</li>
 						<li><a href="<%=cp%>/member/logout">로그아웃</a></li>
 					</c:otherwise>
 				</c:choose>

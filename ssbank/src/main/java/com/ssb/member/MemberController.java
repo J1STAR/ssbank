@@ -46,6 +46,13 @@ public class MemberController {
 		return ".member.mbj-"+stage;
 	}
 	
+	@RequestMapping(value="/member/memberModi-{stage}", method=RequestMethod.GET)
+	public String memberModiForm(@PathVariable String stage, Model model) {
+		
+		model.addAttribute("mode", "update");
+		return ".member.mbm-"+stage;
+	}
+	
 	@RequestMapping(value="/member/memberJoin", method=RequestMethod.POST)
 	public String memberSubmit(Member dto, Model model) {
 		
