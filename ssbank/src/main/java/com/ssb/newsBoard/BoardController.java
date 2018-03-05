@@ -35,7 +35,7 @@ public class BoardController {
 	@Autowired
 	private FileManager fileManager;
 
-	@RequestMapping(value="/customer/newsBoard")
+	@RequestMapping(value="/customer/newsBoard/newsList") // 사용자가 입력한 주소
 	public String list(
 			@RequestParam(value="page", defaultValue="1") int current_page,
 			@RequestParam(value="searchKey", defaultValue="subject") String searchKey,
@@ -43,75 +43,75 @@ public class BoardController {
 			HttpServletRequest req,
 			Model model) throws Exception{
 		
-		String cp = req.getContextPath();
+//		String cp = req.getContextPath();
+//		
+//		int rows = 10; 
+//		int total_page = 0;
+//		int dataCount = 0;
+//		
+//		if(req.getMethod().equalsIgnoreCase("GET")) {
+//			searchValue = URLDecoder.decode(searchValue, "utf-8");
+//		}
+//		
+//		Map<String, Object> map = new HashMap<String, Object>();
+//		map.put("searchKey", searchKey);
+//		map.put("searchValue", searchValue);
+//		
+//		dataCount = service.dataCount(map);
+//		if(dataCount != 0)
+//			total_page = myUtil.pageCount(rows, dataCount);
+//		
+//		if(total_page < current_page)
+//			current_page = total_page;
+//		
+//		int start = (current_page -1 ) * rows + 1;
+//		int end = current_page * rows;
+//		map.put("start", start);
+//		map.put("end", end);
+//		
+//		List<Board> list = service.listBoard(map);
+//		
+//		int listNum, n = 0;
+//		Iterator<Board> it = list.iterator();
+//		while(it.hasNext()) {
+//			Board data = it.next();
+//			listNum = dataCount - (start + n -1);
+//			data.setListNum(listNum);
+//			n++;
+//		}
+//		
+//		String query = "";
+//		String listUrl = cp + "/newsBoard/nib";
+//		String articleUrl = cp + "/newsBoard/nib-0001?page=" + current_page;
+//		if(searchValue.length()!=0) {
+//			query = "searchKey=" + searchKey + "&searchValue=" + URLEncoder.encode(searchValue, "utf-8");
+//		}
+//		
+//		if(query.length()!=0) {
+//			listUrl = cp + "/newsBoard/nib?" + query;
+//			articleUrl = cp + "newsBoard/nib-0001?page=" + current_page + "&" + query;
+//		}
+//		
+//		String paging = myUtil.paging(current_page, total_page, listUrl);
+//		
+//		model.addAttribute("list", list);
+//		model.addAttribute("articleUrl", articleUrl);
+//		model.addAttribute("page", current_page);
+//		model.addAttribute("dataCount", dataCount);
+//		model.addAttribute("total_page", total_page);
+//		model.addAttribute("paging", paging);
 		
-		int rows = 10; 
-		int total_page = 0;
-		int dataCount = 0;
-		
-		if(req.getMethod().equalsIgnoreCase("GET")) {
-			searchValue = URLDecoder.decode(searchValue, "utf-8");
-		}
-		
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("searchKey", searchKey);
-		map.put("searchValue", searchValue);
-		
-		dataCount = service.dataCount(map);
-		if(dataCount != 0)
-			total_page = myUtil.pageCount(rows, dataCount);
-		
-		if(total_page < current_page)
-			current_page = total_page;
-		
-		int start = (current_page -1 ) * rows + 1;
-		int end = current_page * rows;
-		map.put("start", start);
-		map.put("end", end);
-		
-		List<Board> list = service.listBoard(map);
-		
-		int listNum, n = 0;
-		Iterator<Board> it = list.iterator();
-		while(it.hasNext()) {
-			Board data = it.next();
-			listNum = dataCount - (start + n -1);
-			data.setListNum(listNum);
-			n++;
-		}
-		
-		String query = "";
-		String listUrl = cp + "/newsBoard/nib";
-		String articleUrl = cp + "/newsBoard/nib-0001?page=" + current_page;
-		if(searchValue.length()!=0) {
-			query = "searchKey=" + searchKey + "&searchValue=" + URLEncoder.encode(searchValue, "utf-8");
-		}
-		
-		if(query.length()!=0) {
-			listUrl = cp + "/newsBoard/nib?" + query;
-			articleUrl = cp + "newsBoard/nib-0001?page=" + current_page + "&" + query;
-		}
-		
-		String paging = myUtil.paging(current_page, total_page, listUrl);
-		
-		model.addAttribute("list", list);
-		model.addAttribute("articleUrl", articleUrl);
-		model.addAttribute("page", current_page);
-		model.addAttribute("dataCount", dataCount);
-		model.addAttribute("total_page", total_page);
-		model.addAttribute("paging", paging);
-		
-		return ".customer.newsBoard.nib";
+		return ".customer.newsBoard.nib"; // 매핑된 파일 경로
 	}
 	
-	@RequestMapping(value="/customer/newsBoard/", method=RequestMethod.GET)
+	@RequestMapping(value="/customer/newsBoard/writeNews", method=RequestMethod.GET)
 	public String createdForm(Model model) throws Exception {
 		model.addAttribute("mode", "created");
 		
-		return ".newsBoard.nib-";
+		return ".customer.newsBoard.nib-0002";
 	}
 	
-	@RequestMapping(value="/customer/newsBoard", method=RequestMethod.POST)
+	@RequestMapping(value="/customer/newsBoard/writeNews", method=RequestMethod.POST)
 	public String createdSubmit(
 			Board dto,
 			HttpSession session
@@ -125,51 +125,51 @@ public class BoardController {
 		
 		service.insertBoard(dto, pathname);
 		
-		return "redirect:/newsBoard/nib";
+		return "redirect:/customer/newsBoard/newsList";
 	}
 	
-	@RequestMapping(value="/newsBoard/nib-0001")
+	@RequestMapping(value="/customer/newsBoard/nib-0001")
 	public String article(
 			@RequestParam(value="num") int num,
 			@RequestParam(value="page") String page,
 			@RequestParam(value="searchKey", defaultValue="subject") String searchKey,
 			@RequestParam(value="searchValue", defaultValue="") String searchValue,
 			Model model) throws Exception {
-		String query = "page=" + page;
-		if(searchValue.length()!=0) {
-			query += "&searchKey=" + searchKey + "&searchValue=" + searchValue;
-		}
-		searchValue = URLDecoder.decode(searchValue, "utf-8");
+//		String query = "page=" + page;
+//		if(searchValue.length()!=0) {
+//			query += "&searchKey=" + searchKey + "&searchValue=" + searchValue;
+//		}
+//		searchValue = URLDecoder.decode(searchValue, "utf-8");
+//		
+//		service.updateHitCount(num);
+//		
+//		//해당 레코드 가져오기
+//		Board dto = service.readBoard(num);
+//		if(dto == null)
+//			return "redirect:/newsBoard/nib?" + query;
+//		
+//		dto.setContent(myUtil.htmlSymbols(dto.getContent()));
+//		
+//		// 이전글, 다음글
+//		Map<String, Object> map = new HashMap<String, Object>();
+//		map.put("searchKey", searchKey);
+//		map.put("searchValue", searchValue);
+//		map.put("num", num);
+//		
+//		Board preReadDto = service.preReadBoard(map);
+//		Board nextReadDto = service.nextReadBoard(map);
+//		
+//		model.addAttribute("dto", dto);
+//		model.addAttribute("preReadDto", preReadDto);
+//		model.addAttribute("nextReadDto", nextReadDto);
+//		
+//		model.addAttribute("page", page);
+//		model.addAttribute("query", query);
 		
-		service.updateHitCount(num);
-		
-		//해당 레코드 가져오기
-		Board dto = service.readBoard(num);
-		if(dto == null)
-			return "redirect:/newsBoard/nib?" + query;
-		
-		dto.setContent(myUtil.htmlSymbols(dto.getContent()));
-		
-		// 이전글, 다음글
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("searchKey", searchKey);
-		map.put("searchValue", searchValue);
-		map.put("num", num);
-		
-		Board preReadDto = service.preReadBoard(map);
-		Board nextReadDto = service.nextReadBoard(map);
-		
-		model.addAttribute("dto", dto);
-		model.addAttribute("preReadDto", preReadDto);
-		model.addAttribute("nextReadDto", nextReadDto);
-		
-		model.addAttribute("page", page);
-		model.addAttribute("query", query);
-		
-		return ".newsBoard.nib-0001";
+		return ".customer.newsBoard.nib-0001";
 	}
 	
-	@RequestMapping(value="/newsBoard/update", method=RequestMethod.GET)
+	@RequestMapping(value="/customer/newsBoard/update", method=RequestMethod.GET)
 	public String updateForm(
 			@RequestParam int num,
 			@RequestParam String page,
@@ -179,21 +179,21 @@ public class BoardController {
 		
 		Board dto = service.readBoard(num);
 		if(dto == null) {
-			return "redirect:/newsBoard/nib?page=" + page;
+			return "redirect:/customer/newsBoard/newsList?page=" + page;
 		}
 		
 		if(!info.getUserId().equals(dto.getUserId())) {
-			return "redirect:/newsBoard/nib?page=" + page;
+			return "redirect:/customer/newsBoard/newsList?page=" + page;
 		}
 		
 		model.addAttribute("dto", dto);
 		model.addAttribute("mode", "update");
 		model.addAttribute("page", page);
 		
-		return ".newsBoard.nib-0002";
+		return ".customer.newsBoard.nib-0002";
 	}
 	
-	@RequestMapping(value="/newsBoard/update", method=RequestMethod.POST)
+	@RequestMapping(value="/customer/newsBoard/update", method=RequestMethod.POST)
 	public String updateSubmit(
 			Board dto,
 			@RequestParam String page,
@@ -203,10 +203,10 @@ public class BoardController {
 		
 		service.updateBoard(dto, pathname);
 		
-		return "redirect:/newsBoard/nib?page=" + page;
+		return "redirect:/customer/newsBoard/newsList?page=" + page;
 	}
 	
-	@RequestMapping(value="/newsBoard/nib-0003")
+	@RequestMapping(value="/customer/newsBoard/nib-0003")
 	public String listReply(
 			@RequestParam int num,
 			@RequestParam(value="pageNo", defaultValue="1") int current_page,
@@ -243,11 +243,11 @@ public class BoardController {
 		model.addAttribute("total_page", total_page);
 		model.addAttribute("paging", paging);
 		
-		return "newsBoard/nib-0003";
+		return "/customer/newsBoard/nib-0003";
 	}
 	
 	// 댓글 및 댓글의 답글 등록
-	@RequestMapping(value="/newsBoard/insertReply", method=RequestMethod.POST)
+	@RequestMapping(value="/customer/newsBoard/insertReply", method=RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> insertReply(
 			Reply dto,

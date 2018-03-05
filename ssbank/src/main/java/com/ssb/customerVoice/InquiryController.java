@@ -1,4 +1,4 @@
-package com.ssb.CustomerVoice;
+package com.ssb.customerVoice;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

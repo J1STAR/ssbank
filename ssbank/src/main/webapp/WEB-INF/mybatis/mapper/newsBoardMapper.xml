@@ -4,7 +4,7 @@
 <mapper namespace="newsBoard">
 	
 	<insert id="insertBoard" parameterType="com.ssb.newsBoard.Board">
-		INSERT INTO newsBoard(num, userId, subject, content) VALUES
+		INSERT INTO board(num, userId, subject, content) VALUES
 			(newsBoard_seq.NEXTVAL, #{userId}, #{subject}, #{content})
 	</insert>
 	

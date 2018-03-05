@@ -51,7 +51,7 @@
 							<li><a href="#">고객상담</a></li>
 							<li><a href="#">회원서비스</a></li>
 							<li><a href="#">자료실</a></li>
-							<li><a href="#">뉴스</a></li>
+							<li><a href="<%=cp%>/customer/newsBoard">뉴스</a></li>
 							<li><a href="#">공지사항</a></li>
 						</ul></li>
 				</ul>

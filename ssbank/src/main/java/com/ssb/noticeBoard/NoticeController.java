@@ -36,7 +36,7 @@ public class NoticeController {
 	@Autowired
 	private FileManager fileManager;
 	
-	@RequestMapping(value="/customer/noticeBoard")
+	@RequestMapping(value="/customer/noticeBoard/noticeList")
 	public String list(
 			@RequestParam(value="page", defaultValue="1") int current_page,
 			@RequestParam(value="searchKey", defaultValue="subject") String searchKey,
@@ -44,7 +44,7 @@ public class NoticeController {
 			HttpServletRequest req,
 			Model model
 			) throws Exception{
-		int rows = 10;
+		/*int rows = 10;
 		int total_page = 0;
 		int dataCount = 0;
 		
@@ -102,22 +102,22 @@ public class NoticeController {
 		model.addAttribute("page", current_page);
 		model.addAttribute("dataCount", dataCount);
 		model.addAttribute("total_page", total_page);
-		model.addAttribute("paging", paging);
+		model.addAttribute("paging", paging);*/
 		
-		return "/customer/noticeBoard/nbl";
+		return ".customer.noticeBoard.nbl";
 	}
 	
-	@RequestMapping(value="/customer/noticeBoard/nbl0002", method=RequestMethod.GET)
+	@RequestMapping(value="/customer/noticeBoard/writeNotice", method=RequestMethod.GET)
 	public String createdForm(
 			Model model
 			) throws Exception{
 		
 		model.addAttribute("pageNo", "1");
 		model.addAttribute("mode", "created");
-		return "/customer/noticeBoard/nbl0002";
+		return ".customer.noticeBoard.nbl0002";
 	}
 	
-	@RequestMapping(value="/customer/noticeBoard/nbl0002", method=RequestMethod.POST)
+	@RequestMapping(value="/customer/noticeBoard/writeNotice", method=RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> createdSubmit(
 			Notice dto,
