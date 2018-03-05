@@ -15,45 +15,63 @@
 			<div class="gnb">
 				<ul>
 					<li class="depth-one"><a href="#">개인</a>
-						<ul>
-							<li><a href="#">조회</a></li>
-							<li><a href="#">이체</a></li>
-							<li><a href="<%=cp%>/financial/account">금융상품</a></li>
-							<li><a href="#">기타금융</a></li>
-							<li><a href="#">외환</a></li>
-							<li><a href="#">사용자관리</a></li>
-						</ul></li>
+						<div class="depth-two">
+							<ul>
+								<li><a href="#">조회</a></li>
+								<li><a href="#">이체</a></li>
+								<li><a href="<%=cp%>/financial/account">금융상품</a></li>
+								<li><a href="#">기타금융</a></li>
+								<li><a href="#">외환</a></li>
+								<li><a href="#">사용자관리</a></li>
+							</ul>
+						</div>
+					</li>
 					<li class="depth-one"><a href="<%=cp%>/financial/account">금융상품</a>
-						<ul>
-							<li><a href="<%=cp%>/financial/account/fds">예금/신탁</a></li>
-							<li><a href="<%=cp%>/financial/loan/las">대출</a></li>
-							<li><a href="<%=cp%>/financial/product/lsm">상품안내</a></li>
-							<li><a href="<%=cp%>/financial/fund/nfp">펀드</a></li>
-							<li><a href="<%=cp%>/financial/counsel/cpc">상품상담</a></li>
-						</ul></li>
+						<div class="depth-two">
+							<ul>
+								<li><a href="<%=cp%>/financial/account/fds">예금/신탁</a></li>
+								<li><a href="<%=cp%>/financial/loan/las">대출</a></li>
+								<li><a href="<%=cp%>/financial/product/lsm">상품안내</a></li>
+								<li><a href="<%=cp%>/financial/fund/nfp">펀드</a></li>
+								<li><a href="<%=cp%>/financial/counsel/cpc">상품상담</a></li>
+							</ul>
+						</div>
+					</li>
 					<li class="depth-one"><a href="<%=cp%>/acBookNcarBook/accountBook">가계부</a>
-						<ul>
-							<li><a href="<%=cp%>/acBookNcarBook/accountBook">가계부</a></li>
-							<li><a href="<%=cp%>/acBookNcarBook/carAcBook">차계부</a></li>
-						</ul></li>
+						<div class="depth-two">
+							<ul>
+								<li><a href="<%=cp%>/acBookNcarBook/accountBook">가계부</a></li>
+								<li><a href="<%=cp%>/acBookNcarBook/carAcBook">차계부</a></li>
+							</ul>
+						</div>
+					</li>
 					<li class="depth-one"><a href="#">자산관리</a>
-						<ul>
-							<li><a href="#">자산관리</a></li>
-							<li><a href="#">포트폴리오</a></li>
-						</ul></li>
+						<div class="depth-two">
+							<ul>
+								<li><a href="#">자산관리</a></li>
+								<li><a href="#">포트폴리오</a></li>
+							</ul>
+						</div>
+					</li>
 					<li class="depth-one"><a href="#">부동산</a>
-						<ul>
-							<li><a href="#">부동산</a></li>
-							<li><a href="#">청약 및 경매</a></li>
-						</ul></li>
+						<div class="depth-two">
+							<ul>
+								<li><a href="#">부동산</a></li>
+								<li><a href="#">청약 및 경매</a></li>
+							</ul>
+						</div>
+					</li>
 					<li class="depth-one"><a href="#">고객센터</a>
-						<ul>
-							<li><a href="#">고객상담</a></li>
-							<li><a href="#">회원서비스</a></li>
-							<li><a href="#">자료실</a></li>
-							<li><a href="<%=cp%>/customer/newsBoard">뉴스</a></li>
-							<li><a href="#">공지사항</a></li>
-						</ul></li>
+						<div class="depth-two">
+							<ul>
+								<li><a href="#">고객상담</a></li>
+								<li><a href="#">회원서비스</a></li>
+								<li><a href="#">자료실</a></li>
+								<li><a href="#">뉴스</a></li>
+								<li><a href="#">공지사항</a></li>
+							</ul>
+						</div>
+					</li>
 				</ul>
 			</div>
 		</nav>
@@ -77,3 +95,28 @@
 		</a>
 	</div>
 </header>
+
+<script>
+	$(function(){
+		
+		/* tab */
+		$("li.depth-one").mouseenter(function(){
+			var target = $(this).children(".depth-two");
+			
+			$.each( $(this).parent("ul").find(".depth-two"), function(index, item){
+				$(item).css("display", "none");
+			});
+			target.css("display", "block");
+			target.css("top", 56);
+			target.css("left", -($(".gnb").offset().left - ($(window).width() - $(".header-wrap").width())/2));
+			target.css("background-color", "gray");
+			
+			$(target).mouseout(function(){
+				console.log("test");
+				target.css("display", "none");
+			});
+		});
+	});
+	
+
+</script>

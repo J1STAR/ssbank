@@ -70,12 +70,12 @@ body, html {width: 100%;}
 .header-wrap h1 a span{display: block; padding-top: 21px;}
 .header-wrap nav {}
 .header-wrap nav .gnb {position: absolute; top: 75px; right: 65px;}
-.header-wrap nav .gnb li {float: left; padding-right: 45px;}
+.header-wrap nav .gnb li {float: left; padding-right: 80px;}
 .header-wrap nav .gnb li:after {clear: both; content: ''; display: block;}
 .header-wrap nav .gnb li:last-child {padding-right: 0;}
 .header-wrap nav .gnb li.depth-one {}
 .header-wrap nav .gnb li.depth-one a {font-size: 18px; color: #292929; font-weight: 700;}
-.header-wrap nav .gnb li.depth-one > ul{display: none;}
+.header-wrap nav .gnb li.depth-one > .depth-two {position: absolute; display: none; z-index: 99;}
 .header-wrap nav .gnb li ul li {}
 .header-wrap .lnb-wrap li {font-size: 13px;}
 
