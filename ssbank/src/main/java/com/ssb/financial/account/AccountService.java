@@ -28,8 +28,8 @@ public interface AccountService {
 	//해지
 	public int deleteAccount(Map<String , Object> map);
 	public List<Account> myAccount(Map<String, Object>map);
-	public Account accountBalance(Map<String, Object>map);
-	
+	public int accountBalance(Map<String, Object>map);
+	public int accountCancleCheck(Map<String, Object> map);
 	
 
 }

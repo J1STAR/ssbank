@@ -257,6 +257,34 @@ public class Account {
 	public void setLastTrDate(String lastTrDate) {
 		LastTrDate = lastTrDate;
 	}
+	@Override
+	public String toString() {
+		return "Account [lastName=" + lastName + ", firstName=" + firstName + ", name=" + name + ", birth=" + birth
+				+ ", addr1=" + addr1 + ", addr2=" + addr2 + ", zipCode=" + zipCode + ", tel=" + tel + ", investScore="
+				+ investScore + ", productIdx=" + productIdx + ", productName=" + productName + ", productDetail="
+				+ productDetail + ", createDate=" + createDate + ", productType=" + productType + ", entryDate="
+				+ entryDate + ", monthly=" + monthly + ", interest=" + interest + ", vipInterest=" + vipInterest
+				+ ", savingType=" + savingType + ", interestType=" + interestType + ", tax=" + tax + ", interestRate="
+				+ interestRate + ", accountNo=" + accountNo + ", memberIdx=" + memberIdx + ", branchIdx=" + branchIdx
+				+ ", empIdx=" + empIdx + ", accountPwd=" + accountPwd + ", status=" + status + ", trIdx=" + trIdx
+				+ ", tType=" + tType + ", amount=" + amount + ", balance=" + balance + ", totBal=" + totBal
+				+ ", trDate=" + trDate + ", content=" + content + ", LastTrDate=" + LastTrDate + ", getTotBal()="
+				+ getTotBal() + ", getName()=" + getName() + ", getLastName()=" + getLastName() + ", getFirstName()="
+				+ getFirstName() + ", getBirth()=" + getBirth() + ", getAddr1()=" + getAddr1() + ", getAddr2()="
+				+ getAddr2() + ", getZipCode()=" + getZipCode() + ", getTel()=" + getTel() + ", getInvestScore()="
+				+ getInvestScore() + ", getProductIdx()=" + getProductIdx() + ", getProductName()=" + getProductName()
+				+ ", getProductDetail()=" + getProductDetail() + ", getCreateDate()=" + getCreateDate()
+				+ ", getProductType()=" + getProductType() + ", getEntryDate()=" + getEntryDate() + ", getMonthly()="
+				+ getMonthly() + ", getInterest()=" + getInterest() + ", getVipInterest()=" + getVipInterest()
+				+ ", getSavingType()=" + getSavingType() + ", getInterestType()=" + getInterestType() + ", getTax()="
+				+ getTax() + ", getInterestRate()=" + getInterestRate() + ", getAccountNo()=" + getAccountNo()
+				+ ", getMemberIdx()=" + getMemberIdx() + ", getBranchIdx()=" + getBranchIdx() + ", getEmpIdx()="
+				+ getEmpIdx() + ", getAccountPwd()=" + getAccountPwd() + ", getStatus()=" + getStatus()
+				+ ", getTrIdx()=" + getTrIdx() + ", gettType()=" + gettType() + ", getAmount()=" + getAmount()
+				+ ", getBalance()=" + getBalance() + ", getTrDate()=" + getTrDate() + ", getContent()=" + getContent()
+				+ ", getLastTrDate()=" + getLastTrDate() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
+				+ ", toString()=" + super.toString() + "]";
+	}
 	
-
+	
 }

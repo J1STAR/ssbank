@@ -8,12 +8,14 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.View;
 
 import com.ssb.common.MyExcelView;
@@ -41,11 +43,11 @@ public class AccountController {
 		List<Account> saving = service.savinglistAllAccount(map);
 		Account deTot = service.deTotalBalance(map);
 		Account saTot = service.saTotalBalance(map);
-		
-		//계좌리스트
+
+		// 계좌리스트
 		model.addAttribute("deposit", deposit);
 		model.addAttribute("saving", saving);
-		//총 계좌 잔액
+		// 총 계좌 잔액
 		model.addAttribute("deTot", deTot);
 		model.addAttribute("saTot", saTot);
 
@@ -57,8 +59,8 @@ public class AccountController {
 	public String deDetail(@RequestParam String accountNo, Model model) {
 		Account dto = null;
 		dto = service.detailDepositAccount(accountNo);
-		System.out.println("controller"+dto.toString());
-		model.addAttribute("dto",dto);
+		System.out.println("controller" + dto.toString());
+		model.addAttribute("dto", dto);
 		return ".financial.account.fds-0002";
 	}
 
@@ -67,7 +69,7 @@ public class AccountController {
 	public String saDetail(@RequestParam String accountNo, Model model) {
 		Account dto = null;
 		dto = service.detailSavingAccount(accountNo);
-		model.addAttribute("dto",dto);
+		model.addAttribute("dto", dto);
 		return ".financial.account.fds-0003";
 	}
 
@@ -90,35 +92,72 @@ public class AccountController {
 		service.insertAccount(dto);
 
 		// 계좌 조회페이지로 이동
-		return "redirect: /financial/account/fds";
+		return "redirect: /financial/account";
 	}
 
 	// 해지
-	@RequestMapping(value = "/financial/account/cancel{stage}")
-	public String cancelAccount(
-			@RequestParam String stage
-			,HttpSession session
-			,@RequestParam String accountNo,
-			Model model) {
-		
+	@RequestMapping(value = "/financial/account/fdc0001")
+	public String cancleStep1(HttpSession session, Model model) {
+
 		SessionInfo info = (SessionInfo) session.getAttribute("member");
 		Map<String, Object> map = new HashMap<>();
 		map.put("memberIdx", info.getMemberIdx());
+		// 내 계좌 리스트
 		List<Account> account = service.myAccount(map);
-		//Account account = service.;
-		if(stage.equals("0002")) {
-			//해지 조회 페이지 이동 
-		map.put("accountNo", accountNo);
-		Account balance= service.accountBalance(map);
-		model.addAttribute("balance",balance);
-		}
-		//나의 계좌 
-		model.addAttribute("account",account);
-		
+		model.addAttribute("account", account);
+
 		return ".financial.account.fdc-0001";
 	}
-
+	@RequestMapping(value = "/financial/account/fdc0002")
+	public String cancleStep2(HttpSession session, Model model,@RequestParam String accountNo) {
+		
+		model.addAttribute("accountNo", accountNo);
+		
+		return ".financial.account.fdc-0002";
+	}
 	
+	@RequestMapping(value="/financial/account/fdc0003",method=RequestMethod.POST)
+	public String cancleStep3(@RequestParam String accountNo) {
+		
+		return ".financial.account.fdc-0003";
+	}
+
+	// 해지계좌 잔액 확인
+	@RequestMapping(value = "/financial/account/balance")
+	@ResponseBody
+	public Map<String, Object> balance(@RequestParam String accountNo) {
+		// 데이터 가져오기
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("accountNo", accountNo);
+		int balance = service.accountBalance(map);
+		// 데이터 보내기
+		Map<String, Object> model = new HashMap<>();
+		model.put("balance", balance);
+		return model;
+	}
+	
+	@RequestMapping(value="/financial/account/cancleCheck")
+	@ResponseBody
+	public Map<String, Object> cancleCheck(
+			@RequestParam String accountNo
+			,@RequestParam String accountPwd){
+
+		// 패스워드 암호화
+		/*ShaPasswordEncoder passwordEncoder=new ShaPasswordEncoder(256);
+		String hashed=passwordEncoder.encodePassword(dto.getUserPwd(), null);
+		dto.setUserPwd(hashed);*/
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("accountNo", accountNo);
+		map.put("accountPwd",accountPwd);
+		int state = service.accountCancleCheck(map);
+		
+		Map<String, Object> model = new HashMap<>();
+		model.put("state", state);
+		return model;
+	}
+	
+
 	// 대출 엑셀 다운로드
 	@RequestMapping(value = "/financial/account/excel")
 	public View excelDownload(Map<String, Object> model, HttpSession session) {

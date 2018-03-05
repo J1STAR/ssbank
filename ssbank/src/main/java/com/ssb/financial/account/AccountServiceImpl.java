@@ -34,12 +34,13 @@ public class AccountServiceImpl implements AccountService {
 		}
 		return list;
 	}
-	//계좌상세보기
+
+	// 계좌상세보기
 	@Override
 	public Account detailDepositAccount(String accountNo) {
-		Account dto= null;
+		Account dto = null;
 		try {
-			dto = dao.selectOne("account.detailDepositAccount",accountNo);
+			dto = dao.selectOne("account.detailDepositAccount", accountNo);
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
@@ -48,19 +49,20 @@ public class AccountServiceImpl implements AccountService {
 
 	@Override
 	public Account detailSavingAccount(String accountNo) {
-		Account dto= null;
+		Account dto = null;
 		try {
-			dto = dao.selectOne("account.detailSavingAccount",accountNo);
+			dto = dao.selectOne("account.detailSavingAccount", accountNo);
 		} catch (Exception e) {
 		}
 		return dto;
 	}
-	//계좌 총 잔액
+
+	// 계좌 총 잔액
 	@Override
 	public Account deTotalBalance(Map<String, Object> map) {
-		Account dto= null;
+		Account dto = null;
 		try {
-			dto = dao.selectOne("account.deTotalBalance",map);
+			dto = dao.selectOne("account.deTotalBalance", map);
 		} catch (Exception e) {
 		}
 		return dto;
@@ -68,19 +70,14 @@ public class AccountServiceImpl implements AccountService {
 
 	@Override
 	public Account saTotalBalance(Map<String, Object> map) {
-		Account dto= null;
+		Account dto = null;
 		try {
-			dto = dao.selectOne("account.saTotalBalance",map);
+			dto = dao.selectOne("account.saTotalBalance", map);
 		} catch (Exception e) {
 		}
 		return dto;
 	}
-	
-	
 
-
-
-	
 	@Override
 	public Account newAccountMember(int memberIdx) {
 		Account dto = null;
@@ -91,8 +88,6 @@ public class AccountServiceImpl implements AccountService {
 		}
 		return dto;
 	}
-
-	
 
 	@Override
 	public int insertAccount(Account dto) {
@@ -108,20 +103,20 @@ public class AccountServiceImpl implements AccountService {
 	public List<Account> myAccount(Map<String, Object> map) {
 		List<Account> list = null;
 		try {
-			list = dao.selectOne("account.myAccount", map);
+			list = dao.selectList("account.myAccount", map);
 		} catch (Exception e) {
 		}
 		return list;
 	}
 
 	@Override
-	public Account accountBalance(Map<String, Object> map) {
-		Account dto = null;
+	public int accountBalance(Map<String, Object> map) {
+		int result = 0;
 		try {
-			dto = dao.selectOne("account.accountBalance", map);
+			result = dao.selectOne("account.accountBalance", map);
 		} catch (Exception e) {
 		}
-		return dto;
+		return result;
 	}
 
 	@Override
@@ -134,8 +129,14 @@ public class AccountServiceImpl implements AccountService {
 		return result;
 	}
 
-	
-	
-	
+	@Override
+	public int accountCancleCheck(Map<String, Object> map) {
+		int result=0;
+		try {
+			result=dao.selectOne("account.accountCancleCheck",map);
+		} catch (Exception e) {
+		}
+		return result;
+	}
 
 }

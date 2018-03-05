@@ -91,11 +91,12 @@
 	<select id="myAccount" parameterType="map" resultType="com.ssb.financial.account.Account">
 		SELECT accountNo FROM account WHERE memberIdx= #{memberIdx}
 	</select>
-	<select id="accountBalance" parameterType="map" resultType="com.ssb.financial.account.Account">
-		SELECT a.accountNo,balance FROM account a JOIN transaction t ON a.accountNo=t.accountNo 
-		WHERE a.accountNo = #{accountNo}
+	<select id="accountBalance" parameterType="map" resultType="INTEGER">
+		SELECT balance FROM transaction WHERE accountNo = #{accountNo}
 	</select>
-
+	<select id="accountCancleCheck" parameterType="map" resultType="INTEGER">
+		SELECT COUNT(*) FROM account WHERE accountNo=#{accountNo} AND accountPwd=#{accountPwd}
+	</select>
 
 
 </mapper>

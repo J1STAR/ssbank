@@ -16,7 +16,7 @@ function accountNew(){
 	 alert('비밀번호가 올바르지 않습니다.');
 	 pwd.focus();
  }
- 
+}
  
 </script>
 <div class="content">
