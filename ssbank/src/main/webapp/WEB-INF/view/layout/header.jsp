@@ -53,13 +53,15 @@
 							</ul>
 						</div>
 					</li>
-					<li class="depth-one"><a href="#">부동산</a>
-						<div class="depth-two">
+					<li class="depth-one"><a href="<%=cp%>/sale/raa-0001">부동산</a>
+					<%-- 	 <div class="depth-two">
 							<ul>
-								<li><a href="#">부동산</a></li>
-								<li><a href="#">청약 및 경매</a></li>
+								<li><a href="<%=cp%>/sale/raa-0001">매물/시세</a></li>
+								<li><a href="<%=cp%>/sale/raa-0002">내놓기</a></li>
+								<li><a href="#">청약</a></li>
+								<li><a href="#">고객게시판</a></li>
 							</ul>
-						</div>
+						</div>   --%>
 					</li>
 					<li class="depth-one"><a href="#">고객센터</a>
 						<div class="depth-two">
@@ -90,6 +92,7 @@
 				<li><a href="#" class="btn-mypage"><span class="blind">mypage</span></a></li>
 			</ul>
 		</div>
+		
 		<a href="#" class="btn-gnb"> <span class="gnb-bar1"></span> <span
 			class="gnb-bar2"></span> <span class="gnb-bar3"></span>
 		</a>
