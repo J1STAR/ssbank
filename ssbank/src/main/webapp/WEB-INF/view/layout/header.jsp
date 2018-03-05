@@ -31,10 +31,10 @@
 							<li><a href="<%=cp%>/financial/fund/nfp">펀드</a></li>
 							<li><a href="<%=cp%>/financial/counsel/cpc">상품상담</a></li>
 						</ul></li>
-					<li class="depth-one"><a href="#">가계부</a>
+					<li class="depth-one"><a href="<%=cp%>/acBookNcarBook/accountBook">가계부</a>
 						<ul>
-							<li><a href="#">가계부</a></li>
-							<li><a href="#">차계부</a></li>
+							<li><a href="<%=cp%>/acBookNcarBook/accountBook">가계부</a></li>
+							<li><a href="<%=cp%>/acBookNcarBook/carAcBook">차계부</a></li>
 						</ul></li>
 					<li class="depth-one"><a href="#">자산관리</a>
 						<ul>
