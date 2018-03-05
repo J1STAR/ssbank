@@ -9,7 +9,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>계좌 해지</title>
+<title>article</title>
 </head>
 <body>
 

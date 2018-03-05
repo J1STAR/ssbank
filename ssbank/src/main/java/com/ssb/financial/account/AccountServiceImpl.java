@@ -13,136 +13,120 @@ public class AccountServiceImpl implements AccountService {
 
 	@Autowired
 	private CommonDAO dao;
-	
-	//예금 리스트 전부
+
+	// 예금 리스트 전부
 	@Override
 	public List<Account> depositlistAllAccount(Map<String, Object> map) {
 		List<Account> list = null;
 		try {
-			list = dao.selectList("account.depositlistAllAccount",map);
+			list = dao.selectList("account.depositlistAllAccount", map);
 		} catch (Exception e) {
 		}
 		return list;
 	}
-	
+
 	@Override
 	public List<Account> savinglistAllAccount(Map<String, Object> map) {
 		List<Account> list = null;
 		try {
-			list = dao.selectList("account.savinglistAllAccount",map);
+			list = dao.selectList("account.savinglistAllAccount", map);
 		} catch (Exception e) {
 		}
 		return list;
+	}
+	//계좌상세보기
+	@Override
+	public Account detailDepositAccount(String accountNo) {
+		Account dto= null;
+		try {
+			dto = dao.selectOne("account.detailDepositAccount",accountNo);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return dto;
 	}
 
 	@Override
-	public List<Account> listOneAccount(Map<String, Object> map) {
-		List<Account> list = null;
+	public Account detailSavingAccount(String accountNo) {
+		Account dto= null;
 		try {
-
+			dto = dao.selectOne("account.detailSavingAccount",accountNo);
 		} catch (Exception e) {
 		}
-		return list;
+		return dto;
 	}
+	//계좌 총 잔액
+	@Override
+	public Account deTotalBalance(Map<String, Object> map) {
+		Account dto= null;
+		try {
+			dto = dao.selectOne("account.deTotalBalance",map);
+		} catch (Exception e) {
+		}
+		return dto;
+	}
+
+	@Override
+	public Account saTotalBalance(Map<String, Object> map) {
+		Account dto= null;
+		try {
+			dto = dao.selectOne("account.saTotalBalance",map);
+		} catch (Exception e) {
+		}
+		return dto;
+	}
+	
+	
+
+
+
 	
 	@Override
 	public Account newAccountMember(int memberIdx) {
 		Account dto = null;
 		try {
-			dto = dao.selectOne("account.newAccountMember",memberIdx);
-			dto.setName(dto.getLastName()+dto.getFirstName());
-		} catch (Exception e) {
-		}
-		return dto;
-	}
-
-	@Override
-	public Account detailAccount(int accountNo) {
-		Account dto = null;
-		try {
-
+			dto = dao.selectOne("account.newAccountMember", memberIdx);
+			dto.setName(dto.getLastName() + dto.getFirstName());
 		} catch (Exception e) {
 		}
 		return dto;
 	}
 
 	
-	
-	//적금
-	@Override
-	public List<Account> listAllSavingsProduct(Map<String, Object> map) {
-		List<Account> list = null;
-		try {
-
-		} catch (Exception e) {
-		}
-		return list;
-	}
-
-	@Override
-	public List<Account> listOneSavingsProduct(Map<String, Object> map) {
-		List<Account> list = null;
-		try {
-
-		} catch (Exception e) {
-		}
-		return list;
-	}
-
-	@Override
-	public Account detailSavingProduct(int accountNo) {
-		Account dto = null;
-		try {
-
-		} catch (Exception e) {
-		}
-		return dto;
-	}
 
 	@Override
 	public int insertAccount(Account dto) {
-		int result=0;
+		int result = 0;
 		try {
-			result = dao.insertData("account.insertAccount",dto);
-		} catch (Exception e) {
-		}
-		return result;
-	}
-
-	
-
-	@Override
-	public int insertSavingAccount(Account dto) {
-		int result=0;
-		try {
-
+			result = dao.insertData("account.insertAccount", dto);
 		} catch (Exception e) {
 		}
 		return result;
 	}
 
 	@Override
-	public int deleteSavingAccount(Map<String, Object> map) {
-		int result=0;
+	public List<Account> myAccount(Map<String, Object> map) {
+		List<Account> list = null;
 		try {
-
+			list = dao.selectOne("account.myAccount", map);
 		} catch (Exception e) {
 		}
-		return result;
+		return list;
 	}
 
 	@Override
-	public int deleteCheckSavingAccount(Map<String, Object> map) {
-		int result=0;
+	public Account accountBalance(Map<String, Object> map) {
+		Account dto = null;
 		try {
-
+			dto = dao.selectOne("account.accountBalance", map);
 		} catch (Exception e) {
 		}
-		return result;
+		return dto;
 	}
+
 	@Override
 	public int deleteAccount(Map<String, Object> map) {
-		int result=0;
+		int result = 0;
 		try {
 
 		} catch (Exception e) {
@@ -151,7 +135,7 @@ public class AccountServiceImpl implements AccountService {
 	}
 
 	
-
+	
 	
 
 }

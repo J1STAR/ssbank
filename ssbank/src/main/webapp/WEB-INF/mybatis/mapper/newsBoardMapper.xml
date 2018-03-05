@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="newsBoard">
+	
+	<insert id="insertBoard" parameterType="com.ssb.newsBoard.Board">
+		INSERT INTO board(num, userId, subject, content) VALUES
+			(newsBoard_seq.NEXTVAL, #{userId}, #{subject}, #{content})
+	</insert>
+	
+	<sql id="where-nib">
+		<if test="searchKey=='userName'">
+			userName = #{searchValue}
+		</if>
+		<if test="searchKey=='subject'">
+			INSTR(subject, #{searchValue}) &gt; 0
+		</if>
+		<if test="searchKey=='content'">
+			DBMS_LOB.INSTR(content, #{searchValue}) &gt; 0
+		</if>
+		<if test="searchKey=='created'">
+			(TO_CHAR(b.created, 'YYYY-MM-DD') = #{searchValue}
+				OR TO_CHAR(b.created, 'YYYYMMDD') = #{searchValue})
+		</if>
+	</sql>
+	
+	
+</mapper>

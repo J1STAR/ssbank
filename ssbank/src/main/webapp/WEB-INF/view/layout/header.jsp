@@ -31,10 +31,10 @@
 							<li><a href="<%=cp%>/financial/fund/nfp">펀드</a></li>
 							<li><a href="<%=cp%>/financial/counsel/cpc">상품상담</a></li>
 						</ul></li>
-					<li class="depth-one"><a href="#">가계부</a>
+					<li class="depth-one"><a href="<%=cp%>/acBookNcarBook/accountBook">가계부</a>
 						<ul>
-							<li><a href="#">가계부</a></li>
-							<li><a href="#">차계부</a></li>
+							<li><a href="<%=cp%>/acBookNcarBook/accountBook">가계부</a></li>
+							<li><a href="<%=cp%>/acBookNcarBook/carAcBook">차계부</a></li>
 						</ul></li>
 					<li class="depth-one"><a href="#">자산관리</a>
 						<ul>
@@ -51,7 +51,7 @@
 							<li><a href="#">고객상담</a></li>
 							<li><a href="#">회원서비스</a></li>
 							<li><a href="#">자료실</a></li>
-							<li><a href="#">뉴스</a></li>
+							<li><a href="<%=cp%>/customer/newsBoard">뉴스</a></li>
 							<li><a href="#">공지사항</a></li>
 						</ul></li>
 				</ul>
@@ -65,7 +65,7 @@
 						<li><a href="<%=cp%>/member/member-0001">회원가입</a></li>
 					</c:when>
 					<c:otherwise>
-						<li><strong>${sessionScope.member.userName }</strong>님 환영합니다.</li>
+						<li>${sessionScope.member.userName }님 환영합니다.</li>
 						<li><a href="<%=cp%>/member/logout">로그아웃</a></li>
 					</c:otherwise>
 				</c:choose>
