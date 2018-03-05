@@ -100,20 +100,21 @@
 	$(function(){
 		
 		/* tab */
-		$("li.depth-one").mouseenter(function(){
+		$("li.depth-one").mouseover(function(){
 			var target = $(this).children(".depth-two");
 			
 			$.each( $(this).parent("ul").find(".depth-two"), function(index, item){
 				$(item).css("display", "none");
 			});
+			
+			$(this).addClass("active");
 			target.css("display", "block");
 			target.css("top", 56);
 			target.css("left", -($(".gnb").offset().left - ($(window).width() - $(".header-wrap").width())/2));
-			target.css("background-color", "gray");
 			
 			$(target).mouseout(function(){
-				console.log("test");
-				target.css("display", "none");
+				$(this).parent(".depth-one").removeClass("active");
+				$(this).css("display", "none");
 			});
 		});
 	});
