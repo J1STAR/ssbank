@@ -16,7 +16,7 @@
 			<div class="menu-area">
 				<ul>
 					<li><a href="#" class="active">매물/시세</a></li>
-					<li><a href="#" class="">내놓기</a></li>
+					<li><a href="<%=cp %>/sale/raa-0002" class="">내놓기</a></li>
 					<li><a href="#" class="">청약</a></li>
 					<li><a href="#" class="">고객게시판</a></li>
 				</ul>
@@ -30,6 +30,7 @@
 					<li><a href="#" class="">상가</a></li>
 				</ul>
 			</div>
+			
 		</div>
 		<div class="map-wrap mb50">
 			<div class="map-area" id="map"></div>
