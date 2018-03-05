@@ -109,7 +109,7 @@
 			
 			$(this).addClass("active");
 			target.css("display", "block");
-			target.css("top", 56);
+			target.css("top", 47);
 			target.css("left", -($(".gnb").offset().left - ($(window).width() - $(".header-wrap").width())/2));
 			
 			$(target).mouseout(function(){
