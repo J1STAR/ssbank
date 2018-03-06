@@ -7,41 +7,56 @@
 %>
 <div class="content">
 	<!-- jsp body 영역 -->
-	<h1>개인회원가입</h1>
+	<h1>
+		<c:if test="${mode== 'created' }">개인회원가입</c:if>
+		<c:if test="${mode== 'update' }">나의 회원정보</c:if>
+	</h1>
 	<form name="entryInfo" method="post">
 		<div class="page-con">
 			<div class="step-area">
 				<ol>
 					<li>
 						<span class="step-num">1</span>
-						<span class="step-name">이용약관동의</span>
+						<span class="step-name">
+							<c:if test="${mode== 'created' }">개인회원가입</c:if>
+							<c:if test="${mode== 'update' }">비밀번호 확인</c:if>
+						</span>
 					</li>
 					<li class="active">
 						<span class="step-num">2</span>
-						<span class="step-name">정보입력</span>
+						<span class="step-name">
+							<c:if test="${mode== 'created' }">정보 입력</c:if>
+							<c:if test="${mode== 'update' }">내 정보</c:if>
+						</span>
 					</li>
 					<li>
 						<span class="step-num">3</span>
-						<span class="step-name">가입완료</span>
+						<span class="step-name">
+							<c:if test="${mode== 'created' }">가입 완료</c:if>
+							<c:if test="${mode== 'update' }">수정 완료</c:if>
+						</span>
 					</li>
 				</ol>
 			</div>
-			<div class="box-blue-area">
-				<dl>
-					<dt>안내 및 유의사항</dt>	
-					<dd>
-						<ul>
-							<li>입력하신 개인정보는 본인확인용으로 사용되며, 회원가입 완료 전까지 저장되지 않습니다.</li>
-							<li>이메일 정보는 회원가입 본인인증 및 비밀번호 찾기 시 사용되오니 반드시 유효한 이메일 주소를 입력하여 주시기 바랍니다.</li>
-						</ul>
-					</dd>
-				</dl>
-			</div>
-			<h2>정보입력</h2>
+			<c:if test="${mode == 'created">
+				<div class="box-blue-area">
+					<dl>
+						<dt>안내 및 유의사항</dt>	
+						<dd>
+							<ul>
+								<li>입력하신 개인정보는 본인확인용으로 사용되며, 회원가입 완료 전까지 저장되지 않습니다.</li>
+								<li>이메일 정보는 회원가입 본인인증 및 비밀번호 찾기 시 사용되오니 반드시 유효한 이메일 주소를 입력하여 주시기 바랍니다.</li>
+							</ul>
+						</dd>
+					</dl>
+				</div>
+			</c:if>
+			
+			<h2>회원 정보</h2>
 			<div class="table-wrap">
 				
 				<table class="table-verti">
-					<caption>회원가입 정보입력</caption>
+					<caption>회원 정보</caption>
 					<colgroup>
 						<col style="width:20%;"/>
 						<col style="width:*;"/>
@@ -49,24 +64,29 @@
 					<tbody>
 						<tr>
 							<th scope="col">성 / 이름</th>
-							<td scope="col"><input type="text" name="lastName" class=""> / <input type="text" name="firstName" class=""></td>
+							<td scope="col"><input type="text" name="lastName" class="" ${mode == 'created' ? '' : 'readonly'}> / <input type="text" name="firstName" class="" ${mode == 'created' ? '' : 'readonly'}></td>
 						</tr>
 						<tr>
 							<th>이메일</th>
 							<td>
-								<input type="text" name="email1" class="">
-								<span>@</span>
-								<input type="text" name="email2" class="">
-								<div class="item-select">
-									<select name="item-select-email">
-										<option>직접입력</option>
-										<option>naver.com</option>
-										<option>gmail.com</option>
-										<option>hanmail.com</option>
-									</select>
-								</div>
-								<span class="check-false">이미 존재하는 이메일입니다.</span>
-								<span class="check-true">가입가능한 이메일입니다.</span>
+								<c:if test="${mode == 'created'}">
+									<input type="text" name="email1" class="" >
+									<span>@</span>
+									<input type="text" name="email2" class="">
+									<div class="item-select">
+										<select name="item-select-email">
+											<option>직접입력</option>
+											<option>naver.com</option>
+											<option>gmail.com</option>
+											<option>hanmail.com</option>
+										</select>
+									</div>
+									<span class="check-false">이미 존재하는 이메일입니다.</span>
+									<span class="check-true">가입가능한 이메일입니다.</span>
+								</c:if>
+								<c:if test="${mode == 'update'}">
+
+								</c:if>
 							</td>
 						</tr>
 						<tr>
