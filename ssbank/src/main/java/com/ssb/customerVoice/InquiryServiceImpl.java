@@ -1,4 +1,4 @@
-package com.ssb.CustomerVoice;
+package com.ssb.customerVoice;
 
 import java.util.HashMap;
 import java.util.List;

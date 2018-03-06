@@ -8,10 +8,53 @@
 
 <script>
 
+function cancle(){
+	var account = $("#myAcc option:checked").val();
+	console.log(account);
+	var url ="<%=cp%>/financial/account/fdc0002?accountNo="+account;
+	location.href=url;
+}
+$(function(){
+	$("#myAcc").change(function(){
+		var accountNo = $(this).val();
+		var url="<%=cp%>/financial/account/balance";
+		var q="accountNo="+accountNo;
+		$.ajax({
+			type:"get"
+			,url:url
+			,data:q
+			,dataType:"json"
+			,success:function(data){
+				var s = data.balance;
+				$("#myBalance").val(s);
+			}
+			,error:function(){
+				console.log(e.responseText);
+			}
+		});
+	});
+})
 </script>
 <!-- 해지조회 -->
 <div class="content">
-
+<br>
+<div class="step-area">
+    <ol>
+        <li class="active">
+            <span class="step-num">1</span>
+            <span class="step-name">해지계좌 잔액조회</span>
+        </li>
+        <li>
+            <span class="step-num">2</span>
+            <span class="step-name">해지계좌 인증 및 계좌이체</span>
+        </li>
+        <li>
+            <span class="step-num">4</span>
+            <span class="step-name">해지완료</span>
+        </li>
+    </ol>
+</div>
+<br>
 <div class="box-gray-area">
     <dl>
         <dt>알아두세요</dt>
@@ -24,10 +67,10 @@
         </dd>
     </dl>
 </div>
-
+<br>
 <div class="table-wrap">
     <table class="table-verti half">
-        <caption>회원가입 완료</caption>
+        <caption>통장해지</caption>
         <colgroup>
             <col style="width:20%;"/>
             <col style="width:*;"/>
@@ -37,23 +80,25 @@
                 <th scope="col">해지계좌 선택</th>
                 <td scope="col">
                 	<div class="item-select">
-                        <select name="myAccount" id="">
-                            <option>선택</option>
-                            <option>선택</option>
+                        <select name="myAccount" id="myAcc">
+                        	<option>계좌선택</option>
+                        	<c:forEach var="dto" items="${account}">
+                            <option value="${dto.accountNo}">${dto.accountNo}</option>
+                            </c:forEach>
                         </select>
                     </div>
                  </td>
             </tr>
             <tr>
                 <th>잔액</th>
-                <td></td>
+                <td><input type="text" id="myBalance" readonly="readonly"></td>
             </tr>
         </tbody>
     </table>
 </div>
 <div class="btn-area">
-    <a href="javascript:history.back()" class="btn-type-gray1 big">취소</a>
-    <a href="mbj-0002.html" class="btn-type-blue1 big">확인</a>
+    <a href="javascript:location.href='<%=cp%>/financial/account" class="btn-type-gray1 big">취소</a>
+    <a onclick="javascript:cancle();" class="btn-type-blue1 big">확인</a>
 </div>
 
 </div>

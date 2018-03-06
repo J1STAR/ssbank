@@ -1,4 +1,4 @@
-package com.ssb.CustomerVoice;
+package com.ssb.customerVoice;
 
 public class Inquiry {
 	private int num;

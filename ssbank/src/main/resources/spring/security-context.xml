@@ -30,6 +30,11 @@
             <intercept-url pattern="/member/member*" access="permitAll" />
 			<intercept-url pattern="/member/userIdCheck" access="permitAll" />
 
+			<intercept-url pattern="/customer/newsBoard" access="hasAnyRole('ROLE_USER, ROLE_ADMIN')"/>
+		    <intercept-url pattern="/customer/newsBoard/created" access="hasRole('ROLE_ADMIN')"/>
+		    <intercept-url pattern="/customer/newsBoard/update" access="hasRole('ROLE_ADMIN')"/>
+		    <intercept-url pattern="/customer/nib*" access="hasAnyRole('ROLE_USER, ROLE_ADMIN')"/>
+            
             <!-- 이미지, javascript, css등 -->
 			<intercept-url pattern="/resource/**" access="permitAll" />
 	        
