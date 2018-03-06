@@ -3,7 +3,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="personalAccount">
 	
-	<select id="listAccount" resultType="com.ssb.personal.account.Account">
-		
+	<select id="lookupAccount" parameterType="Integer" resultType="map">
+		SELECT PRODUCTNAME, ac.accountNo, TO_CHAR(ac.createDate, 'YYYY-MM-DD HH24:MI:SS') createDate, TO_CHAR(trDate, 'YYYY-MM-DD HH24:MI:SS') trDate, balance
+		FROM TRANSACTION tr
+		LEFT OUTER JOIN ACCOUNT ac ON tr.ACCOUNTNO = ac.ACCOUNTNO
+		LEFT OUTER JOIN PRODUCT P ON ac.PRODUCTIDX = P.PRODUCTIDX
+		WHERE (ac.accountNO, TRDATE) IN (
+		    SELECT accountNO, MAX(TRDATE) FROM TRANSACTION GROUP BY ACCOUNTNO
+		) AND MEMBERIDX = #{memberIdx}
+		ORDER BY ac.ACCOUNTNO ASC
 	</select>
 </mapper>

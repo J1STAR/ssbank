@@ -12,10 +12,10 @@
 	<div class="box-blue-area">
 	    <dl>    
 	        <dd>
-	            <ul>
+	            <ul id="account-info">
 	                <li>출금계좌번호</li>
 	                <li>최종거래일시</li>
-	                <li>최종접속일자</li>
+	                <li>최종접속일자&nbsp;&nbsp;&nbsp;&nbsp;${sessionScope.member.lastLogin }</li>
 	            </ul>
 	        </dd>
 	    </dl>
@@ -45,38 +45,18 @@
 				            <th scope="col">계좌명</th>
 				            <th scope="col">계좌번호</th>
 				            <th scope="col">신규일</th>
-				            <th scope="col">만기일/최근거래일</th>
+				            <th scope="col">최근거래일</th>
 				            <th scope="col">잔액(원)</th>
 				            <th scope="col">업무</th>
 				        </thead>
+				        <tbody>
+				            
+				        </tbody>
 				        <tfoot>
 				            <th colspan="4">입/출금계좌 총잔액</th>
-				            <td colspan="2">9,999,990원</td>
+				            <td id="totalBalance" colspan="2"></td>
 				        </tfoot>
-				        <tbody>
-				            <tr>
-				                <td>저축</td>
-				                <td>123-456-7899</td>
-				                <td>2016.11.11</td>
-				                <td>2018.01.11</td>
-				                <td>837,770</td>
-				                <td>
-				                    <a href="#" class="btn-type-gray medium">조회</a>
-				                    <a href="#" class="btn-type-blue1 medium">이체</a>
-				                </td>
-				            </tr>
-				            <tr>
-				                <td>저축<br>[별명]</td>
-				                <td>123-456-7899</td>
-				                <td>2016.11.11</td>
-				                <td>2018.01.11</td>
-				                <td>837,770</td>
-				                <td>
-				                    <a href="#" class="btn-type-gray medium">조회</a>
-				                    <a href="#" class="btn-type-blue1 medium">이체</a>
-				                </td>
-				            </tr>
-				        </tbody>
+				        
 				    </table>
 				</div>
 			</div>
@@ -88,5 +68,87 @@
 			</div>
 		</div>
 	</div>
-
 </div>
+
+<script>
+	$(window).load(function(){
+		
+		lookupDepositAccount();
+		
+		$("li[rel=tab1]").click(function(){
+			lookupDepositAccount();	
+		});
+	});
+	
+	function numberWithCommas(x) {
+	    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	}
+
+	
+	function lookupDepositAccount(){
+		
+		$("tbody").empty();
+		$("#totalBalance").empty();
+		
+		var url = "<%=cp %>/personal/lookupAccount";
+		var query = "memberIdx="+${sessionScope.member.memberIdx};
+		console.log(query);
+		
+		$.ajax({
+			url		:	url,
+			type		:	"POST",
+			data		:	query,
+			dataType	:	"json",
+			success	:	function(data){
+				
+				if(data.listAccount.length == 0){
+					var $tr = $("<tr>");
+					var $td = $("<td>");
+
+					$td.prop("colspan", "6").html("계좌가 존재하지 않습니다.");
+					$tr.append($td);
+					$("tbody").append($tr);
+					$("#totalBalance").html("0 원");
+				} else {
+					var totalBalance = 0;
+					$.each(data.listAccount, function(index, account){
+						var $tr = $("<tr>");
+						
+						var $td = $("<td>");
+						$td.html(account.PRODUCTNAME);
+						$tr.append($td);
+						
+						$td = $("<td>");
+						$td.html(account.ACCOUNTNO);
+						$tr.append($td);
+						
+						$td = $("<td>");
+						$td.html(account.CREATEDATE);
+						$tr.append($td);
+						
+						$td = $("<td>");
+						$td.html(account.TRDATE);
+						$tr.append($td);
+						
+						$td = $("<td>");
+						totalBalance += account.BALANCE;
+						$td.html(numberWithCommas(account.BALANCE));
+						$tr.append($td);
+						
+						$td = $("<td>");
+						$td.html("<a href='<%=cp%>/personal/transactionList' class='btn-type-gray medium'>조회</a>"+
+								"<a href='<%=cp%>/personal/transaction' class='btn-type-blue1 medium'>이체</a>");
+						$tr.append($td);
+
+						$("tbody").append($tr);
+					});
+					$("#totalBalance").html(numberWithCommas(totalBalance) + " 원");
+				}
+			},
+			error	: 	function(e){
+				console.log(e.responseText);
+			}
+			
+		});
+	}
+</script>

@@ -12,7 +12,7 @@ public class Account {
 	private String empIdx;
 	
 	// 계좌 정보
-	private String accountPwd;
+	private int balance;
 	private String createDate;
 	private int status;
 	
@@ -46,12 +46,6 @@ public class Account {
 	public void setEmpIdx(String empIdx) {
 		this.empIdx = empIdx;
 	}
-	public String getAccountPwd() {
-		return accountPwd;
-	}
-	public void setAccountPwd(String accountPwd) {
-		this.accountPwd = accountPwd;
-	}
 	public String getCreateDate() {
 		return createDate;
 	}
@@ -64,4 +58,11 @@ public class Account {
 	public void setStatus(int status) {
 		this.status = status;
 	}
+	public int getBalance() {
+		return balance;
+	}
+	public void setBalance(int balance) {
+		this.balance = balance;
+	}
+	
 }
