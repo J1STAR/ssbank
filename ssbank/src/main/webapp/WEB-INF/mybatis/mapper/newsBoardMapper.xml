@@ -3,10 +3,25 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="newsBoard">
 	
-	<insert id="insertBoard" parameterType="com.ssb.newsBoard.Board">
-		INSERT INTO board(num, userId, subject, content) VALUES
-			(newsBoard_seq.NEXTVAL, #{userId}, #{subject}, #{content})
+	<insert id="insertBoard" parameterType="com.ssb.newsBoard.NewsBoard">
+		INSERT INTO board(boardIdx, categoryIdx, memberIdx, subtract, content, hitCount, createDate) VALUES
+			(board_seq.NEXTVAL, 1, 1, #{memberIdx}, #{subtract}, #{content}, 0, SYSDATE)
 	</insert>
+	
+	<select id="readBoard" parameterType="Integer" resultType="com.ssb.newsBoard.NewsBoard">
+		SELECT
+			b.boardIdx,
+			m.lastName || m.firstName userName,
+			categoryIdx,
+			subject,
+			content,
+			TO_CHAR(b.createDate,
+			'YYYY-MM-DD') createDate,
+			hitCount
+		FROM board b
+		JOIN memberInfo m ON b.memberIdx = m.memberIdx
+        WHERE boardIdx = #{num}
+	</select>
 	
 	<sql id="where-nib">
 		<if test="searchKey=='userName'">
@@ -23,6 +38,72 @@
 				OR TO_CHAR(b.created, 'YYYYMMDD') = #{searchValue})
 		</if>
 	</sql>
+	
+	 
+	 <!-- 글개수 -->
+	 <select id="dataCount" resultType="Integer" parameterType="map">
+	 	SELECT NVL(COUNT(*), 0)
+	 		FROM board b JOIN memberInfo m ON b.memberIdx = m.memberIdx
+	 	<where>
+	 		<if test="searchValue != null and searchValue != '' ">
+	 			<include refid="where-nib"/>
+	 		</if>
+	 	</where>
+	 </select>
+	 
+	  <!-- 글리스트 -->
+	 <select id="listBoard" parameterType="map"
+	resultType="com.ssb.newsBoard.NewsBoard">
+	SELECT * FROM (
+		SELECT ROWNUM rnum, tb.* FROM (
+			SELECT
+			b.boardIdx,
+			b.memberIdx,
+			m.lastName || m.firstName userName,
+			categoryIdx,
+			subject,
+			TO_CHAR(b.createDate,
+			'YYYY-MM-DD') createDate,
+			hitCount
+			FROM board b
+			JOIN memberInfo m ON b.memberIdx = m.memberIdx
+			LEFT OUTER JOIN (
+				SELECT
+				boardIdx,
+				COUNT(*) replyCount
+				FROM boardReply
+				GROUP BY boardIdx
+			) c ON b.boardIdx = c.boardIdx
+		ORDER BY boardIdx DESC
+		<where>
+			<if test="searchValue != null and searchValue != ''">
+				<include refid="where-nib" />
+			</if>
+		</where>
+		<![CDATA[
+            ) tb WHERE ROWNUM <= #{end}
+        ) WHERE rnum >= #{start}
+]]>
+
+</select>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 </mapper>
