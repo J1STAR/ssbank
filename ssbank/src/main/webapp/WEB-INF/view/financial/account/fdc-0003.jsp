@@ -7,6 +7,22 @@
 %>
 
 <div class="content">
-<h1>해지 완료 </h1>
+<br>
+<div class="step-area">
+    <ol>
+        <li>
+            <span class="step-num">1</span>
+            <span class="step-name">해지계좌 잔액조회</span>
+        </li>
+        <li>
+            <span class="step-num">2</span>
+            <span class="step-name">해지계좌 인증 및 계좌이체</span>
+        </li>
+        <li class="active">
+            <span class="step-num">4</span>
+            <span class="step-name">해지완료</span>
+        </li>
+    </ol>
+</div>
 
 </div>
