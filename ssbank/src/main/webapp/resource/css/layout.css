@@ -7,8 +7,8 @@
 
 
 /* 장한별 css */
-
-
+.accountTabs { width: 100%; }
+.accountTabs .tabs .accountTab { width: 33.3%; }
 
 /* 방민주 css */
 .info-area .box-agree li.fdn {height: 50px;line-height: 50px}

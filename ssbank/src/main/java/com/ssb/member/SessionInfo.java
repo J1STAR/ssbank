@@ -5,7 +5,14 @@ public class SessionInfo {
 	private String userName;
 	private int memberLevel;
 	private int memberIdx;
+	private String lastLogin;
 	
+	public String getLastLogin() {
+		return lastLogin;
+	}
+	public void setLastLogin(String lastLogin) {
+		this.lastLogin = lastLogin;
+	}
 	public String getUserId() {
 		return userId;
 	}

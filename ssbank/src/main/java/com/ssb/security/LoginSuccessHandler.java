@@ -28,8 +28,6 @@ public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessH
 			throws ServletException, IOException {
 		HttpSession session=req.getSession();
 		
-		/*System.out.println(authentication.getName()); // 로그인 아이디*/
-		
 		// 로그인 날짜 변경
 		memberService.updateLastLogin(authentication.getName());
 		
@@ -39,6 +37,7 @@ public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessH
 		info.setUserId(member.getUserId());
 		info.setUserName(member.getLastName() + member.getFirstName());
 		info.setMemberIdx(member.getMemberIdx());
+		info.setLastLogin(member.getLastLogin());
 		
 		session.setAttribute("member", info);	
 
