@@ -13,4 +13,30 @@
 		) AND MEMBERIDX = #{memberIdx}
 		ORDER BY ac.ACCOUNTNO ASC
 	</select>
+	
+	<select id="listAllAccount" parameterType="Integer">
+		SELECT * FROM account
+	</select>
+	
+	<select id="listDepositAccount" parameterType="com.ssb.personal.Account" resultType="map">
+		SELECT accountNo 
+		FROM account
+		WHERE memberIdx = #{memberIdx} AND productIdx = 1
+	</select>
+	
+	<sql id="where-list">
+		<if test="searchKey=='userName'">
+			userName = #{searchValue}
+		</if>
+		<if test="searchKey=='subject'">
+			INSTR(subject, #{searchValue}) &gt; 0
+		</if>
+		<if test="searchKey=='content'">
+			DBMS_LOB.INSTR(content, #{searchValue}) &gt; 0
+		</if>
+		<if test="searchKey=='created'">
+			(TO_CHAR(b.created, 'YYYY-MM-DD') = #{searchValue}
+			OR TO_CHAR(b.created, 'YYYYMMDD') = #{searchValue})
+		</if>
+	</sql>
 </mapper>

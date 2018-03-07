@@ -92,7 +92,6 @@
 		
 		var url = "<%=cp %>/personal/lookupAccount";
 		var query = "memberIdx="+${sessionScope.member.memberIdx};
-		console.log(query);
 		
 		$.ajax({
 			url		:	url,
