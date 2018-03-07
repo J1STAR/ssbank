@@ -24,8 +24,25 @@ public class AccountBookController {
 	@Autowired
 	private MyExcelView excel;
 	
+	//가계부
 	@RequestMapping(value="/acBookNcarBook/accountBook", method=RequestMethod.GET)
 	public String accountBookList(HttpSession session, Model model) {
+		
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
+		Map<String, Object> map = new HashMap<>();
+		//전체 가계부 가져오기
+		map.put("memberIdx", info.getMemberIdx());
+		System.out.println(info.getMemberIdx());
+		
+		List<AccountBook> listAll = service.listAllAccountBook(map);
+		model.addAttribute("listAll", listAll);
+		
+		return ".acBookNcarBook.accountBook.write";
+	}
+	
+	//차계부
+	@RequestMapping(value="/acBookNcarBook/carAcBook", method=RequestMethod.GET)
+	public String carAcBookList(HttpSession session, Model model) {
 		
 		SessionInfo info = (SessionInfo)session.getAttribute("member");
 		Map<String, Object> map = new HashMap<>();
@@ -37,8 +54,6 @@ public class AccountBookController {
 		
 		model.addAttribute("listAll", listAll);
 		
-		return ".acBookNcarBook.accountBook.write";
+		return ".acBookNcarBook.carAcBook.write";
 	}
-	
-	
 }

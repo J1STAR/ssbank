@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="accountBook">
+
+	<!-- <select id="depositlistAllAccount" parameterType="map"
+		resultType="com.ssb.financial.account.Account">
+		SELECT * FROM (
+		SELECT
+		productName,p.productIdx,a.accountNo,balance,TO_CHAR(trDate,'YYYY-MM-DD')lastTrDate,interestRate
+		FROM account a
+		JOIN product p on a.productIdx = p.productIdx
+		JOIN
+		depositProduct d ON d.productIdx = a.productIdx
+		JOIN transaction t ON
+		a.accountNo = t.accountNo
+		WHERE memberIdx = #{memberIdx}
+		ORDER BY trDate
+		DESC
+		)WHERE ROWNUM =1
+	</select> -->
+	
+	<select id="listAllAccountBook" parameterType="map"
+		resultType="com.ssb.accountBook.AccountBook">
+		SELECT * FROM ( SELECT
+		productName,p.productIdx,a.accountNo,balance,TO_CHAR(trDate,'YYYY-MM-DD')lastTrDate,interestRate
+		FROM
+		account a JOIN product p on a.productIdx = p.productIdx
+		JOIN depositProduct d ON d.productIdx = a.productIdx
+		JOIN transaction t ON a.accountNo = t.accountNo
+		WHERE memberIdx = #{memberIdx} ORDER BY trDate
+		DESC
+		)WHERE ROWNUM =1
+	</select>
+	
+	<select id="listAllAccountBook" parameterType="map"
+		resultType="com.ssb.accountBook.AccountBook">
+		SELECT * FROM ( SELECT
+		accountBookDate,content,amount,categoryIdx,TO_CHAR(trDate,'YYYY-MM-DD')lastTrDate,interestRate
+		FROM
+		account a JOIN product p on a.productIdx = p.productIdx
+		JOIN depositProduct d ON d.productIdx = a.productIdx
+		JOIN transaction t ON a.accountNo = t.accountNo
+		WHERE memberIdx = #{memberIdx} ORDER BY trDate
+		DESC
+		)WHERE ROWNUM =1
+	</select>
+</mapper>

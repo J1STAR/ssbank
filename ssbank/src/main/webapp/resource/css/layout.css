@@ -23,9 +23,22 @@
 
 
 /* 박준형 css */
+input[type=text]{
+	width: 99%;
+	height: 100%;
+	padding: 0px;
+}
 
+.table-wrap .table-hori td {
+	height: 20px;
+	padding : 0px;
+}
 
+#my-tbody .item-radio + .item-radio {
+	margin-right: 0;
+}
 
-
-
+.item-select {
+	width: 100%;
+}
 
