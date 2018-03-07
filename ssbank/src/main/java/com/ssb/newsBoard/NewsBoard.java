@@ -1,34 +1,35 @@
 package com.ssb.newsBoard;
 
-public class Board {
-	private int num, listNum;
-	private String userNum, userId, subject, content, created;
+public class NewsBoard {
+	private int boardIdx, categoryIdx;
+	private String memberIdx, userId, userName;
+	private String subject, content, createDate;
 	private int hitCount;
 	
 	private int replyCount;
 
-	public int getNum() {
-		return num;
+	public int getBoardIdx() {
+		return boardIdx;
 	}
 
-	public void setNum(int num) {
-		this.num = num;
+	public void setBoardIdx(int boardIdx) {
+		this.boardIdx = boardIdx;
 	}
 
 	public int getListNum() {
-		return listNum;
+		return categoryIdx;
 	}
 
-	public void setListNum(int listNum) {
-		this.listNum = listNum;
+	public void setCategoryIdx(int categoryIdx) {
+		this.categoryIdx = categoryIdx;
 	}
 
-	public String getUserNum() {
-		return userNum;
+	public String getMemberIdx() {
+		return memberIdx;
 	}
 
-	public void setUserNum(String userNum) {
-		this.userNum = userNum;
+	public void setMemberIdx(String memberIdx) {
+		this.memberIdx = memberIdx;
 	}
 
 	public String getUserId() {
@@ -55,12 +56,12 @@ public class Board {
 		this.content = content;
 	}
 
-	public String getCreated() {
-		return created;
+	public String getCreateDate() {
+		return createDate;
 	}
 
-	public void setCreated(String created) {
-		this.created = created;
+	public void setCreateDate(String createDate) {
+		this.createDate = createDate;
 	}
 
 	public int getHitCount() {
@@ -77,5 +78,13 @@ public class Board {
 
 	public void setReplyCount(int replyCount) {
 		this.replyCount = replyCount;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 }

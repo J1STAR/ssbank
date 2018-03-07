@@ -1,6 +1,6 @@
 package com.ssb.newsBoard;
 
-public class Reply {
+public class NewsReply {
 	private int replyNum, num;
 	private String userId, userName;
 	private String content, created;
