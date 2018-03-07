@@ -10,6 +10,8 @@
 <script type="text/javascript" src="<%=cp%>/resource/jquery/js/jquery-1.12.4.min.js"></script>
 <script>
 
+
+
 $(document).ready(function(){
     //최상단 체크박스 클릭
     $("#sltAll").click(function(){
@@ -47,36 +49,6 @@ function add_row() {
     cell7.innerHTML = '';
     cell7.innerHTML = '<a href="#" class="btn-type-blue1 medium">입력</a>';
   }
-  
-function chang_cat(){
-	if($("input[type=radio]:checked").val("outCome")){
-		document.getElementById("sltIO").innerHTML =
-		"<select>"
-		"<option>카테고리 선택</option>"
-        "<option>식비</option>"
-        "<option>주거/통신</option>"
-        "<option>생활용품</option>"
-        "<option>의복/미용</option>"
-        "<option>건강/문화</option>"
-        "<option>교육/육아</option>"
-        "<option>교통/차량</option>"
-        "<option>경조사/회비</option>"
-        "<option>세금/이자</option>"
-        "<option>용돈/기타</option>"
-        "<option>미분류</option>"
-    "</select>";
-	}if else($("input[type=radio]:checked").val("inCome")){
-		document.getElementById("sltIO").innerHTML =
-			"<select>
-			<option>카테고리 선택</option>
-	        <option>주수입</option>
-	        <option>부수입</option>
-	        <option>전월이월</option>
-	        <option>저축/보험</option>
-	        <option>미분류</option>
-	    </select>";
-		}
-}
 </script>
 
 <!DOCTYPE html>
@@ -91,11 +63,16 @@ function chang_cat(){
 	<!-- jsp body 영역 -->
 	<h1>가계부</h1>
 	<div class="table-wrap">
-	<table class="table-hori">
         <caption>가계부작성</caption>
-        
-        
-        <!--머리-->
+        <div class="tab-wrap basic">
+        	<ul class="tabs">
+        		<li rel="tab1" class="active">지출</li>
+        		<li rel="tab2" class="active">수입</li>
+        		<li rel="tab3" class="active">달력</li>
+        	</ul>
+        	<div class="tab_container">
+	<table class="table-hori">
+		<!--머리-->
         <colgroup>
             <col style="width:auto"/>
             <col style="width:10%"/>
@@ -118,62 +95,37 @@ function chang_cat(){
                 <th scope="col">현금</th>
                 <th scope="col">카드</th>
                 <th scope="col">카테고리</th>
-                <th scope="col">분류</th>
                 <th scope="col">입력 및 수정</th>
             </tr>        
         </thead>
 		
 		<!--몸통-->
         <tbody id="my-tbody">
+        <c:forEach var="dto" items="${listAll}" begin="1" varStatus="status">
             <tr>
                 <td>
                 	<div class="item-checkbox">
-                   		<input type="checkbox" id="sltThis">
-                    	<label for="sltThis"></label>
+                   		<input type="checkbox" id="${status.count}">
+                    	<label for="${status.count}"></label>
                     </div>
                 </td>
+                <td><input type="text" name="" value="${dto.accountBookDate}" size="10" style="width=100%"></td>
+                <td><input type="text" name="" value="${dto.content}" size="10" style="width=100%"></td>
                 <td><input type="text" name="" value="" size="10" style="width=100%"></td>
-                <td><input type="text" name="" value="" size="10" style="width=100%"></td>
-                <td><input type="text" name="" value="" size="10" style="width=100%"></td>
-                <td><input type="text" name="" value="" size="10" style="width=100%"></td>
+                <td><input type="text" name="" value="${dto.amount}" size="10" style="width=100%"></td>
+                <td><select name="" value="${dto.categoryIdx}" size="10" style="width=100%"/></td>
                 <td>
                 	<div class="item-select" id="sltIO"></div>
-                </td>
-                <td>
-                	<div class="item-radio">
-                    	<input type="radio" id="1radio" name="join1" value="inCome" checked="">
-                    	<label for="1radio">수입</label>
-                	</div>
-                	<div class="item-radio">
-                    	<input type="radio" id="2radio" name="join1" value="outCome">
-                    	<label for="2radio">지출</label>
-                	</div>
                 </td>
                 <td>
                     <a href="#" class="btn-type-blue1 medium">입력</a>
                 	<!-- <a href="#" class="btn-type-gray small">수정</a> -->
                 </td>   
             </tr>
-            <tr>
-                <td>
-                	<div class="item-checkbox">
-                   		<input type="checkbox" id="sltThis">
-                    	<label for="sltThis"></label>
-                    </div>
-                </td>
-                <td><input type="text" name="" value="" size="10" style="width=100%"></td>
-                <td><input type="text" name="" value="" size="10" style="width=100%"></td>
-                <td><input type="text" name="" value="" size="10" style="width=100%"></td>
-                <td><input type="text" name="" value="" size="10" style="width=100%"></td>
-                <td><input type="text" name="" value="" size="10" style="width=100%"></td>
-                <td>
-                	
-                </td>
-                <td>
-                    <a href="#" class="btn-type-blue1 medium">입력</a>
-                	<!-- <a href="#" class="btn-type-gray small">수정</a> -->
-                </td> 
-            </tr>
+      </c:forEach>      
+
+            
+            
             <tr>
                 <td></td>
                 <td></td>
@@ -189,7 +141,11 @@ function chang_cat(){
             </tr>
             
         </tbody>
-    </table>
+    </table>    		
+        	</div>
+        </div>
+        
+        
 	</div>
 </div>
 

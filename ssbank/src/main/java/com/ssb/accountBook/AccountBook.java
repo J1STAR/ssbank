@@ -1,13 +1,9 @@
 package com.ssb.accountBook;
 
-import java.sql.Date;
-
 public class AccountBook {
 	//네이버 계산기를 기준으로 줄일 것 늘릴 것 적어두기
-	
-	private int acBookIdx, memberidx, classIdx, categoryIdx, amount;
-	private Date accountBookDate;
-	private String content;
+	private int acBookIdx, memberIdx, classIdx, categoryIdx, amount;
+	private String content, name, categoryName, accountBookDate;
 	
 	public synchronized int getAcBookIdx() {
 		return acBookIdx;
@@ -15,11 +11,11 @@ public class AccountBook {
 	public synchronized void setAcBookIdx(int acBookIdx) {
 		this.acBookIdx = acBookIdx;
 	}
-	public synchronized int getMemberidx() {
-		return memberidx;
+	public synchronized int getMemberIdx() {
+		return memberIdx;
 	}
-	public synchronized void setMemberidx(int memberidx) {
-		this.memberidx = memberidx;
+	public synchronized void setMemberIdx(int memberIdx) {
+		this.memberIdx = memberIdx;
 	}
 	public synchronized int getClassIdx() {
 		return classIdx;
@@ -39,17 +35,29 @@ public class AccountBook {
 	public synchronized void setAmount(int amount) {
 		this.amount = amount;
 	}
-	public synchronized Date getAccountBookDate() {
-		return accountBookDate;
-	}
-	public synchronized void setAccountBookDate(Date accountBookDate) {
-		this.accountBookDate = accountBookDate;
-	}
 	public synchronized String getContent() {
 		return content;
 	}
 	public synchronized void setContent(String content) {
 		this.content = content;
+	}
+	public String getCategoryName() {
+		return categoryName;
+	}
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getAccountBookDate() {
+		return accountBookDate;
+	}
+	public void setAccountBookDate(String accountBookDate) {
+		this.accountBookDate = accountBookDate;
 	}
 	
 }

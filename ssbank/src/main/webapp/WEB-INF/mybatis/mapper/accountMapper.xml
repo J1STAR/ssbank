@@ -51,7 +51,8 @@
 	<select id="detailSavingAccount" parameterType="String"
 		resultType="com.ssb.financial.account.Account">
 		SELECT
-		a.accountNo,a.createDate,p.productName,p.productDetail,productType,entryDate,monthly,interest,vipInterest,savingType,interestType,tax
+		a.accountNo,a.createDate,p.productName,p.productDetail,productType,
+		entryDate,monthly,interest,vipInterest,savingType,interestType,tax
 		FROM account a
 		JOIN savingsProduct s ON a.productIdx = s.productIdx
 		JOIN product p ON a.productIdx = p.productIdx
