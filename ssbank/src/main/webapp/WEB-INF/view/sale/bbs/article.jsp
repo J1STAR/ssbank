@@ -1,18 +1,18 @@
-<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8" %>
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%
-	String cp=request.getContextPath();
+   String cp = request.getContextPath();
 %>
 
 <script type="text/javascript">
 function deleteBoard() {
 <c:if test="${sessionScope.member.userId=='admin' || sessionScope.member.userId==dto.userId}">
-	var boardIdx = "${dto.boardIdx}";
+	var num = "${dto.num}";
 	var page = "${page}";
-	var query = "boardIdx="+boardIdx+"&page="+page;
-	var url = "<%=cp%>/customer/newsBoard/delete?" + query;
+	var query = "num="+num+"&page="+page;
+	var url = "<%=cp%>/bbs/delete?" + query;
 
 	if(confirm("위 자료를 삭제 하시 겠습니까 ? ")) {
 			location.href=url;
@@ -25,10 +25,10 @@ function deleteBoard() {
 
 function updateBoard() {
 <c:if test="${sessionScope.member.userId==dto.userId}">
-	var boardIdx = "${dto.boardIdx}";
+	var num = "${dto.num}";
 	var page = "${page}";
-	var query = "boardIdx="+boardIdx+"&page="+page;
-	var url = "<%=cp%>/customer/newsboard/update?" + query;
+	var query = "num="+num+"&page="+page;
+	var url = "<%=cp%>/bbs/update?" + query;
 
 	location.href=url;
 </c:if>
@@ -50,8 +50,8 @@ $(function(){
 		if(! confirm("게시물에 공감 하십니까 ? "))
 			return;
 		
-		var url="<%=cp%>/customer/newsBoard/insertBoardLike";
-		var query="boardIdx=${dto.boardIdx}";
+		var url="<%=cp%>/bbs/insertBoardLike";
+		var query="num=${dto.num}";
 		$.ajax({
 			type:"post"
 			,url:url
@@ -68,13 +68,12 @@ $(function(){
 			}
 		    ,beforeSend:function(jqXHR) {
 		    	jqXHR.setRequestHeader("AJAX", true);
-		    } //
+		    }
 		    ,error:function(jqXHR) {
 		    	if(jqXHR.status==401) {
 		    		console.log(jqXHR);
 		    	} else if(jqXHR.status==403) {
-		    		// login();
-		    		location.href="<%=cp%>/member/noAuthorized";
+		    		login();
 		    	} else {
 		    		console.log(jqXHR.responseText);
 		    	}
@@ -89,8 +88,8 @@ $(function(){
 });
 
 function listPage(page) {
-	var url="<%=cp%>/customer/newsBoard/listReply";
-	var query="pageNo="+page+"&boardIdx=${dto.boardIdx}";
+	var url="<%=cp%>/bbs/listReply";
+	var query="pageNo="+page+"&num=${dto.num}";
 	$.ajax({
 		type:"get"
 		,url:url
@@ -105,8 +104,7 @@ function listPage(page) {
 	    	if(jqXHR.status==401) {
 	    		console.log(jqXHR);
 	    	} else if(jqXHR.status==403) {
-	    		// login();
-	    		location.href="<%=cp%>/member/noAuthorized";
+	    		login();
 	    	} else {
 	    		console.log(jqXHR.responseText);
 	    	}
@@ -126,8 +124,8 @@ $(function(){
 			return;
 		}
 
-		var url="<%=cp%>/customer/newsBoard/insertReply";
-		var query="boardIdx=${dto.boardIdx}&content="+content+"&answer=0";
+		var url="<%=cp%>/bbs/insertReply";
+		var query="num=${dto.num}&content="+content+"&answer=0";
 		$.ajax({
 			type:"post"
 			,url:url
@@ -148,11 +146,10 @@ $(function(){
 		    	jqXHR.setRequestHeader("AJAX", true);
 		    }
 		    ,error:function(jqXHR) {
-		    	alert(jqXHR.status);		    	
 		    	if(jqXHR.status==401) {
 		    		console.log(jqXHR);
 		    	} else if(jqXHR.status==403) {
-		    		location.href="<%=cp%>/member/noAuthorized";
+		    		login();
 		    	} else {
 		    		console.log(jqXHR.responseText);
 		    	}
@@ -189,7 +186,7 @@ $(function(){
 function listReplyAnswer(replyNum) {
 	var listId = "#listReplyAnswer"+replyNum;
 	
-	var url="<%=cp%>/customer/newsBoard/listReplyAnswer";
+	var url="<%=cp%>/bbs/listReplyAnswer";
 	var query="replyNum=replyNum";
 	
 	$.ajax({
@@ -206,8 +203,7 @@ function listReplyAnswer(replyNum) {
 	    	if(jqXHR.status==401) {
 	    		console.log(jqXHR);
 	    	} else if(jqXHR.status==403) {
-	    		// login();
-	    		location.href="<%=cp%>/member/noAuthorized";
+	    		login();
 	    	} else {
 	    		console.log(jqXHR.responseText);
 	    	}
@@ -218,7 +214,7 @@ function listReplyAnswer(replyNum) {
 
 // 댓글의 답글 개수
 function replyAnswerCount(replyNum) {
-	var url="<%=cp%>/customer/newsBoard/replyAnswerCount";
+	var url="<%=cp%>/bbs/replyAnswerCount";
 	var query="replyNum=replyNum";
 	
 	$.ajax({
@@ -237,8 +233,7 @@ function replyAnswerCount(replyNum) {
 	    	if(jqXHR.status==401) {
 	    		console.log(jqXHR);
 	    	} else if(jqXHR.status==403) {
-	    		// login();
-	    		location.href="<%=cp%>/member/noAuthorized";
+	    		login();
 	    	} else {
 	    		console.log(jqXHR.responseText);
 	    	}
@@ -259,8 +254,8 @@ $(function(){
 			return;
 		}
 		
-		var url="<%=cp%>/customer/newsBoard/insertReply";
-		var query="boardIdx=${dto.boardIdx}&content="+encodeURIComponent(content)+"&answer="+replyNum;
+		var url="<%=cp%>/bbs/insertReply";
+		var query="num=${dto.num}&content="+encodeURIComponent(content)+"&answer="+replyNum;
 		$.ajax({
 			type:"post"
 			,url:url
@@ -285,8 +280,7 @@ $(function(){
 		    	if(jqXHR.status==401) {
 		    		console.log(jqXHR);
 		    	} else if(jqXHR.status==403) {
-		    		// login();
-		    		location.href="<%=cp%>/member/noAuthorized";
+		    		login();
 		    	} else {
 		    		console.log(jqXHR.responseText);
 		    	}
@@ -317,7 +311,7 @@ $(function(){
 		if(! confirm(msg))
 			return;
 		
-		var url="<%=cp%>/customer/newsBoard/insertReplyLike";
+		var url="<%=cp%>/bbs/insertReplyLike";
 		var query="replyNum="+replyNum+"&replyLike="+replyLike;
 		
 		$.ajax({
@@ -345,8 +339,7 @@ $(function(){
 		    	if(jqXHR.status==401) {
 		    		console.log(jqXHR);
 		    	} else if(jqXHR.status==403) {
-		    		// login();
-		    		location.href="<%=cp%>/member/noAuthorized";
+		    		login();
 		    	} else {
 		    		console.log(jqXHR.responseText);
 		    	}
@@ -361,7 +354,7 @@ function deleteReply(replyNum, page) {
 	if(! confirm("게시글을 삭제하시겠습니까 ?"))
 		return;
 	
-	var url="<%=cp%>/customer/newsBoard/deleteReply";
+	var url="<%=cp%>/bbs/deleteReply";
 	var query="replyNum="+replyNum+"&mode=reply";
 	
 	$.ajax({
@@ -380,8 +373,7 @@ function deleteReply(replyNum, page) {
 	    	if(jqXHR.status==401) {
 	    		console.log(jqXHR);
 	    	} else if(jqXHR.status==403) {
-	    		// login();
-	    		location.href="<%=cp%>/member/noAuthorized";
+	    		login();
 	    	} else {
 	    		console.log(jqXHR.responseText);
 	    	}
@@ -394,7 +386,7 @@ function deleteReplyAnswer(replyNum, answer) {
 	if(! confirm("게시글을 삭제하시겠습니까 ?"))
 		return;
 	
-	var url="<%=cp%>/customer/newsBoard/deleteReply";
+	var url="<%=cp%>/bbs/deleteReply";
 	var query="replyNum="+replyNum+"&mode=answer";
 	
 	$.ajax({
@@ -414,8 +406,7 @@ function deleteReplyAnswer(replyNum, answer) {
 	    	if(jqXHR.status==401) {
 	    		console.log(jqXHR);
 	    	} else if(jqXHR.status==403) {
-	    		// login();
-	    		location.href="<%=cp%>/member/noAuthorized";
+	    		login();
 	    	} else {
 	    		console.log(jqXHR.responseText);
 	    	}
@@ -425,9 +416,10 @@ function deleteReplyAnswer(replyNum, answer) {
 }
 </script>
 
-<div class="content">
-	
-	<h1>News Board</h1>
+<div class="body-container" style="width: 700px;">
+    <div class="body-title">
+        <h3><span style="font-family: Webdings">2</span> 게시판 </h3>
+    </div>
     
     <div>
 			<table style="width: 100%; margin: 20px auto 0px; border-spacing: 0px; border-collapse: collapse;">
@@ -442,7 +434,7 @@ function deleteReplyAnswer(replyNum, answer) {
 			       이름 : ${dto.userName}
 			    </td>
 			    <td width="50%" align="right" style="padding-right: 5px;">
-			        ${dto.createDate} | 조회 ${dto.hitCount}
+			        ${dto.created} | 조회 ${dto.hitCount}
 			    </td>
 			</tr>
 			
@@ -452,7 +444,7 @@ function deleteReplyAnswer(replyNum, answer) {
 			   </td>
 			</tr>
 			
-			<%-- <tr style="border-bottom: 1px solid #cccccc;">
+			<tr style="border-bottom: 1px solid #cccccc;">
 				<td colspan="2" height="40" style="padding-bottom: 15px;" align="center">
 					<button type="button" class="btn btnSendBoardLike"><span style="font-family: Wingdings;">C</span>&nbsp;&nbsp;<span id="boardLikeCount">${dto.boardLikeCount}</span></button>
 				</td>
@@ -460,9 +452,18 @@ function deleteReplyAnswer(replyNum, answer) {
 			
 			<tr height="35" style="border-bottom: 1px solid #cccccc;">
 			    <td colspan="2" align="left" style="padding-left: 5px;">
+			       첨&nbsp;&nbsp;부 :
+		           <c:if test="${not empty dto.saveFilename}">
+		                   <a href="<%=cp%>/bbs/download?num=${dto.num}">${dto.originalFilename}</a>
+		           </c:if>
+			    </td>
+			</tr>
+			
+			<tr height="35" style="border-bottom: 1px solid #cccccc;">
+			    <td colspan="2" align="left" style="padding-left: 5px;">
 			       이전글 :
 			         <c:if test="${not empty preReadDto}">
-			              <a href="<%=cp%>/bbs/article?${query}&boardIdx=${preReadDto.boardIdx}">${preReadDto.subject}</a>
+			              <a href="<%=cp%>/bbs/article?${query}&num=${preReadDto.num}">${preReadDto.subject}</a>
 			        </c:if>
 			    </td>
 			</tr>
@@ -471,27 +472,27 @@ function deleteReplyAnswer(replyNum, answer) {
 			    <td colspan="2" align="left" style="padding-left: 5px;">
 			       다음글 :
 			         <c:if test="${not empty nextReadDto}">
-			              <a href="<%=cp%>/bbs/article?${query}&boardIdx=${nextReadDto.boardIdx}">${nextReadDto.subject}</a>
+			              <a href="<%=cp%>/bbs/article?${query}&num=${nextReadDto.num}">${nextReadDto.subject}</a>
 			        </c:if>
 			    </td>
-			</tr> --%>
+			</tr>
 			</table>
 			
 			<table style="width: 100%; margin: 0px auto 20px; border-spacing: 0px;">
-				<tr height="45">
-				    <td width="300" align="left">
-				       <c:if test="${sessionScope.member.userId==dto.userId}">				    
-				          <button type="button" class="btn" onclick="updateBoard();">수정</button>
-				       </c:if>
-				       <c:if test="${sessionScope.member.userId==dto.userId || sessionScope.member.userId=='admin'}">				    
-				          <button type="button" class="btn-type-gray1 big" onclick="deleteBoard();">삭제</button>
-				       </c:if>
-				    </td>
-				
-				    <td align="right">
-				        <button type="button" class="btn-type-blue big" onclick="javascript:location.href='<%=cp%>/customer/newsBoard/nib?${query}';">리스트</button>
-				    </td>
-				</tr>
+			<tr height="45">
+			    <td width="300" align="left">
+			       <c:if test="${sessionScope.member.userId==dto.userId}">				    
+			          <button type="button" class="btn" onclick="updateBoard();">수정</button>
+			       </c:if>
+			       <c:if test="${sessionScope.member.userId==dto.userId || sessionScope.member.userId=='admin'}">				    
+			          <button type="button" class="btn" onclick="deleteBoard();">삭제</button>
+			       </c:if>
+			    </td>
+			
+			    <td align="right">
+			        <button type="button" class="btn" onclick="javascript:location.href='<%=cp%>/bbs/list?${query}';">리스트</button>
+			    </td>
+			</tr>
 			</table>
     </div>
     
@@ -509,7 +510,7 @@ function deleteReplyAnswer(replyNum, answer) {
 			</tr>
 			<tr>
 			   <td align='right'>
-			        <button type='button' class='btn-type-blue1 big' data-boardIdx='10' style='padding:10px 20px;'>댓글 등록</button>
+			        <button type='button' class='btn btnSendReply' data-num='10' style='padding:10px 20px;'>댓글 등록</button>
 			    </td>
 			 </tr>
 		</table>

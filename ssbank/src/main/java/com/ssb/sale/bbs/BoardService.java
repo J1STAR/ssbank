@@ -1,4 +1,4 @@
-package com.ssb.newsBoard;
+package com.ssb.sale.bbs;
 
 import java.util.List;
 import java.util.Map;
@@ -10,9 +10,12 @@ public interface BoardService {
 	public Board readBoard(int num);
 	public int updateHitCount(int num);
 	public Board preReadBoard(Map<String, Object> map);
-	public Board nextReadBoard(Map<String, Object>map);
+	public Board nextReadBoard(Map<String, Object> map);
 	public int updateBoard(Board dto, String pathname);
 	public int deleteBoard(int num, String pathname, String userId);
+	
+	public int insertBoardLike(Map<String, Object> map);
+	public int boardLikeCount(int num);
 	
 	public int insertReply(Reply dto);
 	public List<Reply> listReply(Map<String, Object> map);
@@ -24,4 +27,7 @@ public interface BoardService {
 	
 	public int insertReplyLike(Map<String, Object> map);
 	public Map<String, Object> replyLikeCount(Map<String, Object> map);
+	
 }
+
+

@@ -5,6 +5,7 @@
 <%
 	String cp=request.getContextPath();
 %>
+
 <table style='width: 100%; margin: 10px auto 30px; border-spacing: 0px;'>
 	<thead id='listReplyHeader'>
 		<tr height='35'>

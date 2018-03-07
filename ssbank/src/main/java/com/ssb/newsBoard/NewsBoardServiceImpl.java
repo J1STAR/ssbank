@@ -10,7 +10,7 @@ import com.ssb.common.FileManager;
 import com.ssb.common.dao.CommonDAO;
 
 @Service("newsBoard.boardService")
-public class BoardServiceImpl implements BoardService{
+public class NewsBoardServiceImpl implements NewsBoardService{
 	@Autowired
 	private CommonDAO dao;
 	
@@ -18,7 +18,7 @@ public class BoardServiceImpl implements BoardService{
 	private FileManager fileManager;
 	
 	@Override
-	public int insertBoard(Board dto, String pathname) {
+	public int insertBoard(NewsBoard dto, String pathname) {
 		int result = 0;
 		try {
 			result = dao.insertData("newsBoard.inserBoard", dto);
@@ -30,8 +30,8 @@ public class BoardServiceImpl implements BoardService{
 	
 	
 	@Override
-	public List<Board> listBoard(Map<String, Object> map) {
-		List<Board> list = null;
+	public List<NewsBoard> listBoard(Map<String, Object> map) {
+		List<NewsBoard> list = null;
 		try {
 			list = dao.selectList("newsBoard.listBoard", map);
 		} catch (Exception e) {
@@ -54,8 +54,8 @@ public class BoardServiceImpl implements BoardService{
 	
 	// 게시물 가져오기
 	@Override
-	public Board readBoard(int num) {
-		Board dto = null;
+	public NewsBoard readBoard(int num) {
+		NewsBoard dto = null;
 		try {
 			dto = dao.selectOne("newsBoard.readBoard", num);
 		} catch (Exception e) {
@@ -76,8 +76,8 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
-	public Board preReadBoard(Map<String, Object> map) {
-		Board dto = null;
+	public NewsBoard preReadBoard(Map<String, Object> map) {
+		NewsBoard dto = null;
 		try {
 			dto = dao.selectOne("newsBoard.preReadBoard", map);
 		} catch (Exception e) {
@@ -87,8 +87,8 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
-	public Board nextReadBoard(Map<String, Object> map) {
-		Board dto = null;
+	public NewsBoard nextReadBoard(Map<String, Object> map) {
+		NewsBoard dto = null;
 		try {
 			dto = dao.selectOne("newsBoard.nextReadBoard", map);
 		} catch (Exception e) {
@@ -98,7 +98,7 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
-	public int updateBoard(Board dto, String pathname) {
+	public int updateBoard(NewsBoard dto, String pathname) {
 		int result = 0;
 		try {
 			dao.updateData("newsBoard.updateBoard", dto);
@@ -113,7 +113,7 @@ public class BoardServiceImpl implements BoardService{
 	public int deleteBoard(int num, String pathname, String userId) {
 		int result = 0;
 		try {
-			Board dto = readBoard(num);
+			NewsBoard dto = readBoard(num);
 			if(dto == null || (!userId.equals("admin") && !userId.equals(dto.getUserId())))
 				return result;
 			
@@ -125,7 +125,7 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
-	public int insertReply(Reply dto) {
+	public int insertReply(NewsReply dto) {
 		int result = 0;
 		try {
 			result = dao.insertData("newsBoard.insertReply", dto);
@@ -136,8 +136,8 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
-	public List<Reply> listReply(Map<String, Object> map) {
-		List<Reply> list = null;
+	public List<NewsReply> listReply(Map<String, Object> map) {
+		List<NewsReply> list = null;
 		try {
 			list = dao.selectList("newsBoard.listReply", map);
 		} catch (Exception e) {
@@ -169,8 +169,8 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
-	public List<Reply> listReplyAnswer(int answer) {
-		List<Reply> list = null;
+	public List<NewsReply> listReplyAnswer(int answer) {
+		List<NewsReply> list = null;
 		try {
 			list = dao.selectList("newsBoard.listReplyAsnwer", answer);
 		} catch (Exception e) {

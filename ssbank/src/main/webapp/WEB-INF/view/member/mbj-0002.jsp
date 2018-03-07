@@ -38,7 +38,7 @@
 					</li>
 				</ol>
 			</div>
-			<c:if test="${mode == 'created">
+			<c:if test="${mode == 'created'}">
 				<div class="box-blue-area">
 					<dl>
 						<dt>안내 및 유의사항</dt>	
