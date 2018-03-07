@@ -45,8 +45,8 @@
             <li>
                 <span class="box-agree-tit">홈페이지 회원 서비스 이용약관에 동의하십니까?</span>
                 <div class="item-checkbox">
-                    <input type="checkbox" id="mbj0001-01">
-                    <label for="mbj0001-01">예, 동의합니다</label>
+                    <input type="checkbox" id="fdn0001-01">
+                    <label for="fdn0001-01">예, 동의합니다</label>
                 </div>
             </li>
         </ul>
@@ -60,10 +60,10 @@
             <li class="fdn">
                 <span class="box-agree-tit">홈페이지 회원 서비스 이용약관에 동의하십니까?</span>
                 <div class="item-checkbox">
-                    <input type="checkbox" id="mbj0001-01">
-                    <label for="mbj0001-01">예, 동의합니다</label>
-                    <input type="checkbox" id="mbj0001-01">
-                    <label for="mbj0001-01">아니요, 동의하지 않습니다.</label>
+                    <input type="checkbox" id="fdn0001-02" value="true" name="newOk" checked>
+                    <label for="fdn0001-02">예, 동의합니다</label>
+                    <input type="checkbox" id="fdn0001-03" value="false" name="newOk">
+                    <label for="fdn0001-03">아니요, 동의하지 않습니다.</label>
                 </div>
             </li>
         </ul>
@@ -72,11 +72,19 @@
 
 <div class="btn-area">
     <a href="javascript:location.href='<%=cp%>/financial/account" class="btn-type-gray1 big">취소</a>
-    <a onclick="javascript:location.href='<%=cp%>/financial/account/fdn0002';" class="btn-type-blue1 big">확인</a>
+    <a id="nextAccount" class="btn-type-blue1 big">확인</a>
 </div>
 
 </div>
 
 <script>
-
+$(function(){
+	//확인버튼 클릭이벤트가 나타 났을 경우
+	$("#nextAccount").click(function(event){
+		event.preventDefault();
+		if($("#fdn0001-01").prop("checked") && $("input[name=newOk]:checked").val()=="true"){
+			location.href="<%=cp %>/financial/account/fdn0002";
+		}
+	});
+});
 </script>

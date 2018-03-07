@@ -1,6 +1,7 @@
 package com.ssb.financial.account;
 
 public class Account {
+	private String userId;
 	private String lastName;
 	private String firstName;
 	private String name;
@@ -28,6 +29,7 @@ public class Account {
 	private int branchIdx;
 	private String empIdx;
 	private String accountPwd;
+	private String accountPwdCh;
 	private int status;
 	private int trIdx;
 	private int tType;
@@ -37,10 +39,42 @@ public class Account {
 	private String trDate;
 	private String content;
 	private String LastTrDate;
+	private String ssn;
+	private String ssn1;
+	private String ssn2;
 	
-
 	
 	
+	public String getAccountPwdCh() {
+		return accountPwdCh;
+	}
+	public void setAccountPwdCh(String accountPwdCh) {
+		this.accountPwdCh = accountPwdCh;
+	}
+	public String getSsn() {
+		return ssn;
+	}
+	public void setSsn(String ssn) {
+		this.ssn = ssn;
+	}
+	public String getSsn1() {
+		return ssn1;
+	}
+	public void setSsn1(String ssn1) {
+		this.ssn1 = ssn1;
+	}
+	public String getSsn2() {
+		return ssn2;
+	}
+	public void setSsn2(String ssn2) {
+		this.ssn2 = ssn2;
+	}
+	public String getUserId() {
+		return userId;
+	}
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
 	public int getTotBal() {
 		return totBal;
 	}
@@ -259,20 +293,23 @@ public class Account {
 	}
 	@Override
 	public String toString() {
-		return "Account [lastName=" + lastName + ", firstName=" + firstName + ", name=" + name + ", birth=" + birth
-				+ ", addr1=" + addr1 + ", addr2=" + addr2 + ", zipCode=" + zipCode + ", tel=" + tel + ", investScore="
-				+ investScore + ", productIdx=" + productIdx + ", productName=" + productName + ", productDetail="
-				+ productDetail + ", createDate=" + createDate + ", productType=" + productType + ", entryDate="
-				+ entryDate + ", monthly=" + monthly + ", interest=" + interest + ", vipInterest=" + vipInterest
-				+ ", savingType=" + savingType + ", interestType=" + interestType + ", tax=" + tax + ", interestRate="
-				+ interestRate + ", accountNo=" + accountNo + ", memberIdx=" + memberIdx + ", branchIdx=" + branchIdx
-				+ ", empIdx=" + empIdx + ", accountPwd=" + accountPwd + ", status=" + status + ", trIdx=" + trIdx
-				+ ", tType=" + tType + ", amount=" + amount + ", balance=" + balance + ", totBal=" + totBal
-				+ ", trDate=" + trDate + ", content=" + content + ", LastTrDate=" + LastTrDate + ", getTotBal()="
-				+ getTotBal() + ", getName()=" + getName() + ", getLastName()=" + getLastName() + ", getFirstName()="
-				+ getFirstName() + ", getBirth()=" + getBirth() + ", getAddr1()=" + getAddr1() + ", getAddr2()="
-				+ getAddr2() + ", getZipCode()=" + getZipCode() + ", getTel()=" + getTel() + ", getInvestScore()="
-				+ getInvestScore() + ", getProductIdx()=" + getProductIdx() + ", getProductName()=" + getProductName()
+		return "Account [userId=" + userId + ", lastName=" + lastName + ", firstName=" + firstName + ", name=" + name
+				+ ", birth=" + birth + ", addr1=" + addr1 + ", addr2=" + addr2 + ", zipCode=" + zipCode + ", tel=" + tel
+				+ ", investScore=" + investScore + ", productIdx=" + productIdx + ", productName=" + productName
+				+ ", productDetail=" + productDetail + ", createDate=" + createDate + ", productType=" + productType
+				+ ", entryDate=" + entryDate + ", monthly=" + monthly + ", interest=" + interest + ", vipInterest="
+				+ vipInterest + ", savingType=" + savingType + ", interestType=" + interestType + ", tax=" + tax
+				+ ", interestRate=" + interestRate + ", accountNo=" + accountNo + ", memberIdx=" + memberIdx
+				+ ", branchIdx=" + branchIdx + ", empIdx=" + empIdx + ", accountPwd=" + accountPwd + ", accountPwdCh="
+				+ accountPwdCh + ", status=" + status + ", trIdx=" + trIdx + ", tType=" + tType + ", amount=" + amount
+				+ ", balance=" + balance + ", totBal=" + totBal + ", trDate=" + trDate + ", content=" + content
+				+ ", LastTrDate=" + LastTrDate + ", ssn=" + ssn + ", ssn1=" + ssn1 + ", ssn2=" + ssn2
+				+ ", getAccountPwdCh()=" + getAccountPwdCh() + ", getSsn()=" + getSsn() + ", getSsn1()=" + getSsn1()
+				+ ", getSsn2()=" + getSsn2() + ", getUserId()=" + getUserId() + ", getTotBal()=" + getTotBal()
+				+ ", getName()=" + getName() + ", getLastName()=" + getLastName() + ", getFirstName()=" + getFirstName()
+				+ ", getBirth()=" + getBirth() + ", getAddr1()=" + getAddr1() + ", getAddr2()=" + getAddr2()
+				+ ", getZipCode()=" + getZipCode() + ", getTel()=" + getTel() + ", getInvestScore()=" + getInvestScore()
+				+ ", getProductIdx()=" + getProductIdx() + ", getProductName()=" + getProductName()
 				+ ", getProductDetail()=" + getProductDetail() + ", getCreateDate()=" + getCreateDate()
 				+ ", getProductType()=" + getProductType() + ", getEntryDate()=" + getEntryDate() + ", getMonthly()="
 				+ getMonthly() + ", getInterest()=" + getInterest() + ", getVipInterest()=" + getVipInterest()

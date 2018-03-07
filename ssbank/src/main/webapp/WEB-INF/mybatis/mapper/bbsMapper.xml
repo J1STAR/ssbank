@@ -4,14 +4,17 @@
 <mapper namespace="bbs">
 
 	<insert id="insertBoard" parameterType="com.ssb.sale.bbs.Board">
-		INSERT ALL
-		into board(boardIdx, categoryIdx, memberIdx, subtract, content, hitCount,
+		INSERT
+		into board(boardIdx, categoryIdx, memberIdx, subject, content, hitCount,
 		createDate,boardPwd) VALUES
-		(board_seq.NEXTVAL, 2, 1, #{memberIdx}, #{subtract}, #{content}, 0, SYSDATE,#{boardpwd})
-		into boardfile(fileIdx,boardIdx,filesize,saveFileName,originalFileName)
-		values(#{fileidx},#{boardIdx},#{filesize},#{saveFileName jdbcType=VARCHAR},#{originalFileName jdbcType=VARCHAR})
+		(board_seq.NEXTVAL, 2, #{memberIdx}, #{subject}, #{content}, 0, SYSDATE,#{boardPwd})
+		
 	</insert>
 
+	<insert id="insertBoardFile" parameterType="com.ssb.sale.bbs.Board">
+	insert into boardfile(fileIdx,boardIdx,filesize,saveFileName,originalFileName)
+		values(boardFile_seq.NEXTVAL,board_seq.currval,#{filesize},#{saveFileName jdbcType=VARCHAR},#{originalFileName jdbcType=VARCHAR})
+	</insert>
 	<select id="readBoard" parameterType="Integer" resultType="com.ssb.sale.bbs.Board">
 		SELECT
 		b.boardIdx,

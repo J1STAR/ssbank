@@ -1,198 +1,310 @@
-<%@ page contentType="text/html; charset=UTF-8" %>
-<%@ page trimDirectiveWhitespaces="true" %>
+<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page trimDirectiveWhitespaces="true"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%
-   String cp = request.getContextPath();
+	String cp=request.getContextPath();
 %>
-<div class="content">
-	<h1>매물올리기</h1>
-	<div class="table-wrap">
-	    <table class="table-verti">
-	        <caption> 매물올리기  </caption>
-	        <colgroup>
-	            <col style="width:20%;"/>
-	            <col style="width:*;"/>
-	        </colgroup>
-	        <tbody>
-	            <tr>
-	                <th scope="col">매물유형&ast;</th>
-	                <td scope="col">  <div class="item-radio">
-	                        <input type="radio" id="raa0001-01" name="join02" checked="checked">
-	                        <label for="raa0001-01">아파트</label>
-	                    </div>
-	                    <div class="item-radio">
-	                        <input type="radio" id="raa0001-02" name="join02">
-	                        <label for="raa0001-02">연립다세대</label>
-	                        </div>
-	                          <div class="item-radio">
-	                        <input type="radio" id="raa0001-03" name="join02">
-	                        <label for="raa0001-03">단독/다가구</label>
-	                    </div>
-	                    <div class="item-radio">
-	                        <input type="radio" id="raa0001-04" name="join02">
-	                        <label for="raa0001-04">오피스텔</label>
-	                       </div>
-	                </td>
-	            </tr>
-	                 <tr>
-	                <th>거래형태&ast;</th>
-	                <td>
-	                    <div class="item-radio">
-	                        <input type="radio" id="raa0001-05" name="join03" checked="checked">
-	                        <label for="raa0001-05">매매</label>
-	                    </div>
-	                    <div class="item-radio">
-	                        <input type="radio" id="raa0001-06" name="join03">
-	                        <label for="raa0001-06">전세</label>
-	                    </div>
-	                     <div class="item-radio">
-	                        <input type="radio" id="raa0001-07" name="join03">
-	                        <label for="raa0001-07">월세</label>
-	                    </div>
-	                </td>
-	            </tr>
-	            
-	            <tr>
-					<th>지역&ast;</th>
-						<td>
-							<input type="text" id="zip" name="zipCode" class="" style="width: 80px;" maxlength="5" readonly>
-							<a href="#" id="btnPostCode" class="btn-type-gray medium" onclick="daumPostcode();">주소찾기</a><br>
-							<input type="text" id="addr1" name="addr1" class="" style="width: 100%; margin-top: 8px;">
-							<input type="text" id="addr2" name="addr2" class="" style="width: 100%; margin-top: 8px;">
-						</td>
-				</tr> 
-				<tr>
-	                <th>면적</th>
-	                <td><input type="text" class="calc_ed" name="vp1">&nbsp;평&nbsp;/&nbsp;<input type="text" class="calc_ed" name="va1" readonly>&nbsp;m&sup2;&nbsp;<br>
-	               <span><em>&ofcir;면적은 단지선택 후 자동 입력됩니다.</em></span>
-	            	</td>
-	            </tr>
-	            <tr>
-	                <th>해당 동/호수&ast;</th>
-	                <td><input type="text" class="calc_ed" name="dong">&nbsp;동&nbsp;/&nbsp;<input type="text" class="calc_ed" name="ho" >&nbsp;호&nbsp;<br>
-	            	</td>
-	            </tr>
-	            <tr>
-	                <th>해당 층/총층&ast;</th>
-	                <td><input type="text" class="calc_ed" name="ch">&nbsp;층&nbsp;/&nbsp;<input type="text" class="calc_ed" name="allch" >&nbsp;층&nbsp;<br>
-	            	</td>
-	            </tr>
-	            <tr>
-	                <th>희망 매매가&ast;</th>
-	                <td><input type="text" name="minprice" placeholder="최소">&nbsp;만원&nbsp;/&nbsp;<input type="text" class="calc_ed" name="maxprice" placeholder="최대">&nbsp;만원&nbsp;<br>
-	            	</td>
-	            </tr>
-	            <tr>
-	                <th>물건특징</th>
-	               		 <td>
-	               		  <div class="item-select">
-	                        <select name="" id="">
-	                            <option>선택해주세요</option>
-	                            <option>교육환경 좋은아파트</option>
-	                            <option>로얄동,로얄층 아파트</option>
-	                            <option>조망권 좋은 아파트</option>
-	                            <option>시세보다 저렴한 아파트</option>
-	                            <option>깨끗하게 수리된 아파트</option>
-	                            <option>입주3년 미만 아파트</option>
-	                            <option>전세끼고 살 수 있는 아파트</option>
-	                            <option>지하철역과 가까운 아프트</option>
-	                            <option>브랜드 좋은 아파트</option>
-	                            <option>교통이 편리한 아파트</option>
-	                            <option>기타사유</option>
-	                        </select>
-	                        </div>
-	              		</td>
-	            </tr>
-	            <tr>
-	                <th>거래희망일&ast;</th>
-	                    <td><input type="text" class="" id="date" name="birth"><br>
-	                    <div class="item-checkbox saledate2" >
-	                        <input type="checkbox" id="raa-0008">
-	                        <label for="mbj0002-03" class="saledate">빠르면 빠를수록 좋음</label>
-	                    </div>
-	                </td>
-	            </tr>
-	        </tbody>
-	    </table>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<div class="box-wrap">
+		<div class="box-area left">
+			<dl class="ico-home">
+				<dt>매물내놓을때</dt>
+				<dd>
+					<a href="#" class="icon-arrow">내놓기 등록</a>
+				</dd>
+			</dl>
+			<dl class="ico-search">
+				<dt>매물을 찾고 계신가요 ?</dt>
+				<dd>
+					<a href="#" class="icon-arrow">찾아주세요 등록</a>
+				</dd>
+			</dl>
+		</div>
+		<div class="box-area right">
+			<dl class="ico-inquiry">
+				<dt>
+					쌍용은행은 고객님의 부동산 거래를<br>지원합니다.
+				</dt>
+				<dd>
+					<a href="#" class="icon-arrow">고객센터 문의하기</a>
+				</dd>
+				<div class="inquiry-num">
+					<dl>
+						<!doctype html>
+						<html lang="ko">
+<head>
+<title>쌍용은행 - SS BANK</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport"
+	content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width" />
+<link rel="stylesheet" href="../../../resource/css/base.css" media="all"
+	type="text/css">
+<link rel="stylesheet" href="../../../resource/css/owl.carousel.min.css">
+<link rel="stylesheet"
+	href="../../../resource/css/owl.theme.default.min.css">
+<link rel="stylesheet" href="../../../resource/css/common.css"
+	media="all" type="text/css">
+<link rel="stylesheet" href="../../../resource/css/layout.css"
+	media="all" type="text/css">
+
+<script type="text/javascript"
+	src="../../../resource/js/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="../../../resource/js/common.js"></script>
+<script type="text/javascript"
+	src="../../../resource/js/owl.carousel.js"></script>
+
+</head>
+<body>
+	<div id="wrap">
+		<header>
+			<div class="header-wrap">
+				<h1>
+					<a href="../main/main.html"><span>쌍용은행</span></a>
+				</h1>
+				<nav>
+					<div class="gnb">
+						<ul>
+							<li class="depth-one"><a href="../menu1/pas-0001.html">개인</a>
+								<ul>
+									<li><a href="../menu1/pas-0001.html">조회</a></li>
+									<li><a href="../menu1/pit-0001.html">이체</a></li>
+									<li><a href="../menu1/pfs-0001.html">금융상품</a></li>
+									<li><a href="../menu1/psl-0001.html">기타금융</a></li>
+									<li><a href="../menu1/per-0001.html">외환</a></li>
+									<li><a href="../menu1/csc-0001.html">사용자관리</a></li>
+								</ul></li>
+							<li class="depth-one"><a href="../menu2/fds-0001.html">금융상품</a>
+								<ul>
+									<li><a href="../menu2/fds-0001.html">예금/신탁</a></li>
+									<li><a href="../menu2/las-0001.html">대출</a></li>
+									<li><a href="../menu2/lsm-0001.html">상품안내</a></li>
+									<li><a href="../menu2/nfp-0001.html">펀드</a></li>
+									<li><a href="../menu2/cpc-0001.html">상품상담</a></li>
+								</ul></li>
+							<li class="depth-one"><a href="../menu3/ggo-0001.html">가계부</a>
+								<ul>
+									<li><a href="../menu3/ggo-0001.html">가계부</a></li>
+									<li><a href="../menu3/cgm-0001.html">차계부</a></li>
+								</ul></li>
+							<li class="depth-one"><a href="../menu4/ssa-0001.html">자산관리</a>
+								<ul>
+									<li><a href="../menu4/ssa-0001.html">자산관리</a></li>
+									<li><a href="../menu4/ssp-0001.html">포트폴리오</a></li>
+								</ul></li>
+							<li class="depth-one"><a href="../menu5/raa-0001.html">부동산</a>
+								<ul>
+									<li><a href="../menu5/raa-0001.html">부동산</a></li>
+									<li><a href="../menu5/sso-0001.html">청약 및 경매</a></li>
+								</ul></li>
+							<li class="depth-one"><a href="../menu6/cms-0001.html">고객센터</a>
+								<ul>
+									<li><a href="../menu6/cms-0001.html">고객상담</a></li>
+									<li><a href="../menu6/mbj-0001.html">회원서비스</a></li>
+									<li><a href="../menu6/rfr-0001.html">자료실</a></li>
+									<li><a href="../menu6/nib-0001.html">뉴스</a></li>
+									<li><a href="../menu6/nbl-0001.html">공지사항</a></li>
+								</ul></li>
+						</ul>
+					</div>
+				</nav>
+				<div class="lnb-wrap">
+					<ul>
+						<li><a href="#">로그인</a></li>
+						<li><a href="#">회원가입</a></li>
+						<li><a href="#" class="btn-mypage"><span class="blind">mypage</span></a></li>
+					</ul>
+				</div>
+				<a href="#" class="btn-gnb"> <span class="gnb-bar1"></span> <span
+					class="gnb-bar2"></span> <span class="gnb-bar3"></span>
+				</a>
+			</div>
+		</header>
+		<section class="container">
+			<div class="content">
+
+
+				<!-- jsp body 영역 -->
+				<div class="page-con">
+					<div class="menu-wrap">
+						<div class="menu-area">
+							<ul>
+								<li><a href="#" class="">매물/시세</a></li>
+								<li><a href="#" class="active">내놓기</a></li>
+								<li><a href="#" class="">청약</a></li>
+								<li><a href="#" class="">고객게시판</a></li>
+							</ul>
+						</div>
+						<div class="hover-menu mb50">
+							<ul>
+								<li><a href="#" class="">내놓기</a></li>
+								<li><a href="#" class="">찾아주세요</a></li>
+								<li><a href="#" class="">의뢰현황</a></li>
+								<li><a href="#" class="">고객후기</a></li>
+							</ul>
+						</div>
+					</div>
+					<div class="box-wrap">
+						<div class="box-area left">
+							<dl class="ico-home">
+								<dt>매물내놓을때</dt>
+								<dd>
+									<a href="#" class="icon-arrow">내놓기 등록</a>
+								</dd>
+							</dl>
+							<dl class="ico-search">
+								<dt>매물을 찾고 계신가요 ?</dt>
+								<dd>
+									<a href="#" class="icon-arrow">찾아주세요 등록</a>
+								</dd>
+							</dl>
+						</div>
+						<div class="box-area right">
+							<dl class="ico-inquiry">
+								<dt>
+									쌍용은행은 고객님의 부동산 거래를<br>지원합니다.
+								</dt>
+								<dd>
+									<a href="#" class="icon-arrow">고객센터 문의하기</a>
+								</dd>
+								<div class="inquiry-num">
+									<dl>
+										<dt>
+											<span>총의뢰수</span> <span>3,106</span>
+										</dt>
+										<dd>
+											<ul>
+												<li><span class="tit">내놓기</span> <span
+													class="type-gray">의뢰중</span> <span class="type-white">30</span>
+													<span class="type-gray">접수</span> <span class="type-white">5</span>
+												</li>
+												<li><span class="tit">찾아주세요</span> <span
+													class="type-gray">의뢰중</span> <span class="type-white">30</span>
+													<span class="type-gray">접수</span> <span class="type-white">5</span>
+												</li>
+											</ul>
+										</dd>
+									</dl>
+								</div>
+							</dl>
+						</div>
+					</div>
+					<h2>내놓기 이용하기</h2>
+					<div class="step-area map-info">
+						<ol>
+							<li><span class="step-num">STEP 1</span> <span
+								class="step-name">내 매물정보 입력</span></li>
+							<li><span class="step-num">STEP 2</span> <span
+								class="step-name">내 매물을 팔아줄 동네 중개사가 의견 제공</span></li>
+							<li><span class="step-num">STEP 3</span> <span
+								class="step-name">마음에 드는 중개사 선택</span></li>
+							<li><span class="step-num">STEP 4</span> <span
+								class="step-name">거래진행</span></li>
+						</ol>
+					</div>
+					<h2>찾아주세요 이용하기</h2>
+					<div class="step-area map-info">
+						<ol>
+							<li><span class="step-num">STEP 1</span> <span
+								class="step-name">희망하는 매물정보 입력</span></li>
+							<li><span class="step-num">STEP 2</span> <span
+								class="step-name">내가 원하는 매물을 찾아줄 동네 중개사가 의견 제공</span></li>
+							<li><span class="step-num">STEP 3</span> <span
+								class="step-name">마음에 드는 중개사 선택</span></li>
+							<li><span class="step-num">STEP 4</span> <span
+								class="step-name">거래진행</span></li>
+						</ol>
+					</div>
+
+
+				</div>
+				<!-- //jsp body 영역 -->
+
+
+			</div>
+		</section>
+		<aside>
+			<div class="side-bar">
+				<ul>
+					<li><a href="#">계산기</a></li>
+					<li><a href="#">위치찾기</a></li>
+					<li><a href="#">문의하기</a></li>
+					<li><span class="tel">1588<br>3082
+					</span> <span class="time">평일<br>09:00~17:50
+					</span></li>
+					<a href="#" class="btn-top">TOP</a>
+				</ul>
+			</div>
+		</aside>
+		<footer>
+			<div class="footer-wrap">
+				<div class="info-tel">
+					<span>쌍용뱅크 콜센터</span> <span>1588-3082</span>
+				</div>
+				<div class="address-wrap">
+					<div class="bottom-nav">
+						<ul>
+							<li><a href="#">개인정보 취급방침</a></li>
+							<li><a href="#">이용약관</a></li>
+							<li><a href="#">전자민원</a></li>
+						</ul>
+					</div>
+					<div class="address">
+						<p>
+							<span><address>서울시 마포구 월드컵북로 21 풍성빌딩 2,3,4층 쌍용뱅크</address></span>
+							<span>대표이사 | 김환욱</span><span>사업자등록번호 | 486-486-012</span>
+						</p>
+						<span class="copy">COPYRIGHT 2018 SSANGYONG BANK CO. LTD.
+							ALL RIGHTS RESERVED.</span>
+					</div>
+				</div>
+			</div>
+		</footer>
 	</div>
-</div>
-	<div class="btn-area">
-    <a href="javascript:history.back()" class="btn-type-gray1 big">취소</a>
-    <a href="<%=cp %>/sale/raa-0003" class="btn-type-blue1 big">확인</a>
-</div>
 
-<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
-<script>
-/* DatePicker를 통한 날짜 입력 */
-$(function(){
-	
-	$("#date").datepicker({
-		showOn:"button"
-		,buttonImage:"<%=cp %>/resource/images/ico_calendar.png"
-		,buttonImageOnly:true
-	});
-	
-	$(".ui-datepicker-trigger").css({
-		position:"absolute", width:"32px", height:"32px"
-	});
-	
+	<script>
+	$(function () {
+
+    $(".tab_content").hide();
+    $(".tab_content:first").show();
+
+    $("ul.tabs li").click(function () {
+        $("ul.tabs li").removeClass("active");
+        $(this).addClass("active");
+        $(".tab_content").hide()
+        var activeTab = $(this).attr("rel");
+        $("#" + activeTab).fadeIn()
+    });
 });
-
-/* 다음 주소 api */
-function daumPostcode() {
-	new daum.Postcode({
-		oncomplete : function(data) {
-			// 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
-
-			// 각 주소의 노출 규칙에 따라 주소를 조합한다.
-			// 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
-			var fullAddr = ''; // 최종 주소 변수
-			var extraAddr = ''; // 조합형 주소 변수
-
-			// 사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
-			if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
-				fullAddr = data.roadAddress;
-
-			} else { // 사용자가 지번 주소를 선택했을 경우(J)
-				fullAddr = data.jibunAddress;
-			}
-
-			// 사용자가 선택한 주소가 도로명 타입일때 조합한다.
-			if (data.userSelectedType === 'R') {
-				//법정동명이 있을 경우 추가한다.
-				if (data.bname !== '') {
-					extraAddr += data.bname;
-				}
-				// 건물명이 있을 경우 추가한다.
-				if (data.buildingName !== '') {
-					extraAddr += (extraAddr !== '' ? ', '
-							+ data.buildingName : data.buildingName);
-				}
-				// 조합형주소의 유무에 따라 양쪽에 괄호를 추가하여 최종 주소를 만든다.
-				fullAddr += (extraAddr !== '' ? ' (' + extraAddr + ')'
-						: '');
-			}
-
-			// 우편번호와 주소 정보를 해당 필드에 넣는다.
-			document.getElementById('zip').value = data.zonecode; //5자리 새우편번호 사용
-			document.getElementById('addr1').value = fullAddr;
-
-			// 커서를 상세주소 필드로 이동한다.
-			document.getElementById('addr2').focus();
-		}
-	}).open();
-}
-
 </script>
-<script type="text/javascript">
-$('input:text[name=vp1]').keyup(function() {
-    var vp1 = parseInt($(this).val());
-    if(vp1 > 0) {
-        var va1 = Math.round(vp1 * 3.3058);
-        $('input:text[name=va1]').attr('value', va1);
-    }
-});
 
 
-</script>
+</body>
+						</html>
+						<dt>
+							<span>총의뢰수</span> <span>3,106</span>
+						</dt>
+						<dd>
+							<ul>
+								<li><span class="tit">내놓기</span> <span class="type-gray">의뢰중</span>
+									<span class="type-white">30</span> <span class="type-gray">접수</span>
+									<span class="type-white">5</span></li>
+								<li><span class="tit">찾아주세요</span> <span class="type-gray">의뢰중</span>
+									<span class="type-white">30</span> <span class="type-gray">접수</span>
+									<span class="type-white">5</span></li>
+							</ul>
+						</dd>
+					</dl>
+				</div>
+			</dl>
+		</div>
+	</div>
+
+</body>
+</html>

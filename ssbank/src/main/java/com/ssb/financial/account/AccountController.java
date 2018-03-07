@@ -75,24 +75,27 @@ public class AccountController {
 
 	// 예금 신규
 	@RequestMapping(value = "/financial/account/fdn{stage}", method = RequestMethod.GET)
-	public String newAccountForm(@PathVariable String stage, HttpSession session, Model model) {
+	public String newAccountForm(@PathVariable String stage, 
+			HttpSession session, Model model,@RequestParam int productIdx) {
 
 		SessionInfo info = (SessionInfo) session.getAttribute("member");
 		// 로그인한 멤버 회원 정보 --0002에 이동시 같이 가야 함
 		Account in = service.newAccountMember(info.getMemberIdx());
 		if (stage.equals("0002")) {
 			model.addAttribute("info", in);
+			model.addAttribute("productIdx",productIdx);
 		}
-		return ".financial.account.fdn-" + stage;
+		return ".financial.account.fdn-"+stage;
 	}
 
 	@RequestMapping(value = "/financial/account/accountNew", method = RequestMethod.POST)
-	public String newAccountSubmit(@RequestParam Account dto) {
+	public String newAccountSubmit(Account dto) {
+		
+		System.out.println("controller : "+dto.toString());
+		//service.insertAccount(dto);
 
-		service.insertAccount(dto);
-
-		// 계좌 조회페이지로 이동
-		return "redirect: /financial/account";
+		
+		return ".financial.account.fdn-0003";
 	}
 
 	// 해지

@@ -45,11 +45,11 @@ $(function(){
 	<br>
 <div class="step-area">
     <ol>
-        <li class="active">
+        <li>
             <span class="step-num">1</span>
             <span class="step-name">해지계좌 잔액조회</span>
         </li>
-        <li>
+        <li class="active">
             <span class="step-num">2</span>
             <span class="step-name">해지계좌 인증 및 계좌이체</span>
         </li>
@@ -60,27 +60,6 @@ $(function(){
     </ol>
 </div>
 	<br>
-<div class="step-area">
-    <ol>
-        <li>
-            <span class="step-num">1</span>
-            <span class="step-name">해지계좌 잔액조회</span>
-        </li>
-        <li>
-            <span class="step-num">2</span>
-            <span class="step-name">해지계좌 비밀번호 입력</span>
-        </li>
-        <li class="active">
-            <span class="step-num">3</span>
-            <span class="step-name">해지계좌 잔액 이체</span>
-        </li>
-        <li>
-            <span class="step-num">4</span>
-            <span class="step-name">해지완료</span>
-        </li>
-    </ol>
-</div>
-<br>
 <div class="box-blue-area">
 		<dl>
 			<dt>안내 및 유의사항</dt>
@@ -94,7 +73,7 @@ $(function(){
 		</dl>
 	</div>
 	<br>
-	<h2>계좌 비밀번호 확인</h2>
+	<h2 align="center">계좌 비밀번호 확인</h2>
 	<div class="table-wrap">
 		<table class="table-verti half">
 			<caption>해지계좌 비밀번호 확인</caption>
@@ -119,9 +98,38 @@ $(function(){
 		</table>
 	</div>
 	<br>
+	<h2 align="center">잔액 계좌이체</h2>
+	<div class="table-wrap">
+    <table class="table-verti half">
+        <caption>해지 계좌이체</caption>
+        <colgroup>
+            <col style="width:20%;"/>
+            <col style="width:*;"/>
+        </colgroup>
+        <tbody>
+            <tr>
+                <th scope="col">보낼 은행</th>
+                <td scope="col">
+                	<div class="item-select">
+                        <select name="bankName" id="">
+                            <option>선택</option>
+                            <option>ssb</option>
+                            <option>저기은행</option>
+                            <option>여기은행</option>
+                        </select>
+                    </div>
+                    </td>
+            </tr>
+            <tr>
+                <th>계좌번호 </th>
+                <td><input type="text" id="accountNo"></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+	<br>
 	<div class="btn-area">
-		<a href="javascript:location.href='<%=cp%>/financial/account"
-			class="btn-type-gray1 big">취소</a> <a id="cancleCheck"
-			class="btn-type-blue1 big">확인</a>
+		<a href="javascript:location.href='<%=cp%>/financial/account" class="btn-type-gray1 big">취소</a> 
+		<a id="cancleCheck"class="btn-type-blue1 big">확인</a>
 	</div>	
 </div>
