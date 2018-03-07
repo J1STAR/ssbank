@@ -7,7 +7,12 @@
 %>
 <script>
 function sendProduct(productIdx){
-	var url="<%=cp%>/financial/account/fdn0001?productIdx="+prductIdx;
+	var url="<%=cp%>/financial/account/fdn0001?productIdx="+productIdx;
+	location.href=url;
+}
+
+function detail(productIdx){
+	var url="<%=cp%>/financial/product/detail?productIdx="+productIdx;
 	location.href=url;
 }
 </script>
@@ -27,8 +32,8 @@ function sendProduct(productIdx){
                 <td>${dto.productName}</td>
                 <td>${dto.productDetail}</td>
                 <td>
-                    <a href="#" class="btn-type-gray medium">상세보기</a>
-                    <a onclick="javascript:sendProduct('${productIdx}');" class="btn-type-blue1 medium">신규가입</a>
+                    <a onclick="javascript:detail(${dto.productIdx})" class="btn-type-gray medium">상세보기</a>
+                    <a onclick="javascript:sendProduct(${dto.productIdx});" class="btn-type-blue1 medium">신규가입</a>
                 </td>
             </tr>
             </c:forEach>

@@ -4,7 +4,23 @@
 <mapper namespace="product">
 
 	<select id="productAll" resultType="com.ssb.financial.product.Product">
-		SELECT productIdx,productName,productDetail,TO_CHAR(createDate,'YYYY-MM-DD')createDate FROM product
+		SELECT
+		productIdx,productName,productDetail,TO_CHAR(createDate,'YYYY-MM-DD')createDate
+		FROM product
 	</select>
-
+	<select id="depositDetail" parameterType="INTEGER"
+		resultType="com.ssb.financial.product.Product">
+		SELECT p.productIdx,productName,productDetail,createDate,
+		interestRate
+		FROM product p JOIN depositProduct d ON
+		p.productIdx=d.productIdx
+		WHERE p.productIdx=#{productIdx}
+	</select>
+	<select id="savingsDetail" parameterType="INTEGER"
+		resultType="com.ssb.financial.product.Product">
+		SELECT
+		p.productIdx,productName,productDetail,TO_CHAR(createDate,'YYYY-MM-DD')createDate,productType,TO_CHAR(entryDate,'YYYY-MM-DD')entryDate,monthly,interest,vipInterest,savingType,interestType,tax
+		FROM product p JOIN savingsProduct s ON p.productIdx=s.productIdx
+		WHERE p.productIdx=#{productIdx}
+	</select>
 </mapper>

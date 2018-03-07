@@ -23,4 +23,48 @@ public class ProductServiceImpl implements ProductService {
 		return list;
 	}
 
+	@Override
+	public Product depositDetail(int productIdx) {
+		Product dto= null;
+		try {
+			dto=dao.selectOne("product.depositDetail", productIdx);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return dto;
+	}
+
+	@Override
+	public Product savingsDetail(int productIdx) {
+		Product dto= null;
+		try {
+			dto=dao.selectOne("product.savingsDetail", productIdx);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return dto;
+	}
+
+	@Override
+	public Product loanDetail(int productIdx) {
+		Product dto= null;
+		try {
+			dto=dao.selectOne("product.loanDetail", productIdx);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return dto;
+	}
+
+	@Override
+	public Product fundDetail(int productIdx) {
+		Product dto= null;
+		try {
+			dto=dao.selectOne("product.fundDetail", productIdx);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return dto;
+	}
+
 }

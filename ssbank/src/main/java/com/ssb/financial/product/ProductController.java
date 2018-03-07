@@ -12,35 +12,41 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class ProductController {
 	@Autowired
 	private ProductService service;
-	
-	//상품 리스트
-	@RequestMapping(value ="/financial/product")
+
+	// 상품 리스트
+	@RequestMapping(value = "/financial/product")
 	public String productList(Model model) {
 		List<Product> list = service.productAll();
-		model.addAttribute("list",list);
+		model.addAttribute("list", list);
 		return ".financial.product.lsm-0001";
 	}
-	
-	//예금 상세보기
-	@RequestMapping(value="/financial/product/deposit")
-	public String depositDetail(@RequestParam int productIdx){
-		return ".financial.product.lsm-0002";
+
+	// 상세보기
+	@RequestMapping(value = "/financial/product/detail")
+	public String depositDetail(@RequestParam int productIdx, Model model) {
+		String root = "";
+		Product dto = null;
+		switch (productIdx) {
+		case 1:// 예금 상세
+			dto = service.depositDetail(productIdx);
+			root = "lsm-0002";
+			break;
+		case 2:// 적금상세
+			dto =service.savingsDetail(productIdx);
+			root = "lsm-0003";
+			break;
+		case 3:// 대출 상세
+			dto =service.loanDetail(productIdx);
+			root = "lsm-0004";
+			break;
+		case 4:// 펀드 상세
+			dto =service.fundDetail(productIdx);
+			root = "lsm-0005";
+			break;
+
+		}
+		model.addAttribute("dto", dto);
+		return ".financial.product." + root;
 	}
-	
-	//적금 상세보기
-	@RequestMapping(value="/financial/product/savings")
-	public String savingsDetail(@RequestParam int productIdx){
-		return ".financial.product.lsm-0003";
-	}
-	//대출 상세보기
-	@RequestMapping(value="/financial/product/loan")
-	public String loanDetail(@RequestParam int productIdx){
-		return ".financial.product.lsm-0004";
-	}
-	
-	//펀드 상세보기
-	@RequestMapping(value="/financial/product/fund")
-	public String fundDetail(@RequestParam int productIdx){
-		return ".financial.product.lsm-0005";
-	}
+
 }
