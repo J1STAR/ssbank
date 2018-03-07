@@ -10,6 +10,11 @@ public class MainController {
 	@RequestMapping(value="/personal/lookupAccount", method=RequestMethod.GET)
 	public String loopUpAccountForm() {
 		
-		return ".personal.paa-0001";
+		return ".personal.account.paa-0001";
+	}
+	
+	@RequestMapping(value="/personal/transaction", method=RequestMethod.GET)
+	public String transactionForm() {
+		return ".personal.transaction.pit-0001";
 	}
 }
