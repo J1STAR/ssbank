@@ -21,11 +21,11 @@
 	    </dl>
 	</div>
 	
-	<div class="tab-wrap basic mt20 accountTabs">
-		<ul class="tabs">
-			<li rel="tab1" class="active accountTab">예금계좌</li>
-			<li rel="tab2" class="accountTab">적금계좌</li>
-			<li rel="tab3" class="accountTab">대출계좌</li>
+	<div class="tab-wrap blue item3 mt20">
+		<ul>
+			<li data-productType="1" class="productTab1"><a href="#">예금계좌</a></li>
+			<li data-productType="2" class="productTab2"><a href="#">적금계좌</a></li>
+			<li data-productType="3" class="productTab3"><a href="#">대출계좌</a></li>
 		</ul>
 		<div class="tab_container mt20">
 			<div id="tab1" class="tab_content">
@@ -73,10 +73,14 @@
 <script>
 	$(window).load(function(){
 		
-		lookupDepositAccount();
+		lookupAccount(1);
 		
-		$("li[rel=tab1]").click(function(){
-			lookupDepositAccount();	
+		$("li[class^=productTab]").click(function(){
+			$(this).addClass("active");
+			$(this).siblings().removeClass("active");
+			
+			console.log($(this).data("producttype"));
+			lookupAccount($(this).data("producttype"));
 		});
 	});
 	
@@ -85,13 +89,14 @@
 	}
 
 	
-	function lookupDepositAccount(){
-		
+	function lookupAccount(prIdx){
+
 		$("tbody").empty();
 		$("#totalBalance").empty();
 		
 		var url = "<%=cp %>/personal/lookupAccount";
-		var query = "memberIdx="+${sessionScope.member.memberIdx};
+		var query = {"memberIdx":"${sessionScope.member.memberIdx}", "productIdx":prIdx}; 
+			/* "memberIdx=${sessionScope.member.memberIdx}&productIdx="+prIdx; */
 		
 		$.ajax({
 			url		:	url,

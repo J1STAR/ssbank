@@ -7,8 +7,6 @@
 
 
 /* 장한별 css */
-.accountTabs { width: 100%; }
-.accountTabs .tabs .accountTab { width: 33.3%; }
 .menu-wrap.depth-two .menu-area  { width: 100%; padding: 0;}
 .menu-wrap.depth-two .menu-area li {top: 0px; padding-right: 0px;}
 .menu-wrap.depth-two .menu-area li a { line-height: 72px; } 
@@ -26,11 +24,16 @@
 
 
 /* 박준형 css */
-input[type=text]{
+
+/* input[type=text]로 css 변경하게되면 모든 페이지에서 input element에 적용되기 때문에 
+	변경을 적용할 특정한 페이지의 element에 class명을 주고 input[type=text] 대신에 
+	.className { cssProp : val }로 수정하여 사용하길 바람
+ */
+/* input[type=text]{
 	width: 99%;
 	height: 100%;
 	padding: 0px;
-}
+} */
 
 .table-wrap .table-hori td {
 	height: 20px;

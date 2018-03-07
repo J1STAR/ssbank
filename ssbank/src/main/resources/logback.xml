@@ -19,8 +19,37 @@ See here for more details: http://gordondickens.com/wordpress/2013/03/27/sawing-
 	<!--<logger name="org.hibernate" level="debug"/> -->
    <!-- Uncomment and add your logger here:
     <logger name="org.springframework.samples.service.service" level="debug"/> -->
-         
+
     <root level="info">
         <appender-ref ref="console"/>
     </root>
+    
+    
+    
+	<logger name="jdbc.sqltiming" additivity="false">
+        <level value="debug" />
+        <appender-ref ref="console" />
+    </logger>
+ 
+    <logger name="jdbc.audit" additivity="false">
+        <level value="debug" />
+        <appender-ref ref="console" />
+    </logger>
+    
+    <logger name="jdbc.resultset" additivity="false">
+        <level value="debug" />
+        <appender-ref ref="console" />
+    </logger>
+    
+    <logger name="org.springframework" additivity="false">
+        <level value="INFO" />
+        <appender-ref ref="console" />
+    </logger>
+    
+    <logger name="java.sql" additivity="false">
+        <level value="debug"/> 
+        <appender-ref ref="console"/> 
+    </logger> 
+
+
 </configuration>

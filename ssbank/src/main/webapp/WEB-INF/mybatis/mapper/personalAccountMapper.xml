@@ -3,40 +3,25 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="personalAccount">
 	
-	<select id="lookupAccount" parameterType="Integer" resultType="map">
-		SELECT PRODUCTNAME, ac.accountNo, TO_CHAR(ac.createDate, 'YYYY-MM-DD HH24:MI:SS') createDate, TO_CHAR(trDate, 'YYYY-MM-DD HH24:MI:SS') trDate, balance
-		FROM TRANSACTION tr
-		LEFT OUTER JOIN ACCOUNT ac ON tr.ACCOUNTNO = ac.ACCOUNTNO
-		LEFT OUTER JOIN PRODUCT P ON ac.PRODUCTIDX = P.PRODUCTIDX
+	<select id="lookupAccount" parameterType="map" resultType="map">
+		SELECT p.PRODUCTNAME, ac.accountNo, TO_CHAR(ac.createDate, 'YYYY-MM-DD HH24:MI:SS') createDate, TO_CHAR(trDate, 'YYYY-MM-DD HH24:MI:SS') trDate, balance
+		FROM ACCOUNT ac
+		LEFT OUTER JOIN TRANSACTION tr ON ac.ACCOUNTNO = tr.ACCOUNTNO
+		LEFT OUTER JOIN PRODUCT p ON ac.PRODUCTIDX = p.PRODUCTIDX
 		WHERE (ac.accountNO, TRDATE) IN (
 		    SELECT accountNO, MAX(TRDATE) FROM TRANSACTION GROUP BY ACCOUNTNO
-		) AND MEMBERIDX = #{memberIdx}
+		) AND memberIdx = ${memberIdx} AND p.productIdx = ${productIdx}
 		ORDER BY ac.ACCOUNTNO ASC
 	</select>
 	
-	<select id="listAllAccount" parameterType="Integer">
-		SELECT * FROM account
-	</select>
-	
-	<select id="listDepositAccount" parameterType="com.ssb.personal.Account" resultType="map">
+	<select id="listAccount" parameterType="map" resultType="map">
 		SELECT accountNo 
 		FROM account
-		WHERE memberIdx = #{memberIdx} AND productIdx = 1
+		WHERE memberIdx = #{memberIdx} 
+			AND productIdx = #{productIdx}
 	</select>
 	
 	<sql id="where-list">
-		<if test="searchKey=='userName'">
-			userName = #{searchValue}
-		</if>
-		<if test="searchKey=='subject'">
-			INSTR(subject, #{searchValue}) &gt; 0
-		</if>
-		<if test="searchKey=='content'">
-			DBMS_LOB.INSTR(content, #{searchValue}) &gt; 0
-		</if>
-		<if test="searchKey=='created'">
-			(TO_CHAR(b.created, 'YYYY-MM-DD') = #{searchValue}
-			OR TO_CHAR(b.created, 'YYYYMMDD') = #{searchValue})
-		</if>
+		
 	</sql>
 </mapper>

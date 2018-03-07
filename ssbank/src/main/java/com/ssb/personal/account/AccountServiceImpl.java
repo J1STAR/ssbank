@@ -15,11 +15,11 @@ public class AccountServiceImpl implements AccountService{
 	private CommonDAO dao;
 	
 	@Override
-	public List<Map<String, Object>> lookupAccount(int memberIdx) {
+	public List<Map<String, Object>> lookupAccount(Map<String, Object> map) {
 		
 		List<Map<String, Object>> listAccount = null;
 		try {
-			listAccount = dao.selectList("personalAccount.lookupAccount", memberIdx);
+			listAccount = dao.selectList("personalAccount.lookupAccount", map);
 		} catch (Exception e) {
 		}
 		return listAccount;

@@ -5,5 +5,5 @@ import java.util.Map;
 
 public interface AccountService {
 	
-	public List<Map<String, Object>> lookupAccount(int memberIdx);
+	public List<Map<String, Object>> lookupAccount(Map<String, Object> map);
 }
