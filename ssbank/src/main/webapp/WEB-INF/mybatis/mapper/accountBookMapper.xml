@@ -18,6 +18,5 @@
 	</insert>
 	
 	<update id="updateAccountBook" parameterType="com.ssb.accountBook.AccountBook">
-	
 	</update>
 </mapper>
