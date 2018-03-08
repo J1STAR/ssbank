@@ -1,6 +1,10 @@
 package com.ssb.member;
 
 
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +15,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ssb.member.Member;
 
@@ -39,7 +45,7 @@ public class MemberController {
 		return ".member.login";
 	}
 	
-	@RequestMapping(value="/member/member-{stage}", method=RequestMethod.GET)
+	@RequestMapping(value="/member/memberJoin-{stage}", method=RequestMethod.GET)
 	public String memberForm(@PathVariable String stage, Model model) {
 		
 		model.addAttribute("mode", "created");
@@ -50,10 +56,36 @@ public class MemberController {
 	public String memberModiForm(@PathVariable String stage, Model model) {
 		
 		model.addAttribute("mode", "update");
-		return ".member.mbm-"+stage;
+		
+		if(stage.equals("0001")) {
+			return ".member.mbm-0001";
+		} else {
+			return ".member.mbj-0002";
+		}
+	
 	}
 	
-	@RequestMapping(value="/member/memberJoin", method=RequestMethod.POST)
+	@RequestMapping(value="/member/readMemberInfo", method=RequestMethod.GET)
+	@ResponseBody
+	public Map<String, Object> readMemberInfo(@RequestParam String memberIdx){
+		
+		Map<String, Object> model = new HashMap<>();
+		
+		try {
+			model.put("member", service.readMemberInfo(memberIdx));
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return model;
+	}
+	
+	
+	
+	
+	
+	
+	/////////////////////////////////////////////////////////////
+	@RequestMapping(value="/member/memberJoinSubmit", method=RequestMethod.POST)
 	public String memberSubmit(Member dto, Model model) {
 		
 		// 패스워드 암호화
@@ -79,6 +111,38 @@ public class MemberController {
 		return ".member.mbj-0003";
 	}
 	
+	@RequestMapping(value="/member/memberPwdCheck", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> memberPwdCheck(Member dto){
+		
+		// 패스워드 암호화
+		ShaPasswordEncoder passwordEncoder=new ShaPasswordEncoder(256);
+		String hashedInputPwd = passwordEncoder.encodePassword(dto.getUserPwd(), null);
+		
+		
+		Map<String, Object> model = new HashMap<>();
+		try {
+			Member resultMember = service.readMember(dto.getUserId());
+			if(hashedInputPwd.equals(resultMember.getUserPwd())) {
+				model.put("status", "success");
+			} else {
+				model.put("status", "falied");
+			}
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		return model;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	/////////////////////////////////////////////////////////////
 	@RequestMapping(value="/member/noAuthorized")
 	public String noAuthorized() {
 		

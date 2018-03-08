@@ -6,6 +6,7 @@ import java.util.Map;
 public interface MemberService {
 	
 	public Member readMember(String userId);
+	public Map<String, Object> readMemberInfo(String memberIdx);
 	
 	public void insertMember(Member dto) throws Exception;
 	
