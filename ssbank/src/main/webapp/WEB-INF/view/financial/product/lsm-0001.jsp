@@ -27,7 +27,7 @@ function detail(productIdx){
             <col style="width:250px;"/>
         </colgroup>
         <tbody>
-          <c:forEach var="dto" items="${list}">
+          <c:forEach var="dto" items="${list}"> 
             <tr>
                 <td>${dto.productName}</td>
                 <td>${dto.productDetail}</td>

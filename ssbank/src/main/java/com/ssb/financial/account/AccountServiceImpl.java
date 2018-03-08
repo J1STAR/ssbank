@@ -88,12 +88,22 @@ public class AccountServiceImpl implements AccountService {
 		}
 		return dto;
 	}
-
+	//상품명 가지고 오기
+	@Override
+	public String productName(int productIdx) {
+		String dto = null;
+		try {
+			dto = dao.selectOne("account.productName", productIdx);
+		} catch (Exception e) {
+		}
+		return dto;
+	}
 	@Override
 	public int insertAccount(Account dto) {
 		int result = 0;
 		try {
-			result = dao.insertData("account.insertAccount", dto);
+			dao.callUpdateProcedure("account.insertAccount", dto);
+			result=1;
 		} catch (Exception e) {
 		}
 		return result;
@@ -138,5 +148,7 @@ public class AccountServiceImpl implements AccountService {
 		}
 		return result;
 	}
+
+	
 
 }

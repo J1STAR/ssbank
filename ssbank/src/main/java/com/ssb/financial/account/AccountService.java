@@ -21,9 +21,11 @@ public interface AccountService {
 	public Account saTotalBalance(Map<String, Object>map);
 	
 	
-	
+	//신규
 	public Account newAccountMember(int memberIdx);
 	public int insertAccount(Account dto);
+	public String productName(int productIdx);
+	
 	
 	//해지
 	public int deleteAccount(Map<String , Object> map);

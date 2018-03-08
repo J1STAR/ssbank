@@ -6,7 +6,7 @@
 	String cp=request.getContextPath();
 %>
 <script>
-function sendOk(){
+function sendOk(productIdx){
 
 	var f = document.newAccInfo;
 	
@@ -22,16 +22,16 @@ function sendOk(){
 		f.accountPwd.focus();
 		return;
 	}
-	//주민번호 체크
+	/* //주민번호 체크
 	var ssn1 = f.ssn1.value;
 	var ssn2 = f.ssn2.value;
 	if(!isValidResidentNO(ssn1,ssn2)){
 		alert('주민번호가 유효하지 않습니다.');
 		f.ssn1.focus();
 		return;
-	}
+	} */
 	
-	f.action = "<%=cp%>/financial/account/accountNew"
+	f.action = "<%=cp%>/financial/account/accountNew?productIdx="+productIdx;
 	f.submit();
 }
 
@@ -142,7 +142,7 @@ function isValidResidentNO(ssn1, ssn2) {
         <tbody>
         	<tr>
         		<th scope="col">상품명</th>
-                <td scope="col"><input type="text" class="" readonly="readonly" value="${productIdx}"></td>
+                <td scope="col"><input type="text" class="" readonly="readonly" value="${productName}"></td>
         	</tr>
             <tr>
                 <th scope="col">성명</th>
@@ -173,7 +173,7 @@ function isValidResidentNO(ssn1, ssn2) {
             <tr>
                 <th>주민번호</th>
                 <td><input type="text" class="" id="jumin1" name="ssn1"> - <input type="text" id="jumin2" name="ssn2"></td>
-                <td><!-- 버튼하나 --></td>
+                <td>${msg}</td>
             </tr>
             <tr>
                 <th>휴대폰</th>
@@ -185,7 +185,7 @@ function isValidResidentNO(ssn1, ssn2) {
 </div>
 <div class="btn-area">
     <a href="javascript:location.href='<%=cp%>/financial/account" class="btn-type-gray1 big">취소</a>
-    <a href="javascript:sendOk();" class="btn-type-blue1 big">확인</a>
+    <a href="javascript:sendOk(${productIdx});" class="btn-type-blue1 big">확인</a>
 </div>
 </div>
 
