@@ -29,22 +29,24 @@
 	변경을 적용할 특정한 페이지의 element에 class명을 주고 input[type=text] 대신에 
 	.className { cssProp : val }로 수정하여 사용하길 바람
  */
-/* input[type=text]{
-	width: 99%;
-	height: 100%;
-	padding: 0px;
-} */
+td input[class="ACBtext"]  { /* 텍스트박스 */
+    border: none;
+    width: 100%;
+    box-sizing: border-box;
+} 
 
-.table-wrap .table-hori td {
+td #sltIO {
+	width: 100%;
+}
+
+.table-wrap .table-hori td { /*텍스트박스를 감싸는 td*/
 	height: 20px;
 	padding : 0px;
+	border-right: 1px solid #ddd;
 }
 
-#my-tbody .item-radio + .item-radio {
-	margin-right: 0;
-}
-
-.item-select {
+#sltIO select {
 	width: 100%;
+	border: none;
 }
 
