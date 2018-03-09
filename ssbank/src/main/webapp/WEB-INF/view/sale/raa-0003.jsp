@@ -6,99 +6,61 @@
 	String cp = request.getContextPath();
 %>
 >
-<div class="content">
+		<div class="content">
 
 
-	<!-- jsp body 영역 -->
-	<div class="page-con">
-		<div class="menu-wrap">
-			<div class="menu-area">
-				<ul>
-					<li><a href="#" class="">매물/시세</a></li>
-					<li><a href="#" class="active">내놓기</a></li>
-					<li><a href="#" class="">청약</a></li>
-					<li><a href="#" class="">고객게시판</a></li>
-				</ul>
-			</div>
-			<div class="hover-menu mb50">
-				<ul>
-					<li><a href="#" class="">내놓기</a></li>
-					<li><a href="#" class="">찾아주세요</a></li>
-					<li><a href="#" class="">의뢰현황</a></li>
-					<li><a href="#" class="">고객후기</a></li>
-				</ul>
-			</div>
-		</div>
-		<div class="box-wrap">
-			<div class="box-area left">
-				<dl class="ico-home">
-					<dt>매물내놓을때</dt>
-					<dd>
-						<a href="#" class="icon-arrow">내놓기 등록</a>
-					</dd>
-				</dl>
-				<dl class="ico-search">
-					<dt>매물을 찾고 계신가요 ?</dt>
-					<dd>
-						<a href="#" class="icon-arrow">찾아주세요 등록</a>
-					</dd>
-				</dl>
-			</div>
-			<div class="box-area right">
-				<dl class="ico-inquiry">
-					<dt>
-						쌍용은행은 고객님의 부동산 거래를<br>지원합니다.
-					</dt>
-					<dd>
-						<a href="#" class="icon-arrow">고객센터 문의하기</a>
-					</dd>
-					<div class="inquiry-num">
-						<dl>
-							<dt>
-								<span>총의뢰수</span> <span>3,106</span>
-							</dt>
-							<dd>
-								<ul>
-									<li><span class="tit">내놓기</span> <span class="type-gray">의뢰중</span>
-										<span class="type-white">30</span> <span class="type-gray">접수</span>
-										<span class="type-white">5</span></li>
-									<li><span class="tit">찾아주세요</span> <span class="type-gray">의뢰중</span>
-										<span class="type-white">30</span> <span class="type-gray">접수</span>
-										<span class="type-white">5</span></li>
-								</ul>
-							</dd>
-						</dl>
+			<!-- jsp body 영역 -->
+			<div class="page-con">
+				<div class="menu-wrap">
+				<h1>청약</h1>
+					<div class="hover-menu mb30">
+						<ul>
+							<li><a href="#" class="">청약정보</a></li>
+							<li><a href="#" class="">청약일정</a></li>
+							<li><a href="#" class="">청약전략</a></li>
+							<li><a href="#" class="">현장사진</a></li>
+						</ul>
 					</div>
-				</dl>
+				</div>
+				<h1>분양정보</h1>
+				<div class="minimap-wrap">
+					<div class="minimap-area">
+						<div class="map-area">미니맵영역</div>
+						<div class="sort-area">
+							<ul>
+								<li><a href="#" class="active">알짜추천순</a></li>
+								<li><a href="#">가격순</a></li>
+								<li><a href="#">면적순</a></li>
+								<li><a href="#">매물명순</a></li>
+							</ul>
+						</div>
+						<div class="list-area">
+							<ul>
+								<li><a href="#">[구로구] 개봉역센트레빌레우스 (민간임대 임미다아앙아아아앙)</a><span class="home-ing">분양중</span></li>
+								<li><a href="#">[강남구] 개나리 4차 재건축</a><span class="home-soon">분양예정</span></li>
+								<li><a href="#">[송파구] 롯데캐슬</a><span class="home-soon">분양예정</span></li>
+								<li><a href="#">[구로구] 개봉역센트레빌레우스 (민간임대 임미다아앙아아아앙)</a><span class="home-ing">분양중</span></li>
+								<li><a href="#">[강남구] 개나리 4차 재건축</a><span class="home-soon">분양예정</span></li>
+								<li><a href="#">[송파구] 롯데캐슬</a><span class="home-soon">분양예정</span></li>
+							</ul>
+						</div>
+					</div>
+					<div class="map-news">
+						<h2>분양뉴스</h2>
+						<ul>
+							<li><a href="#">
+								<span class="img">분양뉴스 사진영역</span>
+								<span class="tit">쌍용건물 쌍용건물 쌍용건물 쌍용건물 쌍용건물 쌍용건물</span>
+								<span class="sub">역세권 어쩌구 저쩌구 사당에서 강남을 누려라!!! 화이또!!! 역세권 어쩌구 저쩌구 역세권 어쩌구 저쩌구 역세권 어쩌구 저쩌구 역세권 어쩌구 저쩌구 강남을 누려라!!! 화이또!!! 강남을 누려라!!! 화이또!!!</span>
+							</a></li>
+							<li><a href="#">뉴스임미당</a></li>
+							<li><a href="#">뉴스임미당</a></li>
+							<li><a href="#">뉴스임미당</a></li>
+							<li><a href="#">뉴스임미당</a></li>
+							<li><a href="#">뉴스임미당</a></li>
+							<li><a href="#">뉴스임미당</a></li>
+						</ul>
+					</div>
+				</div>			
 			</div>
-		</div>
-		<h2>내놓기 이용하기</h2>
-		<div class="step-area map-info">
-			<ol>
-				<li><span class="step-num">STEP 1</span> <span
-					class="step-name">내 매물정보 입력</span></li>
-				<li><span class="step-num">STEP 2</span> <span
-					class="step-name">내 매물을 팔아줄 동네 중개사가 의견 제공</span></li>
-				<li><span class="step-num">STEP 3</span> <span
-					class="step-name">마음에 드는 중개사 선택</span></li>
-				<li><span class="step-num">STEP 4</span> <span
-					class="step-name">거래진행</span></li>
-			</ol>
-		</div>
-		<h2>찾아주세요 이용하기</h2>
-		<div class="step-area map-info">
-			<ol>
-				<li><span class="step-num">STEP 1</span> <span
-					class="step-name">희망하는 매물정보 입력</span></li>
-				<li><span class="step-num">STEP 2</span> <span
-					class="step-name">내가 원하는 매물을 찾아줄 동네 중개사가 의견 제공</span></li>
-				<li><span class="step-num">STEP 3</span> <span
-					class="step-name">마음에 드는 중개사 선택</span></li>
-				<li><span class="step-num">STEP 4</span> <span
-					class="step-name">거래진행</span></li>
-			</ol>
-		</div>
-	</div>
-	<!-- //jsp body 영역 -->
-
-</div>
+			</div>

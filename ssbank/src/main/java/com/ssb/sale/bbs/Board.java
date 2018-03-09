@@ -18,8 +18,14 @@ public class Board {
 	public void setNum(int num) {
 		this.num = num;
 	}
-	private String userName, userId, subject, content, createDate;
-    private int hitCount;
+	private String userName, userId, subject, content, createDate,boardPwd;
+    public String getBoardPwd() {
+		return boardPwd;
+	}
+	public void setBoardPwd(String boardPwd) {
+		this.boardPwd = boardPwd;
+	}
+	private int hitCount;
     private int replyCount;
     private int fileSize;
 	public int getFileSize() {

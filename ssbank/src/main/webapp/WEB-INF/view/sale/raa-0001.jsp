@@ -13,14 +13,7 @@
 <div class="content">
 	<div class="page-con">
 		<div class="menu-wrap">
-			<div class="menu-area">
-				<ul>
-					<li><a href="#" class="active">매물/시세</a></li>
-					<li><a href="<%=cp %>/sale/raa-0002" class="">내놓기</a></li>
-					<li><a href="#" class="">청약</a></li>
-					<li><a href="#" class="">고객게시판</a></li>
-				</ul>
-			</div>
+	<h1>매물/시세</h1>
 			<div class="hover-menu mb50">
 				<ul>
 					<li><a href="#" class="">아파트</a></li>
@@ -133,4 +126,4 @@ var mapOptions = {
 
 var map = new naver.maps.Map('map', mapOptions);
 </script>
-<!-- //jsp body 영역 -->
+<!-- //jsp body 영역 -->z

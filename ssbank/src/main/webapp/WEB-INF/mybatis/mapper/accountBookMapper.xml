@@ -5,8 +5,18 @@
 	
 	<select id="listAllAccountBook" parameterType="map"
 		resultType="com.ssb.accountBook.AccountBook">
-		SELECT * FROM ( SELECT acBookIdx, TO_CHAR(accountBookDate, 'YYYY-MM-DD') accountBookDate, content, amount, categoryIdx, classIdx
+		SELECT * FROM ( SELECT acBookIdx, TO_CHAR(accountBookDate, 'YYYY-MM-DD') accountBookDate,
+		content, amount, categoryIdx, classIdx
 		FROM accountBook WHERE memberIdx = 16 ORDER BY accountBookDate DESC
 		)
 	</select>
+	
+	<insert id="insertAccountBook" parameterType="com.ssb.accountBook.AccountBook">
+		INSERT INTO accountBook(acBookIdx, accountBookDate, content, amount, categoryIdx, classIdx)
+		VALUES
+		(account_seq.NEXTVAL, SYSDATE, #{content}, #{amount}, #{categoryIdx}, #{classIdx})
+	</insert>
+	
+	<update id="updateAccountBook" parameterType="com.ssb.accountBook.AccountBook">
+	</update>
 </mapper>

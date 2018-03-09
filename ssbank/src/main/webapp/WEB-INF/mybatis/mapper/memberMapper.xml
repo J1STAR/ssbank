@@ -10,6 +10,13 @@
 		WHERE userId = #{userId}
 	</select>
 	
+	<select id="readMemberInfo" parameterType="String" resultType="map">
+		SELECT userId, m.memberIdx, lastName, firstName, ZIPCODE, ADDR1, ADDR2, TO_CHAR(BIRTH,'YYYY-MM-DD') BIRTH, TEL
+		FROM member m
+		LEFT OUTER JOIN memberInfo i ON m.MEMBERIDX = i.MEMBERIDX
+		WHERE m.memberIdx = #{memberIdx}
+	</select>
+	
 	<update id="updateLastLogin" parameterType="String">
 		UPDATE member SET lastLogin = SYSDATE
 		WHERE userId = #{userId}

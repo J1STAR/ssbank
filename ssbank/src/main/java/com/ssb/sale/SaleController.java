@@ -24,7 +24,7 @@ public class SaleController {
 	}
 
 	@RequestMapping(value = "/sale/raa-0002")
-	public String saleUploadMain() {
+	public String saleInsertMain() {
 		return ".sale.raa-0002";
 	}
 

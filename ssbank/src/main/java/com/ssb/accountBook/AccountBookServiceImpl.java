@@ -16,8 +16,12 @@ public class AccountBookServiceImpl implements AccountBookService {
 	
 	@Override
 	public int insertAccountBook(AccountBook dto) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result=0;
+		try {
+			result = dao.insertData("accountBook.insertAccountBook", dto);
+		} catch (Exception e) {
+		}
+		return result;
 	}
 
 	@Override
@@ -43,9 +47,13 @@ public class AccountBookServiceImpl implements AccountBookService {
 	}
 
 	@Override
-	public int updateAccountBook() {
-		// TODO Auto-generated method stub
-		return 0;
+	public int updateAccountBook(AccountBook dto) {
+		int result=0;
+		try {
+			result = dao.updateData("accountBook.updateAccountBook", dto);
+		} catch (Exception e) {
+		}
+		return result;
 	}
 
 }

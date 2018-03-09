@@ -35,6 +35,9 @@ public class AccountBookController {
 		System.out.println(info.getMemberIdx());
 		
 		List<AccountBook> listAll = service.listAllAccountBook(map);
+		AccountBook dto = null;
+		int update = service.updateAccountBook(dto);
+		
 		model.addAttribute("listAll", listAll);
 		
 		return ".acBookNcarBook.accountBook.write";

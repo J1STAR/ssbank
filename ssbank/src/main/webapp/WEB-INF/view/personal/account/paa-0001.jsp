@@ -105,9 +105,9 @@
 			dataType	:	"json",
 			success	:	function(data){
 				
-				if(data.listAccount.length == 0){
+				if(data.listAccount.length == 0 || data.listAccount == null){
 					var $tr = $("<tr>");
-					var $td = $("<td>");
+					var $td = $("<td class='noAcInfo'>");
 
 					$td.prop("colspan", "6").html("계좌가 존재하지 않습니다.");
 					$tr.append($td);
@@ -118,28 +118,28 @@
 					$.each(data.listAccount, function(index, account){
 						var $tr = $("<tr>");
 						
-						var $td = $("<td>");
+						var $td = $("<td class='acInfo'>");
 						$td.html(account.PRODUCTNAME);
 						$tr.append($td);
 						
-						$td = $("<td>");
+						$td = $("<td class='acInfo'>");
 						$td.html(account.ACCOUNTNO);
 						$tr.append($td);
 						
-						$td = $("<td>");
+						$td = $("<td class='acInfo'>");
 						$td.html(account.CREATEDATE);
 						$tr.append($td);
 						
-						$td = $("<td>");
+						$td = $("<td class='acInfo'>");
 						$td.html(account.TRDATE);
 						$tr.append($td);
 						
-						$td = $("<td>");
+						$td = $("<td class='acInfo'>");
 						totalBalance += account.BALANCE;
 						$td.html(numberWithCommas(account.BALANCE));
 						$tr.append($td);
 						
-						$td = $("<td>");
+						$td = $("<td class='acInfo'>");
 						$td.html("<a href='<%=cp%>/personal/transactionList' class='btn-type-gray medium'>조회</a>"+
 								"<a href='<%=cp%>/personal/transaction' class='btn-type-blue1 medium'>이체</a>");
 						$tr.append($td);

@@ -63,30 +63,40 @@
 					</colgroup>
 					<tbody>
 						<tr>
-							<th scope="col">성 / 이름</th>
-							<td scope="col"><input type="text" name="lastName" class="" ${mode == 'created' ? '' : 'readonly'}> / <input type="text" name="firstName" class="" ${mode == 'created' ? '' : 'readonly'}></td>
+							<c:choose>
+								<c:when test="">
+									<th scope="col">성 / 이름</th>
+									<td scope="col"><input type="text" name="lastName" class=""> / <input type="text" name="firstName" class=""></td>
+								</c:when>
+								<c:otherwise>
+									<th scope="col">성</th>
+									<td scope="col"><input type="text" name="userName" class="modiTarget" readonly value="${sessionScope.member.userName }">
+								</c:otherwise>
+							</c:choose>
 						</tr>
 						<tr>
 							<th>이메일</th>
 							<td>
-								<c:if test="${mode == 'created'}">
-									<input type="text" name="email1" class="" >
-									<span>@</span>
-									<input type="text" name="email2" class="">
-									<div class="item-select">
-										<select name="item-select-email">
-											<option>직접입력</option>
-											<option>naver.com</option>
-											<option>gmail.com</option>
-											<option>hanmail.com</option>
-										</select>
-									</div>
-									<span class="check-false">이미 존재하는 이메일입니다.</span>
-									<span class="check-true">가입가능한 이메일입니다.</span>
-								</c:if>
-								<c:if test="${mode == 'update'}">
-
-								</c:if>
+								<c:choose>
+									<c:when test="${mode == 'created'}">
+										<input type="text" name="email1" class="" >
+										<span>@</span>
+										<input type="text" name="email2" class="">
+										<div class="item-select">
+											<select>
+												<option>직접입력</option>
+												<option>naver.com</option>
+												<option>gmail.com</option>
+												<option>hanmail.com</option>
+											</select>
+										</div>
+										<span class="check-false">이미 존재하는 이메일입니다.</span>
+										<span class="check-true">가입가능한 이메일입니다.</span>
+									</c:when>
+									<c:otherwise>
+										<input type="text" name="email" class="modiTarget" readonly value="${sessionScope.member.userId }">
+									</c:otherwise>
+								</c:choose>
 							</td>
 						</tr>
 						<tr>
@@ -118,7 +128,7 @@
 							<th>휴대폰</th>
 							<td>
 								<div class="item-select">
-									<select name="tel1">
+									<select class="item-select-tel">
 										<option value="">선택</option>
 										<option value="010">010</option>
 										<option value="011">011</option>
@@ -132,11 +142,6 @@
 								<input type="text" name="tel2" class="" style="width: 120px;" maxlength="4">
 								<span> - </span>
 								<input type="text" name="tel3" class="" style="width: 120px;" maxlength="4">
-								<!-- <div class="item-checkbox">
-									<input type="checkbox" id="mbj0002-03">
-									<label for="mbj0002-03">없음</label>
-								</div>
-								<span><em>* 휴대폰 없으신 분은 '없음' 선택</em></span> -->
 							</td>
 						</tr>
 					</tbody>
@@ -144,7 +149,7 @@
 			</div>
 			<div class="btn-area">
 			    <a href="javascript:history.back()" class="btn-type-gray1 big">취소</a>
-			    <a href="" id="memberJoin" class="btn-type-blue1 big">확인</a>
+			    <a href="" id="memberModi" class="btn-type-blue1 big">확인</a>
 			</div>
 		</div>
 	</form>
@@ -170,15 +175,17 @@ var tel3 = $("input[name=tel3]");
 
 $(function(){
 	
-	$("#memberJoin").click(function(event){
+	readMemberInfo();
+	
+	$("#memberModi").click(function(event){
 		event.preventDefault();
 		
 		if(validInfoCheck()){
 			var form = document.entryInfo;
 			
 			var mode = "${mode}";
-			if(mode == "created"){
-				form.action = "<%=cp%>/member/memberJoin";
+			if(mode == "update"){
+				form.action = "<%=cp%>/member/memberModiSubmit";
 			} else {
 				
 			}
@@ -360,172 +367,31 @@ function daumPostcode() {
 	}).open();
 }
 
-<%-- function memberOk() {
-	var f = document.memberForm;
-	var str;
+function readMemberInfo(){
+	var url = "<%= cp %>/member/readMemberInfo"
+	var query = "memberIdx=${sessionScope.member.memberIdx}";
 
-	str = f.userId.value;
-	str = str.trim();
-	if(!str) {
-		alert("아이디를 입력하세요. ");
-		f.userId.focus();
-		return;
-	}
-	if(!/^[a-z][a-z0-9_]{4,9}$/i.test(str)) { 
-		alert("아이디는 5~10자이며 첫글자는 영문자이어야 합니다.");
-		f.userId.focus();
-		return;
-	}
-	f.userId.value = str;
-
-	str = f.userPwd.value;
-	str = str.trim();
-	if(!str) {
-		alert("패스워드를 입력하세요. ");
-		f.userPwd.focus();
-		return;
-	}
-	if(!/^(?=.*[a-z])(?=.*[!@#$%^*+=-]|.*[0-9]).{5,10}$/i.test(str)) { 
-		alert("패스워드는 5~10자이며 하나 이상의 숫자나 특수문자가 포함되어야 합니다.");
-		f.userPwd.focus();
-		return;
-	}
-	f.userPwd.value = str;
-
-	if(str!= f.userPwdCheck.value) {
-        alert("패스워드가 일치하지 않습니다. ");
-        f.userPwdCheck.focus();
-        return;
-	}
-	
-    str = f.userName.value;
-	str = str.trim();
-    if(!str) {
-        alert("이름을 입력하세요. ");
-        f.userName.focus();
-        return;
-    }
-    f.userName.value = str;
-
-    str = f.birth.value;
-	str = str.trim();
-    if(!str || !isValidDateFormat(str)) {
-        alert("생년월일를 입력하세요[YYYY-MM-DD]. ");
-        f.birth.focus();
-        return;
-    }
-    
-    str = f.tel1.value;
-	str = str.trim();
-    if(!str) {
-        alert("전화번호를 입력하세요. ");
-        f.tel1.focus();
-        return;
-    }
-
-    str = f.tel2.value;
-	str = str.trim();
-    if(!str) {
-        alert("전화번호를 입력하세요. ");
-        f.tel2.focus();
-        return;
-    }
-    if(!/^(\d+)$/.test(str)) {
-        alert("숫자만 가능합니다. ");
-        f.tel2.focus();
-        return;
-    }
-
-    str = f.tel3.value;
-	str = str.trim();
-    if(!str) {
-        alert("전화번호를 입력하세요. ");
-        f.tel3.focus();
-        return;
-    }
-    if(!/^(\d+)$/.test(str)) {
-        alert("숫자만 가능합니다. ");
-        f.tel3.focus();
-        return;
-    }
-    
-    str = f.email1.value;
-	str = str.trim();
-    if(!str) {
-        alert("이메일을 입력하세요. ");
-        f.email1.focus();
-        return;
-    }
-
-    str = f.email2.value;
-	str = str.trim();
-    if(!str) {
-        alert("이메일을 입력하세요. ");
-        f.email2.focus();
-        return;
-    }
-
-    var mode="${mode}";
-    
-    if(mode=="created")
-   		f.action = "<%=cp%>/member/member";
-	else
-   		f.action = "<%=cp%>/member/update";
-
-    f.submit();
-}
-
-function changeEmail() {
-	
-    var f = document.memberForm;
-	    
-    var str = f.selectEmail.value;
-    if(str!="direct") {
-        f.email2.value=str; 
-        f.email2.readOnly = true;
-        f.email1.focus(); 
-    }
-    else {
-        f.email2.value="";
-        f.email2.readOnly = false;
-        f.email1.focus();
-    }
-}
-
-function userIdCheck() {
-	var str = $("#userId").val();
-	str = str.trim();
-	if(!/^[a-z][a-z0-9_]{4,9}$/i.test(str)) { 
-		$("#userId").focus();
-		return;
-	}
-	
-	var url="<%=cp%>/member/userIdCheck";
-		var q = "userId=" + str;
-
-		$.ajax({
-			type : "post",
-			url : url,
-			data : q,
-			dataType : "json",
-			success : function(data) {
-				var p = data.passed;
-				if (p == "true") {
-					var s = "<span style='color:blue;font-weight:bold;'>" + str
-							+ "</span> 아이디는 사용 가능합니다.";
-					$("#userId").parent().next(".help-block").html(s);
-				} else {
-					var s = "<span style='color:red;font-weight:bold;'>" + str
-							+ "</span> 아이디는 사용할 수 없습니다.";
-					$("#userId").parent().next(".help-block").html(s);
-					$("#userId").val("");
-					$("#userId").focus();
-				}
-			},
-			error : function(e) {
-				console.log(e.responseText);
+	$.ajax({
+		url		: url,
+		type		: "GET",
+		data		: query,
+		dataType	: "json",
+		success	: function(data) {
+			if(data != null){
+				$("input[name=zipCode]").val(data.member.ZIPCODE);
+				$("input[name=addr1]").val(data.member.ADDR1);
+				$("input[name=addr2]").val(data.member.ADDR2);
+				$("input[name=birth]").val(data.member.BIRTH);
+				
+				var telInfo = (data.member.TEL).split("-");
+				$("select[class=item-select-tel]").val(telInfo[0]);
+				$("input[name=tel2]").val(telInfo[1]);
+				$("input[name=tel3]").val(telInfo[2]);
 			}
-		});
-
-	} --%>
+		},
+		error	: function(e) {
+			console.log(e.responseText)
+		}
+	});
+}
 </script>
