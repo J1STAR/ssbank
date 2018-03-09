@@ -1,26 +1,31 @@
 package com.ssb.newsBoard;
 
 public class NewsReply {
-	private int replyNum, num;
-	private String userId, userName;
-	private String content, created;
+	private int replyIdx, boardIdx, memberIdx;
+	private String userId;
+	private String content, createDate;
 	private int answer;
 	
 	private int answerCount;
 	private int likeCount;
 	private int disLikecount;
-	
-	public int getReplyNum() {
-		return replyNum;
+	public int getReplyIdx() {
+		return replyIdx;
 	}
-	public void setReplyNum(int replyNum) {
-		this.replyNum = replyNum;
+	public void setReplyIdx(int replyIdx) {
+		this.replyIdx = replyIdx;
 	}
-	public int getNum() {
-		return num;
+	public int getBoardIdx() {
+		return boardIdx;
 	}
-	public void setNum(int num) {
-		this.num = num;
+	public void setBoardIdx(int boardIdx) {
+		this.boardIdx = boardIdx;
+	}
+	public int getMemberIdx() {
+		return memberIdx;
+	}
+	public void setMemberIdx(int memberIdx) {
+		this.memberIdx = memberIdx;
 	}
 	public String getUserId() {
 		return userId;
@@ -28,23 +33,17 @@ public class NewsReply {
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}
-	public String getUserName() {
-		return userName;
-	}
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
 	public String getContent() {
 		return content;
 	}
 	public void setContent(String content) {
 		this.content = content;
 	}
-	public String getCreated() {
-		return created;
+	public String getCreateDate() {
+		return createDate;
 	}
-	public void setCreated(String created) {
-		this.created = created;
+	public void setCreateDate(String createDate) {
+		this.createDate = createDate;
 	}
 	public int getAnswer() {
 		return answer;
@@ -70,4 +69,6 @@ public class NewsReply {
 	public void setDisLikecount(int disLikecount) {
 		this.disLikecount = disLikecount;
 	}
+	
+	
 }

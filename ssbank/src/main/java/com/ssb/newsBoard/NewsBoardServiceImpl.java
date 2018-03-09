@@ -21,7 +21,7 @@ public class NewsBoardServiceImpl implements NewsBoardService{
 	public int insertBoard(NewsBoard dto, String pathname) {
 		int result = 0;
 		try {
-			result = dao.insertData("newsBoard.inserBoard", dto);
+			result = dao.insertData("newsBoard.insertBoard", dto);
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
@@ -54,10 +54,10 @@ public class NewsBoardServiceImpl implements NewsBoardService{
 	
 	// 게시물 가져오기
 	@Override
-	public NewsBoard readBoard(int num) {
+	public NewsBoard readBoard(int boardIdx) {
 		NewsBoard dto = null;
 		try {
-			dto = dao.selectOne("newsBoard.readBoard", num);
+			dto = dao.selectOne("newsBoard.readBoard", boardIdx);
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
@@ -65,10 +65,10 @@ public class NewsBoardServiceImpl implements NewsBoardService{
 	}
 
 	@Override
-	public int updateHitCount(int num) {
+	public int updateHitCount(int boardIdx) {
 		int result = 0;
 		try {
-			result = dao.updateData("newsBoard.updateHitCount", num);
+			result = dao.updateData("newsBoard.updateHitCount", boardIdx);
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
@@ -110,14 +110,14 @@ public class NewsBoardServiceImpl implements NewsBoardService{
 	}
 
 	@Override
-	public int deleteBoard(int num, String pathname, String userId) {
+	public int deleteBoard(int boardIdx, String pathname, String userId) {
 		int result = 0;
 		try {
-			NewsBoard dto = readBoard(num);
+			NewsBoard dto = readBoard(boardIdx);
 			if(dto == null || (!userId.equals("admin") && !userId.equals(dto.getUserId())))
 				return result;
 			
-			dao.deleteData("newsBoard.deleteBoard", num);
+			dao.deleteData("newsBoard.deleteBoard", boardIdx);
 			result = 1;
 		} catch (Exception e) {
 		}
@@ -125,91 +125,14 @@ public class NewsBoardServiceImpl implements NewsBoardService{
 	}
 
 	@Override
-	public int insertReply(NewsReply dto) {
-		int result = 0;
+	public List<NewsBoard> listCategory() {
+		List<NewsBoard> list = null;
 		try {
-			result = dao.insertData("newsBoard.insertReply", dto);
-		} catch (Exception e) {
-			System.out.println(e.toString());
-		}
-		return result;
-	}
-
-	@Override
-	public List<NewsReply> listReply(Map<String, Object> map) {
-		List<NewsReply> list = null;
-		try {
-			list = dao.selectList("newsBoard.listReply", map);
+			list = dao.selectList("newsBoard.listCategory");
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
 		return list;
-	}
-
-	@Override
-	public int replyCount(Map<String, Object> map) {
-		int result = 0;
-		try {
-			result = dao.selectOne("newsBoard.replyCount", map);
-		} catch (Exception e) {
-			System.out.println(e.toString());
-		}
-		return result;
-	}
-
-	@Override
-	public int deleteReply(Map<String, Object> map) {
-		int result = 0;
-		try {
-			result = dao.deleteData("newsBoard.deleteReply", map);
-		} catch (Exception e) {
-			System.out.println(e.toString());
-		}
-		return result;
-	}
-
-	@Override
-	public List<NewsReply> listReplyAnswer(int answer) {
-		List<NewsReply> list = null;
-		try {
-			list = dao.selectList("newsBoard.listReplyAsnwer", answer);
-		} catch (Exception e) {
-			System.out.println(e.toString());
-		}
-		return list;
-	}
-
-	@Override
-	public int replyAnswerCount(int answer) {
-		int result = 0;
-		try {
-			result = dao.selectOne("newsBoard.replyAnswerCount", answer);
-		} catch (Exception e) {
-			System.out.println(e.toString());
-		}
-		return result;
-	}
-
-	@Override
-	public int insertReplyLike(Map<String, Object> map) {
-		int result = 0;
-		try {
-			result = dao.insertData("newsBoard.insertReplyLike", map);
-		} catch (Exception e) {
-			System.out.println(e.toString());
-		}
-		return result;
-	}
-
-	@Override
-	public Map<String, Object> replyLikeCount(Map<String, Object> map) {
-		Map<String, Object> countMap = null;
-		try {
-			countMap = dao.selectOne("newsBoard.replyLikeCount", map);
-		} catch (Exception e) {
-			System.out.println(e.toString());
-		}
-		return countMap;
 	}
 
 }
