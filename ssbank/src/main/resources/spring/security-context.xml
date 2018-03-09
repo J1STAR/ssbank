@@ -30,7 +30,6 @@
 			<intercept-url pattern="/member/memberJoin*" access="permitAll" />
 			<intercept-url pattern="/member/memberModi*" access="hasAnyRole('ROLE_USER, ROLE_ADMIN')" />
 
-
 			<intercept-url pattern="/customer/newsBoard" access="hasAnyRole('ROLE_USER, ROLE_ADMIN')"/>
 		    <intercept-url pattern="/customer/newsBoard/created" access="hasRole('ROLE_ADMIN')"/>
 		    <intercept-url pattern="/customer/newsBoard/update" access="hasRole('ROLE_ADMIN')"/>

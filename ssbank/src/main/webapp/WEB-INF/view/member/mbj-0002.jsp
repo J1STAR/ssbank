@@ -274,6 +274,15 @@ function validInfoCheck(){
 		return false;
 	}
 	
+	if(! (userPwd.val().trim() == userPwdConfirm.val().trim()) ){
+		alert("입력한 비밀번호와 확인용 비밀번호가 일치하지 않습니다.");
+		if(! userPwd.val().trim()){
+			userPwd.focus();	
+		}
+		
+		return false;
+	}
+	
 	if(! birth.val().trim()){
 		alert("생일이 입력되지 않았습니다.");
 		if(! birth.val().trim())
