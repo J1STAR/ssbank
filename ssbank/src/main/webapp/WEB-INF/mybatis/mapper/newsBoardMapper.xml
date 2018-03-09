@@ -49,7 +49,9 @@
 	 <!-- 글개수 -->
 	 <select id="dataCount" resultType="Integer" parameterType="map">
 	 	SELECT NVL(COUNT(*), 0)
-	 		FROM board b JOIN memberInfo m ON b.memberIdx = m.memberIdx
+	 		FROM board b
+			JOIN member m1 ON b.memberIdx = m1.memberIdx
+            JOIN memberInfo m2 ON b.memberIdx = m2.memberIdx
 	 	<where>
 	 		<if test="searchValue != null and searchValue != '' ">
 	 			<include refid="where-nib"/>
@@ -82,7 +84,6 @@
 				GROUP BY boardIdx
 			) c ON b.boardIdx = c.boardIdx
 			<where>
-				categoryIdx = 1
 				<if test="searchValue != null and searchValue != ''">
 					<include refid="where-nib" />
 				</if>
