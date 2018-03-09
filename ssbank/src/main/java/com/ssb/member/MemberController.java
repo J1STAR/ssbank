@@ -78,39 +78,43 @@ public class MemberController {
 		return model;
 	}
 	
-	
+	@RequestMapping(value="/member/submitOK")
+	public String submitOKForm(HttpSession session, Member dto, @RequestParam String mode, Model model) {
+		
+		model.addAttribute("dto", dto);
+		model.addAttribute("mode", mode);
+		
+		session.invalidate();
+		
+		return ".member.mbj-0003";
+	}
 	
 	
 	
 	
 	/////////////////////////////////////////////////////////////
 	@RequestMapping(value="/member/memberJoinSubmit", method=RequestMethod.POST)
-	public String memberSubmit(Member dto, Model model) {
+	@ResponseBody
+	public Map<String, Object> memberSubmit(Member dto) {
 		
 		// 패스워드 암호화
 		String hashed = encryptPwd(dto.getUserPwd());
 		dto.setUserPwd(hashed);
 		
+		Map<String, Object> model = new HashMap<>();
 		try {
 			service.insertMember(dto);
+			model.put("status", "success");
 		}catch(Exception e) {
-			model.addAttribute("message", "회원가입이 실패했습니다. 다른 아이디로 다시 가입하시기 바랍니다.");
-			return ".member.mbj-0002";
+			model.put("status", "failed");
 		}
 		
-		StringBuffer sb=new StringBuffer();
-		dto.setUserName(dto.getLastName() + dto.getFirstName());
-		sb.append(dto.getUserName() + "님의 회원 가입이 정상적으로 처리되었습니다.<br>");
-		sb.append("메인화면으로 이동하여 로그인 하시기 바랍니다.<br>");
-		
-		model.addAttribute("message", sb.toString());
-		model.addAttribute("dto", dto);
-		
-		return ".member.mbj-0003";
+		return model;
 	}
 	
 	@RequestMapping(value="/member/memberModiSubmit", method=RequestMethod.POST)
-	public String memberModiSubmit(Member dto, Model model) {
+	@ResponseBody
+	public Map<String, Object> memberModiSubmit(Member dto) {
 		
 		String hashed = null; 
 		if(dto.getUserPwd() == null || dto.getUserPwd().equals("")) {
@@ -121,8 +125,15 @@ public class MemberController {
 		}
 		dto.setUserPwd(hashed);
 		
+		Map<String, Object> model = new HashMap<>();
+		try {
+			service.updateMember(dto);
+			model.put("status", "success");
+		} catch (Exception e) {
+			model.put("status", "failed");
+		}
 		
-		return ".member.mbj-0003";
+		return model;
 	}
 	
 	@RequestMapping(value="/member/memberPwdCheck", method=RequestMethod.POST)

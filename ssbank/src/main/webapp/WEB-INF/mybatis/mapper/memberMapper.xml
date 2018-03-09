@@ -40,9 +40,19 @@
 		}
 	</insert>
 	
-	<update id="updateMember" parameterType="com.ssb.member.Member">
-		UPDATE member SET userPwd =#{userPwd},address=#{address} ,gender=#{gender},birth=#{birth},tel=#{tel}
-		WHERE userId =#{userId}
+	<update id="updateMember" parameterType="com.ssb.member.Member" statementType="CALLABLE"
+		useGeneratedKeys="false">
+		{
+			CALL pUpdateMember(
+				#{zipCode, jdbcType=VARCHAR, mode=IN},
+				#{addr1, jdbcType=VARCHAR, mode=IN},
+				#{addr2, jdbcType=VARCHAR, mode=IN},
+				#{birth, jdbcType=VARCHAR, mode=IN},
+				#{tel, jdbcType=VARCHAR, mode=IN},
+				#{userPwd, jdbcType=VARCHAR, mode=IN},
+				#{memberIdx, jdbcType=INTEGER, mode=IN}
+			)
+		}
 	</update>
 	
 	<update id="updateMemberEnabled" parameterType="map">
