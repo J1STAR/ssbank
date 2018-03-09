@@ -8,7 +8,7 @@
 <!-- article -->
 <script type="text/javascript">
 function deleteBoard() {
-<c:if test="${sessionScope.member.userId=='admin' || sessionScope.member.userId==dto.userId}">
+<c:if test="${sessionScope.member.userId == 'admin' }">
 	var boardIdx = "${dto.boardIdx}";
 	var page = "${page}";
 	var query = "boardIdx="+boardIdx+"&page="+page;
@@ -18,13 +18,13 @@ function deleteBoard() {
 			location.href=url;
 	}
 </c:if>    
-<c:if test="${sessionScope.member.userId!='admin' && sessionScope.member.userId!=dto.userId}">
+<c:if test="${sessionScope.member.userId == 'admin' }">
 	alert("게시물을 삭제할 수  없습니다.");
 </c:if>
-}
+} 
 
 function updateBoard() {
-<c:if test="${dto.userId == 'admin'}">
+<c:if test="${dto.userId == sessionScope.member.userId || sessionScope.member.userId == 'admin' }">
 	var boardIdx = "${dto.boardIdx}";
 	var page = "${page}";
 	var query = "boardIdx="+boardIdx+"&page="+page;
@@ -33,7 +33,7 @@ function updateBoard() {
 	location.href=url;
 </c:if>
 
-<c:if test="${sessionScope.member.userId!=dto.userId}">
+<c:if test="${dto.userId == sessionScope.member.userId || sessionScope.member.userId == 'admin' }">
 	alert("게시물을 수정할 수  없습니다.");
 </c:if>
 }
@@ -95,10 +95,10 @@ function login() {
 			<table style="width: 100%; margin: 0px auto 20px; border-spacing: 0px;">
 				<tr height="45">
 				    <td align="left">
-				       <c:if test="${sessionScope.member.userId=='admin'}">				    
+				       <c:if test="${dto.userId == sessionScope.member.userId || sessionScope.member.userId == 'admin' }">				    
 				          <a class="btn-type-blue1 medium" onclick="updateBoard();">수정</a>
 				       </c:if>
-				       <c:if test="${sessionScope.member.userId=='admin'}">				    
+				       <c:if test="${sessionScope.member.userId == 'admin' }">				    
 				          <a class="btn-type-gray1 medium" onclick="deleteBoard();">삭제</a>
 				       </c:if>
 				    </td>

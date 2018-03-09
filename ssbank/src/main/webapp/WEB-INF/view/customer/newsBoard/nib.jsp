@@ -54,7 +54,12 @@
 				</div>
 				<div class="btns">
 					<a href="javascript:location.href='<%=cp%>/customer/newsBoard/newsList';" class="btn-type-gray medium mt20 fl">새로고침</a>
-					<a href="javascript:location.href='<%=cp%>/customer/newsBoard/writeNews';" class="btn-type-blue1 medium mt20 fr">글올리기</a>
+				</div>	
+				<div class="btns">	
+					<c:if test="${sessionScope.member.userId == 'admin'}">
+						<%-- <a href="javascript:location.href='<%=cp%>/customer/newsBoard/writeNews';" class="btn-type-blue1 medium mt20 fr">글올리기</a> --%>
+						<a href="javascript:location.href='<%=cp%>/customer/newsBoard/writeNews';" class="btn-type-blue1 medium mt20 fr">글올리기</a>
+					</c:if>
 				</div>
 				<div class="page-nav">
 					<ul>

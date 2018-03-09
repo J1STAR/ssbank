@@ -10,6 +10,8 @@ import com.ssb.common.FileManager;
 import com.ssb.common.dao.CommonDAO;
 import com.ssb.newsBoard.NewsBoard;
 
+import ch.qos.logback.core.net.SyslogOutputStream;
+
 @Service("noticeBoard.noticeService")
 public class NoticeServiceImpl implements NoticeService{
 	@Autowired
@@ -75,20 +77,36 @@ public class NoticeServiceImpl implements NoticeService{
 
 	@Override
 	public Notice preReadNotice(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return null;
+		Notice dto = null;
+		try {
+			dto = dao.selectOne("notice.preReadNotice", map);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return dto;
 	}
 
 	@Override
 	public Notice nextReadNotice(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return null;
+		Notice dto = null;
+		try {
+			dto = dao.selectOne("notice.nextReadNotice", map);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return dto;
 	}
 
 	@Override
 	public int updateNotice(Notice dto, String pathname) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = 0;
+		try {
+			dao.updateData("notice.updateNotice", dto);
+			result = 1;
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return result;
 	}
 
 	@Override
