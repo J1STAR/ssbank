@@ -8,8 +8,14 @@
 
 /* 장한별 css */
 .menu-wrap.depth-two .menu-area  { width: 100%; padding: 0;}
-.menu-wrap.depth-two .menu-area li {top: 0px; padding-right: 0px;}
-.menu-wrap.depth-two .menu-area li a { line-height: 72px; } 
+.menu-wrap.depth-two .menu-area li { top: 0px; padding-right: 0px; }
+.menu-wrap.depth-two .menu-area li a { line-height: 72px; }
+
+.table-wrap .table-hori tr td.noAcInfo { height: 48px; }
+.table-wrap .table-hori tr td.acInfo { height: 48px; }
+
+input[type=text].modiTarget { width: 50%; }
+input[type=password].modiTarget { width: 50%; }
 
 /* 방민주 css */
 .info-area .box-agree li.fdn {height: 50px;line-height: 50px}
@@ -45,8 +51,16 @@ td #sltIO {
 	border-right: 1px solid #ddd;
 }
 
+<<<<<<< HEAD
 #sltIO select {
+=======
+#my-tbody .item-radio + .item-radio {
+	margin-right: 0;
+}
+/* 
+.item-select {
+>>>>>>> branch 'master' of https://github.com/J1STAR/ssbank/
 	width: 100%;
 	border: none;
 }
-
+ */

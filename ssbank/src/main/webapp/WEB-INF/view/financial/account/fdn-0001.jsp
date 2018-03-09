@@ -83,7 +83,7 @@ $(function(){
 	$("#nextAccount").click(function(event){
 		event.preventDefault();
 		if($("#fdn0001-01").prop("checked") && $("input[name=newOk]:checked").val()=="true"){
-			location.href="<%=cp %>/financial/account/fdn0002";
+			location.href="<%=cp %>/financial/account/fdn0002?productIdx=${productIdx}";
 		}
 	});
 });

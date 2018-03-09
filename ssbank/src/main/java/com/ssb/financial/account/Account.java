@@ -39,6 +39,7 @@ public class Account {
 	private String trDate;
 	private String content;
 	private String LastTrDate;
+	//주민번호 
 	private String ssn;
 	private String ssn1;
 	private String ssn2;

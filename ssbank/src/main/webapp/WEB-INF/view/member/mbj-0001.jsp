@@ -519,7 +519,7 @@
 			event.preventDefault();
 			
 			if( $("#mbj0001-01").prop("checked") && $("input[name=join01]:checked").val()=="true" && $("input[name=join02]:checked").val()=="true" ){
-				location.href="<%=cp %>/member/member-0002";
+				location.href="<%=cp %>/member/memberJoin-0002";
 			} else {
 				
 				/* 모든 약관에 동의를 하지 않았을 경우 dialog 출력 */

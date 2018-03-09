@@ -98,6 +98,21 @@
 	<select id="accountCancleCheck" parameterType="map" resultType="INTEGER">
 		SELECT COUNT(*) FROM account WHERE accountNo=#{accountNo} AND accountPwd=#{accountPwd}
 	</select>
-
-
+	
+	<select id="productName" parameterType="INTEGER" resultType="STRING">
+	SELECT productName FROM product WHERE productIdx=#{productIdx}
+	</select>
+	
+	<insert id="insertAccount" parameterType="com.ssb.financial.account.Account"
+			statementType="CALLABLE"
+			useGeneratedKeys="false">
+		{call pinsertaccount(
+			#{ssn,jdbcType=VARCHAR,mode=IN},
+			#{memberIdx,jdbcType=INTEGER,mode=IN},
+			#{accountPwd,jdbcType=VARCHAR,mode=IN},
+			#{productIdx,jdbcType=INTEGER,mode=IN}
+							)
+		}	
+	</insert>
+	
 </mapper>

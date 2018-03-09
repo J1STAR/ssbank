@@ -24,6 +24,21 @@ public class MemberServiceImpl implements MemberService {
 		}
 		return dto;
 	}
+	
+	@Override
+	public Map<String, Object> readMemberInfo(String memberIdx) {
+		Map<String, Object> result = null;
+		
+		System.out.println(memberIdx);
+		try {
+			result = dao.selectOne("member.readMemberInfo", memberIdx);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+	
+		return result;
+	}
+	
 
 	@Override
 	public void insertMember(Member dto) throws Exception {

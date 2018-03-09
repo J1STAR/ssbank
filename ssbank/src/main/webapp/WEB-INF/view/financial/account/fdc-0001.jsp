@@ -46,7 +46,11 @@ $(function(){
         </li>
         <li>
             <span class="step-num">2</span>
-            <span class="step-name">해지계좌 인증 및 계좌이체</span>
+            <span class="step-name">해지계좌 인증</span>
+        </li>
+        <li>
+            <span class="step-num">3</span>
+            <span class="step-name">해지계좌 잔액이체</span>
         </li>
         <li>
             <span class="step-num">4</span>
@@ -97,7 +101,7 @@ $(function(){
     </table>
 </div>
 <div class="btn-area">
-    <a href="javascript:location.href='<%=cp%>/financial/account" class="btn-type-gray1 big">취소</a>
+    <a onclick="javascript:location.href='<%=cp%>/financial/account" class="btn-type-gray1 big">취소</a>
     <a onclick="javascript:cancle();" class="btn-type-blue1 big">확인</a>
 </div>
 

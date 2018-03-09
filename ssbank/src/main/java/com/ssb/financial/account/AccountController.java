@@ -81,20 +81,28 @@ public class AccountController {
 		SessionInfo info = (SessionInfo) session.getAttribute("member");
 		// 로그인한 멤버 회원 정보 --0002에 이동시 같이 가야 함
 		Account in = service.newAccountMember(info.getMemberIdx());
+		String productName = service.productName(productIdx);
 		if (stage.equals("0002")) {
 			model.addAttribute("info", in);
-			model.addAttribute("productIdx",productIdx);
+			model.addAttribute("productName",productName);
 		}
+		model.addAttribute("productIdx",productIdx);
 		return ".financial.account.fdn-"+stage;
 	}
 
 	@RequestMapping(value = "/financial/account/accountNew", method = RequestMethod.POST)
-	public String newAccountSubmit(Account dto) {
+	public String newAccountSubmit(Account dto, @RequestParam int productIdx,Model model,HttpSession session) {
 		
-		System.out.println("controller : "+dto.toString());
-		//service.insertAccount(dto);
-
-		
+		//상품코드 넣기
+		dto.setProductIdx(productIdx);
+		SessionInfo info = (SessionInfo) session.getAttribute("member");
+		dto.setMemberIdx(info.getMemberIdx());
+		dto.setSsn(dto.getSsn1()+"-"+dto.getSsn2());
+		int result = service.insertAccount(dto);
+		if(result==0){
+			model.addAttribute("msg","주민번호가 일치 하지 않습니다.");
+			return ".financial.account.fdn-0002";
+		}
 		return ".financial.account.fdn-0003";
 	}
 
