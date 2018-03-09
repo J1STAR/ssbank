@@ -28,27 +28,42 @@ $(document).ready(function(){
 })
 
 function add_row() {
-    var my_tbody = document.getElementById('my-tbody');
+	var my_tbody = document.getElementById('my-tbody');
     //var row = my_tbody.insertRow(0); // 상단에 추가
     var row = my_tbody.insertRow( my_tbody.rows.length-1 ); // 하단에 추가
-    var cell1 = row.insertCell(0);
-    var cell2 = row.insertCell(1);
-    var cell3 = row.insertCell(2);
-    var cell4 = row.insertCell(3);
-    var cell5 = row.insertCell(4);
-    var cell6 = row.insertCell(5);
-    var cell6 = row.insertCell(6);
-    var cell6 = row.insertCell(7);
+    var cell1 = row.insertCell(0); //체크박스
+    var cell2 = row.insertCell(1); //날짜
+    var cell3 = row.insertCell(2); //내역
+    var cell4 = row.insertCell(3); //현금
+    var cell5 = row.insertCell(4); //카드
+    var cell6 = row.insertCell(5); //카테고리
+    var cell7 = row.insertCell(6); //입력및 수정
     
-    cell1.innerHTML = '';
-    cell2.innerHTML = '';
-    cell3.innerHTML = '';
-    cell4.innerHTML = '';
-    cell5.innerHTML = '';
-    cell6.innerHTML = '';
-    cell7.innerHTML = '';
+    cell1.innerHTML = '<div class="item-checkbox"><input type="checkbox" id="sltAll"><label for="sltAll"></label></div>';
+    cell2.innerHTML = '<input type="text" class="ACBtext" size="10" style="width=100%">';
+    cell3.innerHTML = '<input type="text" class="ACBtext" size="10" style="width=100%">';
+    cell4.innerHTML = '<input type="text" class="ACBtext" size="10" style="width=100%">';
+    cell5.innerHTML = '<input type="text" class="ACBtext" size="10" style="width=100%">';
+    cell6.innerHTML = 
+    	
+    	
+    	/* '<input type="text" class="ACBtext" size="10" style="width=100%">'; */
     cell7.innerHTML = '<a href="#" class="btn-type-blue1 medium">입력</a>';
   }
+  
+<%-- $(function(){
+	
+	$("#date").datepicker({
+		showOn:"button"
+		,buttonImage:"<%=cp %>/resource/images/ico_calendar.png"
+		,buttonImageOnly:true
+	});
+	
+	$(".ui-datepicker-trigger").css({
+		position:"absolute", width:"32px", height:"32px"
+	});
+	
+}); --%>
 </script>
 
 <!DOCTYPE html>
@@ -125,7 +140,7 @@ function add_row() {
 		<!--머리-->
         <colgroup>
             <col style="width:auto"/>
-            <col style="width:10%"/>
+            <col style="width:15%"/>
             <col style="width:15%"/>
             <col style="width:15%"/>
             <col style="width:15%"/>
@@ -160,12 +175,14 @@ function add_row() {
                     </div>
                 </td>
                 <td><input type="text" class="ACBtext" value="${dto.accountBookDate}" size="10" style="width=100%"></td>
+                <!-- <td><input type="text" class="" id="date" name="birth"></td> -->
                 <td><input type="text" class="ACBtext" value="${dto.content}" size="10" style="width=100%"></td>
                 <td><input type="text" class="ACBtext" value="" size="10" style="width=100%"></td>
                 <td><input type="text" class="ACBtext" value="${dto.amount}" size="10" style="width=100%"></td>
+                
                 <td>
-                	<div class="item-select" id="sltIO">
-                		 <select name="" id="">
+                	<div class="item-select" id="sltCat">
+                		 <select class="slt">
                             <option>카테고리</option>
                             <option>식비</option>
                             <option>주거/통신</option>
@@ -182,8 +199,7 @@ function add_row() {
                 	</div>
                 </td>
                 <td>
-                    <a href="#" class="btn-type-blue1 medium">입력</a>
-                	<!-- <a href="#" class="btn-type-gray small">수정</a> -->
+                    <a href="" class="btn-type-blue1 medium">입력</a>
                 </td>   
             </tr>
       </c:forEach>      
@@ -191,17 +207,10 @@ function add_row() {
             
             
             <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td>
+                <td colspan="8">
                 	<a onclick="add_row()" class="btn-type-gray1 small">추가</a>
                 	<a onclick="add_row()" class="btn-type-gray1 small">선택삭제</a>
-                </td>
-                <td></td>
-                <td></td>
-                <td></td>                
+                </td>                
             </tr>
             
         </tbody>

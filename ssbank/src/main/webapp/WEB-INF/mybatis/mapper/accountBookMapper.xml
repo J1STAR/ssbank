@@ -7,16 +7,19 @@
 		resultType="com.ssb.accountBook.AccountBook">
 		SELECT * FROM ( SELECT acBookIdx, TO_CHAR(accountBookDate, 'YYYY-MM-DD') accountBookDate,
 		content, amount, categoryIdx, classIdx
-		FROM accountBook WHERE memberIdx = 16 ORDER BY accountBookDate DESC
+		FROM accountBook WHERE memberIdx = #{memberIdx} ORDER BY accountBookDate ASC
 		)
 	</select>
 	
 	<insert id="insertAccountBook" parameterType="com.ssb.accountBook.AccountBook">
 		INSERT INTO accountBook(acBookIdx, accountBookDate, content, amount, categoryIdx, classIdx)
 		VALUES
-		(account_seq.NEXTVAL, SYSDATE, #{content}, #{amount}, #{categoryIdx}, #{classIdx})
+		(account_seq.NEXTVAL, #{accountBookDate}, #{content}, #{amount}, #{categoryIdx}, #{classIdx})
 	</insert>
 	
 	<update id="updateAccountBook" parameterType="com.ssb.accountBook.AccountBook">
+		UPDATE accountBook SET accountBookDate=#{accountBookDate}, content=#{content},
+		amount=#{amount}, categoryIdx=#{categodryIdx}, classIdx=#{classIdx}
+		WHERE acBookIdx=#{acBookIdx}		
 	</update>
 </mapper>

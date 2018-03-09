@@ -41,8 +41,12 @@ td input[class="ACBtext"]  { /* 텍스트박스 */
     box-sizing: border-box;
 } 
 
-td #sltIO {
+td div[id="sltCat"]{
 	width: 100%;
+}
+
+td div select[class="slt"] {
+	border: none;
 }
 
 .table-wrap .table-hori td { /*텍스트박스를 감싸는 td*/
@@ -50,17 +54,3 @@ td #sltIO {
 	padding : 0px;
 	border-right: 1px solid #ddd;
 }
-
-<<<<<<< HEAD
-#sltIO select {
-=======
-#my-tbody .item-radio + .item-radio {
-	margin-right: 0;
-}
-/* 
-.item-select {
->>>>>>> branch 'master' of https://github.com/J1STAR/ssbank/
-	width: 100%;
-	border: none;
-}
- */
