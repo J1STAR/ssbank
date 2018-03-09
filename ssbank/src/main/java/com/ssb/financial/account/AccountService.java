@@ -25,6 +25,7 @@ public interface AccountService {
 	public Account newAccountMember(int memberIdx);
 	public int insertAccount(Account dto);
 	public String productName(int productIdx);
+	public Account createAccount(Map<String, Object>map);
 	
 	
 	//해지

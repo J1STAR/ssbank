@@ -37,14 +37,13 @@ public class AccountController {
 		Map<String, Object> map = new HashMap<>();
 		// 전체 계좌 가져오기
 		map.put("memberIdx", info.getMemberIdx());
-		System.out.println(info.getMemberIdx());
-
+		
 		List<Account> deposit = service.depositlistAllAccount(map);
 		List<Account> saving = service.savinglistAllAccount(map);
 		Account deTot = service.deTotalBalance(map);
 		Account saTot = service.saTotalBalance(map);
-
-		// 계좌리스트
+		System.out.println("account :"+deposit);
+		// 계좌리스
 		model.addAttribute("deposit", deposit);
 		model.addAttribute("saving", saving);
 		// 총 계좌 잔액
@@ -103,6 +102,12 @@ public class AccountController {
 			model.addAttribute("msg","주민번호가 일치 하지 않습니다.");
 			return ".financial.account.fdn-0002";
 		}
+		//신규가입된 사람
+		Map<String, Object> map = new HashMap<>();
+		map.put("memberIdx",info.getMemberIdx());
+		Account create = service.createAccount(map);
+		model.addAttribute("name", info.getUserName());
+		model.addAttribute("create",create);
 		return ".financial.account.fdn-0003";
 	}
 

@@ -46,13 +46,13 @@ function saDetail(account){
             <td colspan="2">${deTot.totBal}원</td>
         </tfoot>
         <tbody>
-        	<c:forEach var="deposit" items="${deposit}">
+        	<c:forEach var="dedto" items="${deposit}">
             <tr>
-                <td>${deposit.productName}</td>
-                <td><a href="javascript:deDetail('${deposit.accountNo}');">${deposit.accountNo}</a></td>
-                <td>${deposit.interestRate}</td>
-                <td>${deposit.lastTrDate}</td>
-                <td>${deposit.balance}</td>
+                <td>${dedto.productName}</td>
+                <td><a href="javascript:deDetail('${dedto.accountNo}');">${dedto.accountNo}</a></td>
+                <td>${dedto.interestRate}</td>
+                <td>${dedto.lastTrDate}</td>
+                <td>${dedto.balance}</td>
                 <td>
                     <a href="#" class="btn-type-gray medium">조회</a>
                     <a href="#" class="btn-type-blue1 medium">이체</a>

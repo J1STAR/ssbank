@@ -44,11 +44,11 @@
         <tbody>
             <tr>
                 <th scope="col">성명</th>
-                <td scope="col">ooo</td>
+                <td scope="col">${name}</td>
             </tr>
             <tr>
-                <th>이메일</th>
-                <td>ddalkinara@naver.com</td>
+                <th>계좌번호</th>
+                <td>${create.accountNo}</td>
             </tr>
         </tbody>
     </table>

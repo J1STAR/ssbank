@@ -19,8 +19,11 @@ public class AccountServiceImpl implements AccountService {
 	public List<Account> depositlistAllAccount(Map<String, Object> map) {
 		List<Account> list = null;
 		try {
+			//계좌 활성화 된 것만 가져오기
+			map.put("status", 1);
 			list = dao.selectList("account.depositlistAllAccount", map);
 		} catch (Exception e) {
+			System.out.println(e.getMessage());
 		}
 		return list;
 	}
@@ -29,6 +32,7 @@ public class AccountServiceImpl implements AccountService {
 	public List<Account> savinglistAllAccount(Map<String, Object> map) {
 		List<Account> list = null;
 		try {
+			map.put("status", 1);
 			list = dao.selectList("account.savinglistAllAccount", map);
 		} catch (Exception e) {
 		}
@@ -113,6 +117,7 @@ public class AccountServiceImpl implements AccountService {
 	public List<Account> myAccount(Map<String, Object> map) {
 		List<Account> list = null;
 		try {
+			map.put("status",1);
 			list = dao.selectList("account.myAccount", map);
 		} catch (Exception e) {
 		}
@@ -147,6 +152,18 @@ public class AccountServiceImpl implements AccountService {
 		} catch (Exception e) {
 		}
 		return result;
+	}
+	//
+	@Override
+	public Account createAccount(Map<String, Object> map) {
+		Account dto = null;
+		try {
+			map.put("status", 1);
+			dto=dao.selectOne("account.createAccount", map);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return dto;
 	}
 
 	

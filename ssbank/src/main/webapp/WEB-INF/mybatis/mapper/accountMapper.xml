@@ -5,36 +5,28 @@
 
 	<select id="depositlistAllAccount" parameterType="map"
 		resultType="com.ssb.financial.account.Account">
-		SELECT * FROM (
-		SELECT
-		productName,p.productIdx,a.accountNo,balance,TO_CHAR(trDate,'YYYY-MM-DD')lastTrDate,interestRate
-		FROM account a
-		JOIN product p on a.productIdx = p.productIdx
-		JOIN
-		depositProduct d ON d.productIdx = a.productIdx
-		JOIN transaction t ON
-		a.accountNo = t.accountNo
-		WHERE memberIdx = #{memberIdx}
-		ORDER BY trDate
-		DESC
-		)WHERE ROWNUM =1
+	SELECT p.PRODUCTNAME,p.productIdx ,ac.accountNo, TO_CHAR(trDate, 'YYYY-MM-DD') LastTrDate, balance ,interestRate
+		FROM ACCOUNT ac
+		LEFT OUTER JOIN TRANSACTION tr ON ac.ACCOUNTNO = tr.ACCOUNTNO
+		LEFT OUTER JOIN PRODUCT p ON ac.PRODUCTIDX = p.PRODUCTIDX
+		JOIN depositProduct d ON ac.PRODUCTIDX = d.PRODUCTIDX
+		WHERE (ac.accountNO, TRDATE) IN (
+		    SELECT accountNO, MAX(TRDATE) FROM TRANSACTION GROUP BY ACCOUNTNO
+		) AND memberIdx =#{memberIdx} AND p.productIdx =1 AND status=#{status}
+		ORDER BY ac.ACCOUNTNO ASC
 	</select>
 
 	<select id="savinglistAllAccount" parameterType="map"
 		resultType="com.ssb.financial.account.Account">
-		SELECT * FROM (
-		SELECT
-		productName,p.productIdx,a.accountNo,balance,TO_CHAR(trDate,'YYYY-MM-DD')lastTrDate,interest
-		FROM account a
-		JOIN product p on a.productIdx = p.productIdx
-		JOIN
-		savingsProduct s ON s.productIdx = a.productIdx
-		JOIN transaction t ON
-		a.accountNo = t.accountNo
-		WHERE memberIdx = #{memberIdx}
-		ORDER BY trDate
-		DESC
-		)WHERE ROWNUM =1
+		SELECT p.productName,p.productIdx,ac.accountNo,balance,TO_CHAR(trDate,'YYYY-MM-DD')lastTrDate,interest
+		FROM ACCOUNT ac
+		LEFT OUTER JOIN TRANSACTION tr ON ac.ACCOUNTNO = tr.ACCOUNTNO
+		LEFT OUTER JOIN PRODUCT p ON ac.PRODUCTIDX = p.PRODUCTIDX
+		JOIN savingsProduct s ON s.productIdx = ac.productIdx
+		WHERE (ac.accountNO, trDate) IN (
+		    SELECT accountNO, MAX(trDate) FROM TRANSACTION GROUP BY ACCOUNTNO
+		) AND memberIdx =#{memberIdx} AND p.productIdx =2 AND status=#{status}
+		ORDER BY ac.ACCOUNTNO ASC
 	</select>
 	<!-- 계좌 상세보기 -->
 	<select id="detailDepositAccount" parameterType="String"
@@ -44,8 +36,7 @@
 		FROM account a
 		JOIN depositProduct d ON a.productIdx = d.productIdx
 		JOIN product p ON a.productIdx = p.productIdx
-		WHERE a.ACCOUNTNO =
-		#{accountNo}
+		WHERE a.ACCOUNTNO =#{accountNo} AND status=1
 
 	</select>
 	<select id="detailSavingAccount" parameterType="String"
@@ -56,8 +47,7 @@
 		FROM account a
 		JOIN savingsProduct s ON a.productIdx = s.productIdx
 		JOIN product p ON a.productIdx = p.productIdx
-		WHERE a.ACCOUNTNO
-		=#{accountNo}
+		WHERE a.ACCOUNTNO=#{accountNo} AND status=1
 	</select>
 
 	<!-- 계좌 신규가입 시 가져오는 정보 -->
@@ -78,7 +68,7 @@
 		ON t.accountNo = a.accountNo
 		JOIN depositProduct d ON a.productIdx =
 		d.productIdx
-		WHERE memberIdx=#{memberIdx}
+		WHERE memberIdx=#{memberIdx} AND status=1
 	</select>
 	<select id="saTotalBalance" parameterType="map"
 		resultType="com.ssb.financial.account.Account">
@@ -86,11 +76,11 @@
 		FROM transaction t
 		JOIN account a ON t.accountNo = a.accountNo
 		JOIN savingsProduct s ON a.productIdx = s.productIdx
-		WHERE memberIdx=#{memberIdx}
+		WHERE memberIdx=#{memberIdx} AND status=1
 	</select>
 	
 	<select id="myAccount" parameterType="map" resultType="com.ssb.financial.account.Account">
-		SELECT accountNo FROM account WHERE memberIdx= #{memberIdx}
+		SELECT accountNo FROM account WHERE memberIdx= #{memberIdx} AND status=1
 	</select>
 	<select id="accountBalance" parameterType="map" resultType="INTEGER">
 		SELECT balance FROM transaction WHERE accountNo = #{accountNo}
@@ -114,5 +104,12 @@
 							)
 		}	
 	</insert>
+	<select id="createAccount" parameterType="map" resultType="com.ssb.financial.account.Account">
+		SELECT * FROM (
+			SELECT accountNo ,TO_CHAR(createDate,'YYYY-MM-DD HH24:MI:SS')createDate FROM account
+			WHERE memberIdx=#{memberIdx} AND status=1
+			ORDER BY createDate DESC
+		) WHERE ROWNUM=1
+	</select>
 	
 </mapper>
