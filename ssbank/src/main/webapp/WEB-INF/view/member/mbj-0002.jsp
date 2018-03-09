@@ -11,14 +11,14 @@
 		<c:if test="${mode== 'created' }">개인회원가입</c:if>
 		<c:if test="${mode== 'update' }">나의 회원정보</c:if>
 	</h1>
-	<form name="entryInfo" method="post">
+	<form name="memberInfo" method="POST">
 		<div class="page-con">
 			<div class="step-area">
 				<ol>
 					<li>
 						<span class="step-num">1</span>
 						<span class="step-name">
-							<c:if test="${mode== 'created' }">개인회원가입</c:if>
+							<c:if test="${mode== 'created' }">이용약관동의</c:if>
 							<c:if test="${mode== 'update' }">비밀번호 확인</c:if>
 						</span>
 					</li>
@@ -64,7 +64,7 @@
 					<tbody>
 						<tr>
 							<c:choose>
-								<c:when test="">
+								<c:when test="${mode == 'created' }">
 									<th scope="col">성 / 이름</th>
 									<td scope="col"><input type="text" name="lastName" class=""> / <input type="text" name="firstName" class=""></td>
 								</c:when>
@@ -94,7 +94,7 @@
 										<span class="check-true">가입가능한 이메일입니다.</span>
 									</c:when>
 									<c:otherwise>
-										<input type="text" name="email" class="modiTarget" readonly value="${sessionScope.member.userId }">
+										<input type="text" name="userId" class="modiTarget" readonly value="${sessionScope.member.userId }">
 									</c:otherwise>
 								</c:choose>
 							</td>
@@ -128,7 +128,7 @@
 							<th>휴대폰</th>
 							<td>
 								<div class="item-select">
-									<select class="item-select-tel">
+									<select name="tel1" class="item-select-tel">
 										<option value="">선택</option>
 										<option value="010">010</option>
 										<option value="011">011</option>
@@ -149,7 +149,7 @@
 			</div>
 			<div class="btn-area">
 			    <a href="javascript:history.back()" class="btn-type-gray1 big">취소</a>
-			    <a href="" id="memberModi" class="btn-type-blue1 big">확인</a>
+			    <a href="" id="memberSubmit" class="btn-type-blue1 big">확인</a>
 			</div>
 		</div>
 	</form>
@@ -159,10 +159,13 @@
 
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script>	
-var lastName = $("input[name=lastName]");
-var firstName = $("input[name=firstName]");
-var email1 = $("input[name=email1]");
-var email2 = $("input[name=email2]");
+<c:if test="${mode == 'created'}">
+	var lastName = $("input[name=lastName]");
+	var firstName = $("input[name=firstName]");
+	var email1 = $("input[name=email1]");
+	var email2 = $("input[name=email2]");
+</c:if>
+
 var zipCode = $("input[name=zipCode]");
 var addr1 = $("input[name=addr1]");
 var addr2 = $("input[name=addr2]");
@@ -175,22 +178,52 @@ var tel3 = $("input[name=tel3]");
 
 $(function(){
 	
+	<c:if test="${mode == 'update'}">
 	readMemberInfo();
+	</c:if>
 	
-	$("#memberModi").click(function(event){
-		event.preventDefault();
+	
+	/* 회원가입 또는 수정 */
+	$("#memberSubmit").click(function(event){
 		
 		if(validInfoCheck()){
-			var form = document.entryInfo;
+			var form = $("form[name=memberInfo]");
 			
 			var mode = "${mode}";
+			var url = "<%= cp %>/member";
+			var data = form.serialize();
 			if(mode == "update"){
-				form.action = "<%=cp%>/member/memberModiSubmit";
-			} else {
-				
+				url += "/memberModiSubmit";
+				data += "&memberIdx=${sessionScope.member.memberIdx}";
+			} else if(mode == "created"){
+				url += "/memberJoinSubmit";
 			}
-			form.submit();
+			
+			$.ajax({
+				url:url,
+				type:"POST",
+				data:data,
+				dataType:"json",
+				success: function(data) {
+					if(data.status == "success"){
+						$(form).attr("action", "<%= cp%>/member/submitOK?mode="+mode);
+						$(form).submit();
+						return;
+					} else {
+						if(mode == "update"){
+							alert("정보수정에 실패했습니다.");
+						} else if(mode == "created"){
+							alert("회원가입에 실패했습니다.");
+						}
+						return;
+					}
+				},
+				error: function(e) {
+					console.log(e.responseText);
+				}
+			});
 		}
+		event.preventDefault();
 	});
 	
 	/* 입력한 비밀번호와 입력한 확인용 비밀번호 비교 */
@@ -208,19 +241,31 @@ $(function(){
 });
 
 function validInfoCheck(){
-
+	
+	<c:if test="${mode == 'created'}">
 	if(! lastName.val().trim()){
+		 
 		alert("성이 입력되지 않았습니다.");
+			 
 		lastName.focus();
+			 
 		return false;
+		 
 	}
-	
+	 
+	  
+	 
 	if(! firstName.val().trim()){
+		 
 		alert("이름이 입력되지 않았습니다.");
+			 
 		firstName.focus();
+			 
 		return false;
-	}
 	
+	}
+	 
+	  
 	if(! email1.val().trim() || ! email2.val().trim()){
 		alert("이메일이 입력되지 않았습니다.");
 		if(! email1.val().trim()){
@@ -234,6 +279,33 @@ function validInfoCheck(){
 			return false;
 		}
 	}
+	
+	if(! userPwd.val().trim()){
+		 
+		alert("비밀번호가 입력되지 않았습니다.");
+	 
+		if(! userPwd.val().trim())
+	 
+		userPwd.focus();
+	 
+		return false;
+	}
+	 
+	  
+	 
+	if(! userPwdConfirm.val().trim()){
+	 
+		alert("확인용 비밀번호가 입력되지 않았습니다.");
+	 
+		if(! userPwdConfirm.val().trim())
+	 
+		userPwdConfirm.focus();
+		
+		return false;
+	}
+	 
+	</c:if>
+	
 	
 	if(! zipCode.val().trim() || ! addr1.val().trim()){
 		alert("주소가 입력되지 않았습니다.");
@@ -258,20 +330,15 @@ function validInfoCheck(){
 		return false;
 	}
 	
-	if(! userPwd.val().trim()){
-		alert("비밀번호가 입력되지 않았습니다.");
-		if(! userPwd.val().trim())
-			userPwd.focus();
-		
-		return false;
-	}
-	
-	if(! userPwdConfirm.val().trim()){
-		alert("확인용 비밀번호가 입력되지 않았습니다.");
-		if(! userPwdConfirm.val().trim())
-			userPwdConfirm.focus();
-		
-		return false;
+	if( userPwd.val().trim() != "" || userPwdConfirm.val().trim() != "" ) {
+		if(! (userPwd.val().trim() == userPwdConfirm.val().trim()) ){
+			alert("입력한 비밀번호와 확인용 비밀번호가 일치하지 않습니다.");
+			if(! userPwd.val().trim()){
+				userPwd.focus();	
+			}
+			
+			return false;
+		}	
 	}
 	
 	if(! birth.val().trim()){
@@ -368,7 +435,7 @@ function daumPostcode() {
 }
 
 function readMemberInfo(){
-	var url = "<%= cp %>/member/readMemberInfo"
+	var url = "<%= cp %>/member/readMemberInfo";
 	var query = "memberIdx=${sessionScope.member.memberIdx}";
 
 	$.ajax({
@@ -390,7 +457,7 @@ function readMemberInfo(){
 			}
 		},
 		error	: function(e) {
-			console.log(e.responseText)
+			console.log(e.responseText);
 		}
 	});
 }

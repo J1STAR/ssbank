@@ -1,140 +1,114 @@
 package com.ssb.noticeBoard;
 
-import java.util.List;
-
 import org.springframework.web.multipart.MultipartFile;
 
 public class Notice {
-	private int listNum, num;
-	private String userId, userName, subject;
-	private String content, created;
-	private int hitount, notice;
+	private int listNum, boardIdx, categoryIdx, memberIdx;
+	private String userId, userName, categoryName;
+	private String subject, content, createDate;
+	private int hitCount;
 	
-	private int fileNum;
-	private String originalFilename, saveFilename;
+	private String saveFileName;
+	private String originalFileName;
+	private MultipartFile upload;
+	
 	private long fileSize;
+	private int COL;
 	
-	private List<MultipartFile> upload;
-	
-	private long gap;
-
 	public int getListNum() {
 		return listNum;
 	}
-
 	public void setListNum(int listNum) {
 		this.listNum = listNum;
 	}
-
-	public int getNum() {
-		return num;
+	public int getBoardIdx() {
+		return boardIdx;
 	}
-
-	public void setNum(int num) {
-		this.num = num;
+	public void setBoardIdx(int boardIdx) {
+		this.boardIdx = boardIdx;
 	}
-
+	public int getCategoryIdx() {
+		return categoryIdx;
+	}
+	public void setCategoryIdx(int categoryIdx) {
+		this.categoryIdx = categoryIdx;
+	}
+	public int getMemberIdx() {
+		return memberIdx;
+	}
+	public void setMemberIdx(int memberIdx) {
+		this.memberIdx = memberIdx;
+	}
 	public String getUserId() {
 		return userId;
 	}
-
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}
-
 	public String getUserName() {
 		return userName;
 	}
-
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
-
+	public String getCategoryName() {
+		return categoryName;
+	}
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
+	}
 	public String getSubject() {
 		return subject;
 	}
-
 	public void setSubject(String subject) {
 		this.subject = subject;
 	}
-
 	public String getContent() {
 		return content;
 	}
-
 	public void setContent(String content) {
 		this.content = content;
 	}
-
-	public String getCreated() {
-		return created;
+	public String getCreateDate() {
+		return createDate;
 	}
-
-	public void setCreated(String created) {
-		this.created = created;
+	public void setCreateDate(String createDate) {
+		this.createDate = createDate;
 	}
-
-	public int getHitount() {
-		return hitount;
+	public int getHitCount() {
+		return hitCount;
 	}
-
-	public void setHitount(int hitount) {
-		this.hitount = hitount;
+	public void setHitCount(int hitCount) {
+		this.hitCount = hitCount;
 	}
-
-	public int getNotice() {
-		return notice;
+	public String getSaveFileName() {
+		return saveFileName;
 	}
-
-	public void setNotice(int notice) {
-		this.notice = notice;
+	public void setSaveFileName(String saveFileName) {
+		this.saveFileName = saveFileName;
 	}
-
-	public int getFileNum() {
-		return fileNum;
+	public String getOriginalFileName() {
+		return originalFileName;
 	}
-
-	public void setFileNum(int fileNum) {
-		this.fileNum = fileNum;
+	public void setOriginalFileName(String originalFileName) {
+		this.originalFileName = originalFileName;
 	}
-
-	public String getOriginalFilename() {
-		return originalFilename;
+	public MultipartFile getUpload() {
+		return upload;
 	}
-
-	public void setOriginalFilename(String originalFilename) {
-		this.originalFilename = originalFilename;
+	public void setUpload(MultipartFile upload) {
+		this.upload = upload;
 	}
-
-	public String getSaveFilename() {
-		return saveFilename;
-	}
-
-	public void setSaveFilename(String saveFilename) {
-		this.saveFilename = saveFilename;
-	}
-
 	public long getFileSize() {
 		return fileSize;
 	}
-
 	public void setFileSize(long fileSize) {
 		this.fileSize = fileSize;
 	}
-
-	public List<MultipartFile> getUpload() {
-		return upload;
+	public int getCOL() {
+		return COL;
 	}
-
-	public void setUpload(List<MultipartFile> upload) {
-		this.upload = upload;
-	}
-
-	public long getGap() {
-		return gap;
-	}
-
-	public void setGap(long gap) {
-		this.gap = gap;
+	public void setCOL(int cOL) {
+		COL = cOL;
 	}
 }

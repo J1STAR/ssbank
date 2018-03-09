@@ -1,10 +1,9 @@
-package com.ssb.member;
+	package com.ssb.member;
 
 
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,36 +78,62 @@ public class MemberController {
 		return model;
 	}
 	
-	
+	@RequestMapping(value="/member/submitOK")
+	public String submitOKForm(HttpSession session, Member dto, @RequestParam String mode, Model model) {
+		
+		model.addAttribute("dto", dto);
+		model.addAttribute("mode", mode);
+		
+		session.invalidate();
+		
+		return ".member.mbj-0003";
+	}
 	
 	
 	
 	
 	/////////////////////////////////////////////////////////////
 	@RequestMapping(value="/member/memberJoinSubmit", method=RequestMethod.POST)
-	public String memberSubmit(Member dto, Model model) {
+	@ResponseBody
+	public Map<String, Object> memberSubmit(Member dto) {
 		
 		// 패스워드 암호화
-		ShaPasswordEncoder passwordEncoder=new ShaPasswordEncoder(256);
-		String hashed=passwordEncoder.encodePassword(dto.getUserPwd(), null);
+		String hashed = encryptPwd(dto.getUserPwd());
 		dto.setUserPwd(hashed);
 		
+		Map<String, Object> model = new HashMap<>();
 		try {
 			service.insertMember(dto);
+			model.put("status", "success");
 		}catch(Exception e) {
-			model.addAttribute("message", "회원가입이 실패했습니다. 다른 아이디로 다시 가입하시기 바랍니다.");
-			return ".member.mbj-0002";
+			model.put("status", "failed");
 		}
 		
-		StringBuffer sb=new StringBuffer();
-		dto.setUserName(dto.getLastName() + dto.getFirstName());
-		sb.append(dto.getUserName()+ "님의 회원 가입이 정상적으로 처리되었습니다.<br>");
-		sb.append("메인화면으로 이동하여 로그인 하시기 바랍니다.<br>");
+		return model;
+	}
+	
+	@RequestMapping(value="/member/memberModiSubmit", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> memberModiSubmit(Member dto) {
 		
-		model.addAttribute("message", sb.toString());
-		model.addAttribute("dto", dto);
+		String hashed = null; 
+		if(dto.getUserPwd() == null || dto.getUserPwd().equals("")) {
+			dto.setUserPwd("");
+			hashed = dto.getUserPwd();
+		} else {
+			hashed = encryptPwd(dto.getUserPwd());
+		}
+		dto.setUserPwd(hashed);
 		
-		return ".member.mbj-0003";
+		Map<String, Object> model = new HashMap<>();
+		try {
+			service.updateMember(dto);
+			model.put("status", "success");
+		} catch (Exception e) {
+			model.put("status", "failed");
+		}
+		
+		return model;
 	}
 	
 	@RequestMapping(value="/member/memberPwdCheck", method=RequestMethod.POST)
@@ -116,9 +141,7 @@ public class MemberController {
 	public Map<String, Object> memberPwdCheck(Member dto){
 		
 		// 패스워드 암호화
-		ShaPasswordEncoder passwordEncoder=new ShaPasswordEncoder(256);
-		String hashedInputPwd = passwordEncoder.encodePassword(dto.getUserPwd(), null);
-		
+		String hashedInputPwd = encryptPwd(dto.getUserPwd());
 		
 		Map<String, Object> model = new HashMap<>();
 		try {
@@ -157,4 +180,8 @@ public class MemberController {
 		return ".member.expired";
 	}
 	
+	public String encryptPwd(String inputPwd) {
+		ShaPasswordEncoder passwordEncoder=new ShaPasswordEncoder(256);
+		return passwordEncoder.encodePassword(inputPwd, null);
+	}
 }

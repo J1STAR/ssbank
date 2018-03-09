@@ -1,14 +1,14 @@
 package com.ssb.newsBoard;
 
 public class NewsBoard {
-	private int boardIdx, categoryIdx;
-	private String memberIdx, userId, userName;
+	private int listNum, boardIdx, categoryIdx, memberIdx;
+	private String userId, userName, categoryName;
 	private String subject, content, createDate;
 	private int hitCount;
 	
 	private int replyCount;
 
-	public int getBoardIdx() {
+	public int getBoardIdx() {	
 		return boardIdx;
 	}
 
@@ -16,7 +16,7 @@ public class NewsBoard {
 		this.boardIdx = boardIdx;
 	}
 
-	public int getListNum() {
+	public int getCategoryIdx() {
 		return categoryIdx;
 	}
 
@@ -24,13 +24,7 @@ public class NewsBoard {
 		this.categoryIdx = categoryIdx;
 	}
 
-	public String getMemberIdx() {
-		return memberIdx;
-	}
-
-	public void setMemberIdx(String memberIdx) {
-		this.memberIdx = memberIdx;
-	}
+	
 
 	public String getUserId() {
 		return userId;
@@ -38,6 +32,22 @@ public class NewsBoard {
 
 	public void setUserId(String userId) {
 		this.userId = userId;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public String getCategoryName() {
+		return categoryName;
+	}
+
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
 	}
 
 	public String getSubject() {
@@ -80,11 +90,21 @@ public class NewsBoard {
 		this.replyCount = replyCount;
 	}
 
-	public String getUserName() {
-		return userName;
+	public int getListNum() {
+		return listNum;
 	}
 
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setListNum(int listNum) {
+		this.listNum = listNum;
 	}
+
+	public int getMemberIdx() {
+		return memberIdx;
+	}
+
+	public void setMemberIdx(int memberIdx) {
+		this.memberIdx = memberIdx;
+	}
+
+
 }

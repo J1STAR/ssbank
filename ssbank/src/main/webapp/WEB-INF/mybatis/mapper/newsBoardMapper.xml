@@ -4,14 +4,19 @@
 <mapper namespace="newsBoard">
 	
 	<insert id="insertBoard" parameterType="com.ssb.newsBoard.NewsBoard">
-		INSERT INTO board(boardIdx, categoryIdx, memberIdx, subtract, content, hitCount, createDate) VALUES
-			(board_seq.NEXTVAL, 1, 1, #{memberIdx}, #{subtract}, #{content}, 0, SYSDATE)
+		INSERT INTO board(boardIdx, categoryIdx, memberIdx, subject, content, hitCount, createDate) VALUES
+			(board_seq.NEXTVAL, #{categoryIdx}, #{memberIdx}, #{subject}, #{content}, 0, SYSDATE)
 	</insert>
-	
+	<select id="listCategory" resultType="com.ssb.newsBoard.NewsBoard">
+	    SELECT categoryIdx, categoryName FROM boardtype
+	</select>
+	<!-- 글보기 -->
 	<select id="readBoard" parameterType="Integer" resultType="com.ssb.newsBoard.NewsBoard">
 		SELECT
 			b.boardIdx,
-			m.lastName || m.firstName userName,
+			m1.memberIdx,
+			m1.userId,
+			m2.lastName || m2.firstName userName,
 			categoryIdx,
 			subject,
 			content,
@@ -19,8 +24,9 @@
 			'YYYY-MM-DD') createDate,
 			hitCount
 		FROM board b
-		JOIN memberInfo m ON b.memberIdx = m.memberIdx
-        WHERE boardIdx = #{num}
+		JOIN member m1 ON b.memberIdx = m1.memberIdx
+        JOIN memberInfo m2 ON b.memberIdx = m2.memberIdx
+        WHERE boardIdx = #{boardIdx}
 	</select>
 	
 	<sql id="where-nib">
@@ -34,8 +40,8 @@
 			DBMS_LOB.INSTR(content, #{searchValue}) &gt; 0
 		</if>
 		<if test="searchKey=='created'">
-			(TO_CHAR(b.created, 'YYYY-MM-DD') = #{searchValue}
-				OR TO_CHAR(b.created, 'YYYYMMDD') = #{searchValue})
+			(TO_CHAR(b.createDate, 'YYYY-MM-DD') = #{searchValue}
+				OR TO_CHAR(b.createDate, 'YYYYMMDD') = #{searchValue})
 		</if>
 	</sql>
 	
@@ -43,7 +49,9 @@
 	 <!-- 글개수 -->
 	 <select id="dataCount" resultType="Integer" parameterType="map">
 	 	SELECT NVL(COUNT(*), 0)
-	 		FROM board b JOIN memberInfo m ON b.memberIdx = m.memberIdx
+	 		FROM board b
+			JOIN member m1 ON b.memberIdx = m1.memberIdx
+            JOIN memberInfo m2 ON b.memberIdx = m2.memberIdx
 	 	<where>
 	 		<if test="searchValue != null and searchValue != '' ">
 	 			<include refid="where-nib"/>
@@ -59,14 +67,15 @@
 			SELECT
 			b.boardIdx,
 			b.memberIdx,
-			m.lastName || m.firstName userName,
+			m1.userId,
+			m2.lastName || m2.firstName userName,
 			categoryIdx,
 			subject,
-			TO_CHAR(b.createDate,
-			'YYYY-MM-DD') createDate,
+			TO_CHAR(b.createDate, 'YYYY-MM-DD') createDate,
 			hitCount
 			FROM board b
-			JOIN memberInfo m ON b.memberIdx = m.memberIdx
+			JOIN member m1 ON b.memberIdx = m1.memberIdx
+            JOIN memberInfo m2 ON b.memberIdx = m2.memberIdx
 			LEFT OUTER JOIN (
 				SELECT
 				boardIdx,
@@ -74,36 +83,67 @@
 				FROM boardReply
 				GROUP BY boardIdx
 			) c ON b.boardIdx = c.boardIdx
-		ORDER BY boardIdx DESC
-		<where>
-			<if test="searchValue != null and searchValue != ''">
-				<include refid="where-nib" />
-			</if>
-		</where>
-		<![CDATA[
-            ) tb WHERE ROWNUM <= #{end}
-        ) WHERE rnum >= #{start}
+			<where>
+				<if test="searchValue != null and searchValue != ''">
+					<include refid="where-nib" />
+				</if>
+			</where>
+			ORDER BY boardIdx DESC
+<![CDATA[
+        ) tb WHERE ROWNUM <= #{end}
+     ) WHERE rnum >= #{start}
 ]]>
-
 </select>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+<!-- 조회수 -->
+<update id="updateHitCount" parameterType="Integer">
+	UPDATE board SET hitCount = hitCount + 1 WHERE boardIdx = #{boardIdx}
+</update>
+
+<!-- 이전글 -->
+<select id="preReadBoard" resultType="com.ssb.newsBoard.NewsBoard" parameterType="map">
+	SELECT tb.* FROM (
+		SELECT boardIdx, subject
+			FROM board b
+			JOIN memberInfo m ON b.memberIdx = m.memberIdx
+			<where>
+				<if test="searchValue != null and searchValue != ''">
+					<include refid="where-nib"/>
+				</if>
+				<![CDATA[
+				AND (boardIdx > #{boardIdx})
+				]]>
+			</where>
+		ORDER BY boardIdx ASC
+	) tb WHERE ROWNUM = 1
+</select>
+
+<!-- 다음글 -->
+<select id="nextReadBoard" resultType="com.ssb.newsBoard.NewsBoard" parameterType="map">
+	SELECT tb.* FROM (
+		SELECT boardIdx, subject
+			FROM board b
+			JOIN memberInfo m ON b.memberIdx = m.memberIdx
+			<where>
+				<if test="searchValue != null and searchValue != ''">
+					<include refid="where-nib"/>
+				</if>
+				<![CDATA[
+				AND (boardIdx < #{boardIdx})
+				]]>
+			</where>
+		ORDER BY boardIdx DESC
+	) tb WHERE ROWNUM = 1
+</select>
+
+<!-- 수정 -->
+<update id="updateBoard" parameterType="com.ssb.newsBoard.NewsBoard">
+	UPDATE board SET subject = #{subject}, content = #{content}
+				WHERE boardIdx = #{boardIdx}
+</update>
+
+<!-- 삭제 -->
+<delete id="deleteBoard" parameterType="Integer">
+	DELETE FROM board WHERE boardIdx = #{boardIdx}
+</delete>
 </mapper>

@@ -24,6 +24,7 @@ import com.ssb.common.FileManager;
 import com.ssb.common.MyUtil;
 import com.ssb.member.SessionInfo;
 
+// 뉴스페이지
 @Controller("newsBoard.boardController")
 public class NewsBoardController {
 	@Autowired
@@ -71,25 +72,25 @@ public class NewsBoardController {
 		
 		List<NewsBoard> list = service.listBoard(map);
 		
-		int categoryIdx, n = 0;
+		int listNum, n = 0;
 		Iterator<NewsBoard> it = list.iterator();
 		while(it.hasNext()) {
 			NewsBoard data = it.next();
-			categoryIdx = dataCount - (start + n -1);
-			data.setCategoryIdx(categoryIdx);
+			listNum = dataCount - (start + n -1);
+			data.setListNum(listNum);
 			n++;
 		}
 		
 		String query = "";
-		String listUrl = cp + "/customer/newsBoard/nib";
+		String listUrl = cp + "/customer/newsBoard/newsList";
 		String articleUrl = cp + "/customer/newsBoard/nib-0001?page=" + current_page;
 		if(searchValue.length()!=0) {
 			query = "searchKey=" + searchKey + "&searchValue=" + URLEncoder.encode(searchValue, "utf-8");
 		}
 		
 		if(query.length()!=0) {
-			listUrl = cp + "/customer/newsBoard/nib-0001?" + query;
-			articleUrl = cp + "/customer/newsBoard/nib-0001?page=" + current_page + "&" + query;
+			listUrl = listUrl + "?" + query;
+			articleUrl = articleUrl+ "&" + query;
 		}
 		
 		String paging = myUtil.paging(current_page, total_page, listUrl);
@@ -106,7 +107,10 @@ public class NewsBoardController {
 	
 	@RequestMapping(value="/customer/newsBoard/writeNews", method=RequestMethod.GET)
 	public String createdForm(Model model) throws Exception {
-		model.addAttribute("mode", "created");
+		List<NewsBoard> listCategory = service.listCategory();
+		
+		model.addAttribute("listCategory", listCategory);
+		model.addAttribute("mode", "writeNews");
 		
 		return ".customer.newsBoard.nib-0002";
 	}
@@ -121,30 +125,31 @@ public class NewsBoardController {
 		String root = session.getServletContext().getRealPath("/");
 		String pathname = root + "uploads" + File.separator + "newsBoard";
 		
-		dto.setUserId(info.getUserId());
+		dto.setMemberIdx(info.getMemberIdx());
 		
 		service.insertBoard(dto, pathname);
 		
 		return "redirect:/customer/newsBoard/newsList";
 	}
 	
+	// article
 	@RequestMapping(value="/customer/newsBoard/nib-0001")
 	public String article(
-			@RequestParam(value="num") int num,
+			@RequestParam(value="boardIdx") int boardIdx,
 			@RequestParam(value="page") String page,
 			@RequestParam(value="searchKey", defaultValue="subject") String searchKey,
 			@RequestParam(value="searchValue", defaultValue="") String searchValue,
 			Model model) throws Exception {
 		String query = "page=" + page;
 		if(searchValue.length()!=0) {
-			query += "?searchKey=" + searchKey + "&searchValue=" + searchValue;
+			query += "&searchKey=" + searchKey + "&searchValue=" + searchValue;
 		}
 		searchValue = URLDecoder.decode(searchValue, "utf-8");
 		
-		service.updateHitCount(num);
+		service.updateHitCount(boardIdx);
 		
 		//해당 레코드 가져오기
-		NewsBoard dto = service.readBoard(num);
+		NewsBoard dto = service.readBoard(boardIdx);
 		if(dto == null)
 			return "redirect:/customer/newsBoard/newsList?" + query;
 		
@@ -154,7 +159,7 @@ public class NewsBoardController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("searchKey", searchKey);
 		map.put("searchValue", searchValue);
-		map.put("num", num);
+		map.put("boardIdx", boardIdx);
 		
 		NewsBoard preReadDto = service.preReadBoard(map);
 		NewsBoard nextReadDto = service.nextReadBoard(map);
@@ -171,13 +176,14 @@ public class NewsBoardController {
 	
 	@RequestMapping(value="/customer/newsBoard/update", method=RequestMethod.GET)
 	public String updateForm(
-			@RequestParam int num,
+			@RequestParam int boardIdx,
 			@RequestParam String page,
 			HttpSession session,
 			Model model) throws Exception {
 		SessionInfo info = (SessionInfo)session.getAttribute("member");
 		
-		NewsBoard dto = service.readBoard(num);
+		NewsBoard dto = service.readBoard(boardIdx);
+		
 		if(dto == null) {
 			return "redirect:/customer/newsBoard/newsList?page=" + page;
 		}
@@ -186,6 +192,9 @@ public class NewsBoardController {
 			return "redirect:/customer/newsBoard/newsList?page=" + page;
 		}
 		
+		List<NewsBoard> listCategory = service.listCategory();
+		
+		model.addAttribute("listCategory", listCategory);
 		model.addAttribute("dto", dto);
 		model.addAttribute("mode", "update");
 		model.addAttribute("page", page);
@@ -198,6 +207,7 @@ public class NewsBoardController {
 			NewsBoard dto,
 			@RequestParam String page,
 			HttpSession session) throws Exception {
+		
 		String root = session.getServletContext().getRealPath("/");
 		String pathname = root + "uploads" + File.separator + "newsBoard";
 		
@@ -206,135 +216,20 @@ public class NewsBoardController {
 		return "redirect:/customer/newsBoard/newsList?page=" + page;
 	}
 	
-	@RequestMapping(value="/customer/newsBoard/nib-0003")
-	public String listReply(
-			@RequestParam int num,
-			@RequestParam(value="pageNo", defaultValue="1") int current_page,
-			Model model) throws Exception {
-		int rows = 5;
-		int total_page = 0;
-		int dataCount = 0;
-		
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("num", num);
-		
-		dataCount = service.replyCount(map);
-		total_page = myUtil.pageCount(rows, dataCount);
-		if(current_page > total_page)
-			current_page = total_page;
-		
-		int start = (current_page - 1) * rows + 1;
-		int end = current_page * rows;
-		
-		map.put("start", start);
-		map.put("end", end);
-		List<NewsReply> listReply = service.listReply(map);
-		
-		for(NewsReply dto : listReply) {
-			dto.setContent(dto.getContent().replaceAll("\n", "<br>"));
-		}
-		
-		// AJAX 페이징
-		String paging = myUtil.pagingMethod(current_page, total_page, "listPage");
-		
-		model.addAttribute("listReply", listReply);
-		model.addAttribute("pageNo", current_page);
-		model.addAttribute("replyCount", dataCount);
-		model.addAttribute("total_page", total_page);
-		model.addAttribute("paging", paging);
-		
-		return "/customer/newsBoard/nib-0003";
-	}
 	
-	// 댓글 및 댓글의 답글 등록
-	@RequestMapping(value="/customer/newsBoard/insertReply", method=RequestMethod.POST)
-	@ResponseBody
-	public Map<String, Object> insertReply(
-			NewsReply dto,
+	@RequestMapping(value="/customer/newsBoard/delete")
+	public String delete(
+			@RequestParam int boardIdx,
+			@RequestParam String page,
 			HttpSession session
-			){
+			) throws Exception{
 		SessionInfo info = (SessionInfo)session.getAttribute("member");
-		String state = "true";
 		
-		dto.setUserId(info.getUserId());
-		int result = service.insertReply(dto);
-		if(result == 0) 
-			state = "false";
+		String root = session.getServletContext().getRealPath("/");
+		String pathname = root + "uploads" + File.separator + "newsBoard";
 		
-		Map<String, Object> model = new HashMap<>();
-		model.put("state", state);
+		service.deleteBoard(boardIdx, pathname, info.getUserId());
 		
-		return model;
-	}
-	
-	//댓글 및 댓글의 답글 삭제
-	@RequestMapping(value="/newsBoard/deleteReply", method=RequestMethod.POST)
-	@ResponseBody
-	public Map<String, Object> deleteReply(
-			@RequestParam Map<String, Object> paramMap
-			) {
-		String state = "true";
-		service.deleteReply(paramMap);
-		
-		Map<String, Object> map = new HashMap<>();
-		map.put("state", state);
-		
-		return map;
-	}
-	
-	//댓글의 답글 리스트
-	@RequestMapping(value="/newsBoard/listReplyAnswer")
-	public String listReplyAnwer(
-			@RequestParam(value="replyNum") int answer
-			,Model model) {
-		List<NewsReply> listAnswer = service.listReplyAnswer(answer);
-		for(NewsReply dto : listAnswer) {
-			dto.setContent(dto.getContent().replaceAll("\n", "<br>"));
-		}
-		
-		model.addAttribute("listAnswer", listAnswer);
-		
-		return "newsBoard/listReplyAnswer";
-	}
-	
-	// 댓글의 답글 개수
-	@RequestMapping(value="/newsBoard/replyAnswerCount")
-	@ResponseBody
-	public Map<String, Object> replyCountAnswer(
-			@RequestParam(value="replyNum") int answer) {
-		int count = service.replyAnswerCount(answer);
-		
-		Map<String, Object> model = new HashMap<>();
-		model.put("answerCount", count);
-		
-		return model;
-	}
-	
-	// 댓글의 좋아요/싫어요 
-	@RequestMapping(value="/newsBoard/insertreplyLike", method=RequestMethod.POST)
-	@ResponseBody
-	public Map<String, Object> insertReplyLike(
-			@RequestParam Map<String, Object> paramMap,
-			HttpSession session) {
-		String state = "true";
-		
-		SessionInfo info = (SessionInfo)session.getAttribute("member");
-		Map<String, Object> model = new HashMap<>();
-		
-		paramMap.put("userId", info.getUserId());
-		int result = service.insertReplyLike(paramMap);
-		if(result == 0) {
-			state = "false";
-		} else {
-			Map<String, Object> countMap = service.replyLikeCount(paramMap);
-			
-			int likeCount = ((BigDecimal)countMap.get("LIKECOUNT")).intValue();
-			int disLikeCount = ((BigDecimal)countMap.get("DISLIKECOUNT")).intValue();
-			model.put("likeCount", likeCount);
-			model.put("disLikeCount", disLikeCount);
-		}
-		
-		model.put("state", state);
-		return model;
+		return "redirect:/customer/newsBoard/newsList?page="+page;
 	}
 }

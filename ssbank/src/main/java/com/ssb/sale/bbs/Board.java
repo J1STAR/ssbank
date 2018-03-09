@@ -3,41 +3,24 @@ package com.ssb.sale.bbs;
 import org.springframework.web.multipart.MultipartFile;
 
 public class Board {
-	private int boardIdx, categoryIdx ,fileIdx ;
-	public int getFileIdx() {
-		return fileIdx;
-	}
-	public void setFileIdx(int fileIdx) {
-		this.fileIdx = fileIdx;
-	}
-	private String memberIdx;
-    private int num,listNum;
-    public int getNum() {
-		return num;
-	}
-	public void setNum(int num) {
-		this.num = num;
-	}
-	private String userName, userId, subject, content, createDate,boardPwd;
-    public String getBoardPwd() {
-		return boardPwd;
-	}
-	public void setBoardPwd(String boardPwd) {
-		this.boardPwd = boardPwd;
-	}
-	private int hitCount;
-    private int replyCount;
-    private int fileSize;
-	public int getFileSize() {
-		return fileSize;
-	}
-	public void setFileSize(int fileSize) {
-		this.fileSize = fileSize;
-	}
+	private int boardIdx, categoryIdx, memberIdx;
+    private int num, listNum;
+    private String userName, userId, subject, content, createDate;
+    private int hitCount;
+	
 	private String saveFilename;
 	private String originalFilename;
-	private MultipartFile upload; // <input type='file' name='upload' ..
+	private int replyCount;
+	
 
+	private long gap;
+	
+	public long getGap() {
+		return gap;
+	}
+	public void setGap(long gap) {
+		this.gap = gap;
+	}
 	public int getBoardIdx() {
 		return boardIdx;
 	}
@@ -50,10 +33,10 @@ public class Board {
 	public void setCategoryIdx(int categoryIdx) {
 		this.categoryIdx = categoryIdx;
 	}
-	public String getMemberIdx() {
+	public int getMemberIdx() {
 		return memberIdx;
 	}
-	public void setMemberIdx(String memberIdx) {
+	public void setMemberIdx(int memberIdx) {
 		this.memberIdx = memberIdx;
 	}
 	public String getCreateDate() {
@@ -62,8 +45,37 @@ public class Board {
 	public void setCreateDate(String createDate) {
 		this.createDate = createDate;
 	}
-	private int boardLikeCount;
+	public int getFileIdx() {
+		return fileIdx;
+	}
+	public void setFileIdx(int fileIdx) {
+		this.fileIdx = fileIdx;
+	}
+	public long getFileSize() {
+		return fileSize;
+	}
+	public void setFileSize(long fileSize) {
+		this.fileSize = fileSize;
+	}
+	private int fileIdx;
+	private long fileSize;
 	
+	private int likeBoardCount;
+
+	private MultipartFile upload; //<input type="file" name="upload" ...>
+	
+	public int getLikeBoardCount() {
+		return likeBoardCount;
+	}
+	public void setLikeBoardCount(int likeBoardCount) {
+		this.likeBoardCount = likeBoardCount;
+	}
+	public int getNum() {
+		return num;
+	}
+	public void setNum(int num) {
+		this.num = num;
+	}
 	public int getListNum() {
 		return listNum;
 	}
@@ -126,10 +138,5 @@ public class Board {
 	public void setReplyCount(int replyCount) {
 		this.replyCount = replyCount;
 	}
-	public int getBoardLikeCount() {
-		return boardLikeCount;
-	}
-	public void setBoardLikeCount(int boardLikeCount) {
-		this.boardLikeCount = boardLikeCount;
-	}
+	
 }
