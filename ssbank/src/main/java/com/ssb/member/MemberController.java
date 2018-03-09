@@ -122,7 +122,7 @@ public class MemberController {
 		dto.setUserPwd(hashed);
 		
 		
-		
+		return ".member.mbj-0003";
 	}
 	
 	@RequestMapping(value="/member/memberPwdCheck", method=RequestMethod.POST)
