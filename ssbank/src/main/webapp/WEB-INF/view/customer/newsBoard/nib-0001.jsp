@@ -49,7 +49,7 @@ function login() {
 
 <div class="content">
 	
-	<h1>News Board</h1>
+	<h1>뉴스</h1>
     
     <div>
 			<table style="width: 100%; margin: 20px auto 0px; border-spacing: 0px; border-collapse: collapse;">
