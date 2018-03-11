@@ -29,7 +29,6 @@ public class MemberServiceImpl implements MemberService {
 	public Map<String, Object> readMemberInfo(String memberIdx) {
 		Map<String, Object> result = null;
 		
-		System.out.println(memberIdx);
 		try {
 			result = dao.selectOne("member.readMemberInfo", memberIdx);
 		} catch (Exception e) {

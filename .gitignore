@@ -8,3 +8,7 @@ Users/
 
 ssbank/src/main/webapp/WEB-INF/view/layout/header.jsp
 ssbank/src/main/webapp/resource/css/common.css
+
+ssbank/src/main/webapp/WEB-INF/mybatis/jdbc\.properties
+
+*.properties
