@@ -29,7 +29,7 @@ public interface AccountService {
 	
 	
 	//해지
-	public int deleteAccount(Map<String , Object> map);
+	public int deleteAccount(Account dto);
 	public List<Account> myAccount(Map<String, Object>map);
 	public int accountBalance(Map<String, Object>map);
 	public int accountCancleCheck(Map<String, Object> map);

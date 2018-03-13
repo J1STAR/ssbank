@@ -20,7 +20,7 @@ function saDetail(account){
 <div class="content">
 
 <h1>계좌조회</h1>
-<a onclick="javascript:location.href='<%=cp%>/financial/account/excel';" class="btn-type-gray">엑셀다운</a>
+
 <h2>입출금계좌</h2>
 	<div class="table-wrap">
     <table class="table-hori">
@@ -103,7 +103,10 @@ function saDetail(account){
         </tbody>
     </table>
 </div>
+	<div class="btns">
+    <a onclick="javascript:location.href='<%=cp%>/financial/account/excel';" class="btn-type-gray medium mt20 fl">엑셀다운</a>
+    <a onclick="javascript:location.href='<%=cp%>/financial/account/fdc0001';" class="btn-type-blue1 medium mt20 fr">내계좌해지</a>
+</div>
 	
-
 
 </div>

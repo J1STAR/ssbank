@@ -8,7 +8,6 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -43,7 +42,7 @@ public class AccountController {
 		Account deTot = service.deTotalBalance(map);
 		Account saTot = service.saTotalBalance(map);
 		System.out.println("account :"+deposit);
-		// 계좌리스
+		// 계좌리스트
 		model.addAttribute("deposit", deposit);
 		model.addAttribute("saving", saving);
 		// 총 계좌 잔액
@@ -124,28 +123,47 @@ public class AccountController {
 
 		return ".financial.account.fdc-0001";
 	}
-	@RequestMapping(value = "/financial/account/fdc0002")
-	public String cancleStep2(HttpSession session, Model model,@RequestParam String accountNo) {
+	@RequestMapping(value = "/financial/account/fdc{stage}")
+	public String cancleStep2(HttpSession session, Model model,@RequestParam String accountNo,@PathVariable String stage) {
 		
 		model.addAttribute("accountNo", accountNo);
 		
-		return ".financial.account.fdc-0002";
+		return ".financial.account.fdc-"+stage;
 	}
 	
-	@RequestMapping(value="/financial/account/fdc0003",method=RequestMethod.POST)
-	public String cancleStep3(@RequestParam String accountNo) {
+	
+	@RequestMapping(value = "/financial/account/deleteAccount",method = RequestMethod.POST)
+	public String cancleSubmit(Account dto,HttpSession session,@RequestParam String accountNo,Model model) {
 		
-		return ".financial.account.fdc-0003";
+		//해지 처리 
+		SessionInfo info = (SessionInfo) session.getAttribute("member");
+		dto.setMemberIdx(info.getMemberIdx());
+		dto.setSsn(dto.getSsn1()+"-"+dto.getSsn2());
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("accountNo", accountNo);
+		dto.setBalance( service.accountBalance(map));
+		dto.setAccountNo(accountNo);
+		int result = service.deleteAccount(dto);
+		//해지가 안될 경우 
+		if(result==0){
+			model.addAttribute("msg","주민번호가 일치 하지 않습니다.");
+			return ".financial.account.fdc-0003";
+		}
+		//해지가 될 경우 
+		model.addAttribute("msg","해지가 완료되었습니다.");
+		return ".financial.account.fdc-0004";
 	}
-
+	
+	
 	// 해지계좌 잔액 확인
-	@RequestMapping(value = "/financial/account/balance")
+	@RequestMapping(value = "/financial/account/balance",method=RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> balance(@RequestParam String accountNo) {
 		// 데이터 가져오기
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("accountNo", accountNo);
 		int balance = service.accountBalance(map);
+		System.out.println(balance);
 		// 데이터 보내기
 		Map<String, Object> model = new HashMap<>();
 		model.put("balance", balance);

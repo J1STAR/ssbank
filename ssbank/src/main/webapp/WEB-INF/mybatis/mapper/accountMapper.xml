@@ -10,8 +10,8 @@
 		LEFT OUTER JOIN TRANSACTION tr ON ac.ACCOUNTNO = tr.ACCOUNTNO
 		LEFT OUTER JOIN PRODUCT p ON ac.PRODUCTIDX = p.PRODUCTIDX
 		JOIN depositProduct d ON ac.PRODUCTIDX = d.PRODUCTIDX
-		WHERE (ac.accountNO, TRDATE) IN (
-		    SELECT accountNO, MAX(TRDATE) FROM TRANSACTION GROUP BY ACCOUNTNO
+		WHERE (ac.accountNO, trIdx) IN (
+		    SELECT accountNO, MAX(trIdx) FROM TRANSACTION GROUP BY ACCOUNTNO
 		) AND memberIdx =#{memberIdx} AND p.productIdx =1 AND status=#{status}
 		ORDER BY ac.ACCOUNTNO ASC
 	</select>
@@ -23,8 +23,8 @@
 		LEFT OUTER JOIN TRANSACTION tr ON ac.ACCOUNTNO = tr.ACCOUNTNO
 		LEFT OUTER JOIN PRODUCT p ON ac.PRODUCTIDX = p.PRODUCTIDX
 		JOIN savingsProduct s ON s.productIdx = ac.productIdx
-		WHERE (ac.accountNO, trDate) IN (
-		    SELECT accountNO, MAX(trDate) FROM TRANSACTION GROUP BY ACCOUNTNO
+		WHERE (ac.accountNO, trIdx) IN (
+		    SELECT accountNO, MAX(trIdx) FROM TRANSACTION GROUP BY ACCOUNTNO
 		) AND memberIdx =#{memberIdx} AND p.productIdx =2 AND status=#{status}
 		ORDER BY ac.ACCOUNTNO ASC
 	</select>
@@ -83,7 +83,11 @@
 		SELECT accountNo FROM account WHERE memberIdx= #{memberIdx} AND status=1
 	</select>
 	<select id="accountBalance" parameterType="map" resultType="INTEGER">
-		SELECT balance FROM transaction WHERE accountNo = #{accountNo}
+		 SELECT * FROM (
+			SELECT balance FROM transaction
+			WHERE accountNo=#{accountNo}
+			ORDER BY trIdx DESC
+		) WHERE ROWNUM=1
 	</select>
 	<select id="accountCancleCheck" parameterType="map" resultType="INTEGER">
 		SELECT COUNT(*) FROM account WHERE accountNo=#{accountNo} AND accountPwd=#{accountPwd}
@@ -93,6 +97,13 @@
 	SELECT productName FROM product WHERE productIdx=#{productIdx}
 	</select>
 	
+	<select id="createAccount" parameterType="map" resultType="com.ssb.financial.account.Account">
+		SELECT * FROM (
+			SELECT accountNo ,TO_CHAR(createDate,'YYYY-MM-DD HH24:MI:SS')createDate FROM account
+			WHERE memberIdx=#{memberIdx} AND status=1
+			ORDER BY createDate DESC
+		) WHERE ROWNUM=1
+	</select>
 	<insert id="insertAccount" parameterType="com.ssb.financial.account.Account"
 			statementType="CALLABLE"
 			useGeneratedKeys="false">
@@ -104,12 +115,20 @@
 							)
 		}	
 	</insert>
-	<select id="createAccount" parameterType="map" resultType="com.ssb.financial.account.Account">
-		SELECT * FROM (
-			SELECT accountNo ,TO_CHAR(createDate,'YYYY-MM-DD HH24:MI:SS')createDate FROM account
-			WHERE memberIdx=#{memberIdx} AND status=1
-			ORDER BY createDate DESC
-		) WHERE ROWNUM=1
-	</select>
+	<insert id="deleteAccount" parameterType="com.ssb.financial.account.Account"
+			statementType="CALLABLE"
+			useGeneratedKeys="false">
+		{call pdeleteaccount(
+			#{balance,jdbcType=INTEGER,mode=IN},
+			#{memberIdx,jdbcType=INTEGER,mode=IN},
+			#{ssn,jdbcType=VARCHAR,mode=IN},
+			#{accountNo,jdbcType=VARCHAR,mode=IN},
+			#{accountNo2,jdbcType=VARCHAR,mode=IN},
+			#{sender,jdbcType=VARCHAR,mode=IN},
+			#{relativeBank,jdbcType=VARCHAR,mode=IN}
+
+							)
+		}	
+	</insert>
 	
 </mapper>

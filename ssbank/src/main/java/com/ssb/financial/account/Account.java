@@ -43,9 +43,31 @@ public class Account {
 	private String ssn;
 	private String ssn1;
 	private String ssn2;
+	//해지시 필요한 dto
+	private String  accountNo2;
+	private String relativeBank;
+	private String sender;
 	
 	
 	
+	public String getAccountNo2() {
+		return accountNo2;
+	}
+	public void setAccountNo2(String accountNo2) {
+		this.accountNo2 = accountNo2;
+	}
+	public String getRelativeBank() {
+		return relativeBank;
+	}
+	public void setRelativeBank(String relativeBank) {
+		this.relativeBank = relativeBank;
+	}
+	public String getSender() {
+		return sender;
+	}
+	public void setSender(String sender) {
+		this.sender = sender;
+	}
 	public String getAccountPwdCh() {
 		return accountPwdCh;
 	}

@@ -134,15 +134,6 @@ public class AccountServiceImpl implements AccountService {
 		return result;
 	}
 
-	@Override
-	public int deleteAccount(Map<String, Object> map) {
-		int result = 0;
-		try {
-
-		} catch (Exception e) {
-		}
-		return result;
-	}
 
 	@Override
 	public int accountCancleCheck(Map<String, Object> map) {
@@ -164,6 +155,17 @@ public class AccountServiceImpl implements AccountService {
 			// TODO: handle exception
 		}
 		return dto;
+	}
+
+	@Override
+	public int deleteAccount(Account dto) {
+		int result = 0;
+		try {
+			dao.callUpdateProcedure("account.deleteAccount", dto);
+			result=1;
+		} catch (Exception e) {
+		}
+		return result;
 	}
 
 	
