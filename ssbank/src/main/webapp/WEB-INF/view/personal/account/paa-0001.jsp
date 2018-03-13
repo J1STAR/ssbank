@@ -23,7 +23,7 @@
 	
 	<div class="tab-wrap blue item3 mt20">
 		<ul>
-			<li data-productType="1" class="productTab1"><a href="#">예금계좌</a></li>
+			<li data-productType="1" class="productTab1 active"><a href="#">예금계좌</a></li>
 			<li data-productType="2" class="productTab2"><a href="#">적금계좌</a></li>
 			<li data-productType="3" class="productTab3"><a href="#">대출계좌</a></li>
 		</ul>
