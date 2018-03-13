@@ -24,5 +24,17 @@ public class AccountServiceImpl implements AccountService{
 		}
 		return listAccount;
 	}
+
+	@Override
+	public List<Map<String, Object>> listAccount(Map<String, Object> map) {
+		
+		List<Map<String, Object>> listAccount = null;
+		try {
+			listAccount = dao.selectList("personalAccount.listAccount", map);
+		} catch (Exception e) {
+		}
+		return listAccount;
+	}
+	
 	
 }

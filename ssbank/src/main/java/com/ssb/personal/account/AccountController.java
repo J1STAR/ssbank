@@ -19,6 +19,7 @@ public class AccountController {
 	private AccountService acService;
 	
 	@RequestMapping(value="/personal/lookupAccount", method=RequestMethod.POST)
+	@ResponseBody
 	public Map<String, Object> lookupAccount(@RequestParam String memberIdx, @RequestParam String productIdx){
 
 		List<Map<String, Object>> listAccount = null;
@@ -37,11 +38,20 @@ public class AccountController {
 	}
 	
 	@RequestMapping(value="/personal/listAccount", method=RequestMethod.GET)
-	public List<Map<String, Object>> listAccount(@RequestParam Map<String,Object> map){
+	@ResponseBody
+	public Map<String, Object> listAccount(@RequestParam Map<String,Object> map){
 		
+		List<Map<String, Object>> listAccount = null;
 		
-		List<Map<String, Object>> list = null;
-		return list;
+		try {
+			listAccount = acService.listAccount(map);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		Map<String, Object> model = new HashMap<>();
+		model.put("listAccount", listAccount);
+		return model;
 	}
 	
 }

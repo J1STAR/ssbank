@@ -8,8 +8,8 @@
 <div class="content">
 	<!-- jsp body 영역 -->
 	<h1>
-		<c:if test="${mode== 'created' }">개인회원가입</c:if>
-		<c:if test="${mode== 'update' }">나의 회원정보</c:if>
+		<c:if test="${mode == 'created' }">개인회원가입</c:if>
+		<c:if test="${mode == 'update' }">나의 회원정보</c:if>
 	</h1>
 	<form name="memberInfo" method="POST">
 		<div class="page-con">

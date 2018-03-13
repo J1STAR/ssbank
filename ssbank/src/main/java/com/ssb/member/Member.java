@@ -1,5 +1,6 @@
 package com.ssb.member;
 
+
 public class Member {
 	
 	private int memberIdx;
