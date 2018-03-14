@@ -26,26 +26,37 @@ public class AccountBookController {
 	
 	//가계부
 	@RequestMapping(value="/acBookNcarBook/accountBook", method=RequestMethod.GET)
-	public String accountBookList(HttpSession session, Model model) {
+	public String accountBook(HttpSession session, Model model) {
 		
 		SessionInfo info = (SessionInfo)session.getAttribute("member");
 		Map<String, Object> map = new HashMap<>();
-		//전체 가계부 가져오기
+		
 		map.put("memberIdx", info.getMemberIdx());
 		System.out.println(info.getMemberIdx());
+
+		//수입 총합, 지출 총합, 총 총합
+		
+		
+		
+		//리스트
 		
 		List<AccountBook> listAll = service.listAllAccountBook(map);
 		AccountBook dto = null;
 		int update = service.updateAccountBook(dto);
+		int delete = service.deleteAccountBook(dto);
 		
 		model.addAttribute("listAll", listAll);
+		model.addAttribute("update", update);
+		model.addAttribute("delete", delete);
 		
-		return ".acBookNcarBook.accountBook.write";
+		
+		return ".acBookNcarBook.accountBook.ggcommon";
 	}
+	
 	
 	//차계부
 	@RequestMapping(value="/acBookNcarBook/carAcBook", method=RequestMethod.GET)
-	public String carAcBookList(HttpSession session, Model model) {
+	public String carAcBook(HttpSession session, Model model) {
 		
 		SessionInfo info = (SessionInfo)session.getAttribute("member");
 		Map<String, Object> map = new HashMap<>();
