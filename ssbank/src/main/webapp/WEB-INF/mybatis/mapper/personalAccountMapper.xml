@@ -23,12 +23,10 @@
 	        ) WHERE accountNo IS NOT NULL GROUP BY accountNo
 	    ) ORDER BY createDate ASC
 	</select>
-	
-	<select id="listAccount" parameterType="map" resultType="map">
-		SELECT accountNo 
-		FROM account
-		WHERE memberIdx = #{memberIdx} AND productIdx = #{productIdx}
-		ORDER BY accountNo ASC
+
+	<select id="pwdCheck" parameterType="map" resultType="Integer">
+		SELECT INSTR(accountPwd, #{accountPwd}) FROM account
+		WHERE accountNo = #{accountNo}
 	</select>
 
 </mapper>

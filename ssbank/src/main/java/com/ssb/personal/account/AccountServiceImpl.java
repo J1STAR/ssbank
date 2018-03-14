@@ -36,5 +36,17 @@ public class AccountServiceImpl implements AccountService{
 		return listAccount;
 	}
 	
-	
+	@Override
+	public int pwdCheck(Map<String, Object> map) {
+		
+		int result = 0;
+		
+		try {
+			result = dao.selectOne("personalAccount.pwdCheck", map);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		return result;
+	}
 }
