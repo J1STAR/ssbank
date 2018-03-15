@@ -14,6 +14,10 @@ function sendProduct(productIdx){
 </script>
 <div class="content">
 <h1>예금상품 상세보기</h1>
+<div class="btns">
+    <a href="#" class="btn-type-blue1 medium mt20 fr">예금상품상담</a>
+</div>
+
 <div class="table-wrap">
     <table class="table-verti half">
         <caption>예금상품상세</caption>
