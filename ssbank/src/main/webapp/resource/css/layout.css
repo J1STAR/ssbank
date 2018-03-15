@@ -73,3 +73,9 @@ td div select[class="slt"] {
 	padding : 0px;
 	border-right: 1px solid #ddd;
 }
+
+input[name="date"] {
+	position: relative;
+	width: 70%;
+	z-index: 20;
+}

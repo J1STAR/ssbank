@@ -6,9 +6,8 @@ import java.util.Map;
 public interface AccountBookService {
 	
 	public int insertAccountBook(AccountBook dto);
-	public int deleteAccountBook(Map<String, Object> map);
+	public int deleteAccountBook(AccountBook dto);
 	public int updateAccountBook(AccountBook dto);
 	public List<AccountBook> listAllAccountBook(Map<String, Object> map);
-	public int dataCount();
-	
+
 }

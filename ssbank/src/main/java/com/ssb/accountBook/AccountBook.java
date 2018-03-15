@@ -1,44 +1,47 @@
 package com.ssb.accountBook;
 
 public class AccountBook {
-	//네이버 계산기를 기준으로 줄일 것 늘릴 것 적어두기
+	//신한은행 계산기를 기준으로 줄일 것 늘릴 것 적어두기
 	private int acBookIdx, memberIdx, classIdx, categoryIdx, amount;
 	private String content, name, categoryName, accountBookDate;
 	
-	public synchronized int getAcBookIdx() {
+	//공통단 수입과 지출 누계
+	private int expenseTot, IncomeTot, total;
+	
+	public int getAcBookIdx() {
 		return acBookIdx;
 	}
-	public synchronized void setAcBookIdx(int acBookIdx) {
+	public void setAcBookIdx(int acBookIdx) {
 		this.acBookIdx = acBookIdx;
 	}
-	public synchronized int getMemberIdx() {
+	public int getMemberIdx() {
 		return memberIdx;
 	}
-	public synchronized void setMemberIdx(int memberIdx) {
+	public void setMemberIdx(int memberIdx) {
 		this.memberIdx = memberIdx;
 	}
-	public synchronized int getClassIdx() {
+	public int getClassIdx() {
 		return classIdx;
 	}
-	public synchronized void setClassIdx(int classIdx) {
+	public void setClassIdx(int classIdx) {
 		this.classIdx = classIdx;
 	}
-	public synchronized int getCategoryIdx() {
+	public int getCategoryIdx() {
 		return categoryIdx;
 	}
-	public synchronized void setCategoryIdx(int categoryIdx) {
+	public void setCategoryIdx(int categoryIdx) {
 		this.categoryIdx = categoryIdx;
 	}
-	public synchronized int getAmount() {
+	public int getAmount() {
 		return amount;
 	}
-	public synchronized void setAmount(int amount) {
+	public void setAmount(int amount) {
 		this.amount = amount;
 	}
-	public synchronized String getContent() {
+	public String getContent() {
 		return content;
 	}
-	public synchronized void setContent(String content) {
+	public void setContent(String content) {
 		this.content = content;
 	}
 	public String getCategoryName() {
@@ -58,6 +61,24 @@ public class AccountBook {
 	}
 	public void setAccountBookDate(String accountBookDate) {
 		this.accountBookDate = accountBookDate;
+	}
+	public int getExpenseTot() {
+		return expenseTot;
+	}
+	public void setExpenseTot(int expenseTot) {
+		this.expenseTot = expenseTot;
+	}
+	public int getIncomeTot() {
+		return IncomeTot;
+	}
+	public void setIncomeTot(int incomeTot) {
+		IncomeTot = incomeTot;
+	}
+	public int getTotal() {
+		return total;
+	}
+	public void setTotal(int total) {
+		this.total = total;
 	}
 	
 }
