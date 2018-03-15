@@ -6,6 +6,8 @@
 	String cp=request.getContextPath();
 %>
 
+<!-- //jsp body 영역 -->
+
 	<table class="table-hori">
 		<!--머리-->
         <colgroup>
