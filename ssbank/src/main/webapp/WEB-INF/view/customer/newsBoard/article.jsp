@@ -5,7 +5,7 @@
 <%
 	String cp=request.getContextPath();
 %>
-<!-- article -->
+<!-- nib-0001 -->
 <script type="text/javascript">
 function deleteBoard() {
 <c:if test="${sessionScope.member.userId == 'admin' }">
@@ -78,7 +78,7 @@ function login() {
 			    <td colspan="2" align="left" style="padding-left: 5px;">
 			       이전글 :
 			         <c:if test="${not empty preReadDto}">
-			              <a href="<%=cp%>/customer/newsBoard/nib-0001?${query}&boardIdx=${preReadDto.boardIdx}">${preReadDto.subject}</a>
+			              <a href="<%=cp%>/customer/newsBoard/article?${query}&boardIdx=${preReadDto.boardIdx}">${preReadDto.subject}</a>
 			        </c:if>
 			</tr>
 			
@@ -86,7 +86,7 @@ function login() {
 			    <td colspan="2" align="left" style="padding-left: 5px;">
 			       다음글 :
 			         <c:if test="${not empty nextReadDto}">
-			              <a href="<%=cp%>/customer/newsBoard/nib-0001?${query}&boardIdx=${nextReadDto.boardIdx}">${nextReadDto.subject}</a>
+			              <a href="<%=cp%>/customer/newsBoard/article?${query}&boardIdx=${nextReadDto.boardIdx}">${nextReadDto.subject}</a>
 			        </c:if>
 			    </td>
 			</tr>
