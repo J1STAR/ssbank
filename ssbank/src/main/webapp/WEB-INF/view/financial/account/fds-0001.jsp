@@ -55,7 +55,7 @@ function saDetail(account){
                 <td>${dedto.balance}</td>
                 <td>
                     <a href="#" class="btn-type-gray medium">조회</a>
-                    <a href="#" class="btn-type-blue1 medium">이체</a>
+                    <a href="javascript:location.href='<%=cp%>/personal/transaction'" class="btn-type-blue1 medium">이체</a>
                 </td>
             </tr>
            </c:forEach>

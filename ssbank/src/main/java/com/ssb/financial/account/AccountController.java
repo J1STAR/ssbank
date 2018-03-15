@@ -141,7 +141,7 @@ public class AccountController {
 		dto.setSsn(dto.getSsn1()+"-"+dto.getSsn2());
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("accountNo", accountNo);
-		dto.setBalance( service.accountBalance(map));
+		dto.setBalance(service.accountBalance(map));
 		dto.setAccountNo(accountNo);
 		int result = service.deleteAccount(dto);
 		//해지가 안될 경우 

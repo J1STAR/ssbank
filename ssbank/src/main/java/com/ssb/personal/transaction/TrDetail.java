@@ -1,65 +1,51 @@
 package com.ssb.personal.transaction;
 
 public class TrDetail {
-	private int tDetailIdx;
-	private String sender;
-	private int trIdx;
 	
-	// Receiver
+	private int trDetailIdx;
+	
+	private int atmIdx;
+	
 	private String accountNo;
-	
-	// Sender
 	private String accountNo2;
 	
-	private String relativeBank;
-
-	public int gettDetailIdx() {
-		return tDetailIdx;
+	private String trDate;
+	private String content;
+	public int getTrDetailIdx() {
+		return trDetailIdx;
 	}
-
-	public void settDetailIdx(int tDetailIdx) {
-		this.tDetailIdx = tDetailIdx;
+	public void setTrDetailIdx(int trDetailIdx) {
+		this.trDetailIdx = trDetailIdx;
 	}
-
-	public String getSender() {
-		return sender;
+	public int getAtmIdx() {
+		return atmIdx;
 	}
-
-	public void setSender(String sender) {
-		this.sender = sender;
+	public void setAtmIdx(int atmIdx) {
+		this.atmIdx = atmIdx;
 	}
-
-	public int getTrIdx() {
-		return trIdx;
-	}
-
-	public void setTrIdx(int trIdx) {
-		this.trIdx = trIdx;
-	}
-
 	public String getAccountNo() {
 		return accountNo;
 	}
-
 	public void setAccountNo(String accountNo) {
 		this.accountNo = accountNo;
 	}
-
 	public String getAccountNo2() {
 		return accountNo2;
 	}
-
 	public void setAccountNo2(String accountNo2) {
 		this.accountNo2 = accountNo2;
 	}
-
-	public String getRelativeBank() {
-		return relativeBank;
+	public String getTrDate() {
+		return trDate;
 	}
-
-	public void setRelativeBank(String relativeBank) {
-		this.relativeBank = relativeBank;
+	public void setTrDate(String trDate) {
+		this.trDate = trDate;
 	}
-	
+	public String getContent() {
+		return content;
+	}
+	public void setContent(String content) {
+		this.content = content;
+	}
 	
 }
