@@ -35,15 +35,15 @@ public class AccountBookServiceImpl implements AccountBookService {
 	}
 
 	@Override
-	public int dataCount() {
-		// TODO Auto-generated method stub
-		return 0;
+	public int deleteAccountBook(AccountBook dto) {
+		int result = 0;
+	try {
+		dao.deleteData("accountBook.deleteAccountBook", dto);
+		result=1;
+	} catch (Exception e) {
 	}
-
-	@Override
-	public int deleteAccountBook(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return 0;
+		
+		return result;
 	}
 
 	@Override
