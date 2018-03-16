@@ -39,7 +39,7 @@ public class SaleController {
 
 	@RequestMapping(value = "/sale/raa-0001")
 	public String saleList(@RequestParam(value="page", defaultValue="1") int current_page,
-			@RequestParam(value="searchKey", defaultValue="subject") String searchKey,
+			@RequestParam(value="searchKey", defaultValue="addr2") String searchKey,
 			@RequestParam(value="searchValue", defaultValue="") String searchValue,HttpServletRequest req,Model model) throws Exception{
 		String cp = req.getContextPath();
 		int rows=10;
@@ -82,7 +82,7 @@ public class SaleController {
 		
 		String query = "";
 		String listUrl = cp + "/sale/list";
-		String articleUrl = cp + "/sale/raa-0001?page=" + current_page;
+		String articleUrl = cp + "/sale/article?page=" + current_page;
 		if(searchValue.length()!=0) {
 			query = "searchKey=" + searchKey + "&searchValue=" + URLEncoder.encode(searchValue, "utf-8");
 		}
@@ -108,7 +108,7 @@ public class SaleController {
 	public String article(
 			@RequestParam(value="saleIdx") int saleIdx,
 			@RequestParam(value="page") String page,
-			@RequestParam(value="searchKey", defaultValue="subject") String searchKey,
+			@RequestParam(value="searchKey", defaultValue="addr2") String searchKey,
 			@RequestParam(value="searchValue", defaultValue="") String searchValue,
 			Model model) throws Exception {
 		String query = "page=" + page;
@@ -146,7 +146,7 @@ public class SaleController {
 	}
 
 	@RequestMapping(value = "/sale/raa-0002")
-	public String saleInsertMain() {
+	public String saleSoldMain() {
 		return ".sale.raa-0002";
 	}
 
@@ -155,7 +155,7 @@ public class SaleController {
 		return ".sale.raa-0003";
 	}
 
-	@RequestMapping(value = "/sale/insert", method=RequestMethod.GET)
+	@RequestMapping(value = "/sale/created", method=RequestMethod.GET)
 	public String saleCreatedForm(Model model) {
 		
 		model.addAttribute("mode", "created");

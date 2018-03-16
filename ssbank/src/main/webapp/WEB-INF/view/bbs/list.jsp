@@ -1,5 +1,4 @@
-﻿
-<%@ page contentType="text/html; charset=UTF-8"%>
+﻿<%@ page contentType="text/html; charset=UTF-8"%>
 <%@ page trimDirectiveWhitespaces="true"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -46,12 +45,13 @@
 									(${dto.replyCount})</a></td>
 							<td>${dto.userName}</td>
 							<td>${dto.createDate}</td>
-							<%-- <td><c:if test="${not empty dto.saveFilename}">
+							<%-- <c:if test="${not empty dto.saveFilename}">
 									<a href="<%=cp%>/bbs/download?boardIdx=${dto.boardIdx}"
 										class="attach-file"><img
 										src="<%=cp%>/resource/images/disk.gif" border="0"
 										style="margin-top: 1px;"></a>
-								</c:if></td> --%>
+								</c:if> --%>
+							<td>&nbsp;</td>
 							<td>${dto.hitCount}</td>
 						</tr>
 					</tbody>
@@ -67,8 +67,8 @@
 			<ul>
 				<li class="prev-page"><a href="#"></a></li>
 				<li class="prev"><a href="#"></a></li>
-				<li class="normal"><c:if test="${dataCount==0 }">등록된 게시물이 없습니다.</c:if>
-					<c:if test="${dataCount!=0 }">${paging}</c:if></li>
+				<c:if test="${dataCount==0 }">등록된 게시물이 없습니다.</c:if>
+				<c:if test="${dataCount!=0 }">${paging}</c:if>
 				<li class="next"><a href="#"></a></li>
 				<li class="next-page"><a href="#"></a></li>
 			</ul>
