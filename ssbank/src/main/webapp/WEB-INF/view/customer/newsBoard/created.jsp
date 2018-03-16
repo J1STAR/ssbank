@@ -5,7 +5,7 @@
 <%
 	String cp=request.getContextPath();
 %>
-<!-- created -->
+<!-- nib-0002 -->
 <script type="text/javascript">
     function sendOk() {
         var f = document.boardForm;
@@ -50,10 +50,7 @@
 					      <td width="100" bgcolor="#eeeeee" style="text-align: center;">카테고리</td>
 					      <td style="padding-left:10px;"> 
 					          <select name="categoryIdx">
-					          <c:forEach var="vo" items="${listCategory}">
-					          	<option value="${vo.categoryIdx}" ${vo.categoryIdx==dto.categoryIdx ? "selected='selected' ":"" }>${vo.categoryName}</option>
-					          
-					          </c:forEach>
+					                  	<option value="1" >뉴스</option>
 					          </select>
 					      </td>
 					  </tr>

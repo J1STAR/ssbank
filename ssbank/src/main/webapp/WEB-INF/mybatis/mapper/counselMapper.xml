@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="counsel">
+ 	
+ 	<sql id="where-list">
+ 		<if test ="searchKey == 'subject'">
+ 			subject LIKE '%' || #{searchValue} || '%'
+ 		</if>
+ 		<if test="searchKey == 'content'">
+			INSTR(content, #{searchValue}) &gt; 0
+		</if>
+		<if test="searchKey == 'created'">
+			TO_CHAR(createdDate, 'YYYY-MM-DD') = #{searchValue}
+	          OR TO_CHAR(createdDate, 'YYYYMMDD') = #{searchValue}
+		</if>
+ 	</sql>
+ 	
+ 	<select id="dataCount" resultType="INTEGER" parameterType="map">
+ 		SELECT NVL(COUNT(boardIdx),0) FROM board 
+ 		<where>
+ 			<![CDATA[ categoryIdx=#{categoryIdx} AND memberIdx=#{memberIdx}]]>
+ 			<if test="searchValue !=null and searchValue != ''">
+ 				<include refid="where-list"/>
+ 			</if>
+ 		</where>
+ 	</select>
+ 	
+ 	<select id="listCounsel" parameterType="map" resultType="com.ssb.counsel.Counsel">
+ 	SELECT * FROM (
+ 		SELECT ROWNUM rnum, tb.* FROM(
+  			SELECT categoryIdx,boardIdx,mi.lastName || mi.firstName name,subject,hitCount,
+ 			TO_CHAR(createDate,'YYYY-MM-DD')createDate,boardpwd
+			FROM board b JOIN memberinfo mi ON b.memberIdx=mi.memberIdx
+			<where>
+				<![CDATA[ categoryIdx=#{categoryIdx} AND mi.memberIdx=#{memberIdx}]]>
+                         <if test="searchValue != null and searchValue != '' ">
+                              <include refid="where-list"/>
+                         </if>
+            </where>
+			ORDER BY boardIdx DESC
+			
+		<![CDATA[) tb WHERE ROWNUM <= #{end}
+	) WHERE rnum>= #{start}]]>
+ 	</select>
+ 	
+ 	<update id="updateHitCount" parameterType="Integer">
+ 		UPDATE board SET hitCount=hitCount+1 WHERE boardIdx=#{boardIdx}
+ 	</update>
+ 	
+ 	<select id="readBoard" resultType="com.ssb.counsel.Counsel" parameterType="Integer">
+ 		SELECT boardIdx,categoryIdx,mi.lastName || mi.firstName name,subject,content,
+ 			   hitCount,TO_CHAR(createDate,'YYYY-MM-DD')createDate,boardPwd
+ 		FROM board b JOIN memberInfo mi ON b.memberIdx=mi.memberIdx
+ 		WHERE boardIdx=#{boardIdx}
+ 	</select>
+ 	
+ 	<insert id="insertBoard" parameterType="com.ssb.counsel.Counsel">
+ 	 INSERT INTO board(boardIdx,categoryIdx,memberIdx,subject,content,hitCount,createDate,boardPwd)
+  			VALUES(BOARD_SEQ.NEXTVAL,#{categoryIdx},#{memberIdx},#{subject},#{content},0,SYSDATE,#{boardPwd})
+ 	</insert>
+ 	
+</mapper>

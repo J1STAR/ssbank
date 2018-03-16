@@ -2,11 +2,15 @@
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="newsBoard">
+	<select id="seq" resultType="Integer">
+		SELECT board_seq.NEXTVAL FROM dual
+	</select>
 	
 	<insert id="insertBoard" parameterType="com.ssb.newsBoard.NewsBoard">
 		INSERT INTO board(boardIdx, categoryIdx, memberIdx, subject, content, hitCount, createDate) VALUES
-			(board_seq.NEXTVAL, #{categoryIdx}, #{memberIdx}, #{subject}, #{content}, 0, SYSDATE)
+			(#{boardIdx}, #{categoryIdx}, #{memberIdx}, #{subject}, #{content}, 0, SYSDATE)
 	</insert>
+	
 	<select id="listCategory" resultType="com.ssb.newsBoard.NewsBoard">
 	    SELECT categoryIdx, categoryName FROM boardtype
 	</select>
@@ -29,7 +33,7 @@
         WHERE boardIdx = #{boardIdx}
 	</select>
 	
-	<sql id="where-nib">
+	<sql id="where-list">
 		<if test="searchKey=='userName'">
 			userName = #{searchValue}
 		</if>
@@ -53,8 +57,9 @@
 			JOIN member m1 ON b.memberIdx = m1.memberIdx
             JOIN memberInfo m2 ON b.memberIdx = m2.memberIdx
 	 	<where>
+	 		categoryIdx = #{categoryIdx}
 	 		<if test="searchValue != null and searchValue != '' ">
-	 			<include refid="where-nib"/>
+	 			<include refid="where-list"/>
 	 		</if>
 	 	</where>
 	 </select>
@@ -84,8 +89,10 @@
 				GROUP BY boardIdx
 			) c ON b.boardIdx = c.boardIdx
 			<where>
+			    categoryIdx = #{categoryIdx}
 				<if test="searchValue != null and searchValue != ''">
-					<include refid="where-nib" />
+				    AND
+					<include refid="where-list" />
 				</if>
 			</where>
 			ORDER BY boardIdx DESC
@@ -107,12 +114,13 @@
 			FROM board b
 			JOIN memberInfo m ON b.memberIdx = m.memberIdx
 			<where>
-				<if test="searchValue != null and searchValue != ''">
-					<include refid="where-nib"/>
+			   <if test="searchValue != null and searchValue != ''">
+					<include refid="where-list"/>
 				</if>
 				<![CDATA[
 				AND (boardIdx > #{boardIdx})
 				]]>
+				AND categoryIdx = #{categoryIdx}
 			</where>
 		ORDER BY boardIdx ASC
 	) tb WHERE ROWNUM = 1
@@ -126,11 +134,12 @@
 			JOIN memberInfo m ON b.memberIdx = m.memberIdx
 			<where>
 				<if test="searchValue != null and searchValue != ''">
-					<include refid="where-nib"/>
+					<include refid="where-list"/>
 				</if>
 				<![CDATA[
 				AND (boardIdx < #{boardIdx})
 				]]>
+				AND categoryIdx = #{categoryIdx}
 			</where>
 		ORDER BY boardIdx DESC
 	) tb WHERE ROWNUM = 1

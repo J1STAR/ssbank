@@ -3,19 +3,24 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="notice">
 
+	<select id="seq" resultType="Integer">
+		SELECT board_seq.NEXTVAL FROM dual
+	</select>
+	
 	<insert id="insertNotice" parameterType="com.ssb.noticeBoard.Notice">
 		INSERT INTO board(boardIdx, categoryIdx, memberIdx, subject, content, hitCount, createDate)
-		VALUES(notice_seq.NEXTVAL, #{categoryIdx}, #{memberIdx}, #{subject}, #{content}, 0, SYSDATE)
+		VALUES(#{boardIdx}, #{categoryIdx}, #{memberIdx}, #{subject}, #{content}, 0, SYSDATE)
 	</insert>
 	
 	<select id="listCategory" resultType="com.ssb.noticeBoard.Notice">
-		SELECT categoryIdx, cateoryName FROM boardTYPE
+		SELECT categoryIdx, categoryName FROM boardtype
 	</select>
+	
 	
 	<!-- 글보기 -->
 	<select id="readNotice" parameterType="Integer" resultType="com.ssb.noticeBoard.Notice">
 		SELECT
-			n.boardIdx,
+			b.boardIdx,
 			m1.memberIdx,
 			m1.userId,
 			m2.lastName || m2.firstName userName,
@@ -26,7 +31,7 @@
 			'YYYY-MM-DD') createDate,
 			hitCount
 		FROM board b
-		JOIN member m1 ON n.memberIdx = m1.memberIdx
+		JOIN member m1 ON b.memberIdx = m1.memberIdx
 		JOIN memberInfo m2 ON b.memberIdx = m2.memberIdx
 		WHERE boardIdx = #{boardIdx}
 	</select>
@@ -54,13 +59,15 @@
 			JOIN member m1 ON b.memberIdx = m1.memberIdx
             JOIN memberInfo m2 ON b.memberIdx = m2.memberIdx
 		<where>
+		    categoryIdx = #{categoryIdx}
 			<if test="searchValue != null and searchValue != ''">
+			   <!--  AND -->
 				<include refid="where-list"/>
 			</if>
 		</where>
 	</select>
 	
-	<!-- 글리스트 -->
+	 <!-- 글리스트 -->
 	<select id="listNotice" parameterType="map" resultType="com.ssb.noticeBoard.Notice">
 		SELECT * FROM (
 			SELECT ROWNUM rnum, tb.* FROM (
@@ -72,7 +79,8 @@
 				categoryIdx,
 				subject,
 				TO_CHAR(b.createDate, 'YYYY-MM-DD') createDate,
-				hitCount
+				hitCount,
+				NVL(fileCount, 0) fileCount
 				FROM board b
 				JOIN member m1 ON b.memberIdx = m1.memberIdx
 				JOIN memberInfo m2 ON b.memberIdx = m2.memberIdx
@@ -82,9 +90,13 @@
 					COUNT(*) replyCount
 					FROM boardReply
 					GROUP BY boardIdx
-				)n ON b.boardIdx = n.boardIdx
+				)c ON b.boardIdx = c.boardIdx
+				LEFT OUTER JOIN (SELECT boardIdx, count(*) fileCount FROM boardfile group BY boardIdx ) f
+						ON b.boardIdx=f.boardIdx 
 			<where>
+				categoryIdx = #{categoryIdx}
 				<if test="searchValue != null and searchValue != ''">
+				    AND 
 					<include refid="where-list"/>
 				</if>
 			</where> 
@@ -94,6 +106,7 @@
 	) WHERE rnum >= #{start}
 ]]>	
 	</select>
+	
 	
 	<!-- 조회수 -->
 	<update id="updateHitCount" parameterType="Integer">
@@ -113,6 +126,7 @@
 					<![CDATA[
 					AND (boardIdx > #{boardIdx})
 					]]>
+					AND categoryIdx = #{categoryIdx}
 				</where>
 				ORDER BY boardIdx ASC
 		) tb WHERE ROWNUM = 1
@@ -131,17 +145,42 @@
 				<![CDATA[
 				AND (boardIdx < #{boardIdx})
 				]]>
+				AND categoryIdx = #{categoryIdx}
 			</where>
 		  ORDER BY boardIdx DESC
 		) tb WHERE ROWNUM = 1
 	</select>
 	
+	<!-- 수정 -->
+	<update id="updateNotice" parameterType="com.ssb.noticeBoard.Notice">
+		UPDATE board SET subject = #{subject}, content = #{content}
+				WHERE boardIdx = #{boardIdx}
+	</update>
 	
+	<!-- 삭제 -->
+	<delete id="deleteNotice" parameterType="Integer">
+		DELETE FROM board WHERE boardIdx = #{boardIdx}
+	</delete>
 	
+	<!-- 파일 -->
+	<insert id="insertFile" parameterType="com.ssb.noticeBoard.Notice">
+		INSERT INTO boardfile(fileIdx, boardIdx, fileSize, saveFileName, originalFileName)
+		VALUES(boardfile_seq.NEXTVAL, #{boardIdx}, #{fileSize}, #{saveFileName}, #{originalFileName})
+	</insert>
 	
+	<select id="listFile" parameterType="Integer" resultType="com.ssb.noticeBoard.Notice">
+		SELECT fileIdx, boardIdx, fileSize, saveFileName, originalFileName
+			FROM boardfile WHERE boardIdx=#{boardIdx} 
+	</select>
 	
+	<select id="readFile" parameterType="Integer" resultType="com.ssb.noticeBoard.Notice">
+		SELECT fileIdx, boardIdx, saveFileName, originalFileName
+			FROM boardfile WHERE fileIdx=#{fileIdx}
+	</select>
 	
-	
+	<delete id="deleteFile" parameterType="map">
+	DELETE FROM boardfile WHERE ${field}=#{fileIdx}
+	</delete>
 	
 	
 	
