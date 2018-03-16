@@ -73,7 +73,7 @@
 		    </table>
 	    </form>
 	    <div class="btn-area">
-		    <a href="javascript:history.back()" class="btn-type-gray1 big">취소</a>
+		    <a href="<%=cp %>/" class="btn-type-gray1 big">취소</a>
 		    <a href="#" id="transactionConfirm" class="btn-type-blue1 big">확인</a>
 		</div>
 	</div>
