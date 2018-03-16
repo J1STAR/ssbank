@@ -15,10 +15,10 @@ public interface NoticeService {
 	public Notice preReadNotice(Map<String, Object> map);
 	public Notice nextReadNotice(Map<String, Object> map);
 	public int updateNotice(Notice dto, String pathname);
-	public int deleteNotice(int boardIdx, String pathname);
+	public int deleteNotice(int boardIdx, String pathname, String userId);
 	
 	public int insertFile(Notice dto);
 	public List<Notice> listFile(int boardIdx);
-	public Notice readFile(int fileNum);
+	public Notice readFile(int fileIdx);
 	public int deleteFile(Map<String, Object> map);
 }

@@ -5,13 +5,51 @@
 <%
 	String cp=request.getContextPath();
 %>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
+
+<script>
+$(function(){
+	funcExpense(); // 처음 지출 출력
+	$("#accountBookMenu ul li").click(function(){
+		$("#accountBookMenu ul li").each(function(){
+			$(this).removeClass("active");
+		});
+		
+		$(this).addClass("active");
+		
+		var type=$(this).attr("data-productType");
+		
+		if(type=="1") {
+			// 지출
+			funExpense();
+		} else if(type=="2") {
+			// 수입
+		} else if(type=="3") {
+			// 달력
+		}
+	});
+	
+});
+
+function funcExpense() {
+	// 지출
+	var url="<%=cp%>/acBookNcarBook/expense";
+	var query="t="+new Date().getTime();
+	
+	$.ajax({
+		type:"GET"
+		,url:url
+		,data:query
+		,success:function(data){
+			$("#accountBookContent").html(data);
+		}
+	    ,error:function(e) {
+	    	console.log(e.responseText);
+	    }
+	});	
+}
+
+
+</script>
 
 <div class="content">
 	<!-- jsp body 영역 -->
@@ -33,7 +71,7 @@
 								<div class="view-tit">수입</div>
 								<div class="view-sub">
 									<dl>
-										<dd>50,000</dd>
+										<dd>${inTot}</dd>
 										<dt>주수입</dt>
 									</dl>
 									<dl>
@@ -41,13 +79,13 @@
 										<dt>부수입</dt>
 									</dl>
 								</div>
-								<div class="view-total">50,000</div>
+								<div class="view-total">${inTot}</div>
 							</li>
 							<li class="spend-area">
 								<div class="view-tit">지출</div>
 								<div class="view-sub">
 									<dl>
-										<dd>5,000</dd>
+										<dd>${exTot}</dd>
 										<dt>현금</dt>
 									</dl>
 									<dl>
@@ -55,29 +93,30 @@
 										<dt>카드</dt>
 									</dl>
 								</div>
-								<div class="view-total">5,000</div>
+								<div class="view-total">${exTot}</div>
 							</li>
 							<li>
 								<span class="ico-sum"></span>
-								<span class="account-total">45,000</span>
+								<span class="account-total">${total}</span>
 							</li>
 						</ul>
 					</div>
 				</div>
-				<div class="tab-wrap blue item3">
+				<div id="accountBookMenu" class="tab-wrap blue item3">
 					<ul>
 						<li data-productType="1" class="acBookWrite active"><a href="#">지출</a></li>
 						<li data-productType="2" class="acBookWrite"><a href="#">수입</a></li>
 						<li data-productType="3" class="acBookWrite"><a href="#">달력</a></li>
 					</ul>
 				</div>
+				
+				<div id="accountBookContent"></div>
 
 			</div>
 			
         	</div>
         </div>
-</body>
-</html>
+
 
 <!--자바스크립트-->
 <script type="text/javascript">
@@ -100,8 +139,8 @@ $(document).ready(function(){
             //input태그의 id가 sltThis인 태그들을 찾아서 checked옵션을 false로 정의
             $("input[id=sltThis]").prop("checked",false);
         }
-    })
-})
+    });
+});
 
 function add_row() {
 	var my_tbody = document.getElementById('my-tbody');

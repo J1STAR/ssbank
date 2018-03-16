@@ -21,6 +21,8 @@ public class NewsBoardServiceImpl implements NewsBoardService{
 	public int insertBoard(NewsBoard dto, String pathname) {
 		int result = 0;
 		try {
+			int seq = dao.selectOne("newsBoard.seq");
+			dto.setBoardIdx(seq);
 			result = dao.insertData("newsBoard.insertBoard", dto);
 		} catch (Exception e) {
 			System.out.println(e.toString());

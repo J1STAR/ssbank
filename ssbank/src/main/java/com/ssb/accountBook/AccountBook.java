@@ -6,7 +6,7 @@ public class AccountBook {
 	private String content, name, categoryName, accountBookDate;
 	
 	//공통단 수입과 지출 누계
-	private int expenseTot, IncomeTot, total;
+	private int expenseTot, incomeTot, total;
 	
 	public int getAcBookIdx() {
 		return acBookIdx;
@@ -69,10 +69,10 @@ public class AccountBook {
 		this.expenseTot = expenseTot;
 	}
 	public int getIncomeTot() {
-		return IncomeTot;
+		return incomeTot;
 	}
 	public void setIncomeTot(int incomeTot) {
-		IncomeTot = incomeTot;
+		this.incomeTot = incomeTot;
 	}
 	public int getTotal() {
 		return total;

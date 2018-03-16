@@ -3,7 +3,23 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="accountBook">
 	
-	<select id="listAllAccountBook" parameterType="map"
+	<select id="expenseList" parameterType="map"
+		resultType="com.ssb.accountBook.AccountBook">
+		SELECT * FROM ( SELECT acBookIdx, TO_CHAR(accountBookDate, 'YYYY-MM-DD') accountBookDate,
+		content, amount, categoryIdx, classIdx
+		FROM accountBook WHERE memberIdx = #{memberIdx} AND classIdx='-1' ORDER BY accountBookDate DESC
+		)
+	</select>
+	
+	<select id="incomeList" parameterType="map"
+		resultType="com.ssb.accountBook.AccountBook">
+		SELECT * FROM ( SELECT acBookIdx, TO_CHAR(accountBookDate, 'YYYY-MM-DD') accountBookDate,
+		content, amount, categoryIdx, classIdx
+		FROM accountBook WHERE memberIdx = #{memberIdx} AND classIdx='1' ORDER BY accountBookDate DESC
+		)
+	</select>
+	
+	<select id="dateList" parameterType="map"
 		resultType="com.ssb.accountBook.AccountBook">
 		SELECT * FROM ( SELECT acBookIdx, TO_CHAR(accountBookDate, 'YYYY-MM-DD') accountBookDate,
 		content, amount, categoryIdx, classIdx
@@ -26,4 +42,13 @@
 	<delete id="deleteAccountBook" parameterType="Integer">
 		DELETE FROM accountBook WHERE acBookIdx = #{acBookIdx}
 	</delete>
+	
+	<select id="expenseTot" parameterType="map" resultType="Integer">
+		SELECT SUM(amount) exTot FROM accountBook WHERE memberIdx = #{memberIdx} AND classIdx='-1'
+	</select>
+	
+	<select id="incomeTot" parameterType="map" resultType="Integer">
+		SELECT SUM(amount) inTot FROM accountBook WHERE memberIdx = #{memberIdx} AND classIdx='1'
+	</select>
+	
 </mapper>
