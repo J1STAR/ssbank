@@ -22,8 +22,7 @@
 					<li><a href="#" class="">오피스텔</a></li>
 					<li><a href="#" class="">상가</a></li>
 				</ul>
-			</div>
-			
+			</div>		
 		</div>
 		<div class="map-wrap mb50">
 			<div class="map-area" id="map"></div>
@@ -50,14 +49,32 @@
 							<li><a href="#">매물명순</a></li>
 						</ul>
 					</div>
-					<div class="tab-area">A 매물매물A 매물매물A 매물매물A 매물매물A 매물매물A 매물매물A
-						매물매물A 매물매물A 매물매물A 매물매물A 매물매물A 매물매물A 매물매물A 매물매물A 매물매물A 매물매물A 매물매물A
-						매물매물A 매물매물A 매물매물A 매물매물A 매물매물A 매물매물A 매물매물A 매물매물A 매물매물A 매물매물A 매물매물A
-						매물매물A 매물매물A 매물매물A 매물매물A 매물매물A 매물매물A 매물매물A 매물매물A 매물매물A 매물매물A 매물매물A
-						매물매물A 매물매물A 매물매물A 매물매물A 매물매물A 매물매물A 매물매물A 매물매물A 매물매물A 매물매물A 매물매물A
-						매물매물A 매물매물A 매물매물A 매물매물A 매물매물A 매물매물A 매물매물A 매물매물A 매물매물A 매물매물A 매물매물A
-						매물매물A 매물매물A 매물매물A 매물매물A 매물매물A 매물매물A 매물매물A 매물매물A 매물매물A 매물매물A 매물매물A
-						매물매물</div>
+					<div class="tab-area">
+					<c:forEach var="dto" items="${list}">
+					<tbody>
+						<tr>
+							<td>${dto.addr2}</td>
+							<td><a href="${articleUrl}&saleIdx=${dto.saleIdx}">${dto.tradeDate}
+									</a></td>
+							<td>${dto.typeIdx}<br>
+								${dto.room}<br>
+								${layer}/{tLayer}<br>
+								${status}<br>
+								${addr1}
+							</td>
+							<td>${dto.createDate}</td>
+							<td><c:if test="${not empty dto.saveFilename}">
+									<a href="<%=cp%>/bbs/download?num=${dto.num}"
+										class="attach-file"><img
+										src="<%=cp%>/resource/images/disk.gif" border="0"
+										style="margin-top: 1px;"></a>
+								</c:if></td>
+							<td>${dto.hitCount}</td>
+						</tr>
+					</tbody>
+				</c:forEach>
+					
+						</div>
 				</div>
 				<div id="tab2" class="tab_content">
 					<div class="sort-area">
@@ -70,12 +87,7 @@
 					</div>
 					<div class="tab-area">B 매물매물매B 매물매물매B 매물매물매B 매물매물매B 매물매물매B
 						매물매물매B 매물매물매B 매물매물매B 매물매물매B 매물매물매B 매물매물매B 매물매물매B 매물매물매B 매물매물매B
-						매물매물매B 매물매물매B 매물매물매B 매물매물매B 매물매물매B 매물매물매B 매물매물매B 매물매물매B 매물매물매B
-						매물매물매B 매물매물매B 매물매물매B 매물매물매B 매물매물매B 매물매물매B 매물매물매B 매물매물매B 매물매물매B
-						매물매물매B 매물매물매B 매물매물매B 매물매물매B 매물매물매B 매물매물매B 매물매물매B 매물매물매B 매물매물매B
-						매물매물매B 매물매물매B 매물매물매B 매물매물매B 매물매물매B 매물매물매B 매물매물매B 매물매물매B 매물매물매B
-						매물매물매B 매물매물매B 매물매물매B 매물매물매B 매물매물매B 매물매물매B 매물매물매B 매물매물매B 매물매물매B
-						매물매물매B 매물매물매</div>
+					</div>
 				</div>
 				<div id="tab3" class="tab_content">
 					<div class="sort-area">

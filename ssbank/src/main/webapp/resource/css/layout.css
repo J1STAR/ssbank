@@ -5,6 +5,7 @@
 .item-checkbox label.saledate{margin-left:20px;}
 .table-wrap .item-checkbox.saledate2{padding-top:5px;}
 
+.salesTable tr.hide { display:none; }
 
 /* 장한별 css */
 .menu-wrap.depth-two .menu-area  { width: 100%; padding: 0;}
