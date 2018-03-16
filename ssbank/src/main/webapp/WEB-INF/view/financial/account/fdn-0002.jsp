@@ -172,7 +172,7 @@ function isValidResidentNO(ssn1, ssn2) {
             </tr>
             <tr>
                 <th>주민번호</th>
-                <td><input type="text" class="" id="jumin1" name="ssn1"> - <input type="text" id="jumin2" name="ssn2"></td>
+                <td><input type="text" class="" id="jumin1" name="ssn1"> - <input type="password" id="jumin2" name="ssn2"></td>
                 <td>${msg}</td>
             </tr>
             <tr>

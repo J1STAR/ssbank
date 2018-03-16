@@ -79,7 +79,6 @@
 			$(this).addClass("active");
 			$(this).siblings().removeClass("active");
 			
-			console.log($(this).data("producttype"));
 			lookupAccount($(this).data("producttype"));
 		});
 	});
@@ -135,8 +134,11 @@
 						$tr.append($td);
 						
 						$td = $("<td class='acInfo'>");
-						totalBalance += account.BALANCE;
-						$td.html(numberWithCommas(account.BALANCE));
+						var balance = account.BALANCE;
+						if(balance == null)
+							balance = 0;
+						totalBalance += balance;
+						$td.html(numberWithCommas(balance));
 						$tr.append($td);
 						
 						$td = $("<td class='acInfo'>");

@@ -57,6 +57,7 @@ public class NewsBoardController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("searchKey", searchKey);
 		map.put("searchValue", searchValue);
+		map.put("categoryIdx", 1);
 		
 		dataCount = service.dataCount(map);
 		if(dataCount != 0)
@@ -83,7 +84,7 @@ public class NewsBoardController {
 		
 		String query = "";
 		String listUrl = cp + "/customer/newsBoard/newsList";
-		String articleUrl = cp + "/customer/newsBoard/nib-0001?page=" + current_page;
+		String articleUrl = cp + "/customer/newsBoard/article?page=" + current_page;
 		if(searchValue.length()!=0) {
 			query = "searchKey=" + searchKey + "&searchValue=" + URLEncoder.encode(searchValue, "utf-8");
 		}
@@ -102,7 +103,7 @@ public class NewsBoardController {
 		model.addAttribute("total_page", total_page);
 		model.addAttribute("paging", paging);
 		
-		return ".customer.newsBoard.nib"; // 매핑된 파일 경로(실제 코드가 짜여있는 곳으로 가는 경로)
+		return ".customer.newsBoard.list"; // 매핑된 파일 경로(실제 코드가 짜여있는 곳으로 가는 경로)
 	}
 	
 	@RequestMapping(value="/customer/newsBoard/writeNews", method=RequestMethod.GET)
@@ -112,7 +113,7 @@ public class NewsBoardController {
 		model.addAttribute("listCategory", listCategory);
 		model.addAttribute("mode", "writeNews");
 		
-		return ".customer.newsBoard.nib-0002";
+		return ".customer.newsBoard.created";
 	}
 	
 	@RequestMapping(value="/customer/newsBoard/writeNews", method=RequestMethod.POST)
@@ -133,7 +134,7 @@ public class NewsBoardController {
 	}
 	
 	// article
-	@RequestMapping(value="/customer/newsBoard/nib-0001")
+	@RequestMapping(value="/customer/newsBoard/article")
 	public String article(
 			@RequestParam(value="boardIdx") int boardIdx,
 			@RequestParam(value="page") String page,
@@ -160,6 +161,7 @@ public class NewsBoardController {
 		map.put("searchKey", searchKey);
 		map.put("searchValue", searchValue);
 		map.put("boardIdx", boardIdx);
+		map.put("categoryIdx", 1);
 		
 		NewsBoard preReadDto = service.preReadBoard(map);
 		NewsBoard nextReadDto = service.nextReadBoard(map);
@@ -171,7 +173,7 @@ public class NewsBoardController {
 		model.addAttribute("page", page);
 		model.addAttribute("query", query);
 		
-		return ".customer.newsBoard.nib-0001";
+		return ".customer.newsBoard.article";
 	}
 	
 	@RequestMapping(value="/customer/newsBoard/update", method=RequestMethod.GET)
@@ -199,7 +201,7 @@ public class NewsBoardController {
 		model.addAttribute("mode", "update");
 		model.addAttribute("page", page);
 		
-		return ".customer.newsBoard.nib-0002";
+		return ".customer.newsBoard.created";
 	}
 	
 	@RequestMapping(value="/customer/newsBoard/update", method=RequestMethod.POST)

@@ -4,24 +4,29 @@
 <mapper namespace="personalAccount">
 	
 	<select id="lookupAccount" parameterType="map" resultType="map">
-		SELECT p.PRODUCTNAME, ac.accountNo, TO_CHAR(ac.createDate, 'YYYY-MM-DD HH24:MI:SS') createDate, TO_CHAR(trDate, 'YYYY-MM-DD HH24:MI:SS') trDate, balance
-		FROM ACCOUNT ac
-		LEFT OUTER JOIN TRANSACTION tr ON ac.ACCOUNTNO = tr.ACCOUNTNO
-		LEFT OUTER JOIN PRODUCT p ON ac.PRODUCTIDX = p.PRODUCTIDX
-		WHERE (ac.accountNO, TRDATE) IN (
-		    SELECT accountNO, MAX(TRDATE) FROM TRANSACTION GROUP BY ACCOUNTNO
-		) AND memberIdx = ${memberIdx} AND p.productIdx = ${productIdx}
-		ORDER BY ac.ACCOUNTNO ASC
+		SELECT p.PRODUCTNAME, ac.accountNo, TO_CHAR(ac.createDate, 'YYYY-MM-DD HH24:MI:SS') createDate, TO_CHAR(trd.trDate, 'YYYY-MM-DD HH24:MI:SS') trDate, balance
+	    FROM ACCOUNT ac
+	    LEFT OUTER JOIN TRANSACTION tr ON ac.ACCOUNTNO = tr.ACCOUNTNO
+	    LEFT OUTER JOIN TRDETAIL trd ON tr.TRDETAILIDX = trd.TRDETAILIDX
+	    LEFT OUTER JOIN PRODUCT p ON ac.PRODUCTIDX = p.PRODUCTIDX
+	    WHERE memberIdx = #{memberIdx} AND p.productIdx = #{productIdx} AND (ac.accountNo, trd.trDate) IN (
+	        SELECT accountNo, MAX(trDate) FROM (
+	            SELECT
+	                accountNo accountNo,
+	                trdate
+	            FROM TRDETAIL
+	            UNION ALL
+	            SELECT
+	                accountNo2 accountNo,
+	                trdate
+	            FROM TRDETAIL
+	        ) WHERE accountNo IS NOT NULL GROUP BY accountNo
+	    ) ORDER BY createDate ASC
 	</select>
-	
-	<select id="listAccount" parameterType="map" resultType="map">
-		SELECT accountNo 
-		FROM account
-		WHERE memberIdx = #{memberIdx} 
-			AND productIdx = #{productIdx}
+
+	<select id="pwdCheck" parameterType="map" resultType="Integer">
+		SELECT COUNT(*) FROM account
+		WHERE accountNo = #{accountNo} AND accountPwd = #{accountPwd}
 	</select>
-	
-	<sql id="where-list">
-		
-	</sql>
+
 </mapper>

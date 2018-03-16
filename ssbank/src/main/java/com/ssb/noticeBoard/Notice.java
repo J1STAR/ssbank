@@ -1,20 +1,50 @@
 package com.ssb.noticeBoard;
 
+import java.util.List;
+
 import org.springframework.web.multipart.MultipartFile;
 
 public class Notice {
 	private int listNum, boardIdx, categoryIdx, memberIdx;
 	private String userId, userName, categoryName;
 	private String subject, content, createDate;
-	private int hitCount;
+	private int hitCount, notice;
 	
 	private String saveFileName;
 	private String originalFileName;
-	private MultipartFile upload;
+	private List<MultipartFile> upload;
 	
 	private long fileSize;
-	private int COL;
+	private int fileIdx; // 파일번호
+	private int fileCount;
 	
+	private long gap;
+	
+	
+	public int getNotice() {
+		return notice;
+	}
+	public void setNotice(int notice) {
+		this.notice = notice;
+	}
+	public List<MultipartFile> getUpload() {
+		return upload;
+	}
+	public void setUpload(List<MultipartFile> upload) {
+		this.upload = upload;
+	}
+	public long getGap() {
+		return gap;
+	}
+	public void setGap(long gap) {
+		this.gap = gap;
+	}
+	public int getFileIdx() {
+		return fileIdx;
+	}
+	public void setFileIdx(int fileIdx) {
+		this.fileIdx = fileIdx;
+	}
 	public int getListNum() {
 		return listNum;
 	}
@@ -93,22 +123,18 @@ public class Notice {
 	public void setOriginalFileName(String originalFileName) {
 		this.originalFileName = originalFileName;
 	}
-	public MultipartFile getUpload() {
-		return upload;
-	}
-	public void setUpload(MultipartFile upload) {
-		this.upload = upload;
-	}
+	
 	public long getFileSize() {
 		return fileSize;
 	}
 	public void setFileSize(long fileSize) {
 		this.fileSize = fileSize;
 	}
-	public int getCOL() {
-		return COL;
+	public int getFileCount() {
+		return fileCount;
 	}
-	public void setCOL(int cOL) {
-		COL = cOL;
+	public void setFileCount(int fileCount) {
+		this.fileCount = fileCount;
 	}
+	
 }

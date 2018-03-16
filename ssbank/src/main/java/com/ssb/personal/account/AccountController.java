@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -36,12 +37,23 @@ public class AccountController {
 		return model;
 	}
 	
-	@RequestMapping(value="/personal/listAccount", method=RequestMethod.GET)
-	public List<Map<String, Object>> listAccount(@RequestParam Map<String,Object> map){
+	@RequestMapping(value="/personal/pwdCheck", method=RequestMethod.POST)
+	public Map<String, Object> pwdCheck(@RequestParam String accountNo, @RequestParam String accountPwd) {
 		
+		Map<String, Object> map = new HashMap<>();
+		map.put("accountNo",  accountNo);
+		map.put("accountPwd", accountPwd);
 		
-		List<Map<String, Object>> list = null;
-		return list;
+		int result = 0;
+		try {
+			result = acService.pwdCheck(map);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		Map<String, Object> model = new HashMap<>();
+		model.put("result", result);
+		
+		return model;
 	}
-	
 }

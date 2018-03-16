@@ -61,6 +61,7 @@
 						<a href="javascript:location.href='<%=cp%>/customer/newsBoard/writeNews';" class="btn-type-blue1 medium mt20 fr">글올리기</a>
 					</c:if>
 				</div>
+				
 				<div class="page-nav">
 					<ul>
 						<c:if test="${dataCount==0 }">등록된 게시물이 없습니다.</c:if>

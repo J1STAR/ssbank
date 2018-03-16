@@ -20,7 +20,7 @@ $(function(){
 		var url="<%=cp%>/financial/account/balance";
 		var q="accountNo="+accountNo;
 		$.ajax({
-			type:"get"
+			type:"post"
 			,url:url
 			,data:q
 			,dataType:"json"

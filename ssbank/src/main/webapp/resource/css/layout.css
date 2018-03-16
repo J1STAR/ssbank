@@ -18,6 +18,25 @@
 input[type=text].modiTarget { width: 50%; }
 input[type=password].modiTarget { width: 50%; }
 
+
+
+.content .atm-container { width: 1100px; height: 800px; text-align: center; padding-top: 80px; font-family: 'Orbitron', sans-serif;}
+.content .atm-container .atm { width: 1100px; height: 600px; background-color: black; border-radius: 50px; }
+.content .atm-container .atm .atm-display { position: absolute; width: 700px; height: 400px; background-color: white; border-radius: 50px;
+											margin-left: 20px; margin-top: 30px; }
+											
+.content .atm-container .atm .atm-display .display-table { margin-left: 30px; margin-top: 30px; }
+.content .atm-container .atm .atm-display .display-table tr { }
+.content .atm-container .atm .atm-display .display-table tr td { font-size: 32px; font-family: 'Orbitron', sans-serif; }
+.content .atm-container .atm .atm-display .display-table tr td:first-child { width: 200px; border-right: 1px solid black; }
+.content .atm-container .atm .atm-display .display-table tr td:last-child { width: 400px; text-align: left; padding-left: 20px; }											
+.content .atm-container .atm .atm-display .display-table tr td input[type='text'] { background-color: white; border: 0px; font-size: 32px; font-family: 'Orbitron', sans-serif; }
+.content .atm-container .atm .atm-display .display-table tr td input[type='password'] { background-color: white; border: 0px; font-size: 32px; font-family: 'Orbitron', sans-serif; }
+
+.content .atm-container .atm .btn-container { position: absolute; margin-top: 20px; margin-left: 730px; width: 360px; height: 480px; }
+.content .atm-container .atm .btn-container div[class^='btn-'] { float: left; width: 100px; height: 100px; background-color: white; border-radius: 10px; margin: 10px 10px 10px; }
+.content .atm-container .atm .btn-container div[class^='btn-'] span { line-height: 100px; font-size: 48px; }
+
 /* 방민주 css */
 .info-area .box-agree li.fdn {height: 50px;line-height: 50px}
 
@@ -54,4 +73,10 @@ td div select[class="slt"] {
 	height: 20px;
 	padding : 0px;
 	border-right: 1px solid #ddd;
+}
+
+input[name="date"] {
+	position: relative;
+	width: 70%;
+	z-index: 20;
 }
