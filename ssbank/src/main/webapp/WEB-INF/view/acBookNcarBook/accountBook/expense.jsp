@@ -38,16 +38,16 @@
 		
 		<!--몸통-->
         <tbody id="my-tbody">
-        <c:forEach var="dto" items="${listAll}" begin="0" varStatus="status">
+        <c:forEach var="dto" items="${expenseList}" begin="0" varStatus="status">
             <tr>
                 <td>
                 	<div class="item-checkbox">
-                   		<input type="checkbox" name="${status.count}" disabled="readOnly">
+                   		<input type="checkbox" name="${status.count}" id="sltThis" disabled="readOnly">
                     	<label for="${status.count}"></label>
                     </div>
                 </td>
-                <td>
-                	<input type="text" class="ACBtext" name="date" value="${dto.accountBookDate}" size="10" style="width=100%">
+                <td class="date">
+                	<input type="text" class="ACBtext" value="${dto.accountBookDate}" size="10" style="width=100%">
              
                 </td>
                 <td><input type="text" class="ACBtext" value="${dto.content}" size="10" style="width=100%"></td>
@@ -58,34 +58,33 @@
                 	<div class="item-select" name="sltCat">
                 		 <select class="slt">
                 		 	<option>카테고리</option>
-                		 	<option>식비</option>
-                            <option>주거/통신</option>
-                		 	<option>생활용품</option>
-                		 	<option>의복/미용</option>
-                		 	<option>건강/문화</option>
-                		 	<option>교육/육아</option>
-                		 	<option>교통/차량</option>
-                		 	<option>경조사/회비</option>
-                		 	<option>세금/이자</option>
-                		 	<option>용돈/기타</option>
-                            <option>미분류</option>
+                		 	<option value="1">식비</option>
+                            <option value="2">주거/통신</option>
+                		 	<option value="3">생활용품</option>
+                		 	<option value="4">의복/미용</option>
+                		 	<option value="5">건강/문화</option>
+                		 	<option value="6">교육/육아</option>
+                		 	<option value="7">교통/차량</option>
+                		 	<option value="8">경조사/회비</option>
+                		 	<option value="9">세금/이자</option>
+                		 	<option value="10">용돈/기타</option>
+                            <option value="11">미분류</option>
                         </select>
                 	</div>
                 </td>
                 <td>
-                    <a href="#" class="btn-type-gray1 medium">수정</a>
+                    <a  class="btn-type-gray1 medium">수정</a>
                 </td>   
             </tr>
       </c:forEach>      
             <tr>
                 <td colspan="8">
-                	<a onclick="add_row()" class="btn-type-gray1 small">추가</a>
-                	<a onclick="add_row()" class="btn-type-gray1 small">선택삭제</a>
+                	<a id="addRowBtn" class="btn-type-gray1 small">추가</a>
+                	<a id="removeRowBtn" class="btn-type-gray1 small">선택삭제</a>
                 </td>                
             </tr>
             
         </tbody>
     </table>
-    
-    
+
 
