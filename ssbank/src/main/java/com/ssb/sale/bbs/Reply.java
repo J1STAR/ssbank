@@ -1,38 +1,31 @@
 package com.ssb.sale.bbs;
 
 public class Reply {
-	private int replyNum, num;
-	private String userId, userName;
-	private String content, created;
+	private int replyIdx, boardIdx, memberIdx;
+	private String userId;
+	private String content, createDate;
 	private int answer;
 	
-	private int answerCount; //답글의 갯수용도
+	private int answerCount;
 	private int likeCount;
-	private int disLikeCount;
-	
-	public int getLikeCount() {
-		return likeCount;
+	private int disLikecount;
+	public int getReplyIdx() {
+		return replyIdx;
 	}
-	public void setLikeCount(int likeCount) {
-		this.likeCount = likeCount;
+	public void setReplyIdx(int replyIdx) {
+		this.replyIdx = replyIdx;
 	}
-	public int getDisLikeCount() {
-		return disLikeCount;
+	public int getBoardIdx() {
+		return boardIdx;
 	}
-	public void setDisLikeCount(int disLikeCount) {
-		this.disLikeCount = disLikeCount;
+	public void setBoardIdx(int boardIdx) {
+		this.boardIdx = boardIdx;
 	}
-	public int getReplyNum() {
-		return replyNum;
+	public int getMemberIdx() {
+		return memberIdx;
 	}
-	public void setReplyNum(int replyNum) {
-		this.replyNum = replyNum;
-	}
-	public int getNum() {
-		return num;
-	}
-	public void setNum(int num) {
-		this.num = num;
+	public void setMemberIdx(int memberIdx) {
+		this.memberIdx = memberIdx;
 	}
 	public String getUserId() {
 		return userId;
@@ -40,23 +33,17 @@ public class Reply {
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}
-	public String getUserName() {
-		return userName;
-	}
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
 	public String getContent() {
 		return content;
 	}
 	public void setContent(String content) {
 		this.content = content;
 	}
-	public String getCreated() {
-		return created;
+	public String getCreateDate() {
+		return createDate;
 	}
-	public void setCreated(String created) {
-		this.created = created;
+	public void setCreateDate(String createDate) {
+		this.createDate = createDate;
 	}
 	public int getAnswer() {
 		return answer;
@@ -69,6 +56,18 @@ public class Reply {
 	}
 	public void setAnswerCount(int answerCount) {
 		this.answerCount = answerCount;
+	}
+	public int getLikeCount() {
+		return likeCount;
+	}
+	public void setLikeCount(int likeCount) {
+		this.likeCount = likeCount;
+	}
+	public int getDisLikecount() {
+		return disLikecount;
+	}
+	public void setDisLikecount(int disLikecount) {
+		this.disLikecount = disLikecount;
 	}
 	
 	

@@ -1,5 +1,5 @@
-<%@ page contentType="text/html; charset=UTF-8" %>
-<%@ page trimDirectiveWhitespaces="true" %>
+<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page trimDirectiveWhitespaces="true"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%
@@ -9,9 +9,9 @@
 <script type="text/javascript">
 function deleteBoard() {
 <c:if test="${sessionScope.member.userId=='admin' || sessionScope.member.userId==dto.userId}">
-	var num = "${dto.num}";
+	var boardIdx = "${dto.boardIdx}";
 	var page = "${page}";
-	var query = "num="+num+"&page="+page;
+	var query = "boardIdx="+boardIdx+"&page="+page;
 	var url = "<%=cp%>/bbs/delete?" + query;
 
 	if(confirm("위 자료를 삭제 하시 겠습니까 ? ")) {
@@ -25,9 +25,9 @@ function deleteBoard() {
 
 function updateBoard() {
 <c:if test="${sessionScope.member.userId==dto.userId}">
-	var num = "${dto.num}";
+	var boardIdx = "${dto.boardIdx}";
 	var page = "${page}";
-	var query = "num="+num+"&page="+page;
+	var query = "boardIdx="+boardIdx+"&page="+page;
 	var url = "<%=cp%>/bbs/update?" + query;
 
 	location.href=url;
@@ -51,7 +51,7 @@ $(function(){
 			return;
 		
 		var url="<%=cp%>/bbs/insertBoardLike";
-		var query="num=${dto.num}";
+		var query="boardIdx=${dto.boardIdx}";
 		$.ajax({
 			type:"post"
 			,url:url
@@ -68,12 +68,13 @@ $(function(){
 			}
 		    ,beforeSend:function(jqXHR) {
 		    	jqXHR.setRequestHeader("AJAX", true);
-		    }
+		    } //
 		    ,error:function(jqXHR) {
 		    	if(jqXHR.status==401) {
 		    		console.log(jqXHR);
 		    	} else if(jqXHR.status==403) {
-		    		login();
+		    		// login();
+		    		location.href="<%=cp%>/member/noAuthorized";
 		    	} else {
 		    		console.log(jqXHR.responseText);
 		    	}
@@ -89,7 +90,7 @@ $(function(){
 
 function listPage(page) {
 	var url="<%=cp%>/bbs/listReply";
-	var query="pageNo="+page+"&num=${dto.num}";
+	var query="pageNo="+page+"&boardIdx=${dto.boardIdx}";
 	$.ajax({
 		type:"get"
 		,url:url
@@ -104,7 +105,8 @@ function listPage(page) {
 	    	if(jqXHR.status==401) {
 	    		console.log(jqXHR);
 	    	} else if(jqXHR.status==403) {
-	    		login();
+	    		// login();
+	    		location.href="<%=cp%>/member/noAuthorized";
 	    	} else {
 	    		console.log(jqXHR.responseText);
 	    	}
@@ -125,7 +127,7 @@ $(function(){
 		}
 
 		var url="<%=cp%>/bbs/insertReply";
-		var query="num=${dto.num}&content="+content+"&answer=0";
+		var query="boardIdx=${dto.boardIdx}&content="+content+"&answer=0";
 		$.ajax({
 			type:"post"
 			,url:url
@@ -146,10 +148,11 @@ $(function(){
 		    	jqXHR.setRequestHeader("AJAX", true);
 		    }
 		    ,error:function(jqXHR) {
+		    	alert(jqXHR.status);		    	
 		    	if(jqXHR.status==401) {
 		    		console.log(jqXHR);
 		    	} else if(jqXHR.status==403) {
-		    		login();
+		    		location.href="<%=cp%>/member/noAuthorized";
 		    	} else {
 		    		console.log(jqXHR.responseText);
 		    	}
@@ -203,7 +206,8 @@ function listReplyAnswer(replyNum) {
 	    	if(jqXHR.status==401) {
 	    		console.log(jqXHR);
 	    	} else if(jqXHR.status==403) {
-	    		login();
+	    		// login();
+	    		location.href="<%=cp%>/member/noAuthorized";
 	    	} else {
 	    		console.log(jqXHR.responseText);
 	    	}
@@ -233,7 +237,8 @@ function replyAnswerCount(replyNum) {
 	    	if(jqXHR.status==401) {
 	    		console.log(jqXHR);
 	    	} else if(jqXHR.status==403) {
-	    		login();
+	    		// login();
+	    		location.href="<%=cp%>/member/noAuthorized";
 	    	} else {
 	    		console.log(jqXHR.responseText);
 	    	}
@@ -255,7 +260,7 @@ $(function(){
 		}
 		
 		var url="<%=cp%>/bbs/insertReply";
-		var query="num=${dto.num}&content="+encodeURIComponent(content)+"&answer="+replyNum;
+		var query="boardIdx=${dto.boardIdx}&content="+encodeURIComponent(content)+"&answer="+replyNum;
 		$.ajax({
 			type:"post"
 			,url:url
@@ -280,7 +285,8 @@ $(function(){
 		    	if(jqXHR.status==401) {
 		    		console.log(jqXHR);
 		    	} else if(jqXHR.status==403) {
-		    		login();
+		    		// login();
+		    		location.href="<%=cp%>/member/noAuthorized";
 		    	} else {
 		    		console.log(jqXHR.responseText);
 		    	}
@@ -339,7 +345,8 @@ $(function(){
 		    	if(jqXHR.status==401) {
 		    		console.log(jqXHR);
 		    	} else if(jqXHR.status==403) {
-		    		login();
+		    		// login();
+		    		location.href="<%=cp%>/member/noAuthorized";
 		    	} else {
 		    		console.log(jqXHR.responseText);
 		    	}
@@ -373,7 +380,8 @@ function deleteReply(replyNum, page) {
 	    	if(jqXHR.status==401) {
 	    		console.log(jqXHR);
 	    	} else if(jqXHR.status==403) {
-	    		login();
+	    		// login();
+	    		location.href="<%=cp%>/member/noAuthorized";
 	    	} else {
 	    		console.log(jqXHR.responseText);
 	    	}
@@ -406,7 +414,8 @@ function deleteReplyAnswer(replyNum, answer) {
 	    	if(jqXHR.status==401) {
 	    		console.log(jqXHR);
 	    	} else if(jqXHR.status==403) {
-	    		login();
+	    		// login();
+	    		location.href="<%=cp%>/member/noAuthorized";
 	    	} else {
 	    		console.log(jqXHR.responseText);
 	    	}
@@ -416,107 +425,92 @@ function deleteReplyAnswer(replyNum, answer) {
 }
 </script>
 
-<div class="body-container" style="width: 700px;">
-    <div class="body-title">
-        <h3><span style="font-family: Webdings">2</span> 게시판 </h3>
-    </div>
-    
-    <div>
-			<table style="width: 100%; margin: 20px auto 0px; border-spacing: 0px; border-collapse: collapse;">
-			<tr height="35" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;">
-			    <td colspan="2" align="center">
-				   ${dto.subject}
-			    </td>
-			</tr>
-			
-			<tr height="35" style="border-bottom: 1px solid #cccccc;">
-			    <td width="50%" align="left" style="padding-left: 5px;">
-			       이름 : ${dto.userName}
-			    </td>
-			    <td width="50%" align="right" style="padding-right: 5px;">
-			        ${dto.created} | 조회 ${dto.hitCount}
-			    </td>
-			</tr>
-			
-			<tr>
-			  <td colspan="2" align="left" style="padding: 10px 5px;" valign="top" height="200">
-			      ${dto.content}
-			   </td>
-			</tr>
-			
-			<tr style="border-bottom: 1px solid #cccccc;">
-				<td colspan="2" height="40" style="padding-bottom: 15px;" align="center">
-					<button type="button" class="btn btnSendBoardLike"><span style="font-family: Wingdings;">C</span>&nbsp;&nbsp;<span id="boardLikeCount">${dto.boardLikeCount}</span></button>
-				</td>
-			</tr>
-			
-			<tr height="35" style="border-bottom: 1px solid #cccccc;">
-			    <td colspan="2" align="left" style="padding-left: 5px;">
-			       첨&nbsp;&nbsp;부 :
-		           <c:if test="${not empty dto.saveFilename}">
-		                   <a href="<%=cp%>/bbs/download?num=${dto.num}">${dto.originalFilename}</a>
-		           </c:if>
-			    </td>
-			</tr>
-			
-			<tr height="35" style="border-bottom: 1px solid #cccccc;">
-			    <td colspan="2" align="left" style="padding-left: 5px;">
-			       이전글 :
-			         <c:if test="${not empty preReadDto}">
-			              <a href="<%=cp%>/bbs/article?${query}&num=${preReadDto.num}">${preReadDto.subject}</a>
-			        </c:if>
-			    </td>
-			</tr>
-			
-			<tr height="35" style="border-bottom: 1px solid #cccccc;">
-			    <td colspan="2" align="left" style="padding-left: 5px;">
-			       다음글 :
-			         <c:if test="${not empty nextReadDto}">
-			              <a href="<%=cp%>/bbs/article?${query}&num=${nextReadDto.num}">${nextReadDto.subject}</a>
-			        </c:if>
-			    </td>
-			</tr>
+<div class="content">
+	<h1>게시판</h1>
+	<div class="page-con">
+		<div class="table-wrap">
+			<table class="table-hori board">
+				<tr>
+					<td>${dto.subject}</td>
+				</tr>
+				<tr>
+					<td>이름 : ${dto.userName}</td>
+					<td>${dto.created} | 조회 ${dto.hitCount}</td>
+				</tr>
+				<tr>
+					<td>${dto.content}</td>
+				</tr>
+				<tr>
+					<td>
+						<button type="button" class="btn btnSendBoardLike">
+							<span style="font-family: Wingdings;">C</span>&nbsp;&nbsp;<span
+								id="boardLikeCount">${dto.boardLikeCount}</span>
+						</button>
+					</td>
+				</tr>
+				<tr height="35" style="border-bottom: 1px solid #cccccc;">
+					<td colspan="2" align="left" style="padding-left: 5px;">
+						첨&nbsp;&nbsp;부 : <c:if test="${not empty dto.saveFilename}">
+							<a href="<%=cp%>/bbs/download?boardIdx=${dto.boardIdx}">${dto.originalFilename}</a>
+						</c:if>
+					</td>
+				</tr>
+
+				<tr height="35" style="border-bottom: 1px solid #cccccc;">
+					<td colspan="2" align="left" style="padding-left: 5px;">이전글 :
+						<c:if test="${not empty preReadDto}">
+							<a href="<%=cp%>/bbs/article?${query}&boardIdx=${preReadDto.boardIdx}">${preReadDto.subject}</a>
+						</c:if>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2" align="left" style="padding-left: 5px;">다음글 :
+						<c:if test="${not empty nextReadDto}">
+							<a
+								href="<%=cp%>/bbs/article?${query}&boardIdx=${nextReadDto.boardIdx}">${nextReadDto.subject}</a>
+						</c:if>
+					</td>
+				</tr>
 			</table>
-			
-			<table style="width: 100%; margin: 0px auto 20px; border-spacing: 0px;">
-			<tr height="45">
-			    <td width="300" align="left">
-			       <c:if test="${sessionScope.member.userId==dto.userId}">				    
-			          <button type="button" class="btn" onclick="updateBoard();">수정</button>
-			       </c:if>
-			       <c:if test="${sessionScope.member.userId==dto.userId || sessionScope.member.userId=='admin'}">				    
-			          <button type="button" class="btn" onclick="deleteBoard();">삭제</button>
-			       </c:if>
-			    </td>
-			
-			    <td align="right">
-			        <button type="button" class="btn" onclick="javascript:location.href='<%=cp%>/bbs/list?${query}';">리스트</button>
-			    </td>
-			</tr>
+
+			<table>
+				<tr>
+					<td ><c:if
+							test="${sessionScope.member.userId==dto.userId}">
+							<button type="button" class="btn" onclick="updateBoard();">수정</button>
+						</c:if> <c:if
+							test="${sessionScope.member.userId==dto.userId || sessionScope.member.userId=='admin'}">
+							<button type="button" class="btn" onclick="deleteBoard();">삭제</button>
+						</c:if></td>
+
+					<td>
+						<button type="button" class="btn"
+							onclick="javascript:location.href='<%=cp%>/bbs/list?${query}';">리스트</button>
+					</td>
+				</tr>
 			</table>
-    </div>
-    
-    <div>
-		<table style='width: 100%; margin: 15px auto 0px; border-spacing: 0px;'>
-			<tr height='30'> 
-				 <td align='left' >
-				 	<span style='font-weight: bold;' >댓글쓰기</span><span> - 타인을 비방하거나 개인정보를 유출하는 글의 게시를 삼가 주세요.</span>
-				 </td>
-			</tr>
-			<tr>
-			   	<td style='padding:5px 5px 0px;'>
-					<textarea class='boxTA' style='width:99%; height: 70px;' id="replyContent"></textarea>
-			    </td>
-			</tr>
-			<tr>
-			   <td align='right'>
-			        <button type='button' class='btn btnSendReply' data-num='10' style='padding:10px 20px;'>댓글 등록</button>
-			    </td>
-			 </tr>
-		</table>
-		     
-		<div id="listReply"></div>
-    
-    </div>
-    
+		</div>
+
+		<div>
+			<table
+				style='width: 100%; margin: 15px auto 0px; border-spacing: 0px;'>
+				<tr height='30'>
+					<td align='left'><span style='font-weight: bold;'>댓글쓰기</span><span>
+							- 타인을 비방하거나 개인정보를 유출하는 글의 게시를 삼가 주세요.</span></td>
+				</tr>
+				<tr>
+					<td style='padding: 5px 5px 0px;'><textarea class='boxTA'
+							style='width: 99%; height: 70px;' id="replyContent"></textarea></td>
+				</tr>
+				<tr>
+					<td align='right'>
+						<button type='button' class='btn btnSendReply' data-num='10'
+							style='padding: 10px 20px;'>댓글 등록</button>
+					</td>
+				</tr>
+			</table>
+			<div id="listReply"></div>
+		</div>
+	</div>
+
 </div>
