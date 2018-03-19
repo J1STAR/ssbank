@@ -35,6 +35,8 @@
 		    <intercept-url pattern="/customer/newsBoard/created" access="hasRole('ROLE_ADMIN')"/>
 		    <intercept-url pattern="/customer/newsBoard/update" access="hasRole('ROLE_ADMIN')"/>
 		    <intercept-url pattern="/customer/nib*" access="hasAnyRole('ROLE_USER, ROLE_ADMIN')"/>
+		    <intercept-url pattern="/financial/**" access="hasAnyRole('ROLE_USER, ROLE_ADMIN')"/>
+		    <intercept-url pattern="/counsel/**" access="hasAnyRole('ROLE_USER, ROLE_ADMIN')"/>
             
             <intercept-url pattern="/personal/**" access="hasRole('ROLE_USER')"/>
             

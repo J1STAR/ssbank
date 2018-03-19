@@ -16,9 +16,11 @@
     </ul>
 </div>
 
-<div>
+
 <div id="board-body"></div>
-</div>
+
+
+
 </div>
 <script>
 //전연 변수
@@ -76,10 +78,12 @@ function articleBoard(boardIdx,categoryIdx){
 		,url:url
 		,data:q
 		,success:function(data){
+			alert(boardIdx);
 			$("#board-body").html(data);
+			replyList(categoryIdx,pageNo,boardIdx);
 		}
 		,error:function(e) {
-		console.log(e.responseText);
+			console.log(e.responseText);
 		}
 	});
 	
@@ -104,13 +108,13 @@ function searchList() {
 function insertBoard(categoryIdx){
 	var url = "<%=cp%>/counsel/created";
 	var q= "categoryIdx="+categoryIdx;
-	alert(categoryIdx);
 	$.ajax({
 		type:"get"
 		,url:url
 		,data:q
 		,success:function(data){
 			$("#board-body").html(data);
+			
 		}
 		,error:function(e) {
 		console.log(e.responseText);
@@ -147,7 +151,7 @@ function sendBoard(mode,categoryIdx){
 	
 	var url="<%=cp%>/counsel/"+mode;
 	var query = $("form[name=counselForm]").serialize(); 
-	alert(query);
+	
 	$.ajax({
 		type:"post"
 		,url:url
@@ -163,5 +167,54 @@ function sendBoard(mode,categoryIdx){
 		}
 	});
 }
+
+function replyList(categoryIdx,page,boardIdx){
+	var url="<%=cp%>/counsel/replyList";
+	var q="categoryIdx="+categoryIdx+"&pageNo="+page+"&boardIdx="+boardIdx;
+	
+	$.ajax({
+		type:"get"
+		,url:url
+		,data:q
+		,success:function(data){
+			$("#listReply").html(data);
+		}
+		,error:function	(e) {
+	  		console.log(e.responseText);
+		}
+	});
+}
+
+function insertReply(categoryIdx,page,boardIdx){
+	var f = document.replyForm;
+	if(! f.content.value) {
+		alert('내용을 입력 하세요. ');
+		f.content.focus();
+		return;
+	}
+	
+	var url="<%=cp%>/counsel/insertReply";
+	var q = $("form[name=replyForm]").serialize(); 
+	$.ajax({
+		type:"post"
+		,url:url
+		,data:q
+		,dataType:"json"
+		,success:function(data){
+			var state=data.state;
+			if(state="true"){
+				$("#replyContent").val();
+				replyList(categoryIdx,page,boardIdx);
+			}else if(state=="false"){
+				alert("댓글을 추가 하지 못했습니다.")
+			}
+		}
+		,error:function(e){
+			console.log(e.responseText);
+		}
+	});
+}
+
+
 
 </script>

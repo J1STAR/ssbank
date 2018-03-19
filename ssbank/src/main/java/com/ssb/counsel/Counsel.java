@@ -20,9 +20,17 @@ public class Counsel {
 	
 	private String name;
 	
+	//댓글 
+	private int replyCount;
 	
 	
 	
+	public int getReplyCount() {
+		return replyCount;
+	}
+	public void setReplyCount(int replyCount) {
+		this.replyCount = replyCount;
+	}
 	public String getBoardPwd() {
 		return boardPwd;
 	}

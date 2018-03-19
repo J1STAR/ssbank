@@ -60,4 +60,32 @@
   			VALUES(BOARD_SEQ.NEXTVAL,#{categoryIdx},#{memberIdx},#{subject},#{content},0,SYSDATE,#{boardPwd})
  	</insert>
  	
+ 	<select id="replyCount" parameterType="map" resultType="Integer">
+ 	SELECT NVL(COUNT(*), 0) FROM boardReply
+	 		WHERE boardIdx=#{boardIdx} AND answer=0
+ 	</select>
+ 	<select id="listReply" parameterType="map" resultType="com.ssb.counsel.Reply">
+ 	SELECT * FROM (
+			SELECT ROWNUM rnum, tb.* FROM (
+				SELECT r.replyIdx, r.memberIdx, b.boardIdx, r.content, r.createDate
+				FROM boardReply r
+				JOIN  board b ON r.boardIdx=b.boardIdx
+				LEFT OUTER JOIN (
+				     SELECT answer, COUNT(*) answerCount
+				     FROM boardReply WHERE answer!=0 GROUP BY answer
+				) a ON r.replyIdx = a.answer
+				WHERE r.boardIdx=#{boardIdx}  AND r.answer=0
+				ORDER BY r.replyIdx DESC
+	<![CDATA[							
+				) tb WHERE ROWNUM <= #{end}
+		) WHERE rnum >= #{start}
+	]]>		
+	</select>
+	
+	<insert id="insertReply" parameterType="com.ssb.counsel.Reply">
+	INSERT INTO boardReply
+	(replyIdx,memberIdx,boardIdx,content,createDate,answer)
+	VALUES(BOARDREPLY_SEQ.nextval,#{memberIdx},#{boardIdx},#{content},SYSDATE,#{answer})
+	</insert>
+ 	
 </mapper>

@@ -29,7 +29,7 @@
             	<c:forEach var="dto" items="${list}">
                 <tr>
                     <td>${dto.listNum}</td>
-                    <td><a href="javascript:articleBoard(${dto.boardIdx},${dto.categoryIdx});">${dto.subject}</a></td>
+                    <td><a href="javascript:articleBoard(${dto.boardIdx},${dto.categoryIdx});">${dto.subject} (${replyCount})</a></td>
                     <td>${dto.name}</td>
                     <td>${dto.createDate}</td>
                     <td>${dto.hitCount}</td>

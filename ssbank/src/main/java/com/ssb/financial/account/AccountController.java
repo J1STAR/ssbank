@@ -192,7 +192,7 @@ public class AccountController {
 	}
 	
 
-	// 대출 엑셀 다운로드
+	
 	@RequestMapping(value = "/financial/account/excel")
 	public View excelDownload(Map<String, Object> model, HttpSession session) {
 		String filename = "account.xls";
