@@ -58,9 +58,11 @@ td input[class="ACBtext"]  { /* 텍스트박스 */
     border: none;
     width: 100%;
     box-sizing: border-box;
-} 
+}
 
-td div[id="sltCat"]{
+td input[class]
+
+td div[name="sltCat"]{
 	width: 100%;
 }
 
@@ -72,10 +74,4 @@ td div select[class="slt"] {
 	height: 20px;
 	padding : 0px;
 	border-right: 1px solid #ddd;
-}
-
-input[name="date"] {
-	position: relative;
-	width: 70%;
-	z-index: 20;
 }

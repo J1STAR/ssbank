@@ -24,7 +24,7 @@ public class AccountBookController {
 	@Autowired
 	private MyExcelView excel;
 
-	// 가계부
+	// 가계부 메인
 	@RequestMapping(value = "/acBookNcarBook/accountBook", method = RequestMethod.GET)
 	public String accountBook(HttpSession session, Model model) {
 
