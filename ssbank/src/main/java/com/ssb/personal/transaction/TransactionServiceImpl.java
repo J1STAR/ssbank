@@ -19,7 +19,8 @@ public class TransactionServiceImpl implements TransactionService {
 		int result = 0;
 		
 		try {
-			result = dao.insertData("transaction.transactionSubmit", map);
+			dao.insertData("transaction.transactionSubmit", map);
+			result = (int) map.get("result");
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
