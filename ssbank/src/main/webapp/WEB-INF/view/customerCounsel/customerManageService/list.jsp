@@ -5,7 +5,6 @@
 <%
 	String cp=request.getContextPath();
 %>
-<!-- list -->
 <script type="text/javascript">
 	function searchList() {
 		var f=document.searchForm;
@@ -14,7 +13,7 @@
 </script>
 
 <div class="content">
-	<h1>뉴스</h1>
+	<h1>자주하는 질문</h1>
 			<div class="page-con">
 				<div class="table-num">
 					<th>${dataCount}개(${page}/${total_page} 페이지)</th>
@@ -53,14 +52,15 @@
 					</table>
 				</div>
 				<div class="btns">
-					<a href="javascript:location.href='<%=cp%>/customer/newsBoard/newsList';" class="btn-type-gray medium mt20 fl">새로고침</a>
+					<a href="javascript:location.href='<%=cp%>/customerCounsel/customerManageService/list';" class="btn-type-gray medium mt20 fl">새로고침</a>
 				</div>	
 				<div class="btns">	
 					<c:if test="${sessionScope.member.userId == 'admin'}">
 						<%-- <a href="javascript:location.href='<%=cp%>/customer/newsBoard/writeNews';" class="btn-type-blue1 medium mt20 fr">글올리기</a> --%>
-						<a href="javascript:location.href='<%=cp%>/customer/newsBoard/writeNews';" class="btn-type-blue1 medium mt20 fr">글올리기</a>
+						<a href="javascript:location.href='<%=cp%>/customerCounsel/customerManageService/write';" class="btn-type-blue1 medium mt20 fr">글올리기</a>
 					</c:if>
 				</div>
+				
 				<div class="page-nav">
 					<ul>
 						<c:if test="${dataCount==0 }">등록된 게시물이 없습니다.</c:if>
@@ -68,7 +68,7 @@
 					</ul>
 				</div>
 				<div class="search-wrap mt40">
-					<form name="searchForm" action="<%=cp%>/customer/newsBoard/newsList" method="post">
+					<form name="searchForm" action="<%=cp%>/customerCounsel/customerManageService/list" method="post">
 					<div class="item-select">
 						<select name="" class="">
 							<option>제목</option>

@@ -138,17 +138,17 @@
 						if(balance == null)
 							balance = 0;
 						totalBalance += balance;
-						$td.html(numberWithCommas(balance));
+						$td.html(numberWithCommas(Math.floor(balance)));
 						$tr.append($td);
 						
 						$td = $("<td class='acInfo'>");
 						$td.html("<a href='<%=cp%>/personal/transactionList' class='btn-type-gray medium'>조회</a>"+
-								"<a href='<%=cp%>/personal/transaction' class='btn-type-blue1 medium'>이체</a>");
+								"<a href='<%=cp%>/personal/transaction?accountNo=\""+account.ACCOUNTNO+"\"' class='btn-type-blue1 medium'>이체</a>");
 						$tr.append($td);
 
 						$("tbody").append($tr);
 					});
-					$("#totalBalance").html(numberWithCommas(totalBalance) + " 원");
+					$("#totalBalance").html(numberWithCommas(Math.floor(totalBalance)) + " 원");
 				}
 			},
 			error	: 	function(e){

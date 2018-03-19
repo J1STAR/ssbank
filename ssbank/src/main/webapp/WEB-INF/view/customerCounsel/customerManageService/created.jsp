@@ -5,7 +5,6 @@
 <%
 	String cp=request.getContextPath();
 %>
-<!-- created -->
 <script type="text/javascript">
     function sendOk() {
         var f = document.boardForm;
@@ -24,7 +23,7 @@
             return;
         }
 
-    	f.action="<%=cp%>/customer/newsBoard/${mode}";
+    	f.action="<%=cp%>/customerCounsel/customerManageService/${mode}";
 
         f.submit();
     }
@@ -50,10 +49,7 @@
 					      <td width="100" bgcolor="#eeeeee" style="text-align: center;">카테고리</td>
 					      <td style="padding-left:10px;"> 
 					          <select name="categoryIdx">
-					          <c:forEach var="vo" items="${listCategory}">
-					          	<option value="${vo.categoryIdx}" ${vo.categoryIdx==dto.categoryIdx ? "selected='selected' ":"" }>${vo.categoryName}</option>
-					          
-					          </c:forEach>
+					                  	<option value="9" >자주하는 질문</option>
 					          </select>
 					      </td>
 					  </tr>
@@ -71,7 +67,7 @@
 					      <td align="center" >
 					        <a class="btn-type-blue1 medium" onclick="sendOk();">${mode=='update'?'수정완료':'등록하기'}</a>
 					        <a class="btn-type-blue1 medium">다시입력</a>
-					        <a class="btn-type-blue1 medium" onclick="javascript:location.href='<%=cp%>/customer/newsBoard/newsList';">${mode=='update'?'수정취소':'등록취소'}</a>
+					        <a class="btn-type-blue1 medium" onclick="javascript:location.href='<%=cp%>/customerCounsel/customerManageService/list';">${mode=='update'?'수정취소':'등록취소'}</a>
 					         <c:if test="${mode=='update'}">
 					         	 <input type="hidden" name="boardIdx" value="${dto.boardIdx}">
 					        	 <input type="hidden" name="page" value="${page}">

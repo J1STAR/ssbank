@@ -2,36 +2,34 @@
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="bbs">
-
-
+	
 	<insert id="insertBoard" parameterType="com.ssb.sale.bbs.Board">
-		INSERT
-		into board(boardIdx, categoryIdx, memberIdx, subject, content, hitCount,
-		createDate,boardPwd) VALUES
-		(board_seq.NEXTVAL, 2, #{memberIdx}, #{subject}, #{content}, 0, SYSDATE,#{boardPwd})
-		
+		INSERT INTO board(boardIdx, categoryIdx, memberIdx, subject, content, hitCount, createDate) VALUES
+			(board_seq.NEXTVAL, 2, #{memberIdx}, #{subject}, #{content}, 0, SYSDATE)
 	</insert>
-
-	<insert id="insertBoardFile" parameterType="com.ssb.sale.bbs.Board">
-	insert into boardfile(fileIdx,boardIdx,filesize,saveFileName,originalFileName)
-		values(boardFile_seq.NEXTVAL,board_seq.currval,#{filesize},#{saveFileName jdbcType=VARCHAR},#{originalFileName jdbcType=VARCHAR})
-	</insert>
+	<select id="listCategory" resultType="com.ssb.sale.bbs.Board">
+	    SELECT categoryIdx, categoryName FROM boardtype
+	</select>
+	<!-- 글보기 -->
 	<select id="readBoard" parameterType="Integer" resultType="com.ssb.sale.bbs.Board">
 		SELECT
-		b.boardIdx,
-		m.lastName || m.firstName userName,
-		categoryIdx,
-		subject,
-		content,
-		TO_CHAR(b.createDate,
-		'YYYY-MM-DD') createDate,
-		hitCount
+			b.boardIdx,
+			m1.memberIdx,
+			m1.userId,
+			m2.lastName || m2.firstName userName,
+			categoryIdx,
+			subject,
+			content,
+			TO_CHAR(b.createDate,
+			'YYYY-MM-DD') createDate,
+			hitCount
 		FROM board b
-		JOIN memberInfo m ON b.memberIdx = m.memberIdx
-		WHERE boardIdx = #{num}
+		JOIN member m1 ON b.memberIdx = m1.memberIdx
+        JOIN memberInfo m2 ON b.memberIdx = m2.memberIdx
+        WHERE boardIdx = #{boardIdx}
 	</select>
-
-	<sql id="where-nib">
+	
+	<sql id="where-bbs">
 		<if test="searchKey=='userName'">
 			userName = #{searchValue}
 		</if>
@@ -42,25 +40,28 @@
 			DBMS_LOB.INSTR(content, #{searchValue}) &gt; 0
 		</if>
 		<if test="searchKey=='created'">
-			(TO_CHAR(b.created, 'YYYY-MM-DD') = #{searchValue}
-			OR TO_CHAR(b.created, 'YYYYMMDD') = #{searchValue})
+			(TO_CHAR(b.createDate, 'YYYY-MM-DD') = #{searchValue}
+				OR TO_CHAR(b.createDate, 'YYYYMMDD') = #{searchValue})
 		</if>
 	</sql>
-
-
-	<!-- 글개수 -->
-	<select id="dataCount" resultType="Integer" parameterType="map">
-		SELECT NVL(COUNT(*), 0)
-		FROM board b JOIN memberInfo m ON b.memberIdx = m.memberIdx
-		<where>
-			<if test="searchValue != null and searchValue != '' ">
-				<include refid="where-nib" />
-			</if>
-		</where>
-	</select>
-
-	<!-- 글리스트 -->
-	<select id="listBoard" parameterType="map" resultType="com.ssb.sale.bbs.Board">
+	
+	 
+	 <!-- 글개수 -->
+	 <select id="dataCount" resultType="Integer" parameterType="map">
+	 	SELECT NVL(COUNT(*), 0)
+	 		FROM board b
+			JOIN member m1 ON b.memberIdx = m1.memberIdx
+            JOIN memberInfo m2 ON b.memberIdx = m2.memberIdx
+            WHERE categoryIdx=2
+	 	<where>
+	 		<if test="searchValue != null and searchValue != '' ">
+	 			<include refid="where-bbs"/>
+	 		</if>
+	 	</where>
+	 </select>
+	 
+	  <!-- 글리스트 -->
+		<select id="listBoard" parameterType="map" resultType="com.ssb.sale.bbs.Board">
 		SELECT * FROM (
 		SELECT ROWNUM rnum, tb.* FROM (
 		SELECT
@@ -81,194 +82,69 @@
 		FROM boardReply
 		GROUP BY boardIdx
 		) c ON b.boardIdx = c.boardIdx
+		WHERE categoryIdx=2
 		ORDER BY boardIdx DESC
 		<where>
 			<if test="searchValue != null and searchValue != ''">
-				<include refid="where-nib" />
+				<include refid="where-bbs" />
 			</if>
 		</where>
 		<![CDATA[
             ) tb WHERE ROWNUM <= #{end}
-        ) WHERE rnum >= #{start} AND categoryIdx=2
+        ) WHERE rnum >= #{start}
 ]]>
 
  	</select>
-	
-<!-- 조회수 증가
-	<update id="updateHitCount" parameterType="Integer">
-		UPDATE bbs SET hitCount=hitCount+1 WHERE num = #{num}
-	</update>
-	
-	AND 가 필요 없는 경우 자동으로 제거 됨
-	이전글
-	<select id="preReadBoard" resultType="com.ssb.sale.bbs.Board" 
-				parameterType="map">
-		SELECT tb.* FROM (
-			SELECT num, subject
-			      FROM bbs b
-			      JOIN member1 m ON b.userId=m.userId
-                    <where>
-                         <if test="searchValue != null and searchValue != '' ">
-			                  <include refid="where-list"/>
-		                 </if>
-		               <![CDATA[
-		                 AND (num > #{num})
-		                 ]]>
-	                </where>
-				ORDER BY num ASC
-			) tb WHERE ROWNUM=1
-	</select>
 
-	다음글
-	<select id="nextReadBoard" resultType="com.ssb.sale.bbs.Board" 
-				parameterType="map">
-		SELECT tb.* FROM (
-			SELECT num, subject
-			       FROM bbs b
-			       JOIN member1 m ON b.userId=m.userId
-                    <where>
-                         <if test="searchValue != null and searchValue != '' ">
-			                  <include refid="where-list"/>
-		                 </if>
-		               <![CDATA[
-		                 AND (num < #{num})
-		                 ]]>
-	                </where>
-				ORDER BY num DESC
-			) tb WHERE ROWNUM=1
-	</select>
+<!-- 조회수 -->
+<update id="updateHitCount" parameterType="Integer">
+	UPDATE board SET hitCount = hitCount + 1 WHERE boardIdx = #{boardIdx}
+</update>
 
-     수정
-     <update id="updateBoard" parameterType="com.ssb.sale.bbs.Board">
-         UPDATE bbs SET subject=#{subject}, content=#{content}
-                    ,saveFilename=#{saveFilename, jdbcType=VARCHAR}
-                    ,originalFilename=#{originalFilename, jdbcType=VARCHAR}
-                    WHERE num = #{num}
-      </update>
-      
-      삭제
-      <delete id="deleteBoard" parameterType="Integer">
-            DELETE FROM bbs WHERE num = #{num}
-      </delete>
-      
-      게시 글 좋아요  추가
-      <insert id="insertBoardLike" parameterType="map">
-      		INSERT INTO bbsLike(num, userId) VALUES (#{num}, #{userId})
-      </insert>
-      
-      게시글 좋아요 개수
-      <select id="boardLikeCount" parameterType="Integer" resultType="Integer">
-      		SELECT COUNT(*) FROM bbsLike WHERE num=#{num}
-      </select>
-      
-      댓글
-      <insert id="insertReply" parameterType="com.sp.bbs.Reply">
-      	INSERT INTO bbsReply(replyNum, num, userId, content, answer)
-      	   VALUES (bbsReply_seq.NEXTVAL, #{num}, #{userId}, #{content}, #{answer})
-      </insert>
+<!-- 이전글 -->
+<select id="preReadBoard" resultType="com.ssb.sale.bbs.Board" parameterType="map">
+	SELECT tb.* FROM (
+		SELECT boardIdx, subject
+			FROM board b
+			JOIN memberInfo m ON b.memberIdx = m.memberIdx
+			<where>
+				<if test="searchValue != null and searchValue != ''">
+					<include refid="where-bbs"/>
+				</if>
+				<![CDATA[
+				AND (boardIdx > #{boardIdx})
+				]]>
+			</where>
+		ORDER BY boardIdx ASC
+	) tb WHERE ROWNUM = 1
+</select>
 
-	 <select id="replyCount" parameterType="map" resultType="Integer">
-	 		SELECT NVL(COUNT(*), 0) FROM bbsReply
-	 		WHERE num=#{num}  AND answer=0
-	 </select>
+<!-- 다음글 -->
+<select id="nextReadBoard" resultType="com.ssb.sale.bbs.Board" parameterType="map">
+	SELECT tb.* FROM (
+		SELECT boardIdx, subject
+			FROM board b
+			JOIN memberInfo m ON b.memberIdx = m.memberIdx
+			<where>
+				<if test="searchValue != null and searchValue != ''">
+					<include refid="where-bbs"/>
+				</if>
+				<![CDATA[
+				AND (boardIdx < #{boardIdx})
+				]]>
+			</where>
+		ORDER BY boardIdx DESC
+	) tb WHERE ROWNUM = 1
+</select>
 
-	댓글리스트
-	<select id="listReply" parameterType="map" resultType="com.sp.bbs.Reply">
-		SELECT * FROM (
-			SELECT ROWNUM rnum, tb.* FROM (
-				SELECT r.replyNum, r.userId, userName, num, content, r.created
-				            ,NVL(answerCount, 0) answerCount
-				            ,NVL(likeCount, 0) likeCount
-				            ,NVL(disLikeCount, 0) disLikeCount
-				FROM bbsReply r
-				JOIN member1 m ON r.userId = m.userId
-				LEFT OUTER JOIN (
-				     SELECT answer, COUNT(*) answerCount
-				     FROM bbsReply WHERE answer!=0 GROUP BY answer
-				) a ON r.replyNum = a.answer
-				LEFT OUTER JOIN (
-				     SELECT replyNum, COUNT(DECODE(replyLike, 1, 1)) likeCount
-				                 ,COUNT(DECODE(replyLike, 0, 1)) disLikeCount
-				     FROM bbsReplyLike GROUP BY replyNum
-				) c ON r.replyNum = c.replyNum
-				WHERE num=#{num}  AND r.answer=0
-				ORDER BY r.replyNum DESC
-<![CDATA[				
-			) tb WHERE ROWNUM <= #{end}
-		) WHERE rnum >= #{start}
-]]>		
-	</select>
-	
-	댓글 및 답글삭제
-	<delete id="deleteReply" parameterType="map">
-		DELETE bbsReply WHERE 
-		<if test="mode=='reply' ">
-			replyNum IN (
-			     SELECT replyNum FROM bbsReply
-			          START WITH replyNum=#{replyNum}
-			          CONNECT BY PRIOR replyNum = answer         
-			)
-		</if>
-		<if test="mode=='answer' ">
-			replyNum = #{replyNum}
-		</if>
-	</delete>
-	
-	댓글의 답글 리스트
-	<select id="listReplyAnswer" parameterType="Integer"
-	            resultType="com.ssb.sale.bbs.Reply">
-	   SELECT replyNum, num, r.userId, userName, content, created, answer
-	   FROM bbsReply r
-	   JOIN member1 m ON r.userId = m.userId
-	   WHERE answer = #{answer}
-	   ORDER BY replyNum DESC
-	</select>
-	
-	댓글의 답글 개수
-	<select id="replyAnswerCount" resultType="Integer"
-	            parameterType="Integer">
-	 		SELECT NVL(COUNT(*), 0)
-	 		FROM bbsReply WHERE answer = #{answer}
-	 </select>
-	
-	좋아요/싫어요 추가
-	<insert id="insertReplyLike" parameterType="map">
-		INSERT INTO bbsReplyLike(replyNum, userId, replyLike)
-		        VALUES (#{replyNum}, #{userId}, #{replyLike})
-	</insert>
-	
-	좋아요/싫어요 개수
-	<select id="replyLikeCount" parameterType="map" resultType="map">
-	     SELECT COUNT(DECODE(replyLike, 1, 1)) likeCount
-			          ,COUNT(DECODE(replyLike, 0, 1)) disLikeCount
-				     FROM bbsReplyLike WHERE replyNum = #{replyNum}
-	</select>
-	 -->
-	 
-	 	<!-- 파일 -->
-	<insert id="insertFile" parameterType="com.ssb.sale.bbs.Board">
-	  INSERT INTO boardFile(fileNum, num, saveFilename, 
-	    originalFilename, fileSize) VALUES
-	       (noticeFile_seq.NEXTVAL, #{num}, #{saveFilename},
-	           #{originalFilename}, #{fileSize})
-	</insert>
-	
-	<select id="listFile" parameterType="Integer"
-	              resultType="com.ssb.sale.bbs.Board">
-	SELECT  fileNum, num, saveFilename, 
-	    originalFilename, fileSize
-	    FROM BoardFile WHERE  num=#{num}    
-	</select>
-	
-	<select id="readFile" parameterType="Integer"
-	              resultType="com.ssb.sale.bbs.Board">
-	SELECT  fileNum, num, saveFilename, 
-	    originalFilename, fileSize
-	    FROM boardFile WHERE fileNum=#{fileNum}      
-	</select>
-	
-	<delete id="deleteFile" parameterType="map">
-	DELETE FROM boardFile WHERE ${field} = #{num}
-	</delete>
-	
+<!-- 수정 -->
+<update id="updateBoard" parameterType="com.ssb.sale.bbs.Board">
+	UPDATE board SET subject = #{subject}, content = #{content}
+				WHERE boardIdx = #{boardIdx}
+</update>
+
+<!-- 삭제 -->
+<delete id="deleteBoard" parameterType="Integer">
+	DELETE FROM board WHERE boardIdx = #{boardIdx}
+</delete>
 </mapper>

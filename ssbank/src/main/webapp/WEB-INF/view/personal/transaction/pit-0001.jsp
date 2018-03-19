@@ -22,12 +22,17 @@
 		            <tr>
 		                <th scope="col">출금계좌번호</th>
 		                <td scope="col">
-							<div class="item-select">
+							<div class="item-select accNo">
 		                        <select name="accountNo" id="">
 		                            <option>선택</option>
 		                        </select>
 		                    </div>
+		                    <span id="currBalance">
+		                    
+		                    </span>
+		                    <input type="hidden" name="balance" value="">
 						</td>
+						
 		            </tr>
 		            <tr>
 		                <th>계좌비밀번호</th>
@@ -73,7 +78,7 @@
 		    </table>
 	    </form>
 	    <div class="btn-area">
-		    <a href="javascript:history.back()" class="btn-type-gray1 big">취소</a>
+		    <a href="<%=cp %>/" class="btn-type-gray1 big">취소</a>
 		    <a href="#" id="transactionConfirm" class="btn-type-blue1 big">확인</a>
 		</div>
 	</div>
@@ -91,6 +96,16 @@
 				transactionSubmit();
 			} 
 		});
+		
+		/* 잔액 */
+		$("select[name=accountNo]").on("change", function(){
+			var element = $(this).find('option:selected'); 
+	        var balanceTag = element.attr("data-balance"); 
+	
+	        $("input[name=balance]").val(balanceTag);
+	        $("#currBalance").html("출금 가능액 : " + numberWithCommas(balanceTag));
+		});
+		
 	});
 	
 	function transactionInit(){
@@ -117,14 +132,25 @@
 					selAcc.empty();
 					$.each(data.listAccount, function(index, account){
 						
-						var $opt = $("<option>");
+						var $opt = $("<option data-balance="+Math.floor(account.BALANCE)+">");	
+						
 						$opt.val(account.ACCOUNTNO);
-						$opt.html(" [잔액 : "+ numberWithCommas(account.BALANCE) +"]" + account.ACCOUNTNO);
+						$opt.html(account.ACCOUNTNO);
 						
 						selAcc.append($opt);
 						
 					});
 					
+					var $tgAcc = $("select[name=accountNo]")
+					if( ${accountNo == ""} ){
+						$tgAcc.find('option:eq(0)').attr("selected", "selected");
+						
+						$("#currBalance").html("출금 가능액 : " + numberWithCommas($tgAcc.find("option:selected").attr("data-balance")));	
+					} else {
+						$tgAcc.find('option[value=${accountNo}]').attr("selected", "selected");
+						
+						$("#currBalance").html("출금 가능액 : " + numberWithCommas($tgAcc.find("option:selected").attr("data-balance")));
+					}
 					
 				}
 					
@@ -167,19 +193,25 @@
 	
 	function transactionSubmit(){
 		var url = "<%=cp%>/transaction/transactionSubmit";
-		var data = $("form[name=transactionTable]").serialize();
-		
+		var query = $("form[name=transactionTable]").serialize();
+
 		$.ajax({
 			url		: url,
 			type		: "POST",
-			data		: data,
+			data		: query,
 			dataType	: "json",
 			success	: function(data){
-				location.href = "<%=cp%>/personal/transaction-"+ data.result;
+				transactionResult(data.result);
 			},
 			error	: function(e){
 				console.log("err");
 			}
 		});
+	}
+	
+	function transactionResult(result){
+		var f = document.transactionTable;
+		f.action = "<%=cp%>/personal/transaction-"+ result;
+		f.submit();
 	}
 </script>

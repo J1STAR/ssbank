@@ -1,4 +1,4 @@
-package com.ssb.referenceRoom;
+package com.ssb.customerManageService;
 
 import java.util.List;
 import java.util.Map;
@@ -8,24 +8,23 @@ import org.springframework.stereotype.Service;
 
 import com.ssb.common.FileManager;
 import com.ssb.common.dao.CommonDAO;
+import com.ssb.newsBoard.NewsBoard;
 
-@Service("referenceRoom.boardService")
+@Service("customerManageService.boardService")
 public class BoardServiceImpl implements BoardService{
 	@Autowired
 	private CommonDAO dao;
+	
 	@Autowired
 	private FileManager fileManager;
-	
+
 	@Override
 	public int insertBoard(Board dto, String pathname) {
 		int result = 0;
 		try {
-			String saveFilename = fileManager.doFileUpload(dto.getUpload(), pathname);
-			if(saveFilename != null) {
-				dto.setSaveFilename(saveFilename);
-				dto.setOriginalFilename(dto.getUpload().getOriginalFilename());
-			}
-			result = dao.insertData("referenceRoom.insertBoard", dto);
+			int seq = dao.selectOne("customerManageService.seq");
+			dto.setBoardIdx(seq);
+			result = dao.insertData("customerManageService.insertBoard", dto);
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
@@ -36,7 +35,18 @@ public class BoardServiceImpl implements BoardService{
 	public List<Board> listBoard(Map<String, Object> map) {
 		List<Board> list = null;
 		try {
-			list = dao.selectList("referenceRoom.listBoard", map);
+			list = dao.selectList("customerManageService.listBoard", map);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return list;
+	}
+
+	@Override
+	public List<Board> listCategory() {
+		List<Board> list = null;
+		try {
+			list = dao.selectList("customerManageService.listCategory");
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
@@ -47,7 +57,7 @@ public class BoardServiceImpl implements BoardService{
 	public int dataCount(Map<String, Object> map) {
 		int result = 0;
 		try {
-			result = dao.selectOne("referenceRoom.dataCount", map);
+			result = dao.selectOne("customerManageService.dataCount", map);
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
@@ -55,10 +65,10 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
-	public Board readBoard(int num) {
+	public Board readBoard(int boardIdx) {
 		Board dto = null;
 		try {
-			dto = dao.selectOne("referenceRoom.readBoard", num);
+			dto = dao.selectOne("customerManageService.readBoard", boardIdx);
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
@@ -66,10 +76,10 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
-	public int updateHitCount(int num) {
+	public int updateHitCount(int boardIdx) {
 		int result = 0;
 		try {
-			result = dao.updateData("referencaeRoom.updateHitCount", num);
+			result = dao.updateData("customerManageService.updateHitCount", boardIdx);
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
@@ -80,7 +90,7 @@ public class BoardServiceImpl implements BoardService{
 	public Board preReadBoard(Map<String, Object> map) {
 		Board dto = null;
 		try {
-			dto = dao.selectOne("referenceRoom.preReadboard", map);
+			dto = dao.selectOne("customerManageService.preReadBoard", map);
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
@@ -91,7 +101,7 @@ public class BoardServiceImpl implements BoardService{
 	public Board nextReadBoard(Map<String, Object> map) {
 		Board dto = null;
 		try {
-			dto = dao.selectOne("referenceRoom.nextReadBoard", map);
+			dto = dao.selectOne("customerManageService.nextReadBoard", map);
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
@@ -102,15 +112,7 @@ public class BoardServiceImpl implements BoardService{
 	public int updateBoard(Board dto, String pathname) {
 		int result = 0;
 		try {
-			String saveFilename = fileManager.doFileUpload(dto.getUpload(), pathname);
-			if(saveFilename != null) {
-				if(dto.getSaveFilename() != null && dto.getSaveFilename().length() != 0) 
-					fileManager.doFileDelete(dto.getSaveFilename(), pathname);
-				dto.setSaveFilename(saveFilename);
-				dto.setOriginalFilename(dto.getUpload().getOriginalFilename());
-			}
-			
-			dao.updateData("referenceRoom.updateBiard", dto);
+			dao.updateData("customerManageService.updateBoard", dto);
 			result = 1;
 		} catch (Exception e) {
 			System.out.println(e.toString());
@@ -119,20 +121,19 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
-	public int deleteBoard(int num, String pathname, String userId) {
+	public int deleteBoard(int boardIdx, String pathname, String userId) {
 		int result = 0;
 		try {
-			Board dto = readBoard(num);
-			if(dto==null || (!userId.equals("admin") && !userId.equals(dto.getUserId()))) 
+			Board dto = readBoard(boardIdx);
+			if(dto == null || (!userId.equals("admin") && !userId.equals(dto.getUserId())))
 				return result;
 			
-			fileManager.doFileDelete(dto.getSaveFilename(), pathname);
-			
-			dao.deleteData("referenceRoom.deleteBoard", num);
+			dao.deleteData("customerManageService.deleteBoard", boardIdx);
 			result = 1;
 		} catch (Exception e) {
 		}
 		return result;
 	}
-
+	
+	
 }
