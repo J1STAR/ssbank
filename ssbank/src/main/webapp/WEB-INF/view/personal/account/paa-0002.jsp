@@ -8,8 +8,8 @@
 <div class="content">
 	
 	<h1>거래 내역 조회</h1>
-	<div class="table-wrap">
-		<form name="transactionTable" method="POST">
+	<div class="table-wrap" style="margin-bottom: 50px;">
+		<form name="acInfoTable" method="POST">
 		    <table class="table-verti">
 		        <caption>거래 내역 조회</caption>
 		        <colgroup>
@@ -29,7 +29,11 @@
 		            </tr>
 		            <tr>
 		                <th>조회기간</th>
-		                <td><input type="text" class="" id="date"> ~ <input type="text" class="" id="date"></td>
+		                <td>
+		                		<input type="text" class="" id="date" name="startDate" placeholder="">
+		                		
+		                		<input type="text" class="" id="date" name="endDate" placeholder="">
+		                </td>
 		            </tr>
 		            <tr>
 		                <th>조회내용</th>
@@ -63,45 +67,149 @@
 		            </tr>
 		        </tbody>
 		    </table>
-		    
-		    <h2>계좌 정보</h2>
-		    <table class="table-verti">
-		        <caption>계좌 정보</caption>
+		    <div class="btn-area">
+			    <a href="#" id="lookupDetailConfrim" class="btn-type-blue1 big">조회</a>
+			</div>
+		</form>
+		
+	    <h2>계좌 정보</h2>
+	    <table class="table-verti">
+	        <caption>계좌 정보</caption>
+	        <colgroup>
+	            <col style="width:20%;"/>
+	            <col style="width:*;"/>
+	        </colgroup>
+	        <tbody>
+				<tr>
+					<th>계좌명</th>
+					<td></td>
+				</tr>
+				<tr>
+					<th>고객명</th>
+					<td></td>
+				</tr>
+				<tr>
+					<th>계좌번호</th>
+					<td></td>
+				</tr>
+				<tr>
+					<th>계좌잔액(원)</th>
+					<td></td>
+				</tr>
+				<tr>
+					<th>가입일</th>
+					<td></td>
+				</tr>
+				<tr>
+					<th>최종거래일</th>
+					<td></td>
+				</tr>
+	        </tbody>
+	    </table>
+	    
+	    <h2>거래내역</h2>
+	    <div name="transactionList" class="table-wrap">
+		    <table class="table-hori">
+		        <caption>거래내역</caption>
 		        <colgroup>
-		            <col style="width:20%;"/>
-		            <col style="width:*;"/>
+		            <col style="width:auto"/>
+		            <col style="width:15%"/>
+		            <col style="width:15%"/>
+		            <col style="width:15%"/>
+		            <col style="width:15%"/>
+		            <col style="width:155px;"/>
 		        </colgroup>
+		        <thead>
+		            <th scope="col">거래일자</th>
+		            <th scope="col">적요</th>
+		            <th scope="col">출금(원)</th>
+		            <th scope="col">입금(원)</th>
+		            <th scope="col">내용</th>
+		            <th scope="col">잔액</th>
+		        </thead>
 		        <tbody>
-					<tr>
-						<th>계좌명</th>
-						<td></td>
-					</tr>
-					<tr>
-						<th>고객명</th>
-						<td></td>
-					</tr>
-					<tr>
-						<th>계좌번호</th>
-						<td></td>
-					</tr>
-					<tr>
-						<th>계좌잔액(원)</th>
-						<td></td>
-					</tr>
-					<tr>
-						<th>가입일</th>
-						<td></td>
-					</tr>
-					<tr>
-						<th>최종거래일</th>
-						<td></td>
-					</tr>
+		            <tr>
+		                <td>&nbsp;</td>
+		                <td>&nbsp;</td>
+		                <td>&nbsp;</td>
+		                <td>&nbsp;</td>
+		                <td>&nbsp;</td>
+		                <td>&nbsp;</td>
+		            </tr>
+		            <tr>
+		                <td>&nbsp;</td>
+		                <td>&nbsp;</td>
+		                <td>&nbsp;</td>
+		                <td>&nbsp;</td>
+		                <td>&nbsp;</td>
+		                <td>&nbsp;</td>
+		            </tr>
+		            <tr>
+		                <td>&nbsp;</td>
+		                <td>&nbsp;</td>
+		                <td>&nbsp;</td>
+		                <td>&nbsp;</td>
+		                <td>&nbsp;</td>
+		                <td>&nbsp;</td>
+		            </tr>
+		            <tr>
+		                <td>&nbsp;</td>
+		                <td>&nbsp;</td>
+		                <td>&nbsp;</td>
+		                <td>&nbsp;</td>
+		                <td>&nbsp;</td>
+		                <td>&nbsp;</td>
+		            </tr>
+		            <tr>
+		                <td>&nbsp;</td>
+		                <td>&nbsp;</td>
+		                <td>&nbsp;</td>
+		                <td>&nbsp;</td>
+		                <td>&nbsp;</td>
+		                <td>&nbsp;</td>
+		            </tr>
+		            <tr>
+		                <td>&nbsp;</td>
+		                <td>&nbsp;</td>
+		                <td>&nbsp;</td>
+		                <td>&nbsp;</td>
+		                <td>&nbsp;</td>
+		                <td>&nbsp;</td>
+		            </tr>
+		            <tr>
+		                <td>&nbsp;</td>
+		                <td>&nbsp;</td>
+		                <td>&nbsp;</td>
+		                <td>&nbsp;</td>
+		                <td>&nbsp;</td>
+		                <td>&nbsp;</td>
+		            </tr>
+		            <tr>
+		                <td>&nbsp;</td>
+		                <td>&nbsp;</td>
+		                <td>&nbsp;</td>
+		                <td>&nbsp;</td>
+		                <td>&nbsp;</td>
+		                <td>&nbsp;</td>
+		            </tr>
+		            <tr>
+		                <td>&nbsp;</td>
+		                <td>&nbsp;</td>
+		                <td>&nbsp;</td>
+		                <td>&nbsp;</td>
+		                <td>&nbsp;</td>
+		                <td>&nbsp;</td>
+		            </tr>
+		            <tr>
+		                <td>&nbsp;</td>
+		                <td>&nbsp;</td>
+		                <td>&nbsp;</td>
+		                <td>&nbsp;</td>
+		                <td>&nbsp;</td>
+		                <td>&nbsp;</td>
+		            </tr>
 		        </tbody>
 		    </table>
-	    </form>
-	    <div class="btn-area">
-		    <a href="<%=cp %>/" class="btn-type-gray1 big">취소</a>
-		    <a href="#" id="transactionConfirm" class="btn-type-blue1 big">확인</a>
 		</div>
 	</div>
 </div>

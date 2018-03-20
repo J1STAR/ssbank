@@ -92,9 +92,10 @@
 		
 		/* 이체 */
 		$("#transactionConfirm").click(function(event){
-			if( pwdCheck() == true ){
-				transactionSubmit();
-			} 
+			event.preventDefault();
+			
+			transactionSubmit();
+			
 		});
 		
 		/* 잔액 */
@@ -144,14 +145,11 @@
 					var $tgAcc = $("select[name=accountNo]")
 					if( ${accountNo == ""} ){
 						$tgAcc.find('option:eq(0)').attr("selected", "selected");
-						
-						$("#currBalance").html("출금 가능액 : " + numberWithCommas($tgAcc.find("option:selected").attr("data-balance")));	
 					} else {
 						$tgAcc.find('option[value=${accountNo}]').attr("selected", "selected");
-						
-						$("#currBalance").html("출금 가능액 : " + numberWithCommas($tgAcc.find("option:selected").attr("data-balance")));
 					}
-					
+					$("#currBalance").html("출금 가능액 : " + numberWithCommas($tgAcc.find("option:selected").attr("data-balance")));
+					$("input[name=balance]").val($tgAcc.find("option:selected").attr("data-balance"));
 				}
 					
 			},
@@ -193,15 +191,21 @@
 	
 	function transactionSubmit(){
 		var url = "<%=cp%>/transaction/transactionSubmit";
-		var query = $("form[name=transactionTable]").serialize();
+		var trQuery = $("form[name=transactionTable]").serialize();
 
 		$.ajax({
 			url		: url,
 			type		: "POST",
-			data		: query,
+			data		: trQuery,
 			dataType	: "json",
 			success	: function(data){
-				transactionResult(data.result);
+				
+				if(pwdCheck() == true){
+					transactionResult(data.result);
+				} {
+					transactionResult(0);
+				}
+				
 			},
 			error	: function(e){
 				console.log("err");

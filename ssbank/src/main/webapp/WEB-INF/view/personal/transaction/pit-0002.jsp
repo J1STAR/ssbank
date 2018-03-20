@@ -18,7 +18,9 @@
 						<li>보내는 계좌 : ${sendAccount }</li>
 						<li>받는 계좌 : ${recvAccount }</li>
 						<li>금액 : ${amount }</li>
-						<li>잔액 : ${currBalance }</li>
+						<c:if test="${trStatus != '0'}">
+							<li>잔액 : ${currBalance }</li>
+						</c:if>
 					</ul>
 				</dd>
 			</dl>
