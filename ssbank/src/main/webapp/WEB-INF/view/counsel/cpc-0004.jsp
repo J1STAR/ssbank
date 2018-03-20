@@ -26,33 +26,13 @@
 	           <span><b>${userName}</b></span>
 	        </td>
 	       <td width='50%' style='padding:5px 5px; border:1px solid #cccccc; border-left:none;' align='right'>
-	           <span>${vo.createDate}</span> |
+	           <span>${vo.createDate}</span> 
+	           	<a onclick='deleteReply(${vo.replyIdx},1,${categoryIdx},${vo.boardIdx});'>삭제</a>
 	        </td>
 	    </tr>
 	    <tr>
 	        <td colspan='2' valign='top' style='padding:5px 5px;'>
 	              ${vo.content}
-	        </td>
-	    </tr>
-	    
-	    <tr>
-	        <td style='padding:7px 5px;'>
-	            <button type='button' class='btn btnReplyAnswerLayout' data-replyNum='${vo.replyIdx}'>답글 <span id="answerCount${vo.replyIdx}">${vo.answerCount}</span></button>
-	        </td>
-	    </tr>
-	
-	    <tr class='replyAnswer' style='display: none;'>
-	        <td colspan='2'>
-	            <div id='listReplyAnswer${vo.replyIdx}' class='answerList' style='border-top: 1px solid #cccccc;'></div>
-	            <div style='clear: both; padding: 10px 10px;'>
-	                <div style='float: left; width: 5%;'>└</div>
-	                <div style='float: left; width:95%'>
-	                    <textarea cols='72' rows='12' class='boxTA' style='width:98%; height: 70px;'></textarea>
-	                 </div>
-	            </div>
-	             <div style='padding: 0px 13px 10px 10px; text-align: right;'>
-	                <button type='button' class='btn btnSendReplyAnswer' data-replyNum='${vo.replyIdx}'>답글 등록</button>
-	            </div>
 	        </td>
 	    </tr>
 	</c:forEach>

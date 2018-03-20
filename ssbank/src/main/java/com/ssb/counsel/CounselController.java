@@ -38,8 +38,6 @@ public class CounselController {
 	public String list(
 			@RequestParam(value="categoryIdx",defaultValue="4")int categoryIdx
 			,@RequestParam(value="pageNo",defaultValue="1")int current_page
-			,@RequestParam(value="searchKey",defaultValue="subject")String searchKey
-			,@RequestParam(value="searchValue",defaultValue="")String searchValue
 			,HttpServletRequest req,Model model,HttpSession session 
 			) throws Exception {
 		
@@ -48,15 +46,12 @@ public class CounselController {
 		int total_page=0;
 		int dataCount=0;
 		
-		if(req.getMethod().equalsIgnoreCase("GET")) {
-			searchValue = URLDecoder.decode(searchValue,"utf-8");
-		}
+	
 		
 		Map<String, Object> map = new HashMap<>();
 		map.put("categoryIdx", categoryIdx);
 		map.put("memberIdx", info.getMemberIdx());
-		map.put("searchKey", searchKey);
-		map.put("searchValue", searchValue);
+		
 		
 		dataCount= service.dataCount(map);
 		System.out.println("dataCount : controller"+dataCount);
@@ -82,16 +77,13 @@ public class CounselController {
 			n++;
 		}
 		String paging = myUtil.pagingMethod(current_page, total_page, "listPage");
-		int replyCount= service.replyCount(map);
 		
 		model.addAttribute("list",list);
 		model.addAttribute("pageNo",current_page);
 		model.addAttribute("dataCount",dataCount);
-		model.addAttribute("replyCount",replyCount);
 		model.addAttribute("total_page",total_page);
 		model.addAttribute("paging",paging);
-		model.addAttribute("searchKey",searchKey);
-		model.addAttribute("searchValue",searchValue);
+		
 		model.addAttribute("categoryIdx",categoryIdx);
 		return"counsel/cpc-0001";
 	}
@@ -114,7 +106,7 @@ public class CounselController {
 		//글 가져오기
 		Counsel dto=service.readBoard(boardIdx);
 		if(dto==null)
-			return list(categoryIdx,pageNo, searchKey, searchValue, req, model,session);
+			return list(categoryIdx,pageNo, req, model,session);
 		
 		dto.setContent(dto.getContent().replaceAll("\n", "<br>"));
 		
@@ -161,7 +153,8 @@ public class CounselController {
 	
 	@RequestMapping(value="/counsel/replyList")
 	public String replyList(
-			@RequestParam int boardIdx
+			@RequestParam int categoryIdx
+			,@RequestParam int boardIdx
 			,@RequestParam(value="pageNo", defaultValue="1") int current_page
 			,Model model,HttpSession session
 			) {
@@ -172,7 +165,6 @@ public class CounselController {
 		
 		Map<String, Object> map = new HashMap<>();
 		map.put("boardIdx", boardIdx);
-		System.out.println("boardIdx :"+boardIdx);
 		dataCount = service.replyCount(map);
 		total_page=myUtil.pageCount(rows, dataCount);
 		if(current_page >total_page) current_page=total_page;
@@ -191,6 +183,7 @@ public class CounselController {
 		
 		model.addAttribute("userName",info.getUserName());
 		model.addAttribute("listReply",listReply);
+		model.addAttribute("categoryIdx",categoryIdx);
 		model.addAttribute("pageNo",current_page);
 		model.addAttribute("replyCount",dataCount);
 		model.addAttribute("total_page",total_page);
@@ -219,4 +212,30 @@ public class CounselController {
 		return model;
 	}
 	
+	@RequestMapping(value="/counsel/deleteReply",method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> deleteReply(
+			@RequestParam Map<String, Object> paramMap
+			){
+		String state = "true";
+		service.deleteReply(paramMap);
+		
+		Map<String, Object> model = new HashMap<>();
+		model.put("state", state);
+		return model;
+	}
+	
+	@RequestMapping(value="/counsel/delete")
+	@ResponseBody
+	public Map<String, Object> delete(
+			@RequestParam Map<String, Object> paramMap
+			){
+		String state = "true";
+		service.deleteBoardReply(paramMap);
+		service.deleteBoard(paramMap);
+		
+		Map<String, Object> model = new HashMap<>();
+		model.put("state", state);
+		return model;
+	}
 }

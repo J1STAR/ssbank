@@ -25,8 +25,6 @@
 <script>
 //전연 변수
 var pageNo=1;
-var searchKey="subject";
-var searchValue="";
 var categoryIdx=4;
 
 //디폴트 화면
@@ -49,9 +47,6 @@ function counselList(category,page){
 	
 	var url ="<%=cp%>/counsel/list";
 	var q ="categoryIdx="+category+"&pageNo="+page;
-	if(searchValue!=""){
-		q+="&searchKey="+searchKey+"&searchValue="+encodURIComponent(searchValue);
-	}
 	
 	$.ajax({
 		type:"get"
@@ -70,15 +65,12 @@ function counselList(category,page){
 function articleBoard(boardIdx,categoryIdx){
 	var url="<%=cp%>/counsel/article";
 	var q="categoryIdx="+categoryIdx+"&boardIdx="+boardIdx+"&pageNo="+pageNo;
-	if(searchValue!="")
-		q+="&searchKey="+searchKey+"&searchValue="+encodeURIComponent(searchValue);
 	
 	$.ajax({
 		type:"get"
 		,url:url
 		,data:q
 		,success:function(data){
-			alert(boardIdx);
 			$("#board-body").html(data);
 			replyList(categoryIdx,pageNo,boardIdx);
 		}
@@ -91,18 +83,9 @@ function articleBoard(boardIdx,categoryIdx){
 
 function reloadBoard() {
 
-	searchKey="subject";
-	searchValue="";
-	
 	counselList(4,1);
 }
-function searchList() {
-	searchKey=$("#searchKey").val();
-	searchValue=$("#searchValue").val();
-	
-	var category = $(this).attr("data-category");
-	counselList(category,1);
-}
+
 
 //글쓰기 폼 
 function insertBoard(categoryIdx){
@@ -168,6 +151,29 @@ function sendBoard(mode,categoryIdx){
 	});
 }
 
+function deleteBoard(categoryIdx,page,boardIdx){
+	if(!confirm("게시글을 삭제하시겠습니까?..")) return;
+	var url ="<%=cp%>/counsel/delete";
+	var q = "boardIdx="+boardIdx;
+	
+	$.ajax({
+		type:"post"
+		,url:url
+		,data:q
+		,dataType:"json"
+		,success:function(data) {
+			var s = data.state;
+			counselList(categoryIdx,1);
+		}
+	 	,error:function(e){
+	 		console.log(e.responseText);
+		 }
+	});
+	
+	
+
+}
+
 function replyList(categoryIdx,page,boardIdx){
 	var url="<%=cp%>/counsel/replyList";
 	var q="categoryIdx="+categoryIdx+"&pageNo="+page+"&boardIdx="+boardIdx;
@@ -215,6 +221,27 @@ function insertReply(categoryIdx,page,boardIdx){
 	});
 }
 
+function deleteReply(replyIdx,page,categoryIdx,boardIdx){
+	if(!confirm("게시글을 삭제하시겠습니까?..")) return;
+	
+	var url ="<%=cp%>/counsel/deleteReply";
+	var q = "replyIdx="+replyIdx+"&mode=reply";
+	
+	$.ajax({
+		type:"post"
+		,url:url
+		,data:q
+		,dataType:"json"
+		,success:function(data){
+			replyList(categoryIdx,page,boardIdx);
+		}
+		,error:function(e) {
+			console.log(e.responseText);
+		}
+	});
+	
+	
+}
 
 
 </script>
