@@ -144,14 +144,10 @@
 					var $tgAcc = $("select[name=accountNo]")
 					if( ${accountNo == ""} ){
 						$tgAcc.find('option:eq(0)').attr("selected", "selected");
-						
-						$("#currBalance").html("출금 가능액 : " + numberWithCommas($tgAcc.find("option:selected").attr("data-balance")));	
 					} else {
 						$tgAcc.find('option[value=${accountNo}]').attr("selected", "selected");
-						
-						$("#currBalance").html("출금 가능액 : " + numberWithCommas($tgAcc.find("option:selected").attr("data-balance")));
 					}
-					
+					$("#currBalance").html("출금 가능액 : " + numberWithCommas($tgAcc.find("option:selected").attr("data-balance")));
 				}
 					
 			},
