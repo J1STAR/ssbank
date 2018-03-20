@@ -142,7 +142,7 @@
 						$tr.append($td);
 						
 						$td = $("<td class='acInfo'>");
-						$td.html("<a href='<%=cp%>/personal/transactionList' class='btn-type-gray medium'>조회</a>"+
+						$td.html("<a href='<%=cp%>/personal/lookupDetailAccount' class='btn-type-gray medium'>조회</a>"+
 								"<a href='<%=cp%>/personal/transaction?accountNo=\""+account.ACCOUNTNO+"\"' class='btn-type-blue1 medium'>이체</a>");
 						$tr.append($td);
 

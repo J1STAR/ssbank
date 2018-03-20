@@ -372,23 +372,6 @@ function validInfoCheck(){
 }
 
 
-
-
-/* DatePicker를 통한 날짜 입력 */
-$(function(){
-	
-	$("#date").datepicker({
-		showOn:"button"
-		,buttonImage:"<%=cp %>/resource/images/ico_calendar.png"
-		,buttonImageOnly:true
-	});
-	
-	$(".ui-datepicker-trigger").css({
-		position:"absolute", width:"32px", height:"32px"
-	});
-	
-});
-
 /* 다음 주소 api */
 function daumPostcode() {
 	new daum.Postcode({

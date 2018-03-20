@@ -75,8 +75,9 @@ td div select[class="slt"] {
 	border: none;
 }
 
-.table-wrap .table-hori td { /*텍스트박스를 감싸는 td*/
+/* .table-wrap .table-hori td { 텍스트박스를 감싸는 td
 	height: 20px;
 	padding : 0px;
 	border-right: 1px solid #ddd;
 }
+ */
