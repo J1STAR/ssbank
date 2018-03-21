@@ -30,9 +30,8 @@
 		            <tr>
 		                <th>조회기간</th>
 		                <td>
-		                		<input type="text" class="" id="date" name="startDate" placeholder="">
-		                		
-		                		<input type="text" class="" id="date" name="endDate" placeholder="">
+		                		<span><input type="text" class="" id="date" name="startDate" value="" placeholder=""> ~ </span>
+		                		<span><input type="text" class="" id="date" name="endDate" value="" placeholder=""></span>
 		                </td>
 		            </tr>
 		            <tr>
@@ -68,12 +67,12 @@
 		        </tbody>
 		    </table>
 		    <div class="btn-area">
-			    <a href="#" id="lookupDetailConfrim" class="btn-type-blue1 big">조회</a>
+			    <a href="#" id="lookupDetailConfirm" class="btn-type-blue1 big">조회</a>
 			</div>
 		</form>
 		
 	    <h2>계좌 정보</h2>
-	    <table class="table-verti">
+	    <table class="table-verti">	
 	        <caption>계좌 정보</caption>
 	        <colgroup>
 	            <col style="width:20%;"/>
@@ -108,8 +107,8 @@
 	    </table>
 	    
 	    <h2>거래내역</h2>
-	    <div name="transactionList" class="table-wrap">
-		    <table class="table-hori">
+	    <div class="table-wrap">
+		    <table name="transactionList" class="table-hori">
 		        <caption>거래내역</caption>
 		        <colgroup>
 		            <col style="width:auto"/>
@@ -128,86 +127,7 @@
 		            <th scope="col">잔액</th>
 		        </thead>
 		        <tbody>
-		            <tr>
-		                <td>&nbsp;</td>
-		                <td>&nbsp;</td>
-		                <td>&nbsp;</td>
-		                <td>&nbsp;</td>
-		                <td>&nbsp;</td>
-		                <td>&nbsp;</td>
-		            </tr>
-		            <tr>
-		                <td>&nbsp;</td>
-		                <td>&nbsp;</td>
-		                <td>&nbsp;</td>
-		                <td>&nbsp;</td>
-		                <td>&nbsp;</td>
-		                <td>&nbsp;</td>
-		            </tr>
-		            <tr>
-		                <td>&nbsp;</td>
-		                <td>&nbsp;</td>
-		                <td>&nbsp;</td>
-		                <td>&nbsp;</td>
-		                <td>&nbsp;</td>
-		                <td>&nbsp;</td>
-		            </tr>
-		            <tr>
-		                <td>&nbsp;</td>
-		                <td>&nbsp;</td>
-		                <td>&nbsp;</td>
-		                <td>&nbsp;</td>
-		                <td>&nbsp;</td>
-		                <td>&nbsp;</td>
-		            </tr>
-		            <tr>
-		                <td>&nbsp;</td>
-		                <td>&nbsp;</td>
-		                <td>&nbsp;</td>
-		                <td>&nbsp;</td>
-		                <td>&nbsp;</td>
-		                <td>&nbsp;</td>
-		            </tr>
-		            <tr>
-		                <td>&nbsp;</td>
-		                <td>&nbsp;</td>
-		                <td>&nbsp;</td>
-		                <td>&nbsp;</td>
-		                <td>&nbsp;</td>
-		                <td>&nbsp;</td>
-		            </tr>
-		            <tr>
-		                <td>&nbsp;</td>
-		                <td>&nbsp;</td>
-		                <td>&nbsp;</td>
-		                <td>&nbsp;</td>
-		                <td>&nbsp;</td>
-		                <td>&nbsp;</td>
-		            </tr>
-		            <tr>
-		                <td>&nbsp;</td>
-		                <td>&nbsp;</td>
-		                <td>&nbsp;</td>
-		                <td>&nbsp;</td>
-		                <td>&nbsp;</td>
-		                <td>&nbsp;</td>
-		            </tr>
-		            <tr>
-		                <td>&nbsp;</td>
-		                <td>&nbsp;</td>
-		                <td>&nbsp;</td>
-		                <td>&nbsp;</td>
-		                <td>&nbsp;</td>
-		                <td>&nbsp;</td>
-		            </tr>
-		            <tr>
-		                <td>&nbsp;</td>
-		                <td>&nbsp;</td>
-		                <td>&nbsp;</td>
-		                <td>&nbsp;</td>
-		                <td>&nbsp;</td>
-		                <td>&nbsp;</td>
-		            </tr>
+
 		        </tbody>
 		    </table>
 		</div>
@@ -215,12 +135,12 @@
 </div>
 
 <script>
-	$(window).load(function(){
+
+	function accDetailInit(prIdx){
 		
-		acDetailInit(1);
-	});
-	
-	function acDetailInit(prIdx){
+		$("input[name=startDate]").val(new Date().getCurrentDate());
+		$("input[name=endDate]").val(new Date().getCurrentDate());
+		
 		var url = "<%=cp%>/personal/lookupAccount";
 		var data = "memberIdx=${sessionScope.member.memberIdx}&productIdx="+prIdx;
 		
@@ -238,7 +158,8 @@
 					selAcc.empty();
 					$.each(data.listAccount, function(index, account){
 						
-						var $opt = $("<option>");
+						var $opt = $("<option>");	
+						
 						$opt.val(account.ACCOUNTNO);
 						$opt.html(account.ACCOUNTNO);
 						
@@ -246,7 +167,14 @@
 						
 					});
 					
+					var $tgAcc = $("select[name=accountNo]")
+					if( ${accountNo == ""} ){
+						$tgAcc.find('option:eq(0)').attr("selected", "selected");
+					} else {
+						$tgAcc.find('option[value=${accountNo}]').attr("selected", "selected");
+					}
 					
+					loadAccDetail();
 				}
 					
 			},
@@ -256,8 +184,70 @@
 		})
 	}
 	
+	function loadAccDetail(){
+	
+		var trTable = $("table[name=transactionList]");
+		trTable.find("tbody").empty();
+		
+		var url = "<%=cp%>/transaction/transactionList";
+		var query = $("form[name=acInfoTable]").serialize();
+		console.log(query);
+		
+		$.ajax({
+			url		: url,
+			type		: "POST",
+			data		: query,
+			dataType	: "json",
+			success	: function(data){
+				if(data.transactionList == null || data.transactionList.length == 0){
+					console.log("0");
+					trTable.append("<tr><td colspan=6>거래 내역이 존재하지 않습니다.</td></tr>")
+				} else {
+					console.log(data.transactionList.length);
+					$.each(data.transactionList, function(index, item){
+						var $tr = $("<tr>");
+						
+						$.each(item, function(index, field){
+							var $td = $("<td>");
+							$td.html(field[index]);
+							
+							$tr.append($td);
+						})
+						
+						trTable.append($tr);
+					});
+				}
+			},
+			error	: function(e){
+				console.log(e.responseText);
+			}
+		})
+	};
+	
 	function numberWithCommas(x) {
 	    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-	}
+	};
+	
+	Date.prototype.getCurrentDate = function() {
+		var mm = this.getMonth() + 1; // getMonth() is zero-based
+		var dd = this.getDate();
+		
+		return [this.getFullYear(),
+		        (mm>9 ? '' : '0') + mm,
+		        (dd>9 ? '' : '0') + dd
+		       ].join('-');
+	};
+	
+	
+	$(window).load(function(){
+		
+		accDetailInit(1);
+		
+		$("#lookupDetailConfirm").on("click",function(){
+			loadAccDetail();
+		});
+	});
+	
+	
 
 </script>

@@ -9,16 +9,14 @@ import org.springframework.stereotype.Service;
 import com.ssb.common.FileManager;
 import com.ssb.common.dao.CommonDAO;
 import com.ssb.sale.bbs.Board;
-@Service("sale.SaleService")
+@Service("sale.saleService")
 public class SaleServiceImpl implements SaleService{
 	@Autowired
 	private CommonDAO dao;
 	
 	
-	@Autowired
-	private FileManager fileManager;
 	@Override
-	public int insertSale(Sale dto, String pathname) {
+	public int insertSale(Sale dto) {
 		int result=0;
 		try {
 			result=dao.insertData("sale.insertSale",dto);
@@ -78,7 +76,7 @@ public class SaleServiceImpl implements SaleService{
 	}
 
 	@Override
-	public int updateSale(Sale dto, String pathname) {
+	public int updateSale(Sale dto) {
 		int result=0;
 
 		try {
@@ -105,7 +103,7 @@ public class SaleServiceImpl implements SaleService{
 
 
 	@Override
-	public int deleteSale(int num, String pathname) {
+	public int deleteSale(int num) {
 		int result=0;
 
 		try{

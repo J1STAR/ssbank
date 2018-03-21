@@ -31,8 +31,94 @@ $(function(){
 	
 });
 
+//입력 버튼
+$(function(){
+	$(".btnSendVal").click(function(){
+		var content=encodeURIComponent($("#replyContent").val().trim());
 
+
+		var url="<%=cp%>/bbs/insertReply";
+		var query="num=${dto.num}&content="+content+"&answer=0";
+		$.ajax({
+			type:"post"
+			,url:url
+			,data:query
+			,dataType:"json"
+			,success:function(data) {
+				var state=data.state;
+				if(state=="true") {
+					$("#replyContent").val("");
+					
+					listPage(1);
+					
+				} else if(state=="false") {
+					alert("댓글을 추가 하지 못했습니다.");
+				}
+			}
+		    ,beforeSend:function(jqXHR) {
+		    	jqXHR.setRequestHeader("AJAX", true);
+		    }
+		    ,error:function(jqXHR) {
+		    	if(jqXHR.status==401) {
+		    		console.log(jqXHR);
+		    	} else if(jqXHR.status==403) {
+		    		login();
+		    	} else {
+		    		console.log(jqXHR.responseText);
+		    	}
+		    }
+		});
+		
+	});
+});
   
+
+//수정버튼
+$(function(){
+	$(".btnSendReply").click(function(){
+		var content=encodeURIComponent($("#replyContent").val().trim());
+		// var $t = $(this).closest("table");
+		// var content = $t.find("textarea").val().trim();
+		// content=encodeURIComponent(content);
+		if(! content) {
+			$("#replyContent").focus();
+			return;
+		}
+
+		var url="<%=cp%>/bbs/insertReply";
+		var query="num=${dto.num}&content="+content+"&answer=0";
+		$.ajax({
+			type:"post"
+			,url:url
+			,data:query
+			,dataType:"json"
+			,success:function(data) {
+				var state=data.state;
+				if(state=="true") {
+					$("#replyContent").val("");
+					
+					listPage(1);
+					
+				} else if(state=="false") {
+					alert("댓글을 추가 하지 못했습니다.");
+				}
+			}
+		    ,beforeSend:function(jqXHR) {
+		    	jqXHR.setRequestHeader("AJAX", true);
+		    }
+		    ,error:function(jqXHR) {
+		    	if(jqXHR.status==401) {
+		    		console.log(jqXHR);
+		    	} else if(jqXHR.status==403) {
+		    		login();
+		    	} else {
+		    		console.log(jqXHR.responseText);
+		    	}
+		    }
+		});
+		
+	});
+});
 
 function funcExpense() {
 	// 지출
@@ -101,36 +187,53 @@ $(function(){
     	   var cell6 = row.insertCell(5); //카테고리
     	   var cell7 = row.insertCell(6); //입력및 수정
     	  
-    	   var s= "<div class='item-select' name='sltCat' value=''>";
-    		s+= "<select class='slt'>";
-    	   s+= "<option>카테고리</option>";
-    	   s+= "<option>식비</option>";
-    	   s+= "<option>주거/통신</option>";
-    	   s+= "<option>생활용품</option>";
-    	   s+= "<option>의복/미용</option>";
-    	   s+= "<option>건강/문화</option>";
-    	   s+= "<option>교육/육아</option>";
-    	   s+= "<option>교통/차량</option>";
-    	   s+= "<option>경조사/회비</option>";
-    	   s+= "<option>세금/이자</option>";
-    	   s+= "<option>용돈/기타</option>";
-    	   s+= "<option>미분류</option>";
-    	   s+= "</select>";
-    	   s+= "</div>";
+    	   var s = "";
+    	   var type = $("#accountBookMenu ul li").attr("data-productType");
+   		
+   		   if(type=="1") {
+   			   // 지출일 때
+   			   s += "<div class='item-select' name='sltCat' value=''>";
+   	    	   s += "<select class='slt'>";
+   	    	   s+= "<option>카테고리</option>";
+   	    	   s+= "<option>식비</option>";
+   	    	   s+= "<option>주거/통신</option>";
+   	    	   s+= "<option>생활용품</option>";
+   	    	   s+= "<option>의복/미용</option>";
+   	    	   s+= "<option>건강/문화</option>";
+   	    	   s+= "<option>교육/육아</option>";
+   	    	   s+= "<option>교통/차량</option>";
+   	    	   s+= "<option>경조사/회비</option>";
+   	    	   s+= "<option>세금/이자</option>";
+   	    	   s+= "<option>용돈/기타</option>";
+   	    	   s+= "<option>미분류</option>";
+   	    	   s+= "</select>";
+   	    	   s+= "</div>";
+   			} else if(type=="2") {
+   			   // 수입일 때
+   			   s += "<div class='item-select' name='sltCat' value=''>";
+   	    	   s += "<select class='slt'>";
+   	    	   s+= "<option>카테고리</option>";
+   	    	   s+= "<option>주수입</option>";
+   	    	   s+= "<option>부수입</option>";
+   	    	   s+= "<option>미분류</option>";
+   	    	   s+= "</select>";
+   	    	   s+= "</div>";
+   			}
     	   
-    	   cell1.innerHTML = '<div class="item-checkbox"><input type="checkbox" id="sltThis" value=""><label for="sltThis"></label></div>';
+    	   cell1.innerHTML = '<div class="item-checkbox"><input type="checkbox" class="newVal" id="sltThis" value=""><label for="sltThis"></label></div>';
     	   cell2.innerHTML = '<input type="text" class="ACBtext" size="10" value="${dto.accountBookDate}" style="width=100%">';
     	   cell3.innerHTML = '<input type="text" class="ACBtext" size="10" value="${dto.content}" style="width=100%">';
     	   cell4.innerHTML = '<input type="text" class="ACBtext" size="10"  style="width=100%">';
     	   cell5.innerHTML = '<input type="text" class="ACBtext" size="10" value="${dto.amount}" style="width=100%">';
     	   cell6.innerHTML = s;
-    	   cell7.innerHTML = '<a href="#" class="btn-type-blue1 medium">입력</a>';
+    	   cell7.innerHTML = '<a type="button" class="btn-type-blue1 medium">입력</a>';
     	
     });
     
     
 });
 
+//날짜 고를 때 달력 보이기
 $(function(){
 	
 	$("tr td:nth-child(2) .ACBtext").datepicker({

@@ -9,7 +9,6 @@ public interface AccountBookService {
 	public int deleteAccountBook(AccountBook dto);
 	public int updateAccountBook(AccountBook dto);
 	
-	
 	//수입, 지출 합계
 	public int expenseTot(Map<String, Object> map);
 	public int incomeTot(Map<String, Object> map);

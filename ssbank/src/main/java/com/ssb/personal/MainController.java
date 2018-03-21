@@ -21,7 +21,9 @@ public class MainController {
 	}
 	
 	@RequestMapping(value="/personal/lookupDetailAccount", method=RequestMethod.GET)
-	public String loopUpDetailAccountForm() {
+	public String loopUpDetailAccountForm(@RequestParam(defaultValue="") String accountNo, Model model) {
+		
+		model.addAttribute("accountNo", accountNo);
 		
 		return ".personal.account.paa-0002";
 	}

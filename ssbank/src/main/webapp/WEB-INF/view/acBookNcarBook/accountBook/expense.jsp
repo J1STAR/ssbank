@@ -42,7 +42,7 @@
             <tr>
                 <td>
                 	<div class="item-checkbox">
-                   		<input type="checkbox" name="${status.count}" id="sltThis" disabled="readOnly">
+                   		<input type="checkbox" name="${status.count}" id="sltThis">
                     	<label for="${status.count}"></label>
                     </div>
                 </td>
@@ -73,7 +73,7 @@
                 	</div>
                 </td>
                 <td>
-                    <a  class="btn-type-gray1 medium">수정</a>
+                    <a class="btn-type-gray1 medium">수정</a>
                 </td>   
             </tr>
       </c:forEach>      
