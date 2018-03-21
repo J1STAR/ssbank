@@ -30,8 +30,8 @@
 		            <tr>
 		                <th>조회기간</th>
 		                <td>
-		                		<span><input type="text" class="" id="date" name="startDate" placeholder=""> ~ </span>
-		                		<span><input type="text" class="" id="date" name="endDate" placeholder=""></span>
+		                		<span><input type="text" class="" id="date" name="startDate" value="" placeholder=""> ~ </span>
+		                		<span><input type="text" class="" id="date" name="endDate" value="" placeholder=""></span>
 		                </td>
 		            </tr>
 		            <tr>
@@ -135,17 +135,12 @@
 </div>
 
 <script>
-	$(window).load(function(){
-		
-		accDetailInit(1);
-		loadAccDetail();
-		
-		$("#lookupDetailConfirm").on("click",function(){
-			loadAccDetail();
-		});
-	});
-	
+
 	function accDetailInit(prIdx){
+		
+		$("input[name=startDate]").val(new Date().getCurrentDate());
+		$("input[name=endDate]").val(new Date().getCurrentDate());
+		
 		var url = "<%=cp%>/personal/lookupAccount";
 		var data = "memberIdx=${sessionScope.member.memberIdx}&productIdx="+prIdx;
 		
@@ -179,6 +174,7 @@
 						$tgAcc.find('option[value=${accountNo}]').attr("selected", "selected");
 					}
 					
+					loadAccDetail();
 				}
 					
 			},
@@ -189,12 +185,13 @@
 	}
 	
 	function loadAccDetail(){
-
+	
 		var trTable = $("table[name=transactionList]");
 		trTable.find("tbody").empty();
 		
 		var url = "<%=cp%>/transaction/transactionList";
-		var query = $("#acInfoTable").serialize();
+		var query = $("form[name=acInfoTable]").serialize();
+		console.log(query);
 		
 		$.ajax({
 			url		: url,
@@ -216,6 +213,8 @@
 							
 							$tr.append($td);
 						})
+						
+						trTable.append($tr);
 					});
 				}
 			},
@@ -223,10 +222,32 @@
 				console.log(e.responseText);
 			}
 		})
-	}
+	};
 	
 	function numberWithCommas(x) {
 	    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-	}
+	};
+	
+	Date.prototype.getCurrentDate = function() {
+		var mm = this.getMonth() + 1; // getMonth() is zero-based
+		var dd = this.getDate();
+		
+		return [this.getFullYear(),
+		        (mm>9 ? '' : '0') + mm,
+		        (dd>9 ? '' : '0') + dd
+		       ].join('-');
+	};
+	
+	
+	$(window).load(function(){
+		
+		accDetailInit(1);
+		
+		$("#lookupDetailConfirm").on("click",function(){
+			loadAccDetail();
+		});
+	});
+	
+	
 
 </script>
