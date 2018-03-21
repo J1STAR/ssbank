@@ -6,10 +6,10 @@ import org.springframework.stereotype.Controller;
 import com.ssb.common.FileManager;
 import com.ssb.common.MyUtil;
 
-@Controller("referenceRoom.boardController")
-public class BoardController {
+@Controller("referenceRoom.ReferenceRoomController")
+public class ReferenceRoomController {
 	@Autowired
-	private BoardService service;
+	private ReferenceRoomService service;
 	@Autowired
 	private MyUtil myUtil;
 	@Autowired

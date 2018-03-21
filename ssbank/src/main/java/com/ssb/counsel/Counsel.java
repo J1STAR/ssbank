@@ -12,6 +12,7 @@ public class Counsel {
 	private String createDate;
 	private int replyIdx;
 	private int answer;
+	private int replyCount;
 	
 	//화면구성
 	private int listNum;
@@ -20,9 +21,16 @@ public class Counsel {
 	
 	private String name;
 	
+	//댓글 
 	
 	
 	
+	public int getReplyCount() {
+		return replyCount;
+	}
+	public void setReplyCount(int replyCount) {
+		this.replyCount = replyCount;
+	}
 	public String getBoardPwd() {
 		return boardPwd;
 	}

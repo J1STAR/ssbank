@@ -37,6 +37,8 @@ public class AccountController {
 		return model;
 	}
 	
+	
+	
 	@RequestMapping(value="/personal/pwdCheck", method=RequestMethod.POST)
 	public Map<String, Object> pwdCheck(@RequestParam String accountNo, @RequestParam String accountPwd) {
 		

@@ -29,7 +29,7 @@
             	<c:forEach var="dto" items="${list}">
                 <tr>
                     <td>${dto.listNum}</td>
-                    <td><a href="javascript:articleBoard(${dto.boardIdx},${dto.categoryIdx});">${dto.subject}</a></td>
+                    <td><a href="javascript:articleBoard(${dto.boardIdx},${dto.categoryIdx});">${dto.subject} (${dto.replyCount})</a></td>
                     <td>${dto.name}</td>
                     <td>${dto.createDate}</td>
                     <td>${dto.hitCount}</td>
@@ -48,15 +48,3 @@
           <c:if test="${dataCount!=0}">${paging}</c:if>
         </ul>
     </div>
-    <div class="search-wrap mt40">
-        <div class="item-select">
-            <select name="searchKey" id="searchKey" class="selectField">
-                <option value="subject">제목</option>
-                  <option value="content">내용</option>
-                  <option value="created">등록일</option>
-            </select>
-        </div>
-        <input type="text" name="searchValue" id="searchValue">
-        <a onclik="javascript:searchList();" class="btn-type-gray medium">검색</a>
-    </div>
-</div>

@@ -13,7 +13,7 @@
 </script>
 
 <div class="content">
-	<h1>공지사항</h1>
+	<h1>자주하는 질문</h1>
 			<div class="page-con">
 				<div class="table-num">
 					<th>${dataCount}개(${page}/${total_page} 페이지)</th>
@@ -22,21 +22,20 @@
 					<table class="table-hori board">
 						<caption>게시판</caption>
 						<colgroup>
-			                <col style="width:7%"/>
-			                <col style="width:auto"/>
-			                <col style="width:10%"/>
-			                <col style="width:12%"/>
-			                <col style="width:9%"/>
-			                <col style="width:7%;"/>
-			            </colgroup>
-			            <thead>
-			                <th scope="col">No</th>
-			                <th scope="col">제목</th>
-			                <th scope="col">작성자</th>
-			                <th scope="col">작성일</th>
-			                <th scope="col">첨부파일</th>
-			                <th scope="col">조회수</th>
-			            </thead>
+							<col style="width:7%"/>
+							<col style="width:auto"/>
+							<col style="width:10%"/>
+							<col style="width:12%"/>
+							<col style="width:9%"/>
+							<col style="width:7%;"/>
+						</colgroup>
+						<thead>
+							<th scope="col">No</th>
+							<th scope="col">제목</th>
+							<th scope="col">작성자</th>
+							<th scope="col">작성일</th>
+							<th scope="col">조회수</th>
+						</thead>
 						<c:forEach var="dto" items="${list}">
 							<tbody>
 								<tr>
@@ -46,11 +45,6 @@
 									</td>
 									<td>${dto.userName}</td>
 									<td>${dto.createDate}</td>
-									<td>
-									   <c:if test="${dto.fileCount!=0}">
-                           				   <img src="<%=cp%>/resource/images/disk.gif" border="0" style="margin-top: 1px; width: 15%" >
-                           				</c:if>
-									</td>
 									<td>${dto.hitCount}</td>
 								</tr>
 							</tbody>
@@ -58,11 +52,15 @@
 					</table>
 				</div>
 				<div class="btns">
-					<a href="javascript:location.href='<%=cp%>/customer/noticeBoard/noticeList';" class="btn-type-gray medium mt20 fl">새로고침</a>
+					<a href="javascript:location.href='<%=cp%>/customerCounsel/customerManageService/list';" class="btn-type-gray medium mt20 fl">새로고침</a>
+				</div>	
+				<div class="btns">	
+					<c:if test="${sessionScope.member.userId == 'admin'}">
+						<%-- <a href="javascript:location.href='<%=cp%>/customer/newsBoard/writeNews';" class="btn-type-blue1 medium mt20 fr">글올리기</a> --%>
+						<a href="javascript:location.href='<%=cp%>/customerCounsel/customerManageService/write';" class="btn-type-blue1 medium mt20 fr">글올리기</a>
+					</c:if>
 				</div>
-				<c:if test="${sessionScope.member.userId == 'admin' }">				    
-				          <a href="javascript:location.href='<%=cp%>/customer/noticeBoard/writeNotice';" class="btn-type-blue1 medium mt20 fr">글올리기</a>
-				</c:if>
+				
 				<div class="page-nav">
 					<ul>
 						<c:if test="${dataCount==0 }">등록된 게시물이 없습니다.</c:if>
@@ -70,7 +68,7 @@
 					</ul>
 				</div>
 				<div class="search-wrap mt40">
-					<form name="searchForm" action="<%=cp%>/customer/noticeBoard/noticeList" method="post">
+					<form name="searchForm" action="<%=cp%>/customerCounsel/customerManageService/list" method="post">
 					<div class="item-select">
 						<select name="" class="">
 							<option>제목</option>
@@ -84,6 +82,4 @@
 				</form>
 				</div>
 			</div>
-			
-			
 </div>

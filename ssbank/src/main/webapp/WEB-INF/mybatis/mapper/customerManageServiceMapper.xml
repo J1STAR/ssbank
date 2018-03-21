@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="customerManageService">
+
+	<select id="seq" resultType="Integer">
+		SELECT board_seq.NEXTVAL FROM dual
+	</select>
+	
+	<insert id="insertBoard" parameterType="com.ssb.customerManageService.Board">
+		INSERT INTO board(boardIdx, categoryIdx, memberIdx, subject, content, hitCount, createDate) VALUES
+			(#{boardIdx}, #{categoryIdx}, #{memberIdx}, #{subject}, #{content}, 0, SYSDATE)
+	</insert>
+	
+	<select id="listCategory" resultType="com.ssb.customerManageService.Board">
+		SELECT categoryIdx, categoryName FROM boardtype
+	</select>
+	
+	<select id="readBoard" parameterType="Integer" resultType="com.ssb.customerManageService.Board">
+	SELECT
+			b.boardIdx,
+			m1.memberIdx,
+			m1.userId,
+			m2.lastName || m2.firstName userName,
+			categoryIdx,
+			subject,
+			content,
+			TO_CHAR(b.createDate,
+			'YYYY-MM-DD') createDate,
+			hitCount
+		FROM board b
+		JOIN member m1 ON b.memberIdx = m1.memberIdx
+        JOIN memberInfo m2 ON b.memberIdx = m2.memberIdx
+        WHERE boardIdx = #{boardIdx}
+	</select>
+	
+	<sql id="where-list">
+		<if test="searchKey=='userName'">
+			userName = #{searchValue}
+		</if>
+		<if test="searchKey=='subject'">
+			INSTR(subject, #{searchValue}) &gt; 0
+		</if>
+		<if test="searchKey=='content'">
+			DBMS_LOB.INSTR(content, #{searchValue}) &gt; 0
+		</if>
+		<if test="searchKey=='created'">
+			(TO_CHAR(b.createDate, 'YYYY-MM-DD') = #{searchValue}
+				OR TO_CHAR(b.createDate, 'YYYYMMDD') = #{searchValue})
+		</if>
+	</sql>
+	
+	<select id="dataCount" resultType="Integer" parameterType="map">
+		SELECT NVL(COUNT(*), 0)
+	 		FROM board b
+			JOIN member m1 ON b.memberIdx = m1.memberIdx
+            JOIN memberInfo m2 ON b.memberIdx = m2.memberIdx
+	 	<where>
+	 		categoryIdx = #{categoryIdx}
+	 		<if test="searchValue != null and searchValue != '' ">
+	 			<include refid="where-list"/>
+	 		</if>
+	 	</where>
+	</select>
+	
+	<select id="listBoard" parameterType="map"
+	resultType="com.ssb.customerManageService.Board">
+	SELECT * FROM (
+		SELECT ROWNUM rnum, tb.* FROM (
+			SELECT
+			b.boardIdx,
+			b.memberIdx,
+			m1.userId,
+			m2.lastName || m2.firstName userName,
+			categoryIdx,
+			subject,
+			TO_CHAR(b.createDate, 'YYYY-MM-DD') createDate,
+			hitCount
+			FROM board b
+			JOIN member m1 ON b.memberIdx = m1.memberIdx
+            JOIN memberInfo m2 ON b.memberIdx = m2.memberIdx
+			LEFT OUTER JOIN (
+				SELECT
+				boardIdx,
+				COUNT(*) replyCount
+				FROM boardReply
+				GROUP BY boardIdx
+			) c ON b.boardIdx = c.boardIdx
+			<where>
+			    categoryIdx = #{categoryIdx}
+				<if test="searchValue != null and searchValue != ''">
+				    AND
+					<include refid="where-list" />
+				</if>
+			</where>
+			ORDER BY boardIdx DESC
+<![CDATA[
+        ) tb WHERE ROWNUM <= #{end}
+     ) WHERE rnum >= #{start}
+]]>
+</select>
+
+	<!-- 조회수 -->
+	<update id="updateHitCount" parameterType="Integer">
+		UPDATE board SET hitCount = hitCount + 1 WHERE boardIdx = #{boardIdx}
+	</update>
+	
+	<!-- 이전글 -->
+	<select id="preReadBoard" resultType="com.ssb.customerManageService.Board" parameterType="map">
+		SELECT tb.* FROM (
+			SELECT boardIdx, subject
+				FROM board b
+				JOIN memberInfo m ON b.memberIdx = m.memberIdx
+				<where>
+				   <if test="searchValue != null and searchValue != ''">
+						<include refid="where-list"/>
+					</if>
+					<![CDATA[
+					AND (boardIdx > #{boardIdx})
+					]]>
+					AND categoryIdx = #{categoryIdx}
+				</where>
+			ORDER BY boardIdx ASC
+		) tb WHERE ROWNUM = 1
+	</select>
+	
+	<!-- 다음글 -->
+	<select id="nextReadBoard" resultType="com.ssb.customerManageService.Board" parameterType="map">
+		SELECT tb.* FROM (
+			SELECT boardIdx, subject
+				FROM board b
+				JOIN memberInfo m ON b.memberIdx = m.memberIdx
+				<where>
+					<if test="searchValue != null and searchValue != ''">
+						<include refid="where-list"/>
+					</if>
+					<![CDATA[
+					AND (boardIdx < #{boardIdx})
+					]]>
+					AND categoryIdx = #{categoryIdx}
+				</where>
+			ORDER BY boardIdx DESC
+		) tb WHERE ROWNUM = 1
+	</select>
+	
+	<!-- 수정 -->
+	<update id="updateBoard" parameterType="com.ssb.customerManageService.Board">
+		UPDATE board SET subject = #{subject}, content = #{content}
+					WHERE boardIdx = #{boardIdx}
+	</update>
+	
+	<!-- 삭제 -->
+	<delete id="deleteBoard" parameterType="Integer">
+		DELETE FROM board WHERE boardIdx = #{boardIdx}
+	</delete>
+</mapper>

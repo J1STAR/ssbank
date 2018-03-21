@@ -3,43 +3,25 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="counsel">
  	
- 	<sql id="where-list">
- 		<if test ="searchKey == 'subject'">
- 			subject LIKE '%' || #{searchValue} || '%'
- 		</if>
- 		<if test="searchKey == 'content'">
-			INSTR(content, #{searchValue}) &gt; 0
-		</if>
-		<if test="searchKey == 'created'">
-			TO_CHAR(createdDate, 'YYYY-MM-DD') = #{searchValue}
-	          OR TO_CHAR(createdDate, 'YYYYMMDD') = #{searchValue}
-		</if>
- 	</sql>
  	
  	<select id="dataCount" resultType="INTEGER" parameterType="map">
  		SELECT NVL(COUNT(boardIdx),0) FROM board 
- 		<where>
- 			<![CDATA[ categoryIdx=#{categoryIdx} AND memberIdx=#{memberIdx}]]>
- 			<if test="searchValue !=null and searchValue != ''">
- 				<include refid="where-list"/>
- 			</if>
- 		</where>
+ 		WHERE categoryIdx=#{categoryIdx} AND memberIdx=#{memberIdx}
  	</select>
  	
  	<select id="listCounsel" parameterType="map" resultType="com.ssb.counsel.Counsel">
  	SELECT * FROM (
  		SELECT ROWNUM rnum, tb.* FROM(
-  			SELECT categoryIdx,boardIdx,mi.lastName || mi.firstName name,subject,hitCount,
- 			TO_CHAR(createDate,'YYYY-MM-DD')createDate,boardpwd
+  			SELECT categoryIdx,b.boardIdx,mi.lastName || mi.firstName name,subject,hitCount,
+ 			TO_CHAR(createDate,'YYYY-MM-DD')createDate,boardpwd,NVL(replyCount, 0) replyCount
 			FROM board b JOIN memberinfo mi ON b.memberIdx=mi.memberIdx
-			<where>
-				<![CDATA[ categoryIdx=#{categoryIdx} AND mi.memberIdx=#{memberIdx}]]>
-                         <if test="searchValue != null and searchValue != '' ">
-                              <include refid="where-list"/>
-                         </if>
-            </where>
+			LEFT OUTER JOIN (
+				SELECT boardIdx, COUNT(*) replyCount FROM boardReply
+ 				WHERE answer = 0
+				GROUP BY boardIdx
+            ) c ON b.boardIdx = c.boardIdx
+			WHERE categoryIdx=#{categoryIdx} AND mi.memberIdx=#{memberIdx}
 			ORDER BY boardIdx DESC
-			
 		<![CDATA[) tb WHERE ROWNUM <= #{end}
 	) WHERE rnum>= #{start}]]>
  	</select>
@@ -59,5 +41,53 @@
  	 INSERT INTO board(boardIdx,categoryIdx,memberIdx,subject,content,hitCount,createDate,boardPwd)
   			VALUES(BOARD_SEQ.NEXTVAL,#{categoryIdx},#{memberIdx},#{subject},#{content},0,SYSDATE,#{boardPwd})
  	</insert>
+ 	
+ 	<select id="replyCount" parameterType="map" resultType="Integer">
+ 	SELECT NVL(COUNT(*), 0) FROM boardReply
+	 		WHERE boardIdx=#{boardIdx} AND answer=0
+ 	</select>
+ 	<select id="listReply" parameterType="map" resultType="com.ssb.counsel.Reply">
+ 	SELECT * FROM (
+			SELECT ROWNUM rnum, tb.* FROM (
+				SELECT r.replyIdx, r.memberIdx, b.boardIdx, r.content, r.createDate
+				FROM boardReply r
+				JOIN  board b ON r.boardIdx=b.boardIdx
+				LEFT OUTER JOIN (
+				     SELECT answer, COUNT(*) answerCount
+				     FROM boardReply WHERE answer!=0 GROUP BY answer
+				) a ON r.replyIdx = a.answer
+				WHERE r.boardIdx=#{boardIdx}  AND r.answer=0
+				ORDER BY r.replyIdx DESC
+	<![CDATA[							
+				) tb WHERE ROWNUM <= #{end}
+		) WHERE rnum >= #{start}
+	]]>		
+	</select>
+	
+	<insert id="insertReply" parameterType="com.ssb.counsel.Reply">
+	INSERT INTO boardReply
+	(replyIdx,memberIdx,boardIdx,content,createDate,answer)
+	VALUES(BOARDREPLY_SEQ.nextval,#{memberIdx},#{boardIdx},#{content},SYSDATE,#{answer})
+	</insert>
+	
+	<delete id="deleteReply" parameterType="map">
+	DELETE boardReply WHERE 
+	<if test="mode=='reply' ">
+			replyIdx IN (
+			     SELECT replyIdx FROM boardReply
+			          START WITH replyIdx=#{replyIdx}
+			          CONNECT BY PRIOR replyIdx = answer)
+	</if>
+	<if test="mode==answer">
+	replyIdx = #{replyIdx}
+	</if>			          
+	</delete>
+	
+	<delete id="deleteBoard" parameterType="map">
+	 DELETE board WHERE boardIdx=#{boardIdx}
+	</delete>
+	<delete id="deleteBoardReply" parameterType="map">
+	 DELETE boardReply WHERE boardIdx=#{boardIdx}
+	</delete>
  	
 </mapper>

@@ -47,7 +47,6 @@
 	      	<div class="btns">
 	      		<a class="btn-type-gray" onclick="sendBoard('${mode}',${categoryIdx});">${mode=='created'?'등록하기':'수정완료'}</a>
 	      		<a class="btn-type-gray" onclick="counselList(${categoryIdx},1);">${mode=='created'?'등록취소':'수정취소'}</a>
-		  		
 		  	</div>
 		  </td>
 	    </tr>

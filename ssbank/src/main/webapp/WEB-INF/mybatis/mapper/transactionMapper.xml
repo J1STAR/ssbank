@@ -10,7 +10,8 @@
 				#{accountNo, jdbcType=VARCHAR, mode=IN},
 				#{accountNo2, jdbcType=VARCHAR, mode=IN},
 				#{content, jdbcType=VARCHAR, mode=IN},
-				#{amount, jdbcType=INTEGER, mode=IN}
+				#{amount, jdbcType=INTEGER, mode=IN},
+				#{result, jdbcType=INTEGER, mode=OUT}
 			)
 		}
 	</insert>

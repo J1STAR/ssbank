@@ -16,15 +16,15 @@
     </ul>
 </div>
 
-<div>
+
 <div id="board-body"></div>
-</div>
+
+
+
 </div>
 <script>
 //전연 변수
 var pageNo=1;
-var searchKey="subject";
-var searchValue="";
 var categoryIdx=4;
 
 //디폴트 화면
@@ -47,9 +47,6 @@ function counselList(category,page){
 	
 	var url ="<%=cp%>/counsel/list";
 	var q ="categoryIdx="+category+"&pageNo="+page;
-	if(searchValue!=""){
-		q+="&searchKey="+searchKey+"&searchValue="+encodURIComponent(searchValue);
-	}
 	
 	$.ajax({
 		type:"get"
@@ -68,8 +65,6 @@ function counselList(category,page){
 function articleBoard(boardIdx,categoryIdx){
 	var url="<%=cp%>/counsel/article";
 	var q="categoryIdx="+categoryIdx+"&boardIdx="+boardIdx+"&pageNo="+pageNo;
-	if(searchValue!="")
-		q+="&searchKey="+searchKey+"&searchValue="+encodeURIComponent(searchValue);
 	
 	$.ajax({
 		type:"get"
@@ -77,9 +72,10 @@ function articleBoard(boardIdx,categoryIdx){
 		,data:q
 		,success:function(data){
 			$("#board-body").html(data);
+			replyList(categoryIdx,pageNo,boardIdx);
 		}
 		,error:function(e) {
-		console.log(e.responseText);
+			console.log(e.responseText);
 		}
 	});
 	
@@ -87,30 +83,21 @@ function articleBoard(boardIdx,categoryIdx){
 
 function reloadBoard() {
 
-	searchKey="subject";
-	searchValue="";
-	
 	counselList(4,1);
 }
-function searchList() {
-	searchKey=$("#searchKey").val();
-	searchValue=$("#searchValue").val();
-	
-	var category = $(this).attr("data-category");
-	counselList(category,1);
-}
+
 
 //글쓰기 폼 
 function insertBoard(categoryIdx){
 	var url = "<%=cp%>/counsel/created";
 	var q= "categoryIdx="+categoryIdx;
-	alert(categoryIdx);
 	$.ajax({
 		type:"get"
 		,url:url
 		,data:q
 		,success:function(data){
 			$("#board-body").html(data);
+			
 		}
 		,error:function(e) {
 		console.log(e.responseText);
@@ -147,7 +134,7 @@ function sendBoard(mode,categoryIdx){
 	
 	var url="<%=cp%>/counsel/"+mode;
 	var query = $("form[name=counselForm]").serialize(); 
-	alert(query);
+	
 	$.ajax({
 		type:"post"
 		,url:url
@@ -163,5 +150,98 @@ function sendBoard(mode,categoryIdx){
 		}
 	});
 }
+
+function deleteBoard(categoryIdx,page,boardIdx){
+	if(!confirm("게시글을 삭제하시겠습니까?..")) return;
+	var url ="<%=cp%>/counsel/delete";
+	var q = "boardIdx="+boardIdx;
+	
+	$.ajax({
+		type:"post"
+		,url:url
+		,data:q
+		,dataType:"json"
+		,success:function(data) {
+			var s = data.state;
+			counselList(categoryIdx,1);
+		}
+	 	,error:function(e){
+	 		console.log(e.responseText);
+		 }
+	});
+	
+	
+
+}
+
+function replyList(categoryIdx,page,boardIdx){
+	var url="<%=cp%>/counsel/replyList";
+	var q="categoryIdx="+categoryIdx+"&pageNo="+page+"&boardIdx="+boardIdx;
+	
+	$.ajax({
+		type:"get"
+		,url:url
+		,data:q
+		,success:function(data){
+			$("#listReply").html(data);
+		}
+		,error:function	(e) {
+	  		console.log(e.responseText);
+		}
+	});
+}
+
+function insertReply(categoryIdx,page,boardIdx){
+	var f = document.replyForm;
+	if(! f.content.value) {
+		alert('내용을 입력 하세요. ');
+		f.content.focus();
+		return;
+	}
+	
+	var url="<%=cp%>/counsel/insertReply";
+	var q = $("form[name=replyForm]").serialize(); 
+	$.ajax({
+		type:"post"
+		,url:url
+		,data:q
+		,dataType:"json"
+		,success:function(data){
+			var state=data.state;
+			if(state="true"){
+				$("#replyContent").val();
+				replyList(categoryIdx,page,boardIdx);
+			}else if(state=="false"){
+				alert("댓글을 추가 하지 못했습니다.")
+			}
+		}
+		,error:function(e){
+			console.log(e.responseText);
+		}
+	});
+}
+
+function deleteReply(replyIdx,page,categoryIdx,boardIdx){
+	if(!confirm("게시글을 삭제하시겠습니까?..")) return;
+	
+	var url ="<%=cp%>/counsel/deleteReply";
+	var q = "replyIdx="+replyIdx+"&mode=reply";
+	
+	$.ajax({
+		type:"post"
+		,url:url
+		,data:q
+		,dataType:"json"
+		,success:function(data){
+			replyList(categoryIdx,page,boardIdx);
+		}
+		,error:function(e) {
+			console.log(e.responseText);
+		}
+	});
+	
+	
+}
+
 
 </script>

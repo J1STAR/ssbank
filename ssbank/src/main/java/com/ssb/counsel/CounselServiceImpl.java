@@ -71,6 +71,73 @@ public class CounselServiceImpl implements CounselService{
 		return result;
 	}
 
+	@Override
+	public int replyCount(Map<String, Object> map) {
+		int result=0;
+		try {
+			result=dao.selectOne("counsel.replyCount",map);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return result;
+	}
+
+	@Override
+	public List<Reply> listReply(Map<String, Object> map) {
+		List<Reply> list = null;
+		try {
+			list=dao.selectList("counsel.listReply",map);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return list;
+	}
+
+	@Override
+	public int insertReply(Reply dto) {
+		int result=0;
+		try {
+			result=dao.insertData("counsel.insertReply", dto);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return result;
+	}
+
+	@Override
+	public int deleteReply(Map<String, Object> map) {
+		int result=0;
+		try {
+			result=dao.deleteData("counsel.deleteReply", map);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return result;
+	}
+
+	@Override
+	public int deleteBoard(Map<String, Object> map) {
+		int result=0;
+		try {
+			result=dao.deleteData("counsel.deleteBoard", map);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return result;
+	}
+
+	@Override
+	public int deleteBoardReply(Map<String, Object> map) {
+		int result=0;
+		try {
+			result=dao.deleteData("counsel.deleteBoardReply", map);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return result;
+	}
+
+
 	
 
 }
