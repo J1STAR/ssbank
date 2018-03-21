@@ -198,11 +198,12 @@
 			type		: "POST",
 			data		: trQuery,
 			dataType	: "json",
+			async	: false,
 			success	: function(data){
 				
 				if(pwdCheck() == true){
 					transactionResult(data.result);
-				} {
+				} else {
 					transactionResult(0);
 				}
 				
@@ -214,6 +215,7 @@
 	}
 	
 	function transactionResult(result){
+		
 		var f = document.transactionTable;
 		f.action = "<%=cp%>/personal/transaction-"+ result;
 		f.submit();

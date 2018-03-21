@@ -30,9 +30,8 @@
 		            <tr>
 		                <th>조회기간</th>
 		                <td>
-		                		<input type="text" class="" id="date" name="startDate" placeholder="">
-		                		
-		                		<input type="text" class="" id="date" name="endDate" placeholder="">
+		                		<span><input type="text" class="" id="date" name="startDate" placeholder=""> ~ </span>
+		                		<span><input type="text" class="" id="date" name="endDate" placeholder=""></span>
 		                </td>
 		            </tr>
 		            <tr>
@@ -73,7 +72,7 @@
 		</form>
 		
 	    <h2>계좌 정보</h2>
-	    <table class="table-verti">
+	    <table class="table-verti">	
 	        <caption>계좌 정보</caption>
 	        <colgroup>
 	            <col style="width:20%;"/>
@@ -238,7 +237,8 @@
 					selAcc.empty();
 					$.each(data.listAccount, function(index, account){
 						
-						var $opt = $("<option>");
+						var $opt = $("<option>");	
+						
 						$opt.val(account.ACCOUNTNO);
 						$opt.html(account.ACCOUNTNO);
 						
@@ -246,6 +246,12 @@
 						
 					});
 					
+					var $tgAcc = $("select[name=accountNo]")
+					if( ${accountNo == ""} ){
+						$tgAcc.find('option:eq(0)').attr("selected", "selected");
+					} else {
+						$tgAcc.find('option[value=${accountNo}]').attr("selected", "selected");
+					}
 					
 				}
 					
