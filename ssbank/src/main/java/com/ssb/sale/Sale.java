@@ -2,27 +2,29 @@ package com.ssb.sale;
 
 public class Sale {
 	private int saleIdx,listNum;
-	public int getListNum() {
-		return listNum;
-	}
-	public void setListNum(int listNum) {
-		this.listNum = listNum;
-	}
 	private String addr1,addr2,zipCode;
-	private double area,totalArea;
-	private int dong,ho,layer,tLayer;
+	private Double area,totalArea;
+	private int ho,layer,tLayer;
+	private String dong;
 	private String type;
 	private int room;
 	private long minAmount;
 	private long maxAmount;
 	private long guarantee;
 	private String tradeDate,status;
-	private int memberIdx,memberIdx2,typeIdx,categoryIdx;
+	private int memberIdx,typeIdx,categoryIdx;
+	private Integer memberIdx2;
 	public int getSaleIdx() {
 		return saleIdx;
 	}
 	public void setSaleIdx(int saleIdx) {
 		this.saleIdx = saleIdx;
+	}
+	public int getListNum() {
+		return listNum;
+	}
+	public void setListNum(int listNum) {
+		this.listNum = listNum;
 	}
 	public String getAddr1() {
 		return addr1;
@@ -42,23 +44,17 @@ public class Sale {
 	public void setZipCode(String zipCode) {
 		this.zipCode = zipCode;
 	}
-	public double getArea() {
+	public Double getArea() {
 		return area;
 	}
-	public void setArea(double area) {
+	public void setArea(Double area) {
 		this.area = area;
 	}
-	public double getTotalArea() {
+	public Double getTotalArea() {
 		return totalArea;
 	}
-	public void setTotalArea(double totalArea) {
+	public void setTotalArea(Double totalArea) {
 		this.totalArea = totalArea;
-	}
-	public int getDong() {
-		return dong;
-	}
-	public void setDong(int dong) {
-		this.dong = dong;
 	}
 	public int getHo() {
 		return ho;
@@ -78,6 +74,12 @@ public class Sale {
 	public void settLayer(int tLayer) {
 		this.tLayer = tLayer;
 	}
+	public String getDong() {
+		return dong;
+	}
+	public void setDong(String dong) {
+		this.dong = dong;
+	}
 	public String getType() {
 		return type;
 	}
@@ -90,7 +92,6 @@ public class Sale {
 	public void setRoom(int room) {
 		this.room = room;
 	}
-	
 	public long getMinAmount() {
 		return minAmount;
 	}
@@ -127,12 +128,6 @@ public class Sale {
 	public void setMemberIdx(int memberIdx) {
 		this.memberIdx = memberIdx;
 	}
-	public int getMemberIdx2() {
-		return memberIdx2;
-	}
-	public void setMemberIdx2(int memberIdx2) {
-		this.memberIdx2 = memberIdx2;
-	}
 	public int getTypeIdx() {
 		return typeIdx;
 	}
@@ -145,5 +140,13 @@ public class Sale {
 	public void setCategoryIdx(int categoryIdx) {
 		this.categoryIdx = categoryIdx;
 	}
+	public Integer getMemberIdx2() {
+		return memberIdx2;
+	}
+	public void setMemberIdx2(Integer memberIdx2) {
+		this.memberIdx2 = memberIdx2;
+	}
+	
+	
 	
 }
