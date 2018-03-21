@@ -4,7 +4,7 @@
 
 .item-checkbox label.saledate{margin-left:20px;}
 .table-wrap .item-checkbox.saledate2{padding-top:5px;}
-.table-wrap.trh tr td {text-align:center;}
+.table-wrap.trh th td {text-align:center;}
 .salesTable tr.hide { display:none; }
 
 /* 장한별 css */
