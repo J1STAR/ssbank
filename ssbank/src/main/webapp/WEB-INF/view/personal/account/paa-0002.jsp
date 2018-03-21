@@ -67,7 +67,7 @@
 		        </tbody>
 		    </table>
 		    <div class="btn-area">
-			    <a href="#" id="lookupDetailConfrim" class="btn-type-blue1 big">조회</a>
+			    <a href="#" id="lookupDetailConfirm" class="btn-type-blue1 big">조회</a>
 			</div>
 		</form>
 		
@@ -107,8 +107,8 @@
 	    </table>
 	    
 	    <h2>거래내역</h2>
-	    <div name="transactionList" class="table-wrap">
-		    <table class="table-hori">
+	    <div class="table-wrap">
+		    <table name="transactionList" class="table-hori">
 		        <caption>거래내역</caption>
 		        <colgroup>
 		            <col style="width:auto"/>
@@ -127,86 +127,7 @@
 		            <th scope="col">잔액</th>
 		        </thead>
 		        <tbody>
-		            <tr>
-		                <td>&nbsp;</td>
-		                <td>&nbsp;</td>
-		                <td>&nbsp;</td>
-		                <td>&nbsp;</td>
-		                <td>&nbsp;</td>
-		                <td>&nbsp;</td>
-		            </tr>
-		            <tr>
-		                <td>&nbsp;</td>
-		                <td>&nbsp;</td>
-		                <td>&nbsp;</td>
-		                <td>&nbsp;</td>
-		                <td>&nbsp;</td>
-		                <td>&nbsp;</td>
-		            </tr>
-		            <tr>
-		                <td>&nbsp;</td>
-		                <td>&nbsp;</td>
-		                <td>&nbsp;</td>
-		                <td>&nbsp;</td>
-		                <td>&nbsp;</td>
-		                <td>&nbsp;</td>
-		            </tr>
-		            <tr>
-		                <td>&nbsp;</td>
-		                <td>&nbsp;</td>
-		                <td>&nbsp;</td>
-		                <td>&nbsp;</td>
-		                <td>&nbsp;</td>
-		                <td>&nbsp;</td>
-		            </tr>
-		            <tr>
-		                <td>&nbsp;</td>
-		                <td>&nbsp;</td>
-		                <td>&nbsp;</td>
-		                <td>&nbsp;</td>
-		                <td>&nbsp;</td>
-		                <td>&nbsp;</td>
-		            </tr>
-		            <tr>
-		                <td>&nbsp;</td>
-		                <td>&nbsp;</td>
-		                <td>&nbsp;</td>
-		                <td>&nbsp;</td>
-		                <td>&nbsp;</td>
-		                <td>&nbsp;</td>
-		            </tr>
-		            <tr>
-		                <td>&nbsp;</td>
-		                <td>&nbsp;</td>
-		                <td>&nbsp;</td>
-		                <td>&nbsp;</td>
-		                <td>&nbsp;</td>
-		                <td>&nbsp;</td>
-		            </tr>
-		            <tr>
-		                <td>&nbsp;</td>
-		                <td>&nbsp;</td>
-		                <td>&nbsp;</td>
-		                <td>&nbsp;</td>
-		                <td>&nbsp;</td>
-		                <td>&nbsp;</td>
-		            </tr>
-		            <tr>
-		                <td>&nbsp;</td>
-		                <td>&nbsp;</td>
-		                <td>&nbsp;</td>
-		                <td>&nbsp;</td>
-		                <td>&nbsp;</td>
-		                <td>&nbsp;</td>
-		            </tr>
-		            <tr>
-		                <td>&nbsp;</td>
-		                <td>&nbsp;</td>
-		                <td>&nbsp;</td>
-		                <td>&nbsp;</td>
-		                <td>&nbsp;</td>
-		                <td>&nbsp;</td>
-		            </tr>
+
 		        </tbody>
 		    </table>
 		</div>
@@ -216,10 +137,15 @@
 <script>
 	$(window).load(function(){
 		
-		acDetailInit(1);
+		accDetailInit(1);
+		loadAccDetail();
+		
+		$("#lookupDetailConfirm").on("click",function(){
+			loadAccDetail();
+		});
 	});
 	
-	function acDetailInit(prIdx){
+	function accDetailInit(prIdx){
 		var url = "<%=cp%>/personal/lookupAccount";
 		var data = "memberIdx=${sessionScope.member.memberIdx}&productIdx="+prIdx;
 		
@@ -257,6 +183,43 @@
 					
 			},
 			error	:	function(e){
+				console.log(e.responseText);
+			}
+		})
+	}
+	
+	function loadAccDetail(){
+
+		var trTable = $("table[name=transactionList]");
+		trTable.find("tbody").empty();
+		
+		var url = "<%=cp%>/transaction/transactionList";
+		var query = $("#acInfoTable").serialize();
+		
+		$.ajax({
+			url		: url,
+			type		: "POST",
+			data		: query,
+			dataType	: "json",
+			success	: function(data){
+				if(data.transactionList == null || data.transactionList.length == 0){
+					console.log("0");
+					trTable.append("<tr><td colspan=6>거래 내역이 존재하지 않습니다.</td></tr>")
+				} else {
+					console.log(data.transactionList.length);
+					$.each(data.transactionList, function(index, item){
+						var $tr = $("<tr>");
+						
+						$.each(item, function(index, field){
+							var $td = $("<td>");
+							$td.html(field[index]);
+							
+							$tr.append($td);
+						})
+					});
+				}
+			},
+			error	: function(e){
 				console.log(e.responseText);
 			}
 		})

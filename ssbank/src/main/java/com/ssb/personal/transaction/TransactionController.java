@@ -1,6 +1,7 @@
 package com.ssb.personal.transaction;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,22 @@ public class TransactionController {
 		
 		Map<String, Object> model = new HashMap<>();
 		model.put("result", result);
+		return model;
+	}
+	
+	@RequestMapping(value="/transaction/transactionList", method=RequestMethod.POST)
+	public Map<String, Object> transactionList(@RequestParam Map<String, Object> map){
+		
+		List<Map<String, Object>> resultList = null;
+		
+		try {
+			resultList = trService.transactionList(map);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		Map<String, Object> model = new HashMap<>();
+		model.put("transactionList", resultList);
 		return model;
 	}
 }

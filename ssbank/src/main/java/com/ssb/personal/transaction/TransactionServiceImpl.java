@@ -1,5 +1,6 @@
 package com.ssb.personal.transaction;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,31 @@ public class TransactionServiceImpl implements TransactionService {
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
-		System.out.println("이체결과 > "+result);
 		return result;
+	}
+	
+	@Override
+	public int transactionCount(String accountNo) {
+		
+		int result = 0;
+		
+		try {
+			result = dao.selectOne("transaction.transactionCount", accountNo);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return result;
+	}
+	
+	@Override
+	public List<Map<String, Object>> transactionList(Map<String, Object> map) {
+		
+		List<Map<String, Object>> resultList = null;
+		try {
+			resultList = dao.selectList("transaction.transactionList", map);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return resultList;
 	}
 }
