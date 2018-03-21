@@ -59,13 +59,13 @@ input[type=password].modiTarget { width: 50%; }
 	변경을 적용할 특정한 페이지의 element에 class명을 주고 input[type=text] 대신에 
 	.className { cssProp : val }로 수정하여 사용하길 바람
  */
+ 
+/* 기존에 존재한 값을 불러오는 박스들에 대한 CSS - function을 주기 위해 클래스를 다르게 먹인 결과*/
 td input[class="ACBtext"]  { /* 텍스트박스 */
     border: none;
     width: 100%;
     box-sizing: border-box;
 }
-
-td input[class]
 
 td div[name="sltCat"]{
 	width: 100%;
@@ -75,9 +75,13 @@ td div select[class="slt"] {
 	border: none;
 }
 
-/* .table-wrap .table-hori td { 텍스트박스를 감싸는 td
+.table-wrap .table-hori td { /*텍스트박스를 감싸는 td*/
 	height: 20px;
 	padding : 0px;
 	border-right: 1px solid #ddd;
 }
- */
+
+/* 끝 */
+
+/* 입력할 값을 위한 박스들에 대한 CSS*/
+/* 끝 */
