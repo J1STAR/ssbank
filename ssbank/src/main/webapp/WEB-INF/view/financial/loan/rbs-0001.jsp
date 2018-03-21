@@ -7,7 +7,7 @@
 %>
 <div class="content">
 	
-<h1>예금신규가입</h1>
+<h1>대출 신규가입</h1>
 <div class="step-area">
     <ol>
         <li class="active">
@@ -45,8 +45,8 @@
             <li>
                 <span class="box-agree-tit">홈페이지 회원 서비스 이용약관에 동의하십니까?</span>
                 <div class="item-checkbox">
-                    <input type="checkbox" id="fdn0001-01">
-                    <label for="fdn0001-01">예, 동의합니다</label>
+                    <input type="checkbox" id="rbs0001-01">
+                    <label for="rbs0001-01">예, 동의합니다</label>
                 </div>
             </li>
         </ul>
@@ -61,23 +61,23 @@
             <li>
                 <span class="box-agree-tit">쌍용은행이 본인의 개인정보를 수집·이용하는 것에 동의합니다.</span>
                 <div class="item-radio">
-                    <input type="radio" id="fdn0001-02" name="newAcc01" value="false" checked>
-                    <label for="fdn0001-02">동의하지않음</label>
+                    <input type="radio" id="rbs0001-02" name="newLoan01" value="false" checked>
+                    <label for="rbs0001-02">동의하지않음</label>
                 </div>
                 <div class="item-radio">
-                    <input type="radio" id="fdn0001-03" name="newAcc01" value="true">
-                    <label for="fdn0001-03">동의함</label>
+                    <input type="radio" id="rbs0001-03" name="newLoan01" value="true">
+                    <label for="rbs0001-03">동의함</label>
                 </div>
             </li>
             <li>
                 <span class="box-agree-tit">쌍용은행이 본인의 고유식별정보를 수집·이용하는 것에 동의합니다.</span>
                 <div class="item-radio">
-                    <input type="radio" id="fdn0001-04" name="newAcc02" value="false" checked>
-                    <label for="fdn0001-04">동의하지않음</label>
+                    <input type="radio" id="rbs0001-04" name="newLoan02" value="false" checked>
+                    <label for="rbs0001-04">동의하지않음</label>
                 </div>
                 <div class="item-radio">
-                    <input type="radio" id="fdn0001-05" name="newAcc02" value="true">
-                    <label for="fdn0001-05">동의함</label>
+                    <input type="radio" id="rbs0001-05" name="newLoan02" value="true">
+                    <label for="rbs0001-05">동의함</label>
                 </div>
             </li>
         </ul>
@@ -85,8 +85,8 @@
 </div>
 
 <div class="btn-area">
-    <a href="javascript:location.href='<%=cp%>/financial/account'" class="btn-type-gray1 big">취소</a>
-    <a id="nextAccount" class="btn-type-blue1 big">확인</a>
+    <a href="javascript:location.href='<%=cp%>/financial/loan'" class="btn-type-gray1 big">취소</a>
+    <a id="nextLoan" class="btn-type-blue1 big">확인</a>
 </div>
 
 </div>
@@ -94,11 +94,11 @@
 <script>
 $(function(){
 	//확인버튼 클릭이벤트가 나타 났을 경우
-	$("#nextAccount").click(function(event){
-		event.preventDefault();
-		if($("#fdn0001-01").prop("checked") && $("input[name=newAcc01]:checked").val()=="true"
-			&& $("input[name=newAcc02]:checked").val()=="true"){
-			location.href="<%=cp%>/financial/account/fdn0002?productIdx=${productIdx}";
+	$("#nextLoan").click(function(event){
+		if($("#rbs0001-01").prop("checked") && $("input[name=newLoan01]:checked").val()=="true" 
+			&& $("input[name=newLoan02]:checked").val()=="true"){
+		alert("aa");
+			location.href="<%=cp%>/financial/loan/rbs0002?productIdx=${productIdx}";
 		}
 	});
 });

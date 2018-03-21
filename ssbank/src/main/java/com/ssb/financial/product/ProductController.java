@@ -39,10 +39,6 @@ public class ProductController {
 			dto =service.loanDetail(productIdx);
 			root = "lsm-0004";
 			break;
-		case 4:// 펀드 상세
-			dto =service.fundDetail(productIdx);
-			root = "lsm-0005";
-			break;
 
 		}
 		model.addAttribute("dto", dto);

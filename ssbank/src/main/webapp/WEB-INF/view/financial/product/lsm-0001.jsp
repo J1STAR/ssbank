@@ -7,6 +7,11 @@
 %>
 <script>
 function sendProduct(productIdx){
+	if(productIdx==3){
+	var url="<%=cp%>/financial/loan/rbs0001?productIdx="+productIdx;
+	location.href=url;
+	return;
+	}
 	var url="<%=cp%>/financial/account/fdn0001?productIdx="+productIdx;
 	location.href=url;
 }

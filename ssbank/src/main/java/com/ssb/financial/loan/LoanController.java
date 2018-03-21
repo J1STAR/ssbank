@@ -7,6 +7,8 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.View;
@@ -23,69 +25,21 @@ public class LoanController {
 	private MyExcelView excel;
 
 	// 대출 계좌 조회
-	@RequestMapping(value = "/financial/loan/loanSearch")
+	@RequestMapping(value = "/financial/loan")
 	public String loanSearch() {
-		return ".financial.loan.las";
-
-	}
-
-	// 신청내역조회
-	@RequestMapping(value = "/financial/loan/loanHistory")
-	public String loanHistory() {
-		return ".financial.loan.rbs";
-
-	}
-
-	// 이자 조회/납부
-	@RequestMapping(value = "/financial/loan/loanIntHistory")
-	public String loanIntHistory() {
-		return ".financial.loan.lsp";
-
-	}
-
-	// 원금상환/한도해지
-	@RequestMapping(value = "/financial/loan/loanPcRedem")
-	public String loanPcRedem() {
-		return ".financial.loan.prp";
-
-	}
-
-	//원금상환예약
-	@RequestMapping(value = "/financial/loan/redemReserve")
-	public String redemReserve() {
-		return ".financial.loan.prr";
-
-	}
-	//담보예금해지/대출상환
-	@RequestMapping(value = "/financial/loan/mortgage")
-	public String mortgage() {
-		return ".financial.loan.mdc";
 		
+		return ".financial.loan.las-0001";
+
 	}
-	//한도 증액/감액
-	@RequestMapping(value = "/financial/loan/limitIncrese")
-	public String limitIncrese() {
-		return ".financial.loan.llp";
+	
+	//대출 신규
+	@RequestMapping(value="/financial/loan/rbs{stage}")
+	public String newLoan(@PathVariable String stage,@RequestParam int productIdx,Model model) {
 		
+		model.addAttribute("productIdx",productIdx);
+		return ".financial.loan.rbs-"+stage;
 	}
-	//예금담보대출
-	@RequestMapping(value = "/financial/loan/loanDeposit")
-	public String loanDeposit() {
-		return ".financial.loan.scl";
-		
-	}
-	//신용대출
-	@RequestMapping(value = "/financial/loan/loanCredit")
-	public String loanCredit() {
-		return ".financial.loan.pcl";
-		
-	}
-	//부동산대출
-	@RequestMapping(value = "/financial/loan/loanRsa")
-	public String loanRsa() {
-		return ".financial.loan.rcl";
-		
-	}
+
 	
 	
 	//계좌 엑셀 다운로드

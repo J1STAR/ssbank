@@ -1,6 +1,5 @@
 package com.ssb.sale;
 
-import java.io.File;
 import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -20,8 +19,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.ssb.common.FileManager;
 import com.ssb.common.MyUtil;
+import com.ssb.member.SessionInfo;
 import com.ssb.sale.Sale;
 
 @Controller("sale.saleController")
@@ -32,10 +31,7 @@ public class SaleController {
 	@Autowired
 	private MyUtil myutil;
 	
-	@Autowired
-	private  FileManager filemanager;
-	
-	
+
 
 	@RequestMapping(value = "/sale/raa-0001")
 	public String saleList(@RequestParam(value="page", defaultValue="1") int current_page,
@@ -108,70 +104,71 @@ public class SaleController {
 	public String article(
 			@RequestParam(value="saleIdx") int saleIdx,
 			@RequestParam(value="page") String page,
-			@RequestParam(value="searchKey", defaultValue="addr2") String searchKey,
+			@RequestParam(value="searchKey", defaultValue="subject") String searchKey,
 			@RequestParam(value="searchValue", defaultValue="") String searchValue,
 			Model model) throws Exception {
-		String query = "page=" + page;
+		
+		String query="page="+page;
 		if(searchValue.length()!=0) {
-			query += "&searchKey=" + searchKey + "&searchValue=" + searchValue;
+			query+="&searchKey="+searchKey+"&searchValue="+searchValue;
 		}
 		searchValue = URLDecoder.decode(searchValue, "utf-8");
-		
-		service.updateHitSale(saleIdx);
-		
-		//해당 레코드 가져오기
+
+
+		// 해당 레코드 가져 오기
 		Sale dto = service.readSale(saleIdx);
-		if(dto == null)
-			return "redirect:/sale/raa-0001?" + query;
-		
-		dto.setAddr1(myutil.htmlSymbols(dto.getAddr1()));
-		
-		// 이전글, 다음글
+		if(dto==null)
+			return "redirect:/sale/list?"+query;
+		/*
+        dto.setContent(MyUtil.htmlSymbols(dto.getContent()));*/
+        
+		// 이전 글, 다음 글
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("searchKey", searchKey);
 		map.put("searchValue", searchValue);
 		map.put("saleIdx", saleIdx);
-		
+
 		Sale preReadDto = service.preReadSale(map);
 		Sale nextReadDto = service.nextReadSale(map);
-		
+        
 		model.addAttribute("dto", dto);
 		model.addAttribute("preReadDto", preReadDto);
 		model.addAttribute("nextReadDto", nextReadDto);
-		
+
 		model.addAttribute("page", page);
 		model.addAttribute("query", query);
-		
-		return ".sale.raa-0001";
+
+        return ".sale.article";
 	}
 
 	@RequestMapping(value = "/sale/raa-0002")
 	public String saleSoldMain() {
 		return ".sale.raa-0002";
 	}
+	
 
 	@RequestMapping(value = "/sale/raa-0003")
 	public String cheongYak() {
 		return ".sale.raa-0003";
 	}
 
-	@RequestMapping(value = "/sale/created", method=RequestMethod.GET)
+	@RequestMapping(value = "/sale/raa-0005", method=RequestMethod.GET)
 	public String saleCreatedForm(Model model) {
 		
 		model.addAttribute("mode", "created");
 		return ".sale.raa-0005";
 	}
+	
 	@RequestMapping(value="/sale/created", method=RequestMethod.POST)
 	public String createdSubmit(
 			Sale dto,
 			HttpSession session
 			) throws Exception {
 		
-		String root=session.getServletContext().getRealPath("/");
+		SessionInfo info=(SessionInfo)session.getAttribute("member");
+		dto.setMemberIdx(info.getMemberIdx());
 		
-		String pathname=root+"uploads"+File.separator+"sale";
-
-		service.insertSale(dto, pathname);
+		service.insertSale(dto);
 		
 		return "redirect:/sale/raa-0001";
 	}
@@ -197,10 +194,9 @@ public class SaleController {
 			@RequestParam String page,
 			HttpSession session) throws Exception {
 		
-		String root=session.getServletContext().getRealPath("/");
-		String pathname=root+"uploads"+File.separator+"sale";		
+	
 		// 수정 하기
-		service.updateSale(dto, pathname);
+		service.updateSale(dto);
 		
 		return "redirect:/sale/list?page="+page;
 	}
@@ -209,11 +205,8 @@ public class SaleController {
 	public String delete(
 			@RequestParam int num,
 			HttpSession session) throws Exception {
-		
-		String root=session.getServletContext().getRealPath("/");
-		String pathname=root+"uploads"+File.separator+"sale";
-		
-		service.deleteSale(num, pathname);
+
+		service.deleteSale(num);
 		return "redirect:/sale/list";
 	}
 }
