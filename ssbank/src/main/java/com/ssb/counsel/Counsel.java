@@ -12,6 +12,7 @@ public class Counsel {
 	private String createDate;
 	private int replyIdx;
 	private int answer;
+	private int replyCount;
 	
 	//화면구성
 	private int listNum;
@@ -21,7 +22,6 @@ public class Counsel {
 	private String name;
 	
 	//댓글 
-	private int replyCount;
 	
 	
 	

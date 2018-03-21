@@ -21,7 +21,9 @@ public class MainController {
 	}
 	
 	@RequestMapping(value="/personal/lookupDetailAccount", method=RequestMethod.GET)
-	public String loopUpDetailAccountForm() {
+	public String loopUpDetailAccountForm(@RequestParam(defaultValue="") String accountNo, Model model) {
+		
+		model.addAttribute("accountNo", accountNo);
 		
 		return ".personal.account.paa-0002";
 	}
@@ -39,14 +41,14 @@ public class MainController {
 		
 		model.addAttribute("trStatus", status);
 
+		model.addAttribute("sendAccount", map.get("accountNo"));
+		model.addAttribute("recvAccount", map.get("accountNo2"));
+		model.addAttribute("amount", map.get("amount"));
 		if( status.equals("1") ) {
-			model.addAttribute("sendAccount", map.get("accountNo"));
-			model.addAttribute("recvAccount", map.get("accountNo2"));
-			model.addAttribute("amount", map.get("amount"));
 			model.addAttribute("currBalance", Integer.parseInt((String)map.get("balance")) - Integer.parseInt((String)map.get("amount")));
 		}
-		
-		
+
 		return ".personal.transaction.pit-0002";
 	}
+	
 }

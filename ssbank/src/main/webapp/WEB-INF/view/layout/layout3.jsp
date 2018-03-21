@@ -29,6 +29,7 @@
 <script type="text/javascript" src="<%=cp%>/resource/js/util.js"></script>
 <script type="text/javascript" src="<%=cp%>/resource/jquery/js/jquery-ui.min.js"></script>
 <script type="text/javascript" src="<%=cp%>/resource/jquery/js/jquery.ui.datepicker-ko.js"></script>
+<script type="text/javascript" src="<%=cp%>/resource/jquery/js/jquery.tablesorter.js"></script> 
 
 <%-- <link rel="stylesheet" href="<%=cp%>/resource/css/bootstrap.min.css"> --%>
 <%-- <script type="text/javascript" src="<%=cp%>/resource/js/bootstrap.min.js"></script> --%>

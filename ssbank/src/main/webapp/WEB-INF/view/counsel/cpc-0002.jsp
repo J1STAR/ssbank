@@ -32,8 +32,12 @@
 	</table>
 	</div>
 	
+	<div>
+	</div>
+	
 	<div class="btns">
     	<a href="javascript:counselList(${dto.categoryIdx},1)" class="btn-type-gray medium mt20 fl">상담목록</a>
+    	 <a href="javascript:deleteBoard(${dto.categoryIdx},1,${dto.boardIdx})" class="btn-type-blue1 medium mt20 fr">삭제</a>
 	</div>
 	
 	<div>

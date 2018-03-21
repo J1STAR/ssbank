@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ssb.common.MyExcelView;
 import com.ssb.member.SessionInfo;
@@ -103,6 +104,23 @@ public class AccountBookController {
 		// model.addAttribute("delete", delete);
 
 		return "acBookNcarBook/accountBook/calendar";
+	}
+	
+	//AJAX 입력
+	@RequestMapping(value = "acBookNcarBook/insertAccountBook", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> insertAccountBook(AccountBook dto, HttpSession session) {
+		SessionInfo info = (SessionInfo) session.getAttribute("member");
+		String state="true";
+		
+		dto.setMemberIdx(info.getMemberIdx());
+		int result=service.insertAccountBook(dto);
+		if(result == 0)
+			state="false";
+		
+		Map<String, Object> model = new HashMap<>();
+		model.put("state", state);
+		return model;
 	}
 
 	// 차계부
