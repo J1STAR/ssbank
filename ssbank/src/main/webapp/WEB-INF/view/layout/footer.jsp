@@ -53,6 +53,13 @@
 				,buttonImageOnly:true
 			});
 			
+			$(".hasDatePicker").datepicker({
+				showOn:"button"
+				,buttonImage:"<%=cp %>/resource/images/ico_calendar.png"
+				,buttonImageOnly:true
+			});
+			
+			
 			$(".ui-datepicker-trigger").css({
 				position:"absolute", width:"32px", height:"32px"
 			});

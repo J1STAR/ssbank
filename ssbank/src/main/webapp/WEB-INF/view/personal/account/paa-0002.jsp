@@ -6,7 +6,6 @@
 	String cp=request.getContextPath();
 %>
 <div class="content">
-	
 	<h1>거래 내역 조회</h1>
 	<div class="table-wrap" style="margin-bottom: 50px;">
 		<form name="acInfoTable" method="POST">
@@ -30,8 +29,8 @@
 		            <tr>
 		                <th>조회기간</th>
 		                <td>
-		                		<span><input type="text" class="" id="date" name="startDate" value="" placeholder=""> ~ </span>
-		                		<span><input type="text" class="" id="date" name="endDate" value="" placeholder=""></span>
+		                		<span><input type="text" class="hasDatePicker" name="startDate" value="" placeholder=""> ~ </span>
+		                		<span><input type="text" class="hasDatePicker" name="endDate" value="" placeholder=""></span>
 		                </td>
 		            </tr>
 		            <tr>
@@ -71,98 +70,62 @@
 			</div>
 		
 		
-	    <h2>계좌 정보</h2>
-	    <table class="table-verti">	
-	        <caption>계좌 정보</caption>
-	        <colgroup>
-	            <col style="width:20%;"/>
-	            <col style="width:*;"/>
-	        </colgroup>
-	        <tbody>
-				<tr>
-					<th>계좌명</th>
-					<td id="productName">productName</td>
-				</tr>
-				<tr>
-					<th>고객명</th>
-					<td id="userName">${sessionScope.member.userName }</td>
-				</tr>
-				<tr>
-					<th>계좌번호</th>
-					<td id="accountNo"></td>
-				</tr>
-				<tr>
-					<th>계좌잔액(원)</th>
-					<td id="balance"></td>
-				</tr>
-				<tr>
-					<th>가입일</th>
-					<td id="createDate"></td>
-				</tr>
-				<tr>
-					<th>최종거래일</th>
-					<td id="trDate"></td>
-				</tr>
-	        </tbody>
-	    </table>
-	    
-	    <h2>거래내역</h2>
-	    <c:if test="${dataCount!=0 }">
-			<div class="page-nav">
-				<ul>
-					<li class="prev-page"><a href="#"></a></li>
-					<li class="prev"><a href="#"></a></li>
-					${paging}
-					<li class="next"><a href="#"></a></li>
-					<li class="next-page"><a href="#"></a></li>
-				</ul>
-			</div>
-		</c:if>
-	    <div class="table-wrap">
-		    <table name="transactionList" class="table-hori">
-		        <caption>거래내역</caption>
+		    <h2>계좌 정보</h2>
+		    <table class="table-verti">	
+		        <caption>계좌 정보</caption>
 		        <colgroup>
-		            <col style="width:auto"/>
-		            <col style="width:15%"/>
-		            <col style="width:15%"/>
-		            <col style="width:15%"/>
-		            <col style="width:15%"/>
-		            <col style="width:155px;"/>
+		            <col style="width:20%;"/>
+		            <col style="width:*;"/>
 		        </colgroup>
-		        <thead>
-		            <th scope="col">거래일자</th>
-		            <th scope="col">적요</th>
-		            <th scope="col">출금(원)</th>
-		            <th scope="col">입금(원)</th>
-		            <th scope="col">잔액</th>
-		            <th scope="col">내용</th>
-		        </thead>
 		        <tbody>
-
+					<tr>
+						<th>계좌명</th>
+						<td id="productName">productName</td>
+					</tr>
+					<tr>
+						<th>고객명</th>
+						<td id="userName">${sessionScope.member.userName }</td>
+					</tr>
+					<tr>
+						<th>계좌번호</th>
+						<td id="accountNo"></td>
+					</tr>
+					<tr>
+						<th>계좌잔액(원)</th>
+						<td id="balance"></td>
+					</tr>
+					<tr>
+						<th>가입일</th>
+						<td id="createDate"></td>
+					</tr>
+					<tr>
+						<th>최종거래일</th>
+						<td id="trDate"></td>
+					</tr>
 		        </tbody>
-		        <tfoot>
-		        
-		        </tfoot>
 		    </table>
-		</div>
-		<c:if test="${dataCount!=0 }">
-			<div class="page-nav">
-				<ul>
-					<li class="prev-page"><a href="#"></a></li>
-					<li class="prev"><a href="#"></a></li>
-					${paging}
-					<li class="next"><a href="#"></a></li>
-					<li class="next-page"><a href="#"></a></li>
-				</ul>
-			</div>
-		</c:if>
+		    
+		    <div id="trTable-Container">
+		    
+		    </div>
 		</form>
 	</div>
 </div>
 
 <script>
 
-	$(function(){
+	$(document).on('click', '.page-nav a',function(e){
+
+		e.preventDefault();
+	
+		var urlArr = $(this).attr("href").split("page=");
+		loadTrDetail(urlArr[1]);
+		
+		return false;
+
+	});
+	
+	$(window).load(function(){
 		
 		$("input[name=startDate]").val(new Date().getCurrentDate(1));
 		$("input[name=endDate]").val(new Date().getCurrentDate(1));
@@ -170,13 +133,13 @@
 		accDetailInit(${accountNo});
 		
 		$("#lookupDetailConfirm").on("click",function(event){
-			event.preventDefault;
+			event.preventDefault();
 			
 			console.log($("select[name=accountNo]").val());
 			accDetailInit($("select[name=accountNo]").val());
-			
-			return false;
+
 		});
+
 	});
 
 	function accDetailInit(selAcNo){
@@ -190,6 +153,7 @@
 			data		:	data,
 			dataType	:	"json",
 			success	:	function(data){
+				
 				if(data.listAccount == null || data.listAccount.length == 0){
 					
 				} else {
@@ -234,55 +198,24 @@
 		$("#trDate").html(account.TRDATE);	
 	}
 	
-	function loadTrDetail(){
-		
-		var trTable = $("table[name=transactionList]");
-		trTable.find("tbody").empty();
+	function loadTrDetail(page){
 		
 		var url = "<%=cp%>/transaction/transactionList";
 		var query = $("form[name=acInfoTable]").serialize();
+		
+		if(page != null){
+			query += "&page="+page;
+		}
+		console.log(query);
 		
 		$.ajax({
 			url		: url,
 			type		: "POST",
 			data		: query,
-			dataType	: "json",
 			success	: function(data){
-				if(data.transactionList == null || data.transactionList.length == 0){
-					trTable.append("<tr><td colspan=6>거래 내역이 존재하지 않습니다.</td></tr>")
-				} else {
-					$.each(data.transactionList, function(index, item){
-						var $tr = $("<tr>");
-						
-						$.each(item, function(key, value){
-							
-							var $td = $("<td>");
-							if(key == "AMOUNT"){
-								if(parseInt(value) < 0){
-									$td = $("<td class='negative'>");
-									$td.html(value);
-									$tr.append($td);
-									$td = $("<td>");
-									$td.html("&nbsp;");
-									$tr.append($td);
-								} else if(parseInt(value) >= 0) {
-									$td = $("<td>");
-									$td.html("&nbsp;");
-									$tr.append($td);
-									$td = $("<td class='positive'>");
-									$td.html(value);
-									$tr.append($td);
-								}
-							} else {
-								$td.html(value);
-								$tr.append($td);
-							}				
-							
-						});
-						
-						trTable.append($tr);
-					});
-				}
+				
+				$("#trTable-Container").html(data);
+				
 			},
 			error	: function(e){
 				console.log(e.responseText);

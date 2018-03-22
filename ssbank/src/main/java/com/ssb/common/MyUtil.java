@@ -47,10 +47,10 @@ public class MyUtil {
 			currentPageSetup=currentPageSetup-numPerBlock;
 		
 		// 처음페이지, 이전(10페이지 전)
-		n=current_page-numPerBlock;
+		n=((current_page-1)/10)*10;
 		if(total_page > numPerBlock && currentPageSetup > 0) {
-			sb.append("<li class=\"prev\"><a href='"+list_url+"page=1'>처음</a></li>");
-			sb.append("<li class=\"prev-page\"><a href='"+list_url+"page="+n+"'>이전</a></li>");
+			sb.append("<li class=\"prev-page\"><a href='"+list_url+"page=1'></a></li>");
+			sb.append("<li class=\"prev\"><a href='"+list_url+"page="+n+"'></a></li>");
 		}
 		
 		// 바로가기
@@ -65,11 +65,11 @@ public class MyUtil {
 		}
 		
 		// 다음(10페이지 후), 마지막페이지
-		n=current_page+numPerBlock;
+		n=((current_page-1)/10+1)*10+1;
 		if(n>total_page) n=total_page;
 		if(total_page-currentPageSetup>numPerBlock) {
-			sb.append("<li class=\"next-page\"><a href='"+list_url+"page="+n+"'>다음</a>");
-			sb.append("<li class=\"next\"><a href='"+list_url+"page="+total_page+"'>끝</a>");
+			sb.append("<li class=\"next\"><a href='"+list_url+"page="+n+"'></a>");
+			sb.append("<li class=\"next-page\"><a href='"+list_url+"page="+total_page+"'></a>");
 		}
 	
 		return sb.toString();
