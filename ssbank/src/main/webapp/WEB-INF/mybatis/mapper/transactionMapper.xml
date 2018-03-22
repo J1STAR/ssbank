@@ -20,44 +20,32 @@
 		SELECT COUNT(*) FROM transaction t
 		LEFT OUTER JOIN TRDETAIL trd ON t.TRDETAILIDX = trd.TRDETAILIDX
 		LEFT OUTER JOIN TRTYPE tT ON t.TTYPE = tT.TTYPE
-		<where>
-			t.accountNo=#{accountNo}
-			<include refid="where-transaction"></include>
-		</where>
+		WHERE t.accountNo=#{accountNo}
 	</select>
 	
-	<select id="transactionList" parameterType="map">
-		SELECT trd.TRDATE, TYPENAME, trd.trDetailIdx, t.accountNo, t.AMOUNT, t.BALANCE, CONTENT FROM transaction t
-		LEFT OUTER JOIN TRDETAIL trd ON t.TRDETAILIDX = trd.TRDETAILIDX
-		LEFT OUTER JOIN TRTYPE tT ON t.TTYPE = tT.TTYPE
-		<where>
-			t.accountNo=#{accountNo}
-			<include refid="where-transaction"></include>
-		</where>
-		ORDER BY trIdx <if test="dOrder == 1"> DESC </if> <if test="dOrder == 2"> ASC </if>
+	<select id="transactionList" parameterType="map" resultType="linkedHashMap">
+	
+		SELECT * FROM (
+		    SELECT tb.* FROM (
+			    SELECT TO_CHAR(trd.TRDATE, 'YYYY-MM-DD HH24:MI:SS') trDate, typeName, t.AMOUNT amount, t.BALANCE balance, content FROM transaction t
+			    LEFT OUTER JOIN TRDETAIL trd ON t.TRDETAILIDX = trd.TRDETAILIDX
+			    LEFT OUTER JOIN TRTYPE tT ON t.TTYPE = tT.TTYPE
+			    WHERE t.accountNo=#{accountNo}
+			    AND trd.trDate BETWEEN TO_DATE(#{startDate}, 'YYYY-MM-DD') AND TO_DATE(#{endDate}, 'YYYY-MM-DD')+1
+			    <if test="tType == 1">
+			
+				</if>
+				<if test="tType == 2">
+					AND tT.tType IN (1, 5, 91)
+				</if>
+				<if test="tType == 3">
+					AND tT.tType IN (-1, 2, 3, 4)
+				</if>
+			    ORDER BY trIdx <if test="dOrder == 1">DESC</if> <if test="dOrder == 2">ASC</if>
+			<![CDATA[
+			) tb WHERE ROWNUM < 20
+		) WHERE ROWNUM >= 1
+		]]>
 	</select>
 	
-	<sql id="where-transaction">
-		<if test="startDate == null OR startDate == ''">
-			trd.trDate BETWEEN TO_DATE('1900-01-01', 'YYYY-MM-DD') AND TO_DATE(#{endDate}, 'YYYY-MM-DD')+1
-		</if>
-		
-		<if test="endDate == null OR endDate == ''">
-			trd.trDate BETWEEN TO_DATE(#{startDate}, 'YYYY-MM-DD') AND TO_DATE(SYSDATE, 'YYYY-MM-DD')+1
-		</if>
-		
-		<if test="startDate != null AND endDate != null">
-			trd.trDate BETWEEN TO_DATE(#{startDate}, 'YYYY-MM-DD') AND TO_DATE(#{endDate}, 'YYYY-MM-DD')+1
-		</if>
-		
-		<if test="tType == 1">
-		
-		</if>
-		<if test="tType == 2">
-			tT.tType IN (1, 5, 91)
-		</if>
-		<if test="tType == 3">
-			tT.tType IN (-1, 2, 3, 4)
-		</if>
-	</sql>
 </mapper>

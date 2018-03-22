@@ -10,11 +10,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ssb.common.MyUtil;
+
 @RestController("transaction.transactionController")
 public class TransactionController {
 	
 	@Autowired
 	private TransactionService trService;
+	
+	@Autowired
+	private MyUtil myUtil;
 	
 	@RequestMapping(value="/transaction/transactionSubmit", method=RequestMethod.POST)
 	public Map<String, Object> transactionSubmit(@RequestParam Map<String, Object> map){
@@ -36,6 +41,11 @@ public class TransactionController {
 		
 		List<Map<String, Object>> resultList = null;
 		
+		System.out.println(map.get("startDate"));
+		System.out.println(map.get("endDate"));
+		if(map.get("page").equals("") || map.get("page") == null) {
+			map.put("page", 1);
+		}
 		try {
 			resultList = trService.transactionList(map);
 		} catch (Exception e) {

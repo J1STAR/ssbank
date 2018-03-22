@@ -18,7 +18,9 @@
 input[type=text].modiTarget { width: 50%; }
 input[type=password].modiTarget { width: 50%; }
 
-
+table[name=transactionList] td { font-size: 18px; font-weight: 400; }
+table[name=transactionList] td.positive { color: #387cd1; }
+table[name=transactionList] td.negative { color: red; }
 
 .content .atm-container { width: 1100px; height: 800px; text-align: center; padding-top: 80px; font-family: 'Orbitron', sans-serif;}
 .content .atm-container .atm { width: 1100px; height: 600px; background-color: black; border-radius: 50px; }
