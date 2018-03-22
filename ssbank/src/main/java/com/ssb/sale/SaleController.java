@@ -151,6 +151,10 @@ public class SaleController {
 	public String cheongYak() {
 		return ".sale.raa-0003";
 	}
+	@RequestMapping(value = "/sale/chy-0001")
+	public String cheongYaklist() {
+		return ".sale.chy-0001";
+	}
 
 	@RequestMapping(value = "/sale/raa-0005", method=RequestMethod.GET)
 	public String saleCreatedForm(Model model) {

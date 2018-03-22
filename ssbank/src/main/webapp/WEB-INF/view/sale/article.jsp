@@ -5,11 +5,11 @@
 <%
    String cp = request.getContextPath();
 %>
-
-
-<div class="table-wrap trh">
+<div class="content">
     <h1>매물 상세 정보</h1>
-    <table class="table-verti half">
+<div class="table-wrap">
+
+    <table class="table-verti">
         <colgroup>
             <col style="width:40%;"/>
             <col style="width:*;"/>
@@ -77,3 +77,4 @@
    			 <a href="<%=cp%>/sale/raa-0001" class="btn-type-blue1 medium mt20 fr">리스트</a>
 			</div>
 
+</div>
