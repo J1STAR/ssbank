@@ -1,7 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
-<%@ page trimDirectiveWhitespaces="true" %>
+<%@ page trimDirectiveWhitespaces="true"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%
 	String cp=request.getContextPath();
 %>
@@ -31,94 +31,6 @@ $(function(){
 	
 });
 
-//입력 버튼
-$(function(){
-	$(".btnSendVal").click(function(){
-		var content=encodeURIComponent($("#replyContent").val().trim());
-
-
-		var url="<%=cp%>/bbs/insertReply";
-		var query="num=${dto.num}&content="+content+"&answer=0";
-		$.ajax({
-			type:"post"
-			,url:url
-			,data:query
-			,dataType:"json"
-			,success:function(data) {
-				var state=data.state;
-				if(state=="true") {
-					$("#replyContent").val("");
-					
-					listPage(1);
-					
-				} else if(state=="false") {
-					alert("댓글을 추가 하지 못했습니다.");
-				}
-			}
-		    ,beforeSend:function(jqXHR) {
-		    	jqXHR.setRequestHeader("AJAX", true);
-		    }
-		    ,error:function(jqXHR) {
-		    	if(jqXHR.status==401) {
-		    		console.log(jqXHR);
-		    	} else if(jqXHR.status==403) {
-		    		login();
-		    	} else {
-		    		console.log(jqXHR.responseText);
-		    	}
-		    }
-		});
-		
-	});
-});
-  
-
-//수정버튼
-$(function(){
-	$(".btnSendReply").click(function(){
-		var content=encodeURIComponent($("#replyContent").val().trim());
-		// var $t = $(this).closest("table");
-		// var content = $t.find("textarea").val().trim();
-		// content=encodeURIComponent(content);
-		if(! content) {
-			$("#replyContent").focus();
-			return;
-		}
-
-		var url="<%=cp%>/bbs/insertReply";
-		var query="num=${dto.num}&content="+content+"&answer=0";
-		$.ajax({
-			type:"post"
-			,url:url
-			,data:query
-			,dataType:"json"
-			,success:function(data) {
-				var state=data.state;
-				if(state=="true") {
-					$("#replyContent").val("");
-					
-					listPage(1);
-					
-				} else if(state=="false") {
-					alert("댓글을 추가 하지 못했습니다.");
-				}
-			}
-		    ,beforeSend:function(jqXHR) {
-		    	jqXHR.setRequestHeader("AJAX", true);
-		    }
-		    ,error:function(jqXHR) {
-		    	if(jqXHR.status==401) {
-		    		console.log(jqXHR);
-		    	} else if(jqXHR.status==403) {
-		    		login();
-		    	} else {
-		    		console.log(jqXHR.responseText);
-		    	}
-		    }
-		});
-		
-	});
-});
 
 function funcExpense() {
 	// 지출
@@ -175,8 +87,7 @@ $(function(){
    
     //행추가
 	$("body").on('click', "#addRowBtn", function(){
-    	
-    		var my_tbody = document.getElementById('my-tbody');
+    	   var my_tbody = document.getElementById('my-tbody');
     	   //var row = my_tbody.insertRow(0); // 상단에 추가
     	   var row = my_tbody.insertRow( my_tbody.rows.length-1 ); // 하단에 추가
     	   var cell1 = row.insertCell(0); //체크박스
@@ -188,150 +99,201 @@ $(function(){
     	   var cell7 = row.insertCell(6); //입력및 수정
     	  
     	   var s = "";
-    	   var type = $("#accountBookMenu ul li").attr("data-productType");
-   		
+    	   var type = "1";
+    	   $("#accountBookMenu ul li").each(function(){
+    		   if($(this).hasClass("active")) {
+    			   type=$(this).attr("data-productType");
+    			   return;
+    		   }
+    	   });
+
+
    		   if(type=="1") {
    			   // 지출일 때
+   			   s += "<td>";
    			   s += "<div class='item-select' name='sltCat' value=''>";
-   	    	   s += "<select class='slt'>";
-   	    	   s+= "<option>카테고리</option>";
-   	    	   s+= "<option>식비</option>";
-   	    	   s+= "<option>주거/통신</option>";
-   	    	   s+= "<option>생활용품</option>";
-   	    	   s+= "<option>의복/미용</option>";
-   	    	   s+= "<option>건강/문화</option>";
-   	    	   s+= "<option>교육/육아</option>";
-   	    	   s+= "<option>교통/차량</option>";
-   	    	   s+= "<option>경조사/회비</option>";
-   	    	   s+= "<option>세금/이자</option>";
-   	    	   s+= "<option>용돈/기타</option>";
-   	    	   s+= "<option>미분류</option>";
+   	    	   s += "<select class='slt' name='categoryIdx'>";
+   	    	   s+= "<option value=''>카테고리</option>";
+   	    	   s+= "<option value='1'>식비</option>";
+   	    	   s+= "<option value='2'>주거/통신</option>";
+   	    	   s+= "<option value='3'>생활용품</option>";
+   	    	   s+= "<option value='4'>의복/미용</option>";
+   	    	   s+= "<option value='5'>건강/문화</option>";
+   	    	   s+= "<option value='6'>교육/육아</option>";
+   	    	   s+= "<option value='7'>교통/차량</option>";
+   	    	   s+= "<option value='8'>경조사/회비</option>";
+   	    	   s+= "<option value='9'>세금/이자</option>";
+   	    	   s+= "<option value='10'>용돈/기타</option>";
+   	    	   s+= "<option value='11'>미분류</option>";
    	    	   s+= "</select>";
+   	    	   
+   	    	   s+= "<input type='hidden' name='classIdx' value='-1'>";
+   	    	   
    	    	   s+= "</div>";
+   	    	   s+= "</td>";
    			} else if(type=="2") {
    			   // 수입일 때
-   			   s += "<div class='item-select' name='sltCat' value=''>";
-   	    	   s += "<select class='slt'>";
-   	    	   s+= "<option>카테고리</option>";
-   	    	   s+= "<option>주수입</option>";
-   	    	   s+= "<option>부수입</option>";
-   	    	   s+= "<option>미분류</option>";
+   			   s+= "<td>";
+   			   s+= "<div class='item-select' name='sltCat' value=''>";
+   	    	   s+= "<select class='slt' name='categoryIdx'>";
+   	    	   s+= "<option value=''>카테고리</option>";
+   	    	   s+= "<option value='20'>주수입</option>";
+   	    	   s+= "<option value='21'>부수입</option>";
+   	    	   s+= "<option value='11'>미분류</option>";
    	    	   s+= "</select>";
+   	    	   
+   	    	   s+= "<input type='hidden' name='classIdx' value='1'>";
+   	    	   
    	    	   s+= "</div>";
+   	    	   s+= "</td>";
    			}
     	   
-    	   cell1.innerHTML = '<div class="item-checkbox"><input type="checkbox" class="newVal" id="sltThis" value=""><label for="sltThis"></label></div>';
-    	   cell2.innerHTML = '<input type="text" class="ACBtext" size="10" value="${dto.accountBookDate}" style="width=100%">';
-    	   cell3.innerHTML = '<input type="text" class="ACBtext" size="10" value="${dto.content}" style="width=100%">';
-    	   cell4.innerHTML = '<input type="text" class="ACBtext" size="10"  style="width=100%">';
-    	   cell5.innerHTML = '<input type="text" class="ACBtext" size="10" value="${dto.amount}" style="width=100%">';
+    	   cell1.innerHTML = '<td><div class="item-checkbox"><input type="checkbox" class="newVal" id="sltThis" value=""><label for="sltThis"></label></div></td>';
+    	   cell2.innerHTML = '<td class="date"><input type="text" class="ACBtext" size="10" name="accountBookDate" style="width=100%"></td>';
+    	   cell3.innerHTML = '<td><input type="text" class="ACBtext" size="10" name="content" style="width=100%"></td>';
+    	   cell4.innerHTML = '<td><input type="text" class="ACBtext" size="10" style="width=100%"></td>';
+    	   cell5.innerHTML = '<td><input type="text" class="ACBtext" size="10" name="amount" style="width=100%"></td>';
     	   cell6.innerHTML = s;
-    	   cell7.innerHTML = '<a type="button" class="btn-type-blue1 medium">입력</a>';
+    	   cell7.innerHTML = '<td><a type="button" class="btn-accountBook-input btn-type-blue1 medium">입력</a></td>';
     	
     });
     
-    
+    // 저장
+    $("body").on('click', ".btn-accountBook-input", function(){
+    	
+    	var accountBookDate=$(this).closest("tr").children("td").find("input[name=accountBookDate]").val();
+    	var content=$(this).closest("tr").children("td").find("input[name=content]").val();
+    	var amount=$(this).closest("tr").children("td").find("input[name=amount]").val();
+    	var categoryIdx=$(this).closest("tr").children("td").find("select[name=categoryIdx]").val();
+    	var classIdx=$(this).closest("tr").children("td").find("input[name=classIdx]").val();
+    	
+    	if(!categoryIdx) {
+    		alert("카테고리를 선택하세요.");
+    		return;
+    	}   	
+    	var query = "accountBookDate="+accountBookDate+"&content="+encodeURIComponent(content)+"&amount="+amount+"&categoryIdx="+categoryIdx+"&classIdx="+classIdx;
+    	
+    	var url="<%=cp%>/acBookNcarBook/insertAccountBook";
+    	$.ajax({
+    		type:"POST"
+    		,url:url
+    		,data:query
+    		,dataType:"json"
+    		,success:function(data){
+    	    	   var type = "1";
+    	    	   $("#accountBookMenu ul li").each(function(){
+    	    		   if($(this).hasClass("active")) {
+    	    			   type=$(this).attr("data-productType");
+    	    			   return;
+    	    		   }
+    	    	   });
+    	    	   
+    	    	   if(type="1"){
+    	    		   funcExpense();
+    	    	   }else {
+    	    		   funcIncome();
+    	    	   }
+    		}
+    	    ,error:function(e) {
+    	    	console.log(e.responseText);
+    	    }
+    	});	   
+    });
 });
 
 //날짜 고를 때 달력 보이기
 $(function(){
 	
-	$("tr td:nth-child(2) .ACBtext").datepicker({
+	$("td:nth-child(2) .ACBtext").datepicker({
 		showOn:"button"
-		,buttonImage:"<%=cp %>/resource/images/ico_calendar.png"
-		,buttonImageOnly:true
-	});
-	
-	$(".ui-datepicker-trigger").css({
-		position:"absolute", width:"30px", height:"30px"
-	});
-	
-});
+		,buttonImage:"<%=cp%>/resource/images/ico_calendar.png"
+			buttonImageOnly:true
+		});
 
- $(window).load(function(){
-	
-	$("li[class^=acBookWrite]").click(function(){
-		$(this).addClass("active");
-		$(this).siblings().removeClass("active");
-	});
-	
-	
-});
- 
-//셀렉트박스 기본값
+		$(".ui-datepicker-trigger").css({
+			position:"absolute", width:"30px", height:"30px"
+		});
 
- 
+	});
+
+	$(window).load(function() {
+
+		$("li[class^=acBookWrite]").click(function() {
+			$(this).addClass("active");
+			$(this).siblings().removeClass("active");
+		});
+
+	});
+
+	//셀렉트박스 기본값
 </script>
 
 <div class="content">
 	<!-- jsp body 영역 -->
 	<div class="table-wrap">
 		<!-- jsp body 영역 -->
-			<div class="page-con">
-				<h1>가계부 쓰기</h1>
-				<div class="date-wrap">
-					<a href="#" class="btn arrow-left"></a>
-					<span>2018.03.01 ~ 2018.03.31</span>
-					<a href="#" class="btn arrow-right"></a>
-				</div>
-				<h2>가계부 요약</h2>
-				<div class="account-area mb30">
-					<div class="graph-area">그래프이미지영역</div>
-					<div class="account-view">
-						<ul>
-							<li class="income-area">
-								<div class="view-tit">수입</div>
-								<div class="view-sub">
-									<dl>
-										<dd>${inTot}</dd>
-										<dt>주수입</dt>
-									</dl>
-									<dl>
-										<dd>0</dd>
-										<dt>부수입</dt>
-									</dl>
-								</div>
-								<div class="view-total">${inTot}</div>
-							</li>
-							<li class="spend-area">
-								<div class="view-tit">지출</div>
-								<div class="view-sub">
-									<dl>
-										<dd>${exTot}</dd>
-										<dt>현금</dt>
-									</dl>
-									<dl>
-										<dd>0</dd>
-										<dt>카드</dt>
-									</dl>
-								</div>
-								<div class="view-total">${exTot}</div>
-							</li>
-							<li>
-								<span class="ico-sum"></span>
-								<span class="account-total">${total}</span>
-							</li>
-						</ul>
-					</div>
-				</div>
-				<div id="accountBookMenu" class="tab-wrap blue item3">
+		<div class="page-con">
+			<h1>가계부 쓰기</h1>
+			<div class="date-wrap">
+				<a href="#" class="btn arrow-left"></a> <span>2018.03.01 ~
+					2018.03.31</span> <a href="#" class="btn arrow-right"></a>
+			</div>
+			<h2>가계부 요약</h2>
+			<div class="account-area mb30">
+				<div class="graph-area">그래프이미지영역</div>
+				<div class="account-view">
 					<ul>
-						<li data-productType="1" class="acBookWrite active"><a href="#">지출</a></li>
-						<li data-productType="2" class="acBookWrite"><a href="#">수입</a></li>
-						<li data-productType="3" class="acBookWrite"><a href="#">달력</a></li>
+						<li class="income-area">
+							<div class="view-tit">수입</div>
+							<div class="view-sub">
+								<dl>
+									<dd>${inTot}</dd>
+									<dt>주수입</dt>
+								</dl>
+								<dl>
+									<dd>0</dd>
+									<dt>부수입</dt>
+								</dl>
+							</div>
+							<div class="view-total">${inTot}</div>
+						</li>
+						<li class="spend-area">
+							<div class="view-tit">지출</div>
+							<div class="view-sub">
+								<dl>
+									<dd>${exTot}</dd>
+									<dt>현금</dt>
+								</dl>
+								<dl>
+									<dd>0</dd>
+									<dt>카드</dt>
+								</dl>
+							</div>
+							<div class="view-total">${exTot}</div>
+						</li>
+						<li><span class="ico-sum"></span>
+						<span class="account-total">${total}</span>
+						</li>
 					</ul>
 				</div>
-				
-				<div id="accountBookContent"></div>
-
 			</div>
-			
-        	</div>
-        </div>
+			<div id="accountBookMenu" class="tab-wrap blue item3">
+				<ul>
+					<li data-productType="1" class="acBookWrite active"><a href="#">지출</a></li>
+					<li data-productType="2" class="acBookWrite"><a href="#">수입</a></li>
+					<li data-productType="3" class="acBookWrite"><a href="#">달력</a></li>
+				</ul>
+			</div>
+
+			<div id="accountBookContent"></div>
+
+		</div>
+
+	</div>
+</div>
 
 
 <!--자바스크립트-->
 <script type="text/javascript">
-
-
+	
 </script>

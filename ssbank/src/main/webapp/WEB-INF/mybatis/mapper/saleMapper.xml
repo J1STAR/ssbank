@@ -20,18 +20,17 @@
 	  <if test="searchKey=='addr'">
 	      DBMS_LOB.INSTR(addr1 || addr2, #{searchValue}) &gt; 0 
 	  </if>
-	  <if test="searchKey=='amount'">
-	      order by amount desc
-	  </if>
 
 	</sql>
 		<select id="listSale" parameterType="map"
 	            resultType="com.ssb.sale.Sale">
 		SELECT * FROM (
 		    SELECT ROWNUM rnum, tb.* FROM (
-			     SELECT saleIdx,addr2 , categoryIdx, maxAmount,TO_CHAR(tradeDate, 'YYYY-MM-DD') tradeDate,typeIdx
-			     ,room,area,layer,tLayer,status,addr1
-			        FROM sale
+			     SELECT saleIdx,addr2 , categoryName, maxAmount,TO_CHAR(tradeDate, 'YYYY-MM-DD') tradeDate,typeName		     
+			     ,room,totalArea,layer,tLayer,status,addr1
+			        FROM sale s
+			        LEFT OUTER JOIN saleType sT ON s.categoryIdx = sT.categoryIdx
+			        LEFT OUTER JOIN saleTradeType sTT ON s.typeIdx = sTT.typeIdx
                     <where>
                          <if test="searchValue != null and searchValue != ''">
 			                  <include refid="where-sale"/>
@@ -46,9 +45,12 @@
 	
 		<!-- 글보기 -->
 	<select id="readSale" resultType="com.ssb.sale.Sale" parameterType="Integer">
-				SELECT saleIdx, s.memberIdx,s.addr1,s.addr2,s.area,s.categoryIdx,s.typeIdx, 
+				SELECT saleIdx, s.memberIdx,s.addr1,s.addr2,s.area,sT.categoryName,sTT.typeName,s.totalArea,
                  s.layer, s.tLayer,s.dong,s.ho,s.status,TO_CHAR(s.tradeDate,'YYYY-MM-DD') tradeDate
-				 FROM sale s JOIN member m ON s.memberIdx=m.memberIdx
+				 FROM sale s
+				 JOIN member m ON s.memberIdx=m.memberIdx
+				 LEFT OUTER JOIN saleType sT ON s.categoryIdx = sT.categoryIdx
+			     LEFT OUTER JOIN saleTradeType sTT ON s.typeIdx = sTT.typeIdx
                  WHERE saleIdx = #{saleIdx}
 	</select>
 	

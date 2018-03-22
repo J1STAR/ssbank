@@ -6,7 +6,7 @@
    String cp = request.getContextPath();
 %>
 <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=PLHPMSmFQ_sQUQfGl3Bi&submodules=geocoder"></script>
-
+<!-- <script type="text/javascript" src="../jquery-tablesorter/jquery.tablesorter.min.js"></script> -->
 
 
 <!-- jsp body 영역 -->
@@ -43,7 +43,7 @@
 				
 					<div class="sort-area">
 						<ul>
-							<li><a href="#" class="active" onclick=amount();>알짜추천순</a></li>
+							<li><a href="#" class="active" onclick=upload();>알짜추천순</a></li>
 							<li><a href="#" >가격순</a></li>
 							<li><a href="#">면적순</a></li>
 							<li><a href="#">매물명순</a></li>
@@ -67,15 +67,16 @@
 							<c:forEach var="dto" items="${list}">
 							<tbody>						
 								<tr>
-									<td><a href="${articleUrl}&saleIdx=${dto.saleIdx}">${dto.addr2}<br>
-										${dto.categoryIdx}&Tab;${dto.maxAmount}만원</a><br>
+									<fmt:parseNumber var="totalArea" integerOnly="true" value="${dto.totalArea}"/>
+									<td><a href="${articleUrl}&saleIdx=${dto.saleIdx}">${totalArea}평&Tab;${dto.addr2}<br>
+										${dto.categoryName}&Tab;${dto.maxAmount}만원</a><br>
 									</td>
 									<td><a href="${articleUrl}&saleIdx=${dto.saleIdx}">${dto.tradeDate}
 									</a></td>
-									<td>${dto.typeIdx} &Tab; ${dto.room}<br>
-										${dto.layer}&sol;${dto.tLayer}<br> ${dto.status}<br>
+									<td><a href="${articleUrl}&saleIdx=${dto.saleIdx}">${dto.typeName}&Tab; 방${dto.room}개<br>
+										${dto.layer}층&sol;${dto.tLayer}층<br> ${dto.status}<br>
 										<span name="addr">${dto.addr1}</span>
-									</td>
+									</a></td>
 								</tr>
 							</tbody>
 								</c:forEach>
@@ -140,6 +141,8 @@
 	
 	$(window).load(function(){
 		
+		
+		
 		var MARKER_ICON_URL = './img/sp_pins_spot_v3.png';
 
 		var MARKER_SPRITE_X_OFFSET = 29;
@@ -184,6 +187,7 @@
 			    center: new naver.maps.LatLng(37.5332116, 126.8067516),
 			    zoom: 10
 			});
+			
 
 			var bounds = map.getBounds(),
 			    southWest = bounds.getSW(),
@@ -282,6 +286,7 @@
 			}); */
 		}
 		
+		
 	});
 
 </script>
@@ -290,4 +295,5 @@
 		var f=document.searchForm;
 		f.submit();
 	}  
+
 </script>
