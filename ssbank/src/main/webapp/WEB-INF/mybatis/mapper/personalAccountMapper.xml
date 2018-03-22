@@ -9,7 +9,7 @@
 	    LEFT OUTER JOIN TRANSACTION tr ON ac.ACCOUNTNO = tr.ACCOUNTNO
 	    LEFT OUTER JOIN TRDETAIL trd ON tr.TRDETAILIDX = trd.TRDETAILIDX
 	    LEFT OUTER JOIN PRODUCT p ON ac.PRODUCTIDX = p.PRODUCTIDX
-	    WHERE memberIdx = #{memberIdx} AND p.productIdx = #{productIdx} AND (ac.accountNo, trd.trDate) IN (
+	    WHERE memberIdx = #{memberIdx} <if test="productIdx!=''">AND p.productIdx=#{productIdx}</if> AND status = 1 AND (ac.accountNo, trd.trDate) IN (
 	        SELECT accountNo, MAX(trDate) FROM (
 	            SELECT
 	                accountNo accountNo,

@@ -88,13 +88,13 @@
 	}
 
 	
-	function lookupAccount(prIdx){
+	function lookupAccount(productIdx){
 
 		$("tbody").empty();
 		$("#totalBalance").empty();
 		
 		var url = "<%=cp %>/personal/lookupAccount";
-		var query = {"memberIdx":"${sessionScope.member.memberIdx}", "productIdx":prIdx}; 
+		var query = {"memberIdx":"${sessionScope.member.memberIdx}", "productIdx":productIdx}; 
 			/* "memberIdx=${sessionScope.member.memberIdx}&productIdx="+prIdx; */
 		
 		$.ajax({
@@ -104,7 +104,7 @@
 			dataType	:	"json",
 			success	:	function(data){
 				
-				if(data.listAccount.length == 0 || data.listAccount == null){
+				if(data.listAccount == null){
 					var $tr = $("<tr>");
 					var $td = $("<td class='noAcInfo'>");
 

@@ -69,7 +69,7 @@
 		    <div class="btn-area">
 			    <a href="#" id="lookupDetailConfirm" class="btn-type-blue1 big">조회</a>
 			</div>
-		</form>
+		
 		
 	    <h2>계좌 정보</h2>
 	    <table class="table-verti">	
@@ -81,32 +81,43 @@
 	        <tbody>
 				<tr>
 					<th>계좌명</th>
-					<td></td>
+					<td id="productName">productName</td>
 				</tr>
 				<tr>
 					<th>고객명</th>
-					<td></td>
+					<td id="userName">${sessionScope.member.userName }</td>
 				</tr>
 				<tr>
 					<th>계좌번호</th>
-					<td></td>
+					<td id="accountNo"></td>
 				</tr>
 				<tr>
 					<th>계좌잔액(원)</th>
-					<td></td>
+					<td id="balance"></td>
 				</tr>
 				<tr>
 					<th>가입일</th>
-					<td></td>
+					<td id="createDate"></td>
 				</tr>
 				<tr>
 					<th>최종거래일</th>
-					<td></td>
+					<td id="trDate"></td>
 				</tr>
 	        </tbody>
 	    </table>
 	    
 	    <h2>거래내역</h2>
+	    <c:if test="${dataCount!=0 }">
+			<div class="page-nav">
+				<ul>
+					<li class="prev-page"><a href="#"></a></li>
+					<li class="prev"><a href="#"></a></li>
+					${paging}
+					<li class="next"><a href="#"></a></li>
+					<li class="next-page"><a href="#"></a></li>
+				</ul>
+			</div>
+		</c:if>
 	    <div class="table-wrap">
 		    <table name="transactionList" class="table-hori">
 		        <caption>거래내역</caption>
@@ -123,26 +134,55 @@
 		            <th scope="col">적요</th>
 		            <th scope="col">출금(원)</th>
 		            <th scope="col">입금(원)</th>
-		            <th scope="col">내용</th>
 		            <th scope="col">잔액</th>
+		            <th scope="col">내용</th>
 		        </thead>
 		        <tbody>
 
 		        </tbody>
+		        <tfoot>
+		        
+		        </tfoot>
 		    </table>
 		</div>
+		<c:if test="${dataCount!=0 }">
+			<div class="page-nav">
+				<ul>
+					<li class="prev-page"><a href="#"></a></li>
+					<li class="prev"><a href="#"></a></li>
+					${paging}
+					<li class="next"><a href="#"></a></li>
+					<li class="next-page"><a href="#"></a></li>
+				</ul>
+			</div>
+		</c:if>
+		</form>
 	</div>
 </div>
 
 <script>
 
-	function accDetailInit(prIdx){
+	$(function(){
 		
-		$("input[name=startDate]").val(new Date().getCurrentDate());
-		$("input[name=endDate]").val(new Date().getCurrentDate());
+		$("input[name=startDate]").val(new Date().getCurrentDate(1));
+		$("input[name=endDate]").val(new Date().getCurrentDate(1));
+		
+		accDetailInit(${accountNo});
+		
+		$("#lookupDetailConfirm").on("click",function(event){
+			event.preventDefault;
+			
+			console.log($("select[name=accountNo]").val());
+			accDetailInit($("select[name=accountNo]").val());
+			
+			return false;
+		});
+	});
+
+	function accDetailInit(selAcNo){
 		
 		var url = "<%=cp%>/personal/lookupAccount";
-		var data = "memberIdx=${sessionScope.member.memberIdx}&productIdx="+prIdx;
+		var data = "memberIdx=${sessionScope.member.memberIdx}";
 		
 		$.ajax({
 			url		:	url,
@@ -153,7 +193,6 @@
 				if(data.listAccount == null || data.listAccount.length == 0){
 					
 				} else {
-					
 					var selAcc = $("select[name=accountNo]");
 					selAcc.empty();
 					$.each(data.listAccount, function(index, account){
@@ -163,6 +202,10 @@
 						$opt.val(account.ACCOUNTNO);
 						$opt.html(account.ACCOUNTNO);
 						
+						if(account.ACCOUNTNO == selAcNo){
+							loadAccDetail(account);
+						}
+						
 						selAcc.append($opt);
 						
 					});
@@ -171,10 +214,9 @@
 					if( ${accountNo == ""} ){
 						$tgAcc.find('option:eq(0)').attr("selected", "selected");
 					} else {
-						$tgAcc.find('option[value=${accountNo}]').attr("selected", "selected");
+						$tgAcc.find('option[value='+selAcNo+']').attr("selected", "selected");
 					}
-					
-					loadAccDetail();
+					loadTrDetail();
 				}
 					
 			},
@@ -184,14 +226,21 @@
 		})
 	}
 	
-	function loadAccDetail(){
+	function loadAccDetail(account){
+		$("#productName").html(account.PRODUCTNAME);
+		$("#accountNo").html(account.ACCOUNTNO);
+		$("#balance").html(numberWithCommas(Math.floor(account.BALANCE)));
+		$("#createDate").html(account.CREATEDATE);
+		$("#trDate").html(account.TRDATE);	
+	}
 	
+	function loadTrDetail(){
+		
 		var trTable = $("table[name=transactionList]");
 		trTable.find("tbody").empty();
 		
 		var url = "<%=cp%>/transaction/transactionList";
 		var query = $("form[name=acInfoTable]").serialize();
-		console.log(query);
 		
 		$.ajax({
 			url		: url,
@@ -200,19 +249,36 @@
 			dataType	: "json",
 			success	: function(data){
 				if(data.transactionList == null || data.transactionList.length == 0){
-					console.log("0");
 					trTable.append("<tr><td colspan=6>거래 내역이 존재하지 않습니다.</td></tr>")
 				} else {
-					console.log(data.transactionList.length);
 					$.each(data.transactionList, function(index, item){
 						var $tr = $("<tr>");
 						
-						$.each(item, function(index, field){
-							var $td = $("<td>");
-							$td.html(field[index]);
+						$.each(item, function(key, value){
 							
-							$tr.append($td);
-						})
+							var $td = $("<td>");
+							if(key == "AMOUNT"){
+								if(parseInt(value) < 0){
+									$td = $("<td class='negative'>");
+									$td.html(value);
+									$tr.append($td);
+									$td = $("<td>");
+									$td.html("&nbsp;");
+									$tr.append($td);
+								} else if(parseInt(value) >= 0) {
+									$td = $("<td>");
+									$td.html("&nbsp;");
+									$tr.append($td);
+									$td = $("<td class='positive'>");
+									$td.html(value);
+									$tr.append($td);
+								}
+							} else {
+								$td.html(value);
+								$tr.append($td);
+							}				
+							
+						});
 						
 						trTable.append($tr);
 					});
@@ -228,25 +294,20 @@
 	    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 	};
 	
-	Date.prototype.getCurrentDate = function() {
+	Date.prototype.getCurrentDate = function(mode) {
 		var mm = this.getMonth() + 1; // getMonth() is zero-based
 		var dd = this.getDate();
 		
-		return [this.getFullYear(),
-		        (mm>9 ? '' : '0') + mm,
-		        (dd>9 ? '' : '0') + dd
-		       ].join('-');
+		var result;
+		if(mode == 1)
+			result = [this.getFullYear(), (mm>9 ? '' : '0') + mm, (dd>9 ? '' : '0') + dd].join('-');
+		else if(mode == 2)
+			result = [this.getFullYear(), (mm>9 ? '' : '0') + mm, (dd>9 ? '' : '0') + dd].join('-') +" "+
+						[this.getHours(), this.getMinutes(), this.getSeconds()].join(':');
+		return result;
 	};
 	
 	
-	$(window).load(function(){
-		
-		accDetailInit(1);
-		
-		$("#lookupDetailConfirm").on("click",function(){
-			loadAccDetail();
-		});
-	});
 	
 	
 
