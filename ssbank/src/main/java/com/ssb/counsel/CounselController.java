@@ -33,6 +33,12 @@ public class CounselController {
 	public String main() throws Exception {
 		return ".counsel.main";
 	}
+	//상품에서 갈 경우
+	@RequestMapping(value="/counsel/product")
+	public String product(@RequestParam int categoryIdx,Model model) throws Exception {
+		model.addAttribute("categoryP",categoryIdx);
+		return ".counsel.main";
+	}
 	
 	@RequestMapping(value="/counsel/list")
 	public String list(

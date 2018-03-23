@@ -23,4 +23,11 @@
 		FROM product p JOIN savingsProduct s ON p.productIdx=s.productIdx
 		WHERE p.productIdx=#{productIdx}
 	</select>
+	<select id="loanDetail" parameterType="INTEGER"
+	resultType="com.ssb.financial.product.Product">
+	SELECT p.productIdx,productName,productDetail,createDate,
+		limitAmount,entryDate,interest
+		FROM product p JOIN loanProduct l ON
+		P.productIdx = l.productIdx WHERE p.productIdx=#{productIdx}
+	</select>
 </mapper>

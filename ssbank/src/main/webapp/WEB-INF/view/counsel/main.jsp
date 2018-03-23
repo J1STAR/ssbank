@@ -7,11 +7,10 @@
 %>
 <div class="content">
 <br>
-<div class="tab-wrap blue item4">
+<div class="tab-wrap blue item3">
     <ul>
-        <li data-category="4" class="counsel1 active"><a href="">맞춤형 적금 상담</a></li>
+        <li data-category="4" class="counsel1 active"><a href="#">맞춤형 적금 상담</a></li>
         <li data-category="5" class="counsel2"><a href="#">맞춤형 예금 상담</a></li>
-        <li data-category="6" class="counsel3"><a href="#">맞춤형 펀드 상담</a></li>
         <li data-category="7" class="counsel4"><a href="#">맞춤형 대출 상담</a></li>
     </ul>
 </div>
@@ -27,18 +26,32 @@
 var pageNo=1;
 var categoryIdx=4;
 
+
+
 //디폴트 화면
 $(function(){
+	
+	if('${categoryP}'!=""){
+		$("li[data-category=${categoryP}]").addClass("active");
+		$("li[data-category=${categoryP}]").siblings().removeClass("active");
+		counselList('${categoryP}',1);
+	}else{
 	counselList(4,1);
+	}
 	
 	//리스트 가져오기
-	$("li[class^=counsel]").click(function(){
+	 $("li[class^=counsel]").on('click',function(){
 		$(this).addClass("active");
 		$(this).siblings().removeClass("active");
 		var category = $(this).attr("data-category");
+		console.log(category)
 		counselList(category,1);
 	});
-	
+	 
+	 
+	/*  $("li.counsel1").on("click",function(){
+		 alert("test");
+	 }); */
 })
 //목록 가져오기
 function counselList(category,page){
