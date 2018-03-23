@@ -5,6 +5,7 @@
 <%
 	String cp=request.getContextPath();
 %>
+
 <div class="content">
 	<h1>거래 내역 조회</h1>
 	<div class="table-wrap" style="margin-bottom: 50px;">
@@ -29,8 +30,9 @@
 		            <tr>
 		                <th>조회기간</th>
 		                <td>
-		                		<span><input type="text" class="hasDatePicker" name="startDate" value="" placeholder=""> ~ </span>
-		                		<span><input type="text" class="hasDatePicker" name="endDate" value="" placeholder=""></span>
+		                		<div><p>시작일 </p><input type="text" class="hasDatePicker" name="startDate" value="" placeholder=""></div>
+		                		<div><p>&nbsp;</p></div>
+		                		<div><p>종료일 </p><input type="text" class="hasDatePicker" name="endDate" value="" placeholder=""></div>
 		                </td>
 		            </tr>
 		            <tr>
@@ -106,14 +108,14 @@
 		    </table>
 		    
 		    <div id="trTable-Container">
-		    
+			    	
 		    </div>
 		</form>
 	</div>
 </div>
 
 <script>
-
+	
 	$(document).on('click', '.page-nav a',function(e){
 
 		e.preventDefault();
@@ -127,15 +129,17 @@
 	
 	$(window).load(function(){
 		
-		$("input[name=startDate]").val(new Date().getCurrentDate(1));
-		$("input[name=endDate]").val(new Date().getCurrentDate(1));
+		var startDate = new Date();
+		startDate.setDate(startDate.getDate()-30);
+		var endDate = new Date();
+		$("input[name=startDate]").val(startDate.getCurrentDate(1));
+		$("input[name=endDate]").val(endDate.getCurrentDate(1));
 		
 		accDetailInit(${accountNo});
 		
 		$("#lookupDetailConfirm").on("click",function(event){
 			event.preventDefault();
 			
-			console.log($("select[name=accountNo]").val());
 			accDetailInit($("select[name=accountNo]").val());
 
 		});
@@ -206,7 +210,6 @@
 		if(page != null){
 			query += "&page="+page;
 		}
-		console.log(query);
 		
 		$.ajax({
 			url		: url,

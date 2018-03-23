@@ -57,7 +57,7 @@ public class MyUtil {
 		page=currentPageSetup+1;
 		while(page<=total_page && page <=(currentPageSetup+numPerBlock)) {
 			if(page==current_page) {
-				sb.append("<li class=\"normal active\"><a href='\"+list_url+\"page=\"+page+\"'>"+page+"</a></li>");
+				sb.append("<li class=\"normal active\"><a href='"+list_url+"page="+page+"'>"+page+"</a></li>");
 			} else {
 				sb.append("<li class=\"normal\"><a href='"+list_url+"page="+page+"'>"+page+"</a></li>");
 			}
