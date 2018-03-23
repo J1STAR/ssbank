@@ -13,7 +13,9 @@ public class Sale {
 	private long guarantee;
 	private String tradeDate,status;
 	private int memberIdx,typeIdx,categoryIdx;
+	private String categoryName;
 	private Integer memberIdx2;
+	private String typeName;
 	public int getSaleIdx() {
 		return saleIdx;
 	}
@@ -145,6 +147,18 @@ public class Sale {
 	}
 	public void setMemberIdx2(Integer memberIdx2) {
 		this.memberIdx2 = memberIdx2;
+	}
+	public String getCategoryName() {
+		return categoryName;
+	}
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
+	}
+	public String getTypeName() {
+		return typeName;
+	}
+	public void setTypeName(String typeName) {
+		this.typeName = typeName;
 	}
 	
 	

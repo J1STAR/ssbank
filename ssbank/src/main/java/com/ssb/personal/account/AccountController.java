@@ -20,12 +20,13 @@ public class AccountController {
 	private AccountService acService;
 	
 	@RequestMapping(value="/personal/lookupAccount", method=RequestMethod.POST)
-	public Map<String, Object> lookupAccount(@RequestParam String memberIdx, @RequestParam String productIdx){
+	public Map<String, Object> lookupAccount(@RequestParam String memberIdx, @RequestParam(defaultValue="") String productIdx){
 
 		List<Map<String, Object>> listAccount = null;
 		Map<String, Object> map = new HashMap<>();
 		map.put("memberIdx", memberIdx);
 		map.put("productIdx", productIdx);
+		
 		try {
 			listAccount = acService.lookupAccount(map);
 		} catch (Exception e) {

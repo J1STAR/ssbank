@@ -7,9 +7,10 @@
 %>
 
 
-<div class="table-wrap trh">
-    <h1>매물 상세 정보</h1>
-    <table class="table-verti half">
+<h1>매물 상세</h1>
+<div class="table-wrap">
+
+    <table class="table-verti">
         <colgroup>
             <col style="width:40%;"/>
             <col style="width:*;"/>
@@ -30,19 +31,20 @@
             </tr>
                <tr>
                 <th>건물유형</th>
-                <td>${dto.categoryIdx}</td>
+                <td>${dto.categoryName}</td>
             </tr>
             <tr>
                 <th>거래유형</th>
-                <td>${dto.typeIdx}</td>
+                <td>${dto.typeName}</td>
             </tr>
             <tr>
                 <th>매물주소</th>
                 <td>${dto.addr1},${dto.addr2}</td>
             </tr>
             <tr>
+            	<fmt:parseNumber var="totalArea" integerOnly="true" value="${dto.totalArea}"/>
                 <th>면적</th>
-                <td>${dto.area}</td>
+                <td>${totalArea}평</td>
             </tr>
          
             <tr>
@@ -73,6 +75,6 @@
 				    </td> --%>
 </div>
  <div class="btns">
-   			 <a href="<%=cp%>/sale/raa-0001" class="btn-type-blue1 medium mt20 fr">리스트</a>
-			</div>
+	<a href="<%=cp%>/sale/raa-0001" class="btn-type-blue1 medium mt20 fr">리스트</a>
+</div>
 

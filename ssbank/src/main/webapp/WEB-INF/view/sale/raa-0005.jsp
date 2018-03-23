@@ -35,7 +35,7 @@
 					</td>
 				</tr>
 				<tr>
-					<th>거래유형&ast;</th>
+					<th>거래형태&ast;</th>
 					<td>
 						<div class="item-radio">
 							<input type="radio" id="raa0001-05" name="typeIdx" value="1"
@@ -53,7 +53,7 @@
 				</tr>
 
 				<tr>
-					<th>주소&ast;</th>
+					<th>지역&ast;</th>
 					<td><input type="text" id="zip" name="zipCode" class=""
 						style="width: 80px;" maxlength="5" readonly> <a href="#"
 						id="btnPostCode" class="btn-type-gray medium"
@@ -148,7 +148,7 @@
 				</tr>
 				<tr>
 					<th>거래희망일&ast;</th>
-					<td><input type="text" class="" id="date" name="birth"><br>
+					<td><input type="text" class="" id="date" name="tradeDate"><br>
 						<div class="item-checkbox saledate2">
 							<input type="checkbox" id="raa-0008"> <label
 								for="mbj0002-03" class="saledate">빠르면 빠를수록 좋음</label>
@@ -167,70 +167,6 @@
 
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script>
-function saleupload() {
-	var f=document.saleForm;
-	
-	var str=f.categoryIdx.value;
-	if(!str){
-		alert("매물유형 선택하세요");
-		f.categoryIdx.foucs();
-		return;
-	}
-	var str=f.typeIdx.value;
-	if(!str){
-		alert("거래유형을 선택하세요");
-		f.typeIdx.foucs();
-		return;
-	}
-	var str=f.categoryIdx.value;
-	if(!str){
-		alert("우편번호를 입력하세요");
-		f.categoryIdx.foucs();
-		return;
-	}
-	var str=f.categoryIdx.value;
-	if(!str){
-		alert("거래유형을 선택하세요");
-		f.categoryIdx.foucs();
-		return;
-	}
-	var str=f.categoryIdx.value;
-	if(!str){
-		alert("거래유형을 선택하세요");
-		f.categoryIdx.foucs();
-		return;
-	}
-	var str=f.area.value;
-	if(!str){
-		alert("대지먼적 입력하세요");
-		f.area.foucs();
-		return;
-	}
-	var str=f.textArea.value;
-	if(!str){
-		alert("면적을을 입력하세요");
-		f.textArea.foucs();
-		return;
-	}
-	var str=f.categoryIdx.value;
-	if(!str){
-		alert("거래유형을 선택하세요");
-		f.categoryIdx.foucs();
-		return;
-	}
-	
-	
-	
-	
-	f.action="<%=cp%>/sale/created";
-	f.submit();
-	
-}
-
-
-    f.action = "<%=cp%>/member/login_check";
-    f.submit();
-}
 
 
 
@@ -321,7 +257,7 @@ $(function(){
 			
 			
 		}
-	}s
+	}
 });
 
 $('input:text[name=totalArea]').keyup(function() {
@@ -340,6 +276,88 @@ $('input:text[name=area]').keyup(function() {
     }
 });
 
+function saleupload() {
+	var f=document.saleForm;
+	var category = $("input[name=categoryIdx]:checked").val();
 
+	var str=f.categoryIdx.value;
+	if(!str){
+		alert("거래유형을 선택하세요");
+		f.categoryIdx.focus();
+		return;
+	}
+/* 	var str= $("input[name=minAmount]").val();
+	if(!str){
+		alert("거래유형을 선택하세요");
+		$("input[name=minAmount]").focus();
+		return;
+	} */
+	var str=f.addr1.value;
+	if(!str){
+		alert("기본주소를 선택하세요");
+		f.addr1.focus();
+		return;
+	}
+	var str=f.addr2.value;
+	if(!str){
+		alert("상세주소를 입력하세요");
+		f.addr2.focus();
+		return;
+	}
+	var str=f.dong.value;
+	if(!str){
+		alert("동을 입력하세요");
+		f.dong.focus();
+		return;
+	}
+	var str=f.ho.value;	
+	if(!str){
+		alert("호를 입력하세요");
+		f.ho.focus();
+		return;
+	}
+	var str=f.layer.value;	
+	if(!str){
+		alert("층을 입력하세요");
+		f.layer.focus();
+		return;
+	}
+	var str=f.tLayer.value;	
+	if(!str){
+		alert("총층을 입력하세요");
+		f.tLayer.focus();
+		return;
+	}
+	var str=f.minAmount.value;	
+	if(!str){
+		alert("최소금액 입력하세요");
+		f.tLayer.focus();
+		return;
+	}
+	var str=f.maxAmount.value;	
+	if(!str){
+		alert("최대금액 입력하세요");
+		f.tLayer.focus();
+		return;
+	}
+	var str=f.room.value;	
+	if(!str){
+		alert("방수를 입력하세요");
+		f.room.focus();
+		return;
+	}
+	if (category == 1){
+
+	} else if(category == 2 || category ==3){
+		var str=f.area.value;
+		if(!str){
+			alert("대지면적을 입력하세요");
+			f.area.focus();
+			return;
+		}
+	}
+	f.action="<%=cp%>/sale/created";
+	f.submit();
+}
 
 </script>

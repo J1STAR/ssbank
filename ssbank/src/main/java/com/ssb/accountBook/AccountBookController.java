@@ -107,7 +107,7 @@ public class AccountBookController {
 	}
 	
 	//AJAX 입력
-	@RequestMapping(value = "acBookNcarBook/insertAccountBook", method=RequestMethod.POST)
+	@RequestMapping(value = "/acBookNcarBook/insertAccountBook", method=RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> insertAccountBook(AccountBook dto, HttpSession session) {
 		SessionInfo info = (SessionInfo) session.getAttribute("member");
@@ -122,6 +122,23 @@ public class AccountBookController {
 		model.put("state", state);
 		return model;
 	}
+	
+	//AJAX 수정
+	/*@RequestMapping(value = "/acBookNcarBook/updateAccountBook", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> updateAccountBook(AccountBook dto, HttpSession session) {
+		SessionInfo info = (SessionInfo) session.getAttribute("member");
+		String state="true";
+		
+		dto.setMemberIdx(info.getMemberIdx());
+		int result=service.insertAccountBook(dto);
+		if(result == 0)
+			state="false";
+		
+		Map<String, Object> model = new HashMap<>();
+		model.put("state", state);
+		return model;
+	}*/
 
 	// 차계부
 	@RequestMapping(value = "/acBookNcarBook/carAcBook", method = RequestMethod.GET)

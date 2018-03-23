@@ -44,7 +44,8 @@
                     	<label for="${status.count}"></label>
                     </div>
                 </td>
-                <td>
+                <td class="date">
+                    <input type="hidden" name="acBookIdx" value="${dto.acBookIdx}">
                 	<input type="text" class="ACBtext" name="date" value="${dto.accountBookDate}" size="10" style="width=100%">
              
                 </td>
@@ -55,15 +56,15 @@
                 <td class="slt">
                 	<div class="item-select" name="sltCat">
                 		 <select class="slt">
-                		 	<option>카테고리</option>
-                		 	<option>주수입</option>
-                            <option>부수입</option>
-                            <option>미분류</option>
+                		 	<option value="">카테고리</option>
+                		 	<option value="20" ${dto.categoryIdx=="20"?"selected='selected'":""}>주수입</option>
+                            <option value="21" ${dto.categoryIdx=="21"?"selected='selected'":""}>부수입</option>
+                            <option value="11" ${dto.categoryIdx=="11"?"selected='selected'":""}>미분류</option>
                         </select>
                 	</div>
                 </td>
                 <td>
-                    <a href="#" class="btn-type-gray1 medium">수정</a>
+                	<a type="button" class="btn-accountBook-update btn-type-blue1 medium">수정</a>
                 </td>   
             </tr>
       </c:forEach>      

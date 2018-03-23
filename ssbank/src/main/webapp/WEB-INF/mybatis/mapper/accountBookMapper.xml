@@ -30,19 +30,19 @@
 	</select>
 	
 	<insert id="insertAccountBook" parameterType="com.ssb.accountBook.AccountBook">
-		INSERT INTO accountBook(acBookIdx, accountBookDate, content, amount, categoryIdx, classIdx)
+		INSERT INTO accountBook(acBookIdx, accountBookDate, content, amount, categoryIdx, classIdx, memberIdx)
 		VALUES
-		(account_seq.NEXTVAL, #{accountBookDate}, #{content}, #{amount}, #{categoryIdx}, #{classIdx})
+		(account_seq.NEXTVAL, #{accountBookDate}, #{content}, #{amount}, #{categoryIdx}, #{classIdx}, #{memberIdx})
 	</insert>
 	
 	<update id="updateAccountBook" parameterType="com.ssb.accountBook.AccountBook">
-		UPDATE accountBook SET accountBookDate=#{accountBookDate}, content=#{content},
-		amount=#{amount}, categoryIdx=#{categodryIdx}, classIdx=#{classIdx}
+		UPDATE accountBook SET acBookIdx=#{acBookIdx}, memberIdx=#{memberIdx}, accountBookDate=#{accountBookDate}, content=#{content},
+		amount=#{amount}, categoryIdx=#{categodryIdx}
 		WHERE acBookIdx=#{acBookIdx}		
 	</update>
 	
 	<delete id="deleteAccountBook" parameterType="Integer">
-		DELETE FROM accountBook WHERE acBookIdx = #{acBookIdx}
+		DELETE FROM accountBook WHERE acBookIdx=#{acBookIdx}
 	</delete>
 	
 	<select id="expenseTot" parameterType="map" resultType="Integer">
