@@ -19,7 +19,7 @@ function article(num) {
 }
 </script>
 <div class="content">
-	<h1>고객게시판</h1>
+	<h1>청약 사진</h1>
 	<div class="table-num"> ${dataCount}개(${page}/${total_page} 페이지)</div>
 		
 		<table style="width: 100%; margin: 0px auto; border-spacing: 0px;">
@@ -53,57 +53,18 @@ function article(num) {
 		       <c:out value="</tr>" escapeXml="false"/>
 </c:if>
 		</table>           
-		 
-	<%-- 	<table style="width: 100%; margin: 0px auto; border-spacing: 0px;">
-		   <tr height="35">
-			<td align="center">
-			        <c:if test="${dataCount==0 }">
-			                등록된 게시물이 없습니다.
-			         </c:if>
-			        <c:if test="${dataCount!=0 }">
-			               ${paging}
-			         </c:if>
-			 </td>
-		   </tr>
-		</table>
-		<table style="width: 100%; margin: 10px auto; border-spacing: 0px;">
-		   <tr height="40">
-		 
-		      <td align="center">
-		          <form name="searchForm" action="<%=cp%>/photo/list" method="post">
-		              <select name="searchKey" class="selectField">
-		                  <option value="subject">제목</option>
-		                  <option value="userId">작성자</option>
-		                  <option value="content">내용</option>
-		                  <option value="created">등록일</option>
-		            </select>
-		            <input type="text" name="searchValue" class="boxTF">
-		            <a href="#" class="btn-type-gray medium" onclick="searchList()">검색</a>
-		        </form>
-		      </td>
-		 
-		   </tr>
-		</table> --%>
-		
-		<!--  -->
 		<div class="btns">
         <a href="#" class="btn-type-gray medium mt20 fl" onclick="javascript:location.href='<%=cp%>/photo/list';">새로고침</a>
         <a href="#" class="btn-type-blue1 medium mt20 fr" onclick="javascript:location.href='<%=cp%>/photo/created';">등록하기</a>
     </div>
     <div class="page-nav">
         <ul>
-            <li class="prev-page"><a href="#"></a></li>
-            <li class="prev"><a href="#"></a></li>
-            <li class="normal active"><a href="#">1</a></li>
-            <li class="normal"><a href="#"> <c:if test="${dataCount==0 }">
-			                등록된 게시물이 없습니다.
-			         </c:if></a></li>
-            <li class="normal">
-              <c:if test="${dataCount!=0 }">
-			               ${paging}
-			         </c:if><a href="#">3</a></li>
-            <li class="next"><a href="#"></a></li>
-            <li class="next-page"><a href="#"></a></li>
+  		<li class="prev-page"><a href="#"></a></li>
+				<li class="prev"><a href="#"></a></li>
+				<c:if test="${dataCount==0 }">등록된 게시물이 없습니다.</c:if>
+				<c:if test="${dataCount!=0 }">${paging}</c:if>
+				<li class="next"><a href="#"></a></li>
+				<li class="next-page"><a href="#"></a></li>
         </ul>
     </div>
     

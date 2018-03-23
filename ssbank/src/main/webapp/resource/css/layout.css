@@ -6,6 +6,8 @@
 .table-wrap .item-checkbox.saledate2{padding-top:5px;}
 .table-wrap.trh th td {text-align:center;}
 .salesTable tr.hide { display:none; }
+.table-wrap.bold th {font-family:'nanumSB'; font-weight: 700; font-size: 20px;}
+.imgLayout.bold span {font-family:'nanumSB'; font-weight: 700; font-size: 20px;}
 
 /* 장한별 css */
 .menu-wrap.depth-two .menu-area  { width: 100%; padding: 0;}
