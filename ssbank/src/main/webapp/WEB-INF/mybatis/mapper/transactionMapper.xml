@@ -16,17 +16,18 @@
 		}
 	</insert>
 	
-	<select id="transactionCount" resultType="Integer">
+	<select id="transactionCount" parameterType="map" resultType="Integer">
 		SELECT COUNT(*) FROM transaction t
 		LEFT OUTER JOIN TRDETAIL trd ON t.TRDETAILIDX = trd.TRDETAILIDX
 		LEFT OUTER JOIN TRTYPE tT ON t.TTYPE = tT.TTYPE
 		WHERE t.accountNo=#{accountNo}
+		AND trd.trDate BETWEEN TO_DATE(#{startDate}, 'YYYY-MM-DD') AND TO_DATE(#{endDate}, 'YYYY-MM-DD')+1
 	</select>
 	
 	<select id="transactionList" parameterType="map" resultType="linkedHashMap">
 	
-		SELECT * FROM (
-		    SELECT tb.* FROM (
+		SELECT trDate, typeName, amount, balance, content FROM (
+		    SELECT ROWNUM rnum, tb.* FROM (
 			    SELECT TO_CHAR(trd.TRDATE, 'YYYY-MM-DD HH24:MI:SS') trDate, typeName, t.AMOUNT amount, t.BALANCE balance, content FROM transaction t
 			    LEFT OUTER JOIN TRDETAIL trd ON t.TRDETAILIDX = trd.TRDETAILIDX
 			    LEFT OUTER JOIN TRTYPE tT ON t.TTYPE = tT.TTYPE
@@ -43,8 +44,8 @@
 				</if>
 			    ORDER BY trIdx <if test="dOrder == 1">DESC</if> <if test="dOrder == 2">ASC</if>
 			<![CDATA[
-			) tb WHERE ROWNUM < 20
-		) WHERE ROWNUM >= 1
+			) tb WHERE ROWNUM <= #{end}
+		) WHERE rnum >= #{start}
 		]]>
 	</select>
 	

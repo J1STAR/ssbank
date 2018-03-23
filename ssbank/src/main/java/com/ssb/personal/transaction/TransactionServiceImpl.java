@@ -29,12 +29,12 @@ public class TransactionServiceImpl implements TransactionService {
 	}
 	
 	@Override
-	public int transactionCount(String accountNo) {
+	public int transactionCount(Map<String, Object> map) {
 		
 		int result = 0;
 		
 		try {
-			result = dao.selectOne("transaction.transactionCount", accountNo);
+			result = dao.selectOne("transaction.transactionCount", map);
 		} catch (Exception e) {
 			// TODO: handle exception
 		}

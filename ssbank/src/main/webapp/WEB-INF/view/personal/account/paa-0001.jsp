@@ -104,7 +104,7 @@
 			dataType	:	"json",
 			success	:	function(data){
 				
-				if(data.listAccount == null){
+				if(data.listAccount == null || data.listAccount.length == 0){
 					var $tr = $("<tr>");
 					var $td = $("<td class='noAcInfo'>");
 

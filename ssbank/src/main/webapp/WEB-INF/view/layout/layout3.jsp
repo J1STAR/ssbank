@@ -38,12 +38,17 @@
 
 <body>
 
+<div class="cssload-container middle">
+	<div class="cssload-crazy-arrow"></div>
+</div>
+	
 <div id="wrap">	
 	<div class="header">
 	    <tiles:insertAttribute name="header"/>
 	</div>
 	
 	<section class="container">
+	
    		<tiles:insertAttribute name="body"/>
 	</section>
 
@@ -95,6 +100,13 @@
 		});
 	});
 
+	$(document).bind("ajaxStart.mine", function() {
+	    $('.cssload-container').css("display", "flex");
+	});
+	
+	$(document).bind("ajaxStop.mine", function() {
+	    $('.cssload-container').css("display", "none");
+	});
 </script>
 </body>
 </html>

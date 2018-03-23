@@ -40,6 +40,58 @@ table[name=transactionList] td.negative { color: red; }
 .content .atm-container .atm .btn-container { position: absolute; margin-top: 20px; margin-left: 730px; width: 360px; height: 480px; }
 .content .atm-container .atm .btn-container div[class^='btn-'] { float: left; width: 100px; height: 100px; background-color: white; border-radius: 10px; margin: 10px 10px 10px; }
 .content .atm-container .atm .btn-container div[class^='btn-'] span { line-height: 100px; font-size: 48px; }
+  
+.cssload-container {
+	display: none;
+    align-items: center;
+    justify-content: center;
+    
+    z-index: 999;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    position: fixed;
+    top: 0px;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.cssload-crazy-arrow {
+	width: 50px;
+	height: 50px;
+	margin: 0 auto;
+	border: 5px solid;
+	border-top-left-radius: 50%;
+	border-bottom-right-radius: 50%;
+	border-bottom-left-radius: 50%;
+	border-color: #1e88e5;
+	animation: cssload-spin 400ms infinite linear;
+		-o-animation: cssload-spin 400ms infinite linear;
+		-ms-animation: cssload-spin 400ms infinite linear;
+		-webkit-animation: cssload-spin 400ms infinite linear;
+		-moz-animation: cssload-spin 400ms infinite linear;
+}
+
+
+
+@keyframes cssload-spin {
+	100%{ transform: rotate(360deg); transform: rotate(360deg); }
+}
+
+@-o-keyframes cssload-spin {
+	100%{ -o-transform: rotate(360deg); transform: rotate(360deg); }
+}
+
+@-ms-keyframes cssload-spin {
+	100%{ -ms-transform: rotate(360deg); transform: rotate(360deg); }
+}
+
+@-webkit-keyframes cssload-spin {
+	100%{ -webkit-transform: rotate(360deg); transform: rotate(360deg); }
+}
+
+@-moz-keyframes cssload-spin {
+	100%{ -moz-transform: rotate(360deg); transform: rotate(360deg); }
+}
 
 /* 방민주 css */
 .info-area .box-agree li.fdn {height: 50px;line-height: 50px}
