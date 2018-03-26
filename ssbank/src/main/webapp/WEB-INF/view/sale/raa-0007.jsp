@@ -9,8 +9,8 @@
 <h1>의뢰 상세 현황</h1>
 <div class="tab-wrap blue item2">
     <ul class="tabs">
-        <li class="active" data-sortType="1">매수</li>
-        <li data-sortType="2">매도</li>
+        <li class="active" data-modeType="1">매수</li>
+        <li data-modeType="2">매도</li>
     </ul>
     <div class="tab_container">
 				<div id="tab1" class="tab_content"></div>
@@ -38,17 +38,17 @@ $(function(){
 });
 
 function listPage(modeIdx) {
-	   var sortType = "1";
+	   var modeType = "1";
 	   $(".tab-wrap .tabs li").each(function(){
 		   if($(this).hasClass("active")) {
-			   sortType=$(this).attr("data-sortType");
+			   modeType=$(this).attr("data-modeType");
 			   return;
 		   }
 	   });
 	   
 	   var url="<%=cp%>/sale/saleList";
 	 
-	   var query="&sortType="+sortType+"&modeIdx="+modeIdx;
+	   var query="&modeType="+modeType+"&modeIdx="+modeIdx;
 	   
 	   $.ajax({
 		  type:"GET"
@@ -56,7 +56,7 @@ function listPage(modeIdx) {
 		  ,data:query
 		  ,success:function(data){
 			  
-			  var id="#tab"+sortType;
+			  var id="#tab"+modeType;
 			  $(id).html(data);
 			  
 			  // 마커
@@ -71,10 +71,10 @@ function listPage(modeIdx) {
 
 function articleView(saleIdx) {
 	
-	var sortType = "1";
+	var modeType = "1";
 	   $(".tab-wrap .tabs li").each(function(){
 		   if($(this).hasClass("active")) {
-			   sortType=$(this).attr("data-sortType");
+			   modeType=$(this).attr("data-modeType");
 			   return;
 		   }
 	   });
@@ -89,7 +89,7 @@ function articleView(saleIdx) {
 		  ,url:url
 		  ,data:query
 		  ,success:function(data){
-			  var id="#tab"+sortType;
+			  var id="#tab"+modeType;
 			  $(id).html(data);
 		  }
 	   	  ,error:function(e){

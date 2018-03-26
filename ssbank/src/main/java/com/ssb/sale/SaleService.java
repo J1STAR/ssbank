@@ -16,4 +16,6 @@ public interface SaleService {
 	public Sale nextReadSale(Map<String, Object> map);
 	public int deleteSale(int saleIdx);
 	public int insertSaleGain(Sale dto);
+	public List<Sale> cityCount();
+	public List<Sale> listSaleMode(Map<String, Object>map);
 }

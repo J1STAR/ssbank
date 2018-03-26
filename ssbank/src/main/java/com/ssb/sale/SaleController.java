@@ -31,7 +31,14 @@ public class SaleController {
 
 
 	@RequestMapping(value = "/sale/raa-0001")
-	public String saleListMain(Model model) throws Exception{
+	public String saleListMain(Model model
+			) throws Exception{
+		
+		List<Sale> list=service.cityCount();
+		
+		model.addAttribute("list",list);
+		
+		
 		return ".sale.raa-0001";
 	}
 	
@@ -40,7 +47,8 @@ public class SaleController {
 			@RequestParam(value="sortType", defaultValue="1") String sortType,
 			@RequestParam(value="searchKey", defaultValue="addr") String searchKey,
 			@RequestParam(value="searchValue", defaultValue="") String searchValue,
-			@RequestParam String modeIdx
+			@RequestParam String modeIdx,
+			@RequestParam(value="modeType", defaultValue="1") String modeType
 			,HttpServletRequest req,Model model) throws Exception{
 
 		int rows=10;
@@ -52,6 +60,7 @@ public class SaleController {
 		}
 		
 		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("modeType", modeType);
 		map.put("searchKey", searchKey);
 		map.put("searchValue", searchValue);
 		map.put("sortType", sortType);

@@ -17,6 +17,22 @@ public class Sale {
 	private String categoryName;
 	private Integer memberIdx2;
 	private String typeName;
+	
+	private String city;
+	private int cnt;
+	
+	public String getCity() {
+		return city;
+	}
+	public void setCity(String city) {
+		this.city = city;
+	}
+	public int getCnt() {
+		return cnt;
+	}
+	public void setCnt(int cnt) {
+		this.cnt = cnt;
+	}
 	public int getSaleIdx() {
 		return saleIdx;
 	}

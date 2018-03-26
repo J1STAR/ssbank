@@ -25,9 +25,11 @@
 		<div class="map-wrap mb50">
 			<div class="map-area" id="map"></div>
 			<div class="map-menu">
+			<c:forEach var="dto" items="${list}">
 				<ul>
-					<li><a href="#">강남구(4,400)</a></li>
+					<li>${dto.city}(${dto.cnt})</li>
 				</ul>
+			</c:forEach>
 			</div>
 		</div>
 		<div class="tab-wrap basic">

@@ -6,9 +6,8 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ssb.common.FileManager;
+
 import com.ssb.common.dao.CommonDAO;
-import com.ssb.sale.bbs.Board;
 
 @Service("sale.saleService")
 public class SaleServiceImpl implements SaleService {
@@ -125,4 +124,31 @@ public class SaleServiceImpl implements SaleService {
 
 		return result;
 	}
+
+
+	@Override
+	public List<Sale> cityCount() {
+		List<Sale> list=null;
+		
+		try {
+			list =dao.selectList("sale.cityCount");
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return list;
+	}
+
+	@Override
+	public List<Sale> listSaleMode(Map<String, Object> map) {
+		List<Sale> list = null;
+
+		try {
+			list = dao.selectList("sale.listSaleMode", map);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+
+		return list;
+	}
+
 }
