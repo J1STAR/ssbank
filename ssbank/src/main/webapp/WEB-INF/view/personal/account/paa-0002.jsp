@@ -168,7 +168,14 @@
 						var $opt = $("<option>");	
 						
 						$opt.val(account.ACCOUNTNO);
-						$opt.html(account.ACCOUNTNO);
+						if(account.STATUS == 0){
+							$opt.html(account.ACCOUNTNO + "[만기 계좌]");
+							$opt.css("color", "red");
+						} else {
+							$opt.html(account.ACCOUNTNO);
+						}
+							
+						
 						
 						if(account.ACCOUNTNO == selAcNo){
 							loadAccDetail(account);
