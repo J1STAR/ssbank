@@ -15,4 +15,5 @@ public interface SaleService {
 	public Sale preReadSale(Map<String, Object> map);
 	public Sale nextReadSale(Map<String, Object> map);
 	public int deleteSale(int saleIdx);
+	public int insertSaleGain(Sale dto);
 }
