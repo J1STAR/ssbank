@@ -17,11 +17,6 @@
         </colgroup>
         <tbody>
             <tr>
-                <th scope="col">개요</th>
-                <td scope="col">내용</td>
-            </tr>
-            
-            <tr>
                 <th>매물번호</th>
                 <td>${dto.saleIdx}</td>
             </tr>
@@ -75,6 +70,6 @@
 				    </td> --%>
 </div>
  <div class="btns">
-	<a href="<%=cp%>/sale/raa-0001" class="btn-type-blue1 medium mt20 fr">리스트</a>
+	<a href="#" class="btn-type-blue1 medium mt20 fr" onclick="listPage(1);return false;">리스트</a>
 </div>
 

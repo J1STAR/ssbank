@@ -4,16 +4,18 @@
 <mapper namespace="sale">
 	<insert id="insertSale" parameterType="com.ssb.sale.Sale">
 	  INSERT INTO sale(saleIdx,categoryIdx,typeIdx,memberIdx,memberIdx2,addr1, addr2, zipCode,area,totalArea,
-	          dong,ho,layer,tLayer,type,room,minAmount,maxAmount,guarantee,tradeDate,status) VALUES
+	          dong,ho,layer,tLayer,type,room,minAmount,maxAmount,guarantee,tradeDate,status,modeIdx) VALUES
 	         (sale_seq.NEXTVAL,#{categoryIdx},#{typeIdx},#{memberIdx},#{memberIdx2, jdbcType=INTEGER},#{addr1},#{addr2},#{zipCode},#{area, jdbcType=DOUBLE},
 	         #{totalArea},#{dong},#{ho},#{layer},#{tLayer},#{type},#{room},#{minAmount},#{maxAmount},#{guarantee},#{tradeDate, jdbcType=DATE},#{status, jdbcType=VARCHAR}
-	         )
+	         ,#{modeIdx})
 	</insert>	
+	
 	<sql id="where-sale">
 	  <if test="searchKey=='addr'">
 	       INSTR(typeIdx, #{searchValue}) &gt; 0
 	  </if>
 	</sql>
+	
 	<!-- 글개수 -->
 	<select id="dataCount" parameterType="map"
 	            resultType="Integer">
@@ -25,6 +27,7 @@
 	     	<if test="searchValue!=null and searchValue!='' ">
 	     	    <include refid="where-sale"/>
 	     	</if>
+			AND modeIdx=#{modeIdx}
 	   </where>   
 	</select>
 	
@@ -41,6 +44,7 @@
                          <if test="searchValue != null and searchValue != ''">
 			                  <include refid="where-sale"/>
 		                 </if>
+		                 AND modeIdx=#{modeIdx}
 	                </where>
 	                
 	                <if test="sortType==1 ">
@@ -57,12 +61,12 @@
 	                </if>		                
 	<![CDATA[
 	        ) tb WHERE ROWNUM <= #{end}
-	    ) WHERE rnum >= #{start}
+	    ) WHERE rnum >= #{start} 
 	]]>
 	</select>
 		<!-- 글보기 -->
 	<select id="readSale" resultType="com.ssb.sale.Sale" parameterType="Integer">
-				SELECT saleIdx, s.memberIdx,s.addr1,s.addr2,s.area,sT.categoryName,sTT.typeName,s.totalArea,
+				SELECT modeIdx,saleIdx, s.memberIdx,s.addr1,s.addr2,s.area,sT.categoryName,sTT.typeName,s.totalArea,
                  s.layer, s.tLayer,s.dong,s.ho,s.status,TO_CHAR(s.tradeDate,'YYYY-MM-DD') tradeDate
 				 FROM sale s
 				 JOIN member m ON s.memberIdx=m.memberIdx
@@ -70,4 +74,39 @@
 			     LEFT OUTER JOIN saleTradeType sTT ON s.typeIdx = sTT.typeIdx
                  WHERE saleIdx = #{saleIdx}
 	</select>
+	
+	<select id="cityCount" resultType="com.ssb.sale.Sale" >
+			select city, count(*) cnt from (
+		   	select substr(addr1,1,instr(addr1,' ',1,2)) city
+		    from sale
+			)group By city order by city
+	</select>
+	
+<!-- 	<select id="listSaleMode" parameterType="map"
+	            resultType="com.ssb.sale.Sale">
+		SELECT * FROM (
+		    SELECT ROWNUM rnum, tb.* FROM (
+			     SELECT saleIdx,addr2 , categoryName, maxAmount,TO_CHAR(tradeDate, 'YYYY-MM-DD') tradeDate,typeName		     
+			     ,room,totalArea,layer,tLayer,status,addr1
+			        FROM sale s
+			        LEFT OUTER JOIN saleType sT ON s.categoryIdx = sT.categoryIdx
+			        LEFT OUTER JOIN saleTradeType sTT ON s.typeIdx = sTT.typeIdx
+                    <where>
+                         <if test="searchValue != null and searchValue != ''">
+			                  <include refid="where-sale"/>
+		                 </if>
+		                 AND 
+	                </where>
+	                
+	                <if test="modeType==1 ">
+	                     modeIdx=1
+	                </if>
+	                <if test="modeType==2 ">
+	                     modeIdx=2
+	                </if>	                
+	<![CDATA[
+	        ) tb WHERE ROWNUM <= #{end}
+	    ) WHERE rnum >= #{start} 
+	]]>
+	</select> -->
 </mapper>

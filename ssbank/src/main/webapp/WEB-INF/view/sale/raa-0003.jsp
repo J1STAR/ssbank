@@ -17,7 +17,6 @@
 						<ul>
 							<li><a href="#" class="">청약정보</a></li>
 							<li><a href="<%=cp %>/sale/chy-0001" class="">청약일정</a></li>
-							<li><a href="#" class="">청약전략</a></li>
 							<li><a href="<%=cp %>/photo/list" class="">현장사진</a></li>
 						</ul>
 					</div>

@@ -69,10 +69,10 @@ public class AccountBookServiceImpl implements AccountBookService {
 	@Override
 	public int updateAccountBook(AccountBook dto) {
 		int result=0;
-		try {
-			result = dao.updateData("accountBook.updateAccountBook", dto);
-		} catch (Exception e) {
-		}
+	try {
+		result = dao.updateData("accountBook.updateAccountBook", dto);
+	} catch (Exception e) {
+	}
 		return result;
 	}
 

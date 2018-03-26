@@ -4,12 +4,12 @@
 <mapper namespace="personalAccount">
 	
 	<select id="lookupAccount" parameterType="map" resultType="map">
-		SELECT p.PRODUCTNAME, ac.accountNo, TO_CHAR(ac.createDate, 'YYYY-MM-DD HH24:MI:SS') createDate, TO_CHAR(trd.trDate, 'YYYY-MM-DD HH24:MI:SS') trDate, balance
+		SELECT p.PRODUCTNAME, ac.accountNo, TO_CHAR(ac.createDate, 'YYYY-MM-DD HH24:MI:SS') createDate, TO_CHAR(trd.trDate, 'YYYY-MM-DD HH24:MI:SS') trDate, balance, status
 	    FROM ACCOUNT ac
 	    LEFT OUTER JOIN TRANSACTION tr ON ac.ACCOUNTNO = tr.ACCOUNTNO
 	    LEFT OUTER JOIN TRDETAIL trd ON tr.TRDETAILIDX = trd.TRDETAILIDX
 	    LEFT OUTER JOIN PRODUCT p ON ac.PRODUCTIDX = p.PRODUCTIDX
-	    WHERE memberIdx = #{memberIdx} <if test="productIdx!=''">AND p.productIdx=#{productIdx}</if> AND status = 1 AND (ac.accountNo, trd.trDate) IN (
+	    WHERE memberIdx = #{memberIdx} <if test="productIdx!=''">AND p.productIdx=#{productIdx}</if> AND (ac.accountNo, trd.trDate) IN (
 	        SELECT accountNo, MAX(trDate) FROM (
 	            SELECT
 	                accountNo accountNo,

@@ -30,7 +30,7 @@
 		<div class="tab_container mt20">
 			<div id="tab1" class="tab_content">
 				
-				<div class="table-wrap">
+				<div class="table-wrap" style="margin-bottom: 50px;">
 				    <table class="table-hori">
 				        <caption>입/출금계좌</caption>
 				        <colgroup>
@@ -118,7 +118,13 @@
 						var $tr = $("<tr>");
 						
 						var $td = $("<td class='acInfo'>");
-						$td.html(account.PRODUCTNAME);
+						if(account.STATUS == 0){
+							$td.html("[만기 계좌]" + account.PRODUCTNAME);
+							$td.css("color", "red");
+						} else {
+							$td.html(account.PRODUCTNAME);
+						}
+						
 						$tr.append($td);
 						
 						$td = $("<td class='acInfo'>");
