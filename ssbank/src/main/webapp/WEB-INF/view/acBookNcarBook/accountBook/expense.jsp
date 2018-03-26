@@ -7,21 +7,20 @@
 %>
 
 <!-- //jsp body 영역 -->
-
 	<table class="table-hori">
 		<!--머리-->
         <colgroup>
-            <col style="width:auto"/>
+        	<col style="width:7%"/>
             <col style="width:15%"/>
-            <col style="width:15%"/>
-            <col style="width:15%"/>
-            <col style="width:15%"/>
-            <col style="width:15%"/>
-            <col style="width:auto;"/>
+            <col style="width:13%"/>
+            <col style="width:13%"/>
+            <col style="width:13%"/>
+            <col style="width:17%"/>
+            <col style="width:13%"/>
         </colgroup>
         <thead>
         	<tr>
-                <th scope="col">
+        		<th scope="col">
                 	<div class="item-checkbox">
                    		<input type="checkbox" id="sltAll">
                    		<label for="sltAll"></label>
@@ -38,26 +37,24 @@
 		
 		<!--몸통-->
         <tbody id="my-tbody">
-        <c:forEach var="dto" items="${expenseList}" begin="0" varStatus="status">
+        <c:forEach var="dto" items="${expenseList}" varStatus="status">
             <tr>
-                <td>
+            	<td>
                 	<div class="item-checkbox">
-                   		<input type="checkbox" name="${status.count}" id="sltThis">
-                    	<label for="${status.count}"></label>
+                   		<input type="checkbox" name="acBookIdxChk" value="${dto.acBookIdx}" id="sltThis${status.index}">
+                    	<label for="sltThis${status.index}"></label>
                     </div>
                 </td>
-                <td class="date">
+                <td>
                     <input type="hidden" name="acBookIdx" value="${dto.acBookIdx}">
-                	<input type="text" class="ACBtext" value="${dto.accountBookDate}" size="10" style="width=100%">
-                    
+                	<input type="text"  name="accountBookDate" class="ACBtext" value="${dto.accountBookDate}" size="10" style="width=100%;background: white;" readonly="readonly">  
                 </td>
-                <td><input type="text" class="ACBtext" value="${dto.content}" size="10" style="width=100%"></td>
+                <td><input type="text" class="ACBtext" name="content" value="${dto.content}" size="10" style="width=100%"></td>
+                <td><input type="text" class="ACBtext" name="amount" value="${dto.amount}" size="10" style="width=100%"></td>
                 <td><input type="text" class="ACBtext" value="" size="10" style="width=100%"></td>
-                <%-- <td><input type="text" class="ACBtext" value="${dto.amount}" size="10" style="width=100%"></td> --%>
-                <td><input type="text" class="ACBtext" value="${dto.amount}" size="10" style="width=100%"></td>
                 <td class="slt">
                 	<div class="item-select" name="sltCat">
-                		 <select class="slt">
+                		 <select class="slt" name="categoryIdx">
                 		 	<option value="">카테고리</option>
                 		 	<option value="1" ${dto.categoryIdx=="1"?"selected='selected'":""}>식비</option>
                             <option value="2" ${dto.categoryIdx=="2"?"selected='selected'":""}>주거/통신</option>
@@ -74,18 +71,17 @@
                 	</div>
                 </td>
                 <td>
-                    <a type="button" class="btn-type-blue1 medium">수정</a>
+                    <a type="button" class="btn-accountBook-update btn-type-gray1 medium">수정</a>
                 </td>   
             </tr>
       </c:forEach>      
             <tr>
                 <td colspan="8">
                 	<a id="addRowBtn" class="btn-type-gray1 small">추가</a>
-                	<a id="removeRowBtn" class="btn-type-gray1 small">선택삭제</a>
+                	<a type="button" class="btn-accountBook-delete btn-type-gray1 small">선택삭제</a>
                 </td>                
             </tr>
             
         </tbody>
     </table>
-
 

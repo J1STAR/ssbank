@@ -26,6 +26,7 @@ $(function(){
 			funcIncome();
 		} else if(type=="3") {
 			// 달력
+			funcCaldendar();
 		}
 	});
 	
@@ -44,6 +45,7 @@ function funcExpense() {
 		,async:false
 		,success:function(data){
 			$("#accountBookContent").html(data);
+			datepickerView();
 		}
 	    ,error:function(e) {
 	    	console.log(e.responseText);
@@ -62,31 +64,17 @@ function funcIncome() {
 		,data:query
 		,success:function(data){
 			$("#accountBookContent").html(data);
+			datepickerView();
 		}
 	    ,error:function(e) {
 	    	console.log(e.responseText);
 	    }
 	});	
 }
-
-
-$(function(){
-    //체크박스 전체선택 해제
-    $("body").on('change', "#sltAll", function(){
-        //클릭되었으면
-        if($("#sltAll").prop("checked")){
-            //input태그의 id가 sltThis인 태그들을 찾아서 checked옵션을 true로 정의
-            $("input[id=sltThis]").prop("checked",true);
-            //클릭이 안되었으면
-        }else{
-            //input태그의 id가 sltThis인 태그들을 찾아서 checked옵션을 false로 정의
-            $("input[id=sltThis]").prop("checked",false);
-        }
-    });
     
    
-    //행추가
-	$("body").on('click', "#addRowBtn", function(){
+//행추가
+$("body").on('click', "#addRowBtn", function(){
     	   var my_tbody = document.getElementById('my-tbody');
     	   //var row = my_tbody.insertRow(0); // 상단에 추가
     	   var row = my_tbody.insertRow( my_tbody.rows.length-1 ); // 하단에 추가
@@ -148,17 +136,18 @@ $(function(){
    	    	   s+= "</td>";
    			}
     	   
-    	   cell1.innerHTML = '<td><div class="item-checkbox"><input type="checkbox" class="newVal" id="sltThis" value=""><label for="sltThis"></label></div></td>';
-    	   cell2.innerHTML = '<td class="date"><input type="text" class="ACBtext" size="10" name="accountBookDate" style="width=100%"></td>';
+    	   cell1.innerHTML = '<td><div class="item-checkbox">&nbsp;</div></td>';
+    	   cell2.innerHTML = '<td><input type="text" class="ACBtext" size="10" name="accountBookDate" style="width=100%;background: white;" readonly="readonly"></td>';
     	   cell3.innerHTML = '<td><input type="text" class="ACBtext" size="10" name="content" style="width=100%"></td>';
-    	   cell4.innerHTML = '<td><input type="text" class="ACBtext" size="10" style="width=100%"></td>';
-    	   cell5.innerHTML = '<td><input type="text" class="ACBtext" size="10" name="amount" style="width=100%"></td>';
+    	   cell4.innerHTML = '<td><input type="text" class="ACBtext" size="10" name="amount" style="width=100%"></td>';
+    	   cell5.innerHTML = '<td><input type="text" class="ACBtext" size="10" style="width=100%"></td>';
     	   cell6.innerHTML = s;
-    	   cell7.innerHTML = '<td><a type="button" class="btn-accountBook-input btn-type-blue1 medium">입력</a></td>';
-    	
+    	   cell7.innerHTML = '<td><a type="button" class="btn-accountBook-input btn-type-blue1 medium">입력</a>';
+    	   
+    	   datepickerView();
     });
     
-    // 저장
+// 입력
     $("body").on('click', ".btn-accountBook-input", function(){
     	
     	var accountBookDate=$(this).closest("tr").children("td").find("input[name=accountBookDate]").val();
@@ -170,8 +159,21 @@ $(function(){
     	if(!categoryIdx) {
     		alert("카테고리를 선택하세요.");
     		return;
-    	}   	
-    	var query = "accountBookDate="+accountBookDate+"&content="+encodeURIComponent(content)+"&amount="+amount+"&categoryIdx="+categoryIdx+"&classIdx="+classIdx;
+    	}
+    	if(!content) {
+    		alert("내용을 입력하세요.");
+    		return;
+    	}
+    	if(!amount) {
+    		alert("금액을 입력하세요.");
+    		return;
+    	}
+    	if(!accountBookDate) {
+    		alert("날짜를 선택하세요.");
+    		return;
+    	}
+    	var query = "accountBookDate="+accountBookDate+"&content="+encodeURIComponent(content)+"&amount="
+    				+amount+"&categoryIdx="+categoryIdx+"&classIdx="+classIdx;
     	
     	var url="<%=cp%>/acBookNcarBook/insertAccountBook";
     	$.ajax({
@@ -188,44 +190,159 @@ $(function(){
     	    		   }
     	    	   });
     	    	   
-    	    	   if(type="1"){
+    	    	   if(type=="1"){
     	    		   funcExpense();
-    	    	   }else {
+    	    	   }else if(type=="2") {
     	    		   funcIncome();
+    	    	   }else if(type=="3"){
+    	    		   funcCaldendar();
     	    	   }
     		}
     	    ,error:function(e) {
     	    	console.log(e.responseText);
     	    }
-    	});	   
+    	});	//ajax 종료   
+    	
+    });// 저장 종료
+    
+// 수정
+    $("body").on('click', ".btn-accountBook-update", function(){
+    	
+    	var acBookIdx=$(this).closest("tr").children("td").find("input[name=acBookIdx]").val();
+    	var accountBookDate=$(this).closest("tr").children("td").find("input[name=accountBookDate]").val();
+    	var content=$(this).closest("tr").children("td").find("input[name=content]").val();
+    	var amount=$(this).closest("tr").children("td").find("input[name=amount]").val();
+    	var categoryIdx=$(this).closest("tr").children("td").find("select[name=categoryIdx]").val();
+  
+    	alert("수정하시겠습니까?");
+    	if(!categoryIdx) {
+    		alert("카테고리를 선택하세요.");
+    		return;
+    	}
+    	if(!content) {
+    		alert("내용을 입력하세요.");
+    		return;
+    	}
+    	if(!amount) {
+    		alert("금액을 입력하세요.");
+    		return;
+    	}
+    	if(!accountBookDate) {
+    		alert("날짜를 선택하세요.");
+    		return;
+    	}
+    	
+    	var query = "acBookIdx="+acBookIdx+"&accountBookDate="+accountBookDate+"&content="
+    				+encodeURIComponent(content)+"&amount="+amount+"&categoryIdx="+categoryIdx;
+    	
+    	var url="<%=cp%>/acBookNcarBook/updateAccountBook";
+    	$.ajax({
+    		type:"POST"
+    		,url:url
+    		,data:query
+    		,dataType:"json"
+    		,success:function(data){
+    	    	   var type = "1";
+    	    	   $("#accountBookMenu ul li").each(function(){
+    	    		   if($(this).hasClass("active")) {
+    	    			   type=$(this).attr("data-productType");
+    	    			   return;
+    	    		   }
+    	    	   });
+    	    	   
+    	    	   if(type=="1"){
+    	    		   funcExpense();
+    	    	   }else if(type=="2") {
+    	    		   funcIncome();
+    	    	   }else if(type=="3"){
+    	    		   funcCaldendar();
+    	    	   }
+    		}
+    	    ,error:function(e) {
+    	    	console.log(e.responseText);
+    	    }
+    	});	//ajax 종료   
+    	
+    });// 수정 종료
+
+ // 선택삭제
+    $("body").on('click', ".btn-accountBook-delete", function(){
+    	$("input[name=acBookIdxChk]:checked").each(function(){
+    		var acBookIdx=$(this).val();
+    		alert(acBookIdx);
+    		
+    		if(!acBookIdx) {
+        		alert("acBookIdx값 없음.");
+        		return;
+        	}
+        	
+        	var query = "acBookIdx="+acBookIdx;
+        	alert("삭제하시겠습니까?");
+        	
+        	var url="<%=cp%>/acBookNcarBook/deleteAccountBook";
+        	$.ajax({
+        		type:"POST"
+        		,url:url
+        		,data:query
+        		,dataType:"json"
+        		,success:function(data){
+        	    	   var type = "1";
+        	    	   $("#accountBookMenu ul li").each(function(){
+        	    		   if($(this).hasClass("active")) {
+        	    			   type=$(this).attr("data-productType");
+        	    			   return;
+        	    		   }
+        	    	   });
+        	    	   
+        	    	   if(type=="1"){
+        	    		   funcExpense();
+        	    	   }else if(type=="2") {
+        	    		   funcIncome();
+        	    	   }else if(type=="3"){
+        	    		   funcCaldendar();
+        	    	   }
+        		}
+        	    ,error:function(e) {
+        	    	console.log(e.responseText);
+        	    }
+        	});	//ajax 종료   
+    	});
+    	
+    	
+    	
+    });// 삭제 종료
+
+    //달력보기
+    function datepickerView() {
+    	$("td:nth-child(2) .ACBtext").datepicker({
+    		showOn:"button"
+    		,buttonImage:"<%=cp%>/resource/images/ico_calendar.png"
+    		,buttonImageOnly:true
+    	});
+
+    	$(".ui-datepicker-trigger").css({
+    			position:"absolute", width:"30px", height:"30px"
+    	});
+    	
+    	$("td:nth-child(2) .ACBtext").css("border", "none");
+    }
+    
+    //체크박스 전체선택/해제
+    $(function(){
+        $("body").on('change', "#sltAll", function(){
+            //클릭되었으면
+            
+            if($("#sltAll").prop("checked")){
+                //input태그의 id가 sltThis인 태그들을 찾아서 checked옵션을 true로 정의
+                $("input[name=acBookIdxChk]").prop("checked",true);
+                //클릭이 안되었으면
+            }else{
+                //input태그의 id가 sltThis인 태그들을 찾아서 checked옵션을 false로 정의
+                $("input[name=acBookIdxChk]").prop("checked",false);
+            }
+        });
     });
-});
-
-//날짜 고를 때 달력 보이기
-$(function(){
-	
-	$("td:nth-child(2) .ACBtext").datepicker({
-		showOn:"button"
-		,buttonImage:"<%=cp%>/resource/images/ico_calendar.png"
-			buttonImageOnly:true
-		});
-
-		$(".ui-datepicker-trigger").css({
-			position:"absolute", width:"30px", height:"30px"
-		});
-
-	});
-
-	$(window).load(function() {
-
-		$("li[class^=acBookWrite]").click(function() {
-			$(this).addClass("active");
-			$(this).siblings().removeClass("active");
-		});
-
-	});
-
-	//셀렉트박스 기본값
+ 
 </script>
 
 <div class="content">
@@ -235,8 +352,7 @@ $(function(){
 		<div class="page-con">
 			<h1>가계부 쓰기</h1>
 			<div class="date-wrap">
-				<a href="#" class="btn arrow-left"></a> <span>2018.03.01 ~
-					2018.03.31</span> <a href="#" class="btn arrow-right"></a>
+				<a href="#" class="btn arrow-left"></a> <span>2018.03.01 ~ 2018.03.31</span> <a href="#" class="btn arrow-right"></a>
 			</div>
 			<h2>가계부 요약</h2>
 			<div class="account-area mb30">

@@ -8,7 +8,7 @@
 <div class="content">
 	<br>
 	<h1>대출</h1>
-	<h2>대출신청 (약정)잔액 : 원 | 대출 총잔액 : 원</h2>
+	<h2>대출신청 (약정)잔액 : ${totalLoan}원 | 대출 총잔액 : 원</h2>
 		<br>
 		<div class="table-wrap">
 		    <table class="table-hori">
@@ -35,19 +35,21 @@
 		        </thead>
 		        
 		        <tbody>
+		        <c:forEach var="loan" items="${loanList}">
 		            <tr>
-		                <td>저축</td>
-		                <td><a href="#">123-456-7899</a></td>
-		                <td>2016.11.11</td>
-		                <td>2018.01.11</td>
-		                <td>837,770</td>
-		                <td>837,770</td>
-		                <td>15일</td>
+		                <td>${loan.productName}</td>
+		                <td><a href="#">${loan.accountNo}</a></td>
+		                <td>${loan.createDate}</td>
+		                <td>${loan.lastDate}</td>
+		                <td>${loan.lendMoney}</td>
+		                <td name="">837,770</td>
+		                <td>${loan.interestDate}</td>
 		                <td>
 		                    <a href="#" class="btn-type-gray medium">이자조회</a>
 		                    <a href="#" class="btn-type-blue1 medium">납부</a>
 		                </td>
 		            </tr>
+		            </c:forEach>
 		        </tbody>
 		    </table>
 		</div>

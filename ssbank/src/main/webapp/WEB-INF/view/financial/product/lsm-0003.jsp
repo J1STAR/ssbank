@@ -10,12 +10,16 @@ function sendProduct(productIdx){
 	var url="<%=cp%>/financial/account/fdn0001?productIdx="+productIdx;
 	location.href=url;
 }
-
+function counsel(categoryIdx){
+	var url="<%=cp%>/counsel/product?categoryIdx="+categoryIdx;
+	location.href=url;
+	
+}
 </script>
 <div class="content">
 <h1>적금상품 상세보기</h1>
 <div class="btns">
-    <a href="#" class="btn-type-gray medium mt20 fl">적금상품상담</a>
+    <a href="javascript:counsel(4);" class="btn-type-gray medium mt20 fl">적금상품상담</a>
 </div>
 <div class="table-wrap">
     <table class="table-verti half">
