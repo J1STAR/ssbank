@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="loan">
+
+	<select id="newMember" parameterType="INTEGER"
+		resultType="com.ssb.financial.loan.Loan">
+		SELECT lastName,firstName,addr1,addr2,zipcode,tel,userid
+		FROM member m
+		JOIN memberinfo i ON m.memberidx=i.memberidx
+		WHERE
+		m.memberidx= #{memberIdx}
+	</select>
+	
+	<select id="productName" parameterType="INTEGER" resultType="STRING">
+	SELECT productName FROM product WHERE productIdx=#{productIdx}
+	</select>
+	
+	<select id="createLoan" parameterType="map" resultType="com.ssb.financial.loan.Loan">
+		SELECT * FROM (
+			SELECT accountNo ,TO_CHAR(createDate,'YYYY-MM-DD HH24:MI:SS')createDate FROM account
+			WHERE memberIdx=#{memberIdx} AND status=1
+			ORDER BY createDate DESC
+		) WHERE ROWNUM=1
+	</select>
+	<insert id="insertLoan" parameterType="com.ssb.financial.loan.Loan"
+			statementType="CALLABLE"
+			useGeneratedKeys="false">
+			
+			{call pinsertloan(
+			#{ssn,jdbcType=VARCHAR,mode=IN},
+			#{memberIdx,jdbcType=INTEGER,mode=IN},
+			#{loanPwd,jdbcType=VARCHAR,mode=IN},
+			#{productIdx,jdbcType=INTEGER,mode=IN},
+			#{lendMoney,jdbcType=INTEGER,mode=IN}
+			)
+		}
+	</insert>
+	
+	<select id="totalLoan" parameterType="map" resultType="INTEGER">
+	SELECT SUM(AMOUNT) 
+	FROM transaction t JOIN account a ON t.accountNo=a.accountNo 
+	WHERE t.ttype=0 AND a.memberIdx=#{memberIdx} AND a.productIdx=3
+	</select>
+	
+	<select id="loanList" parameterType="map" resultType="com.ssb.financial.loan.Loan">
+	SELECT productName,a.accountNo,TO_CHAR((tr.trDate),'YYYY-MM-DD') createDate,
+	TO_CHAR((tr.trDate)+364,'YYYY-MM-DD') lastDate,amount AS lendMoney
+	,TO_CHAR(TO_DATE(tr.trDate+45),'dd')interestDate,l.interest
+	FROM account a  JOIN transaction t ON a.accountNo=t.accountNo 
+                JOIN product p ON a.productIdx = p.productIdx
+                JOIN trDetail tr ON t.trDetailIdx = tr.trDetailIdx
+                JOIN loanproduct l ON a.productIdx = l.productIdx
+	WHERE memberIdx=#{memberIdx} AND a.productIdx=3 AND ttype=0 AND a.status=1
+	</select>	
+			
+</mapper>

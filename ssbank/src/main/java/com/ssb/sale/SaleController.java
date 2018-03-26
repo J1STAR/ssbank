@@ -39,7 +39,9 @@ public class SaleController {
 	public String saleList(@RequestParam(value="pageNo", defaultValue="1") int current_page,
 			@RequestParam(value="sortType", defaultValue="1") String sortType,
 			@RequestParam(value="searchKey", defaultValue="addr") String searchKey,
-			@RequestParam(value="searchValue", defaultValue="") String searchValue,HttpServletRequest req,Model model) throws Exception{
+			@RequestParam(value="searchValue", defaultValue="") String searchValue,
+			@RequestParam String modeIdx
+			,HttpServletRequest req,Model model) throws Exception{
 
 		int rows=10;
 		int total_page=0;
@@ -53,7 +55,7 @@ public class SaleController {
 		map.put("searchKey", searchKey);
 		map.put("searchValue", searchValue);
 		map.put("sortType", sortType);
-		
+		map.put("modeIdx", modeIdx);
 		dataCount = service.dataCount(map);
 		if(dataCount != 0)
 			total_page = myutil.pageCount(rows, dataCount);
@@ -126,21 +128,19 @@ public class SaleController {
 	public String saleSoldMain() {
 		return ".sale.raa-0002";
 	}
-	
-
 	@RequestMapping(value = "/sale/raa-0003")
 	public String cheongYak() {
 		return ".sale.raa-0003";
 	}
 	@RequestMapping(value = "/sale/chy-0001")
 	public String cheongYaklist() {
-		return ".sale.chy-0001";
+		return "/sale/chy-0001";
 	}
 
 	@RequestMapping(value = "/sale/raa-0005", method=RequestMethod.GET)
-	public String saleCreatedForm(Model model) {
+	public String saleCreatedForm(Model model, @RequestParam String mode) {
 		
-		model.addAttribute("mode", "created");
+		model.addAttribute("mode", mode);
 		return ".sale.raa-0005";
 	}
 	
@@ -153,13 +153,14 @@ public class SaleController {
 		SessionInfo info=(SessionInfo)session.getAttribute("member");
 		dto.setMemberIdx(info.getMemberIdx());
 		
-		service.insertSale(dto);
+		
+			service.insertSale(dto);
 		
 		return "redirect:/sale/raa-0001";
 	}
 	
 	@RequestMapping(value="/sale/update", method=RequestMethod.GET)
-	public String updateSaleFom(
+	public String updateSaleForm(
 			@RequestParam int num,
 			@RequestParam String page,
 			HttpSession session,
@@ -178,9 +179,7 @@ public class SaleController {
 			Sale dto, 
 			@RequestParam String page,
 			HttpSession session) throws Exception {
-		
-	
-		// 수정 하기
+
 		service.updateSale(dto);
 		
 		return "redirect:/sale/list?page="+page;
@@ -193,5 +192,10 @@ public class SaleController {
 
 		service.deleteSale(num);
 		return "redirect:/sale/list";
+	}
+	@RequestMapping(value="/sale/raa-0007")
+	public String saleAllList() {
+		
+		return ".sale.raa-0007";
 	}
 }

@@ -84,13 +84,14 @@ function listPage(page) {
 	   
 	   var url="<%=cp%>/sale/saleList";
 	 
-	   var query="pageNo="+page+"&sortType="+sortType;
+	   var query="pageNo="+page+"&sortType="+sortType+"&modeIdx=1";
 	   
 	   $.ajax({
 		  type:"GET"
 		  ,url:url
 		  ,data:query
 		  ,success:function(data){
+			  
 			  var id="#tab"+sortType;
 			  $(id).html(data);
 			  
@@ -101,10 +102,11 @@ function listPage(page) {
 	   		  console.log(e.responseText);
 	   	  }
 	   });
+	   
 }
 
 function articleView(saleIdx) {
-	console.log(saleIdx);
+	
 	var sortType = "1";
 	   $(".tab-wrap .tabs li").each(function(){
 		   if($(this).hasClass("active")) {

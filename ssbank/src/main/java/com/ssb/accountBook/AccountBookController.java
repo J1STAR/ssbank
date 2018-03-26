@@ -1,5 +1,6 @@
 package com.ssb.accountBook;
 
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,9 +40,11 @@ public class AccountBookController {
 		int incomeTot = service.incomeTot(map);
 		int total = -(expenseTot) + incomeTot;
 
-		model.addAttribute("exTot", expenseTot);
-		model.addAttribute("inTot", incomeTot);
-		model.addAttribute("total", total);
+		DecimalFormat df = new DecimalFormat("#,###");
+		
+		model.addAttribute("exTot", df.format(expenseTot));
+		model.addAttribute("inTot", df.format(incomeTot));
+		model.addAttribute("total", df.format(total));
 
 		return ".acBookNcarBook.accountBook.ggcommon";
 	}
@@ -56,12 +59,8 @@ public class AccountBookController {
 
 		List<AccountBook> expenseList = service.expenseList(map);
 		AccountBook dto = null;
-		// int update = service.updateAccountBook(dto);
-		// int delete = service.deleteAccountBook(dto);
 
 		model.addAttribute("expenseList", expenseList);
-		// model.addAttribute("update", update);
-		// model.addAttribute("delete", delete);
 
 		return "acBookNcarBook/accountBook/expense";
 	}
@@ -76,12 +75,8 @@ public class AccountBookController {
 
 		List<AccountBook> incomeList = service.incomeList(map);
 		AccountBook dto = null;
-		// int update = service.updateAccountBook(dto);
-		// int delete = service.deleteAccountBook(dto);
 
 		model.addAttribute("incomeList", incomeList);
-		// model.addAttribute("update", update);
-		// model.addAttribute("delete", delete);
 
 		return "acBookNcarBook/accountBook/income";
 	}
@@ -96,12 +91,8 @@ public class AccountBookController {
 
 		List<AccountBook> calendarList = service.calendarList(map);
 		AccountBook dto = null;
-		// int update = service.updateAccountBook(dto);
-		// int delete = service.deleteAccountBook(dto);
 
 		model.addAttribute("calendarList", calendarList);
-		// model.addAttribute("update", update);
-		// model.addAttribute("delete", delete);
 
 		return "acBookNcarBook/accountBook/calendar";
 	}
@@ -124,21 +115,38 @@ public class AccountBookController {
 	}
 	
 	//AJAX 수정
-	/*@RequestMapping(value = "/acBookNcarBook/updateAccountBook", method=RequestMethod.POST)
+	@RequestMapping(value = "/acBookNcarBook/updateAccountBook", method=RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> updateAccountBook(AccountBook dto, HttpSession session) {
 		SessionInfo info = (SessionInfo) session.getAttribute("member");
 		String state="true";
 		
 		dto.setMemberIdx(info.getMemberIdx());
-		int result=service.insertAccountBook(dto);
+		int result=service.updateAccountBook(dto);
 		if(result == 0)
 			state="false";
 		
 		Map<String, Object> model = new HashMap<>();
 		model.put("state", state);
 		return model;
-	}*/
+	}
+	
+	//AJAX 삭제
+	@RequestMapping(value = "/acBookNcarBook/deleteAccountBook")
+	@ResponseBody
+	public Map<String, Object> deleteAccountBook(AccountBook dto, HttpSession session) {
+		SessionInfo info = (SessionInfo) session.getAttribute("member");
+		String state="true";
+		
+		dto.setMemberIdx(info.getMemberIdx());
+		int result=service.deleteAccountBook(dto);
+		if(result == 0)
+			state="false";
+		
+		Map<String, Object> model = new HashMap<>();
+		model.put("state", state);
+		return model;
+	}
 
 	// 차계부
 	@RequestMapping(value = "/acBookNcarBook/carAcBook", method = RequestMethod.GET)

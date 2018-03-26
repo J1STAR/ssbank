@@ -36,9 +36,8 @@
 	</insert>
 	
 	<update id="updateAccountBook" parameterType="com.ssb.accountBook.AccountBook">
-		UPDATE accountBook SET acBookIdx=#{acBookIdx}, memberIdx=#{memberIdx}, accountBookDate=#{accountBookDate}, content=#{content},
-		amount=#{amount}, categoryIdx=#{categodryIdx}
-		WHERE acBookIdx=#{acBookIdx}		
+		UPDATE accountBook SET accountBookDate=#{accountBookDate}, content=#{content},
+		amount=#{amount}, categoryIdx=#{categoryIdx} WHERE acBookIdx=#{acBookIdx}	
 	</update>
 	
 	<delete id="deleteAccountBook" parameterType="Integer">

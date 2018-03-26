@@ -56,15 +56,5 @@ public class ProductServiceImpl implements ProductService {
 		return dto;
 	}
 
-	@Override
-	public Product fundDetail(int productIdx) {
-		Product dto= null;
-		try {
-			dto=dao.selectOne("product.fundDetail", productIdx);
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
-		return dto;
-	}
 
 }

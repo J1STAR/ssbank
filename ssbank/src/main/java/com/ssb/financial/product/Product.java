@@ -10,16 +10,42 @@ public class Product {
 	private String productType;
 	private String entryDate;
 	private int monthly;
-	private int interest;
-	private int vipInterest;
+	private double interest;
+	private double vipInterest;
 	private String savingType;
 	private String interestType;
 	private int tax;
 	//예금테이블
-	private int interestRate;
+	private double interestRate;
+	//대출테이블
+	private int limitAmount;
 	
 	
 	
+	public double getInterest() {
+		return interest;
+	}
+
+	public void setInterest(double interest) {
+		this.interest = interest;
+	}
+
+	public double getVipInterest() {
+		return vipInterest;
+	}
+
+	public void setVipInterest(double vipInterest) {
+		this.vipInterest = vipInterest;
+	}
+
+	public int getLimitAmount() {
+		return limitAmount;
+	}
+
+	public void setLimitAmount(int limitAmount) {
+		this.limitAmount = limitAmount;
+	}
+
 	public String getProductType() {
 		return productType;
 	}
@@ -44,21 +70,6 @@ public class Product {
 		this.monthly = monthly;
 	}
 
-	public int getInterest() {
-		return interest;
-	}
-
-	public void setInterest(int interest) {
-		this.interest = interest;
-	}
-
-	public int getVipInterest() {
-		return vipInterest;
-	}
-
-	public void setVipInterest(int vipInterest) {
-		this.vipInterest = vipInterest;
-	}
 
 	public String getSavingType() {
 		return savingType;
@@ -84,11 +95,12 @@ public class Product {
 		this.tax = tax;
 	}
 
-	public int getInterestRate() {
+	
+	public double getInterestRate() {
 		return interestRate;
 	}
 
-	public void setInterestRate(int interestRate) {
+	public void setInterestRate(double interestRate) {
 		this.interestRate = interestRate;
 	}
 

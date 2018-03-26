@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="nbbs">
+	<!-- 추가 -->
+	<insert id="insertBoard" parameterType="com.ssb.sale.nbbs.Board">
+		INSERT INTO nbbs (num, name, pwd, subject, content, ipAddr, saveFilename, originalFilename)
+		        VALUES (nbbs_seq.NEXTVAL, #{name}, #{pwd}, #{subject}
+				    , #{content}, #{ipAddr}, #{saveFilename, jdbcType=VARCHAR}, 
+	                #{originalFilename, jdbcType=VARCHAR})
+	</insert>
+
+	<sql id="where-list">
+		<if test = "searchKey == 'name'">
+			name = #{searchValue}
+		</if>
+		<if test="searchKey == 'subject'">
+			subject LIKE '%' || #{searchValue} || '%'
+		</if>
+		<if test="searchKey == 'content'">
+			INSTR(content, #{searchValue}) &gt; 0
+		</if>
+		<if test="searchKey == 'created'">
+			(TO_CHAR(b.created, 'YYYY-MM-DD') = #{searchValue}
+	          OR TO_CHAR(b.created, 'YYYYMMDD') = #{searchValue})
+		</if>
+	</sql>
+	
+	<!-- 글 개수 -->
+	<select id="dataCount" resultType="Integer" parameterType="map">
+		SELECT NVL(COUNT(num), 0) FROM nbbs
+       <where>
+          <if test="searchValue != null and searchValue != '' ">
+			   <include refid="where-list"/>
+		   </if>
+	   </where>
+	</select>
+	
+	<!-- 글 리스트 -->
+	<select id="listBoard" resultType="com.ssb.sale.nbbs.Board"  parameterType="map">
+		SELECT * FROM (
+		    SELECT ROWNUM rnum, tb.* FROM (
+			     SELECT num, name, subject, hitCount, TO_CHAR(created, 'yyyy-mm-dd') as created,
+			        saveFilename 
+			        FROM nbbs
+                    <where>
+                         <if test="searchValue != null and searchValue != ''">
+			                  <include refid="where-list"/>
+		                 </if>
+	                </where>
+	                ORDER BY num DESC
+	<![CDATA[
+	        ) tb WHERE ROWNUM <= #{end}
+		) WHERE rnum >= #{start}
+	]]>
+	</select>
+
+	<!-- 글보기 -->
+	<select id="readBoard" resultType="com.ssb.sale.nbbs.Board" parameterType="Integer">
+		SELECT num, name, pwd, subject, content, ipAddr,
+				hitCount, created, saveFilename, originalFilename
+				 FROM nbbs WHERE num = #{num}
+	</select>
+	
+	<!-- 조회수 증가 -->
+	<update id="updateHitCount" parameterType="Integer">
+		UPDATE nbbs SET hitCount=hitCount+1 WHERE num = #{num}
+	</update>
+	
+	<!-- 이전글 -->
+	<select id="preReadBoard" resultType="com.ssb.sale.nbbs.Board"  parameterType="map">
+		SELECT tb.* FROM (
+			SELECT num, subject FROM nbbs
+                    <where>
+                         <if test="searchValue != null and searchValue != '' ">
+			                  <include refid="where-list"/>
+		                 </if>
+		               <![CDATA[
+		                 AND (num > #{num})
+		                 ]]>
+	                </where>
+				ORDER BY num ASC
+			) tb WHERE ROWNUM=1
+	</select>
+
+	<!-- 다음글 -->
+	<select id="nextReadBoard" resultType="com.ssb.sale.nbbs.Board" parameterType="map">
+		SELECT tb.* FROM (
+			SELECT num, subject FROM nbbs
+                    <where>
+                         <if test="searchValue != null and searchValue != '' ">
+			                  <include refid="where-list"/>
+		                 </if>
+		               <![CDATA[
+		                 AND (num < #{num})
+		                 ]]>
+	                </where>
+				ORDER BY num DESC
+			) tb WHERE ROWNUM=1
+	</select>
+
+     <!-- 수정 -->
+     <update id="updateBoard" parameterType="com.ssb.sale.nbbs.Board">
+         UPDATE nbbs SET name=#{name}, pwd=#{pwd}, subject=#{subject}, content=#{content},
+                    saveFilename=#{saveFilename, jdbcType=VARCHAR}, 
+                    originalFilename=#{originalFilename, jdbcType=VARCHAR}
+                    WHERE num = #{num}
+      </update>
+      
+      <!-- 삭제 -->
+      <delete id="deleteBoard" parameterType="Integer">
+            DELETE FROM nbbs WHERE num = #{num}
+      </delete>
+</mapper>
