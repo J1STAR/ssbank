@@ -3,9 +3,9 @@ $(function(){
 		$(this).toggleClass("active");
 	});
 
-	$('a[class*="btn-type-"]').click(function(e) {
-		e.preventDefault();
-	});
+//	$('a[class*="btn-type-"]').click(function(e) {
+//		e.preventDefault();
+//	});
 });
 
 

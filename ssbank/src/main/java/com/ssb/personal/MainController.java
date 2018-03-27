@@ -25,7 +25,7 @@ public class MainController {
 		
 		model.addAttribute("accountNo", accountNo);
 		
-		if(accountNo.charAt(2) == '3') {
+		if(accountNo != null && accountNo.charAt(3) == '3') {
 			return ".financial.loan.las-0001";
 		} else {
 			return ".personal.account.paa-0002";
@@ -37,7 +37,7 @@ public class MainController {
 		
 		model.addAttribute("accountNo", accountNo);
 		
-		if(accountNo.charAt(2) == '3') {
+		if(accountNo != null && accountNo.charAt(3) == '3') {
 			return ".financial.loan.prp-0001";
 		} else {
 			return ".personal.transaction.pit-0001";
