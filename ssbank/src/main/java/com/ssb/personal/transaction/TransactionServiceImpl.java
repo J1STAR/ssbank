@@ -29,6 +29,19 @@ public class TransactionServiceImpl implements TransactionService {
 	}
 	
 	@Override
+	public int transactionRepaySubmit(Map<String, Object> map) {
+		int result = 0;
+		
+		try {
+			dao.insertData("transaction.transactionRepaySubmit", map);
+			result = (int) map.get("result");
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return result;
+	}
+	
+	@Override
 	public int transactionCount(Map<String, Object> map) {
 		
 		int result = 0;
