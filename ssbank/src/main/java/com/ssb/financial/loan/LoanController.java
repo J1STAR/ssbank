@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.View;
 
 import com.ssb.common.MyExcelView;
@@ -122,5 +123,23 @@ public class LoanController {
 		model.put("columnValues", columnValues);
 		
 		return excel;
+	}
+	@RequestMapping(value="/loan/repay" , method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> repay(Loan dto){
+		
+		String data="대출 상환 성공";
+		int result=service.repay(dto);
+		if(result==0) {
+			data="대출 상환 실패";
+		}
+		Map<String, Object> model = new HashMap<>();
+		model.put("data", data);
+		return model;
+	}
+	
+	@RequestMapping(value="/loan/repayList")
+	public String repayList(@RequestParam String accountNo) {
+		return ".financial.loan.las-0001";
 	}
 }

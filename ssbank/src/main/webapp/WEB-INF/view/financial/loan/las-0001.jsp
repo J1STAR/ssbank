@@ -46,7 +46,7 @@
 		                <td>${loan.balance}</td>
 		                <td>${loan.interestDate}</td>
 		                <td>
-		                    <a href='<%=cp%>/personal/lookupDetailAccount?accountNo="${loan.accountNo}"' class="btn-type-gray medium">조회</a>
+		                    <a href='<%=cp%>/loan/repayList?accountNo="${loan.accountNo}"' class="btn-type-gray medium">조회</a>
 		                    <a href='<%=cp%>/personal/transaction?accountNo="${loan.accountNo}"' class="btn-type-blue1 medium">납부</a>
 		                </td>
 		            </tr>

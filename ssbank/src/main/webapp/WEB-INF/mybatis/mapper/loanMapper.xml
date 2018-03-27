@@ -54,5 +54,13 @@
 	WHERE memberIdx=#{memberIdx} AND a.productIdx=3 AND ttype=0 AND a.status=1
 	</select>	
 	
-	
+	<insert id="repayLoan" parameterType="com.ssb.financial.loan.Loan"
+			statementType="CALLABLE"
+			useGeneratedKeys="false">
+			{call pRepayLoan(
+			#{acountNo2,jdbcType=VARCHAR,mode=IN},
+			#{amount,jdbcType=INTEGER,mode=IN}
+			)
+		}	
+	</insert>
 </mapper>
