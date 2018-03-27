@@ -28,9 +28,16 @@ public class Loan {
 		private double interest;
 		private String lastDate;
 		private String interestDate;
+		private int balance;
 		
 		
 		
+		public int getBalance() {
+			return balance;
+		}
+		public void setBalance(int balance) {
+			this.balance = balance;
+		}
 		public String getInterestDate() {
 			return interestDate;
 		}
