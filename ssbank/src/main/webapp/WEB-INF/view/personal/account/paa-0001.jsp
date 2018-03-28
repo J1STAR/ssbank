@@ -119,7 +119,7 @@
 						
 						var $td = $("<td class='acInfo'>");
 						if(account.STATUS == 0){
-							$td.html(account.PRODUCTNAME + "[만기 계좌]");
+							$td.html("[만기 계좌]" + account.PRODUCTNAME);
 							$td.css("color", "red");
 						} else {
 							$td.html(account.PRODUCTNAME);

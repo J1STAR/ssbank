@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.View;
 
 import com.ssb.common.MyExcelView;
@@ -35,7 +36,6 @@ public class LoanController {
 		map.put("memberIdx", info.getMemberIdx());
 		int totalLoan = service.totalLoan(map);
 		List<Loan> loanList = service.loanList(map);
-		
 		model.addAttribute("totalLoan",totalLoan);
 		model.addAttribute("loanList",loanList);
 		return ".financial.loan.las-0001";
@@ -82,9 +82,9 @@ public class LoanController {
 	
 	//계좌 엑셀 다운로드
 	@RequestMapping(value="/financial/loan/excel")
-	public View excelDownload(Map<String, Object> model,@RequestParam int memberIdx) {
-		String filename ="account.xls";
-		String sheetName = "계좌목록";
+	public View excelDownload(Map<String, Object> model,HttpSession session) {
+		String filename ="loan.xls";
+		String sheetName = "대출목록";
 		
 		//내려받을 목록리스트
 		List<String> columnLabels = new ArrayList<>();
@@ -92,16 +92,30 @@ public class LoanController {
 		List<Object[]> columnValues = new ArrayList<>();
 		
 		//내려받을 것들 목룍리스트
+		columnLabels.add("상품명");
 		columnLabels.add("계좌번호");
+		columnLabels.add("대출일");
+		columnLabels.add("만기일");
+		columnLabels.add("대출신청금액");
+		columnLabels.add("대출잔액");
+		columnLabels.add("이자납입일");
+	
 		
-		
-		/*//내려받을 값 넣는 처리
+		SessionInfo info = (SessionInfo) session.getAttribute("member");
 		Map<String, Object> map = new HashMap<>();
-		map.put("memberIdx", memberIdx);
-		//List<Account> list = service.listAllAccount(map);
-		for(Account dto :list) {
-			columnValues.add(new Object[] {});
-		}*/
+		map.put("memberIdx", info.getMemberIdx());
+		List<Loan> loanList = service.loanList(map);
+		for(Loan dto :loanList) {
+			columnValues.add(new Object[] { 
+					dto.getProductName(),
+					dto.getAccountNo(),
+					dto.getCreateDate(),
+					dto.getLastDate(),
+					dto.getLendMoney(),
+					"",
+					dto.getInterestDate()
+					});
+		}
 		
 		model.put("filename", filename);
 		model.put("sheetName", sheetName);
@@ -109,5 +123,23 @@ public class LoanController {
 		model.put("columnValues", columnValues);
 		
 		return excel;
+	}
+	@RequestMapping(value="/loan/repay" , method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> repay(Loan dto){
+		
+		String data="대출 상환 성공";
+		int result=service.repay(dto);
+		if(result==0) {
+			data="대출 상환 실패";
+		}
+		Map<String, Object> model = new HashMap<>();
+		model.put("data", data);
+		return model;
+	}
+	
+	@RequestMapping(value="/loan/repayList")
+	public String repayList(@RequestParam String accountNo) {
+		return ".financial.loan.las-0001";
 	}
 }

@@ -13,4 +13,8 @@ public interface LoanService {
 	// 리스트
 	public int totalLoan(Map <String, Object> map);
 	public List<Loan> loanList(Map <String, Object> map);
+	
+	//대출 상환
+	public int repay(Loan dto);
+	public List<Loan> repayList(Map <String, Object> map);
 }

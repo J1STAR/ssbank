@@ -6,6 +6,7 @@ import java.util.Map;
 public interface TransactionService {
 
 	public int transactionSubmit(Map<String, Object> map);
+	public int transactionRepaySubmit(Map<String, Object> map);
 	
 	public int transactionCount(Map<String, Object> map);
 	public List<Map<String, Object>> transactionList(Map<String, Object> map);
