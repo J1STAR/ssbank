@@ -58,7 +58,7 @@
 			statementType="CALLABLE"
 			useGeneratedKeys="false">
 			{call pRepayLoan(
-			#{acountNo2,jdbcType=VARCHAR,mode=IN},
+			#{accountNo2,jdbcType=VARCHAR,mode=IN},
 			#{amount,jdbcType=INTEGER,mode=IN}
 			)
 		}	

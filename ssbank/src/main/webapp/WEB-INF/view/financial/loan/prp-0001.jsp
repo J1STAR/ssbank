@@ -84,7 +84,7 @@
 		$("#transactionLoanConfirm").click(function(event){
 			event.preventDefault();
 			
-			transactionSubmit();
+			transactionRepaySubmit();
 			
 			
 		});
@@ -181,7 +181,7 @@
 		return result;
 	}
 	
-	function transactionSubmit(){
+	function transactionRepaySubmit(){
 		var url = "<%=cp%>/transaction/transactionRepaySubmit";
 		var trQuery = $("form[name=transactionLoan]").serialize();
 
@@ -216,7 +216,7 @@
 			,data:q
 			,dataType:"json"
 			,success : function(data){
-				alert(data);
+				
 			}
 			,error	: function(e){
 				console.log("err");
@@ -227,7 +227,7 @@
 	
 	function transactionResult(result){
 		loanSubmit();
-		var f = document.transactionTable;
+		var f = document.transactionLoan;
 		f.action = "<%=cp%>/personal/transaction-"+ result;
 		f.submit();
 	}
