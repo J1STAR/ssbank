@@ -139,7 +139,12 @@ public class LoanController {
 	}
 	
 	@RequestMapping(value="/loan/repayList")
-	public String repayList(@RequestParam String accountNo) {
-		return ".financial.loan.las-0001";
+	public String repayList(@RequestParam String accountNo,Model model) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("accountNo", accountNo);
+		List<Loan> repayList =service.repayList(map);
+		model.addAttribute("repayList",repayList);
+		model.addAttribute("accountNo",accountNo);
+		return ".financial.loan.scl-0001";
 	}
 }

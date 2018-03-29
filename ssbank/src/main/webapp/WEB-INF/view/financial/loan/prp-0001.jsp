@@ -11,7 +11,7 @@
 	
 	<h2>출금 정보</h2>
 	<div class="table-wrap">
-		<form name="transactionTable" method="POST">
+		<form name="transactionLoan" method="POST">
 		    <table class="table-verti">
 		        <caption>출금 정보</caption>
 		        <colgroup>
@@ -69,7 +69,7 @@
 	    </form>
 	    <div class="btn-area">
 		    <a href="<%=cp %>/" class="btn-type-gray1 big">취소</a>
-		    <a href="#" id="transactionConfirm" class="btn-type-blue1 big">확인</a>
+		    <a href="#" id="transactionLoanConfirm" class="btn-type-blue1 big">확인</a>
 		</div>
 	</div>
 </div>
@@ -81,7 +81,7 @@
 		transactionInit();
 		
 		/* 이체 */
-		$("#transactionConfirm").click(function(event){
+		$("#transactionLoanConfirm").click(function(event){
 			event.preventDefault();
 			
 			transactionSubmit();
@@ -157,7 +157,7 @@
 
 	function pwdCheck() {
 		var url = "<%= cp%>/personal/pwdCheck";
-		var data = $("form[name=transactionTable]").serialize();
+		var data = $("form[name=transactionLoan]").serialize();
 		
 		var result;
 		$.ajax({
@@ -183,7 +183,7 @@
 	
 	function transactionSubmit(){
 		var url = "<%=cp%>/transaction/transactionRepaySubmit";
-		var trQuery = $("form[name=transactionTable]").serialize();
+		var trQuery = $("form[name=transactionLoan]").serialize();
 
 		$.ajax({
 			url		: url,
@@ -208,7 +208,7 @@
 	
 	function loanSubmit(){
 		var url ="<%=cp%>/loan/repay";
-		var q = $("form[name=transactionTable]").serialize();
+		var q = $("form[name=transactionLoan]").serialize();
 		
 		$.ajax({
 			type:"post"

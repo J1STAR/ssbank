@@ -5,4 +5,3 @@
 <%
 	String cp=request.getContextPath();
 %>
-시벌탱

@@ -95,7 +95,7 @@ table[name=transactionList] td.negative { color: red; }
 
 /* 방민주 css */
 .info-area .box-agree li.fdn {height: 50px;line-height: 50px}
-
+.result-box .mj {font-family:'nanumSB';fornt-weight:400;}
 
 
 
