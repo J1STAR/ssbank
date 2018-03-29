@@ -25,7 +25,11 @@ public class MainController {
 		
 		model.addAttribute("accountNo", accountNo);
 		
-		return ".personal.account.paa-0002";
+		if(accountNo != null && accountNo.charAt(3) == '3') {
+			return ".financial.loan.las-0001";
+		} else {
+			return ".personal.account.paa-0002";
+		}
 	}
 	
 	@RequestMapping(value="/personal/transaction", method=RequestMethod.GET)
@@ -33,7 +37,12 @@ public class MainController {
 		
 		model.addAttribute("accountNo", accountNo);
 		
-		return ".personal.transaction.pit-0001";
+		if(accountNo != null && accountNo.charAt(3) == '3') {
+			return ".financial.loan.prp-0001";
+		} else {
+			return ".personal.transaction.pit-0001";
+		}
+		
 	}
 	
 	@RequestMapping(value="/personal/transaction-{status}", method=RequestMethod.POST)

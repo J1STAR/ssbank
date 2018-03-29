@@ -24,13 +24,75 @@ public class Loan {
 		private int memberIdx;
 		private int lendMoney;//빌린돈
 		private String accountNo;
+		private String accountNo2;
 		private int loanBal;//대출잔액
 		private double interest;
 		private String lastDate;
 		private String interestDate;
+		private int balance;
+		private int amount;
+		private String content;
+		private String accountPwd;
+		private String repayDate;
+		private int principal;
+		private int repayPrinciple;
+		private int repayInterest;
 		
 		
-		
+		public String getRepayDate() {
+			return repayDate;
+		}
+		public void setRepayDate(String repayDate) {
+			this.repayDate = repayDate;
+		}
+		public int getPrincipal() {
+			return principal;
+		}
+		public void setPrincipal(int principal) {
+			this.principal = principal;
+		}
+		public int getRepayPrinciple() {
+			return repayPrinciple;
+		}
+		public void setRepayPrinciple(int repayPrinciple) {
+			this.repayPrinciple = repayPrinciple;
+		}
+		public int getRepayInterest() {
+			return repayInterest;
+		}
+		public void setRepayInterest(int repayInterest) {
+			this.repayInterest = repayInterest;
+		}
+		public String getAccountPwd() {
+			return accountPwd;
+		}
+		public void setAccountPwd(String accountPwd) {
+			this.accountPwd = accountPwd;
+		}
+		public int getAmount() {
+			return amount;
+		}
+		public void setAmount(int amount) {
+			this.amount = amount;
+		}
+		public String getContent() {
+			return content;
+		}
+		public void setContent(String content) {
+			this.content = content;
+		}
+		public String getAccountNo2() {
+			return accountNo2;
+		}
+		public void setAccountNo2(String accountNo2) {
+			this.accountNo2 = accountNo2;
+		}
+		public int getBalance() {
+			return balance;
+		}
+		public void setBalance(int balance) {
+			this.balance = balance;
+		}
 		public String getInterestDate() {
 			return interestDate;
 		}

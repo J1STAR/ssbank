@@ -16,6 +16,19 @@
 		}
 	</insert>
 	
+	
+	<insert id="transactionRepaySubmit" parameterType="map" statementType="CALLABLE"
+		useGeneratedKeys="false">
+		{
+			CALL pTransactionRepay(
+				#{accountNo, jdbcType=VARCHAR, mode=IN},
+				#{accountNo2, jdbcType=VARCHAR, mode=IN},
+				#{amount, jdbcType=INTEGER, mode=IN},
+				#{result, jdbcType=INTEGER, mode=OUT}
+			)
+		}
+	</insert>
+	
 	<select id="transactionCount" parameterType="map" resultType="Integer">
 		SELECT COUNT(*) FROM transaction t
 		LEFT OUTER JOIN TRDETAIL trd ON t.TRDETAILIDX = trd.TRDETAILIDX

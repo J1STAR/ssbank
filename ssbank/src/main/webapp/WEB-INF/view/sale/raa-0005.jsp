@@ -3,166 +3,178 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%
-   String cp = request.getContextPath();
+	String cp = request.getContextPath();
 %>
 <div class="content">
-	<h1>매물올리기</h1>
+	${mode=='gain' ? "<h1>매물구하기</h1>" : "<h1>매물올리기</h1>"}
 	<div class="table-wrap">
-	
-	<form name="saleForm" method="post">
-		<table class="table-verti salesTable">
-			<caption>매물올리기</caption>
-			<colgroup>
-				<col style="width: 20%;" />
-				<col style="width: *;" />
-			</colgroup>
-			<tbody>
-				<tr>
-					<th scope="col">매물유형&ast;</th>
-					<td scope="col">
-						<div class="item-radio">
-							<input type="radio" id="raa0001-01" name="categoryIdx" value="1"
-								checked="checked"> <label for="raa0001-01">아파트</label>
-						</div>
-						<div class="item-radio">
-							<input type="radio" id="raa0001-02" name="categoryIdx" value="2">
-							<label for="raa0001-02">단독/다가구</label>
-						</div>
-						<div class="item-radio">
-							<input type="radio" id="raa0001-03" name="categoryIdx" value="3">
-							<label for="raa0001-03">오피스텔</label>
-						</div>
-					</td>
-				</tr>
-				<tr>
-					<th>거래형태&ast;</th>
-					<td>
-						<div class="item-radio">
-							<input type="radio" id="raa0001-05" name="typeIdx" value="1"
-								checked="checked"> <label for="raa0001-05">매매</label>
-						</div>
-						<div class="item-radio">
-							<input type="radio" id="raa0001-06" name="typeIdx" value="2"> <label
-								for="raa0001-06">전세</label>
-						</div>
-						<div class="item-radio">
-							<input type="radio" id="raa0001-07" name="typeIdx" value="3"> <label
-								for="raa0001-07">월세</label>
-						</div>
-					</td>
-				</tr>
+		<form name="saleForm" method="post">
+			<input type="hidden" name="modeIdx" value=${mode=='gain' ? "2" : "1"}>
+			<table class="table-verti salesTable">
+				<caption>매물올리기</caption>
+				<colgroup>
+					<col style="width: 20%;" />
+					<col style="width: *;" />
+				</colgroup>
+				<tbody>
+					<tr>
+						<th scope="col">매물유형&ast;</th>
+						<td scope="col">
+							<div class="item-radio">
+								<input type="radio" id="raa0001-01" name="categoryIdx" value="1"
+									checked="checked"> <label for="raa0001-01">아파트</label>
+							</div>
+							<div class="item-radio">
+								<input type="radio" id="raa0001-02" name="categoryIdx" value="2">
+								<label for="raa0001-02">단독/다가구</label>
+							</div>
+							<div class="item-radio">
+								<input type="radio" id="raa0001-03" name="categoryIdx" value="3">
+								<label for="raa0001-03">오피스텔</label>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<th>거래형태&ast;</th>
+						<td>
+							<div class="item-radio">
+								<input type="radio" id="raa0001-05" name="typeIdx" value="1"
+									checked="checked"> <label for="raa0001-05">매매</label>
+							</div>
+							<div class="item-radio">
+								<input type="radio" id="raa0001-06" name="typeIdx" value="2">
+								<label for="raa0001-06">전세</label>
+							</div>
+							<div class="item-radio">
+								<input type="radio" id="raa0001-07" name="typeIdx" value="3">
+								<label for="raa0001-07">월세</label>
+							</div>
+						</td>
+					</tr>
 
-				<tr>
-					<th>지역&ast;</th>
-					<td><input type="text" id="zip" name="zipCode" class=""
-						style="width: 80px;" maxlength="5" readonly> <a href="#"
-						id="btnPostCode" class="btn-type-gray medium"
-						onclick="daumPostcode();">주소찾기</a><br> <input type="text"
-						id="addr1" name="addr1" class=""
-						style="width: 100%; margin-top: 8px;"> <input type="text"
-						id="addr2" name="addr2" class=""
-						style="width: 100%; margin-top: 8px;"></td>
-				</tr>
-				<tr id="djarea">
-					<th>대지면적</th>
-					<td><input type="text" class="calc_ed" name="area">&nbsp;평&nbsp;/&nbsp;<input
-						type="text" class="calc_ed" name="va2" readonly>&nbsp;m&sup2;&nbsp;<br>
-						<span><em>&ofcir;면적은 단지선택 후 자동 입력됩니다.</em></span></td>
-				</tr>
-				<tr>
-					<th>연면적</th>
-					<td><input type="text" class="calc_ed" name="totalArea">&nbsp;평&nbsp;/&nbsp;<input
-						type="text" class="calc_ed" name="va1" readonly>&nbsp;m&sup2;&nbsp;<br>
-						<span><em>&ofcir;면적은 단지선택 후 자동 입력됩니다.</em></span></td>
-				</tr>
-				<tr>
-					<th>해당 동/호수&ast;</th>
-					<td><input type="text" class="calc_ed" name="dong">&nbsp;동&nbsp;/&nbsp;<input
-						type="text" class="calc_ed" name="ho">&nbsp;호&nbsp;<br>
+					<tr>
+						<th>지역&ast;</th>
+						<td><input type="text" id="zip" name="zipCode" class=""
+							style="width: 80px;" maxlength="5" readonly> <a href="#"
+							id="btnPostCode" class="btn-type-gray medium"
+							onclick="daumPostcode();">주소찾기</a><br> <input type="text"
+							id="addr1" name="addr1" class=""
+							style="width: 100%; margin-top: 8px;"> <input type="text"
+							id="addr2" name="addr2" class=""
+							style="width: 100%; margin-top: 8px;"></td>
+					</tr>
+					<tr id="djarea">
+						<th>대지면적</th>
+						<td><input type="text" class="calc_ed" name="area">&nbsp;평&nbsp;/&nbsp;<input
+							type="text" class="calc_ed" name="va2" readonly>&nbsp;m&sup2;&nbsp;<br>
+							<span><em>&ofcir;면적은 단지선택 후 자동 입력됩니다.</em></span></td>
+					</tr>
+					<tr>
+						<th>${mode=='gain' ? "희망면적" : "면적"}</th>
+						<td><input type="text" class="calc_ed" name="totalArea">&nbsp;평&nbsp;/&nbsp;<input
+							type="text" class="calc_ed" name="va1" readonly>&nbsp;m&sup2;&nbsp;<br>
+							<span><em>&ofcir;면적은 단지선택 후 자동 입력됩니다.</em></span></td>
+					</tr>
+					<tr>
+						<th>해당 동/호수&ast;</th>
+						<td><input type="text" class="calc_ed" name="dong">&nbsp;동&nbsp;/&nbsp;<input
+							type="text" class="calc_ed" name="ho">&nbsp;호&nbsp;<br>
+						</td>
+					</tr>
+					<c:if test="${mode != 'gain' }">
+						<tr>
+							<th>해당 층/총층&ast;</th>
+							<td><input type="text" class="calc_ed" name="layer">&nbsp;층&nbsp;/&nbsp;<input
+								type="text" class="calc_ed" name="tLayer">&nbsp;층&nbsp;<br>
+							</td>
+						</tr>
+					</c:if>
+
+					<tr>
+						<th>${mode=='gain' ? "희망매수가" : "희망매매가"}</th>
+						<td><input type="text" name="minAmount" placeholder="최소">&nbsp;만원&nbsp;/&nbsp;<input
+							type="text" class="calc_ed" name="maxAmount" placeholder="최대">&nbsp;만원&nbsp;<br>
+						</td>
+					</tr>
+					<!-- 				<tr id="gurantee">
+					<th>보증금</th>
+					<td><input type="text" name="guarantee">&nbsp;만원&nbsp;/&nbsp;
+					<input
+						type="text" class="calc_ed" name="maxGuarantee" placeholder="최대">&nbsp;만원&nbsp;<br>
 					</td>
-				</tr>
-				<tr>
-					<th>해당 층/총층&ast;</th>
-					<td><input type="text" class="calc_ed" name="layer">&nbsp;층&nbsp;/&nbsp;<input
-						type="text" class="calc_ed" name="tLayer">&nbsp;층&nbsp;<br>
-					</td>
-				</tr>
-				<tr>
-					<th>희망 매매가&ast;</th>
-					<td><input type="text" name="minAmount" placeholder="최소">&nbsp;만원&nbsp;/&nbsp;<input
-						type="text" class="calc_ed" name="maxAmount" placeholder="최대">&nbsp;만원&nbsp;<br>
-					</td>
-				</tr>
-				<tr id="categoryTr">
-					<th scope="col">유형&ast;</th>
-					<td scope="col">
-						<div class="item-radio">
-							<input type="radio" id="8" name="type" checked="checked" value="거주용">
-							<label for="8">거주용</label>
-						</div>
-						<div class="item-radio">
-							<input type="radio" id="9" name="type" value="업무용"> <label for="9">업무용</label>
-						</div>
-						<div class="item-radio">
-							<input type="radio" id="10" name="type" value="거주/업무겸용"> <label
-								for="10">거주/업무겸용</label>
-						</div>
-					</td>
-				</tr>
-				<tr id="category2Tr">
-					<th scope="col">유형&ast;</th>
-					<td scope="col">
-						<div class="item-radio">
-							<input type="radio" id="11" name="type" checked="checked" value="단독">
-							<label for="11">단독</label>
-						</div>
-						<div class="item-radio">
-							<input type="radio" id="12" name="type" value="다가구"> <label for="12">다가구</label>
-						</div>
-					</td>
-				</tr>
-				<tr id="roomTr">
-					<th>방수&ast;</th>
-					<td><input type="text" name="room">&nbsp;개</td>
-				</tr>
-				<tr>
-					<th>물건특징</th>
-					<td>
-						<div class="item-select">
-							<select name="status" id="">
-								<option value="선택해주세요">선택해주세요</option>
-								<option value="교육환경 좋은아파트">교육환경 좋은아파트</option>
-								<option value="로얄동,로얄층 아파트">로얄동,로얄층 아파트</option>
-								<option value="조망권 좋은 아파트">조망권 좋은 아파트</option>
-								<option value="시세보다 저렴한 아파트">시세보다 저렴한 아파트</option>
-								<option value="깨끗하게 수리된 아파트">깨끗하게 수리된 아파트</option>
-								<option value="입주3년 미만 아파트">입주3년 미만 아파트</option>
-								<option value="전세끼고 살 수 있는 아파트">전세끼고 살 수 있는 아파트</option>
-								<option value="지하철역과 가까운 아파트">지하철역과 가까운 아파트</option>
-								<option value="브랜드 좋은 아파트">브랜드 좋은 아파트</option>
-								<option value="교통이 편리한 아파트">교통이 편리한 아파트</option>
-								<option value="기타사유">기타사유</option>
-							</select>
-						</div>
-					</td>
-				</tr>
-				<tr>
-					<th>거래희망일&ast;</th>
-					<td><input type="text" class="" id="date" name="tradeDate"><br>
-						<div class="item-checkbox saledate2">
-							<input type="checkbox" id="raa-0008"> <label
-								for="mbj0002-03" class="saledate">빠르면 빠를수록 좋음</label>
-						</div></td>
-				</tr>
-			</tbody>
-		</table>
-</form>		
-		
+				</tr> -->
+					<tr id="categoryTr">
+						<th scope="col">유형&ast;</th>
+						<td scope="col">
+							<div class="item-radio">
+								<input type="radio" id="8" name="type" checked="checked"
+									value="거주용"> <label for="8">거주용</label>
+							</div>
+							<div class="item-radio">
+								<input type="radio" id="9" name="type" value="업무용"> <label
+									for="9">업무용</label>
+							</div>
+							<div class="item-radio">
+								<input type="radio" id="10" name="type" value="거주/업무겸용">
+								<label for="10">거주/업무겸용</label>
+							</div>
+						</td>
+					</tr>
+					<tr id="category2Tr">
+						<th scope="col">유형&ast;</th>
+						<td scope="col">
+							<div class="item-radio">
+								<input type="radio" id="11" name="type" checked="checked"
+									value="단독"> <label for="11">단독</label>
+							</div>
+							<div class="item-radio">
+								<input type="radio" id="12" name="type" value="다가구"> <label
+									for="12">다가구</label>
+							</div>
+						</td>
+					</tr>
+					<tr id="roomTr">
+						<th>방수&ast;</th>
+						<td><input type="text" name="room">&nbsp;개</td>
+					</tr>
+					<tr>
+						<th>${mode=='gain' ? "우선 조건" : "물건 특징"}</th>
+						<td>
+							<div class="item-select">
+								<select name="status" id="">
+									<option value="선택해주세요">선택해주세요</option>
+									<option value="교육환경 좋은아파트">교육환경 좋은아파트</option>
+									<option value="로얄동,로얄층 아파트">로얄동,로얄층 아파트</option>
+									<option value="조망권 좋은 아파트">조망권 좋은 아파트</option>
+									<option value="시세보다 저렴한 아파트">시세보다 저렴한 아파트</option>
+									<option value="깨끗하게 수리된 아파트">깨끗하게 수리된 아파트</option>
+									<option value="입주3년 미만 아파트">입주3년 미만 아파트</option>
+									<option value="전세끼고 살 수 있는 아파트">전세끼고 살 수 있는 아파트</option>
+									<option value="지하철역과 가까운 아파트">지하철역과 가까운 아파트</option>
+									<option value="브랜드 좋은 아파트">브랜드 좋은 아파트</option>
+									<option value="교통이 편리한 아파트">교통이 편리한 아파트</option>
+									<option value="기타사유">기타사유</option>
+								</select>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<th>거래희망일&ast;</th>
+						<td><input type="text" class="" id="date" name="tradeDate"><br>
+							<div class="item-checkbox saledate2">
+								<input type="checkbox" id="raa-0008"> <label
+									for="mbj0002-03" class="saledate">빠르면 빠를수록 좋음</label>
+							</div></td>
+					</tr>
+				</tbody>
+			</table>
+		</form>
+
 	</div>
 </div>
 <div class="btn-area">
-	<a href="javascript:history.back()" class="btn-type-gray1 big">취소</a> 
-	<a href="#" class="btn-type-blue1 big" onclick=saleupload();>올리기</a>
+	<a href="javascript:history.back()" class="btn-type-gray1 big">취소</a> <a
+		href="#" class="btn-type-blue1 big" onclick=saleupload();>올리기</a>
 </div>
 
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
@@ -175,7 +187,7 @@ $(function(){
 	
 	$("#date").datepicker({
 		showOn:"button"
-		,buttonImage:"<%=cp %>/resource/images/ico_calendar.png"
+		,buttonImage:"<%=cp%>/resource/images/ico_calendar.png"
 		,buttonImageOnly:true
 	});
 	
@@ -244,6 +256,7 @@ $(function(){
 			$("#categoryTr").addClass("hide");
 			$("#category2Tr").addClass("hide");
 			$("#djarea").addClass("hide");
+			$("#gurantee").addClass("hide");
 		} else if (category == 2){
 			$("#category2Tr").removeClass("hide");
 			$("#categoryTr").addClass("hide");
@@ -259,7 +272,7 @@ $(function(){
 		}
 	}
 });
-
+	//평수구하기
 $('input:text[name=totalArea]').keyup(function() {
     var vp1 = parseInt($(this).val());
     if(vp1 > 0) {
@@ -286,12 +299,6 @@ function saleupload() {
 		f.categoryIdx.focus();
 		return;
 	}
-/* 	var str= $("input[name=minAmount]").val();
-	if(!str){
-		alert("거래유형을 선택하세요");
-		$("input[name=minAmount]").focus();
-		return;
-	} */
 	var str=f.addr1.value;
 	if(!str){
 		alert("기본주소를 선택하세요");
@@ -316,18 +323,22 @@ function saleupload() {
 		f.ho.focus();
 		return;
 	}
+	<c:if test ="${mode != 'gain' }">
 	var str=f.layer.value;	
 	if(!str){
 		alert("층을 입력하세요");
 		f.layer.focus();
 		return;
 	}
+	
 	var str=f.tLayer.value;	
 	if(!str){
 		alert("총층을 입력하세요");
 		f.tLayer.focus();
 		return;
 	}
+	</c:if>
+	
 	var str=f.minAmount.value;	
 	if(!str){
 		alert("최소금액 입력하세요");
@@ -335,6 +346,7 @@ function saleupload() {
 		return;
 	}
 	var str=f.maxAmount.value;	
+	console.log(str);
 	if(!str){
 		alert("최대금액 입력하세요");
 		f.tLayer.focus();
@@ -356,8 +368,9 @@ function saleupload() {
 			return;
 		}
 	}
-	f.action="<%=cp%>/sale/created";
+	f.action="<%=cp%>/sale/created?mode=${mode}";
 	f.submit();
 }
+
 
 </script>

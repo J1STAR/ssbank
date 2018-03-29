@@ -48,13 +48,15 @@
 		$(function(){
 			
 			$("#date").datepicker({
-				showOn:"button"
+				maxDate:"0"
+				,showOn:"button"
 				,buttonImage:"<%=cp %>/resource/images/ico_calendar.png"
 				,buttonImageOnly:true
 			});
 			
 			$(".hasDatePicker").datepicker({
-				showOn:"button"
+				maxDate:"0"
+				,showOn:"button"
 				,buttonImage:"<%=cp %>/resource/images/ico_calendar.png"
 				,buttonImageOnly:true
 			});

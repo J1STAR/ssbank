@@ -20,10 +20,10 @@
 					<h1>매물올리기</h1>
 					<div class="hover-menu mb50">
 						<ul>
-							<li><a href="#" class="">내놓기</a></li>
-							<li><a href="#" class="">찾아주세요</a></li>
-							<li><a href="#" class="">의뢰현황</a></li>
-							<li><a href="#" class="">고객후기</a></li>
+							<li><a href="<%=cp %>/sale/raa-0005?mode=created" class="">내놓기</a></li>
+							<li><a href="<%=cp %>/sale/raa-0005?mode=gain"  class="">찾아주세요</a></li>
+							<li><a href="<%=cp %>/sale/raa-0007" class="">의뢰현황</a></li>
+							<li><a href="<%=cp %>/nbbs" class="">고객후기</a></li>
 						</ul>
 					</div>
 				</div>
@@ -32,13 +32,13 @@
 						<dl class="ico-home">
 							<dt>매물내놓을때</dt>
 							<dd>
-								<a href="<%=cp %>/sale/raa-0005" class="icon-arrow">내놓기 등록</a>
+								<a href="<%=cp %>/sale/raa-0005?mode=created" class="icon-arrow">내놓기 등록</a>
 							</dd>
 						</dl>
 						<dl class="ico-search">
 							<dt>매물을 찾고 계신가요 ?</dt>
 							<dd>
-								<a href="#" class="icon-arrow">찾아주세요 등록</a>
+								<a href="<%=cp %>/sale/raa-0005?mode=gain" class="icon-arrow">찾아주세요 등록</a>
 							</dd>
 						</dl>
 					</div>
@@ -53,7 +53,7 @@
 							<div class="inquiry-num">
 								<dl>
 									<dt>
-										<span>총의뢰수</span> <span>3,106</span>
+										<span>총의뢰수</span> <span>${dataCount}</span>
 									</dt>
 									<dd>
 										<ul>
@@ -71,7 +71,7 @@
 						</dl>
 					</div>
 				</div>
-				<h2>내놓기 이용하기</h2>
+				<h2>자산관리 이용하기</h2>
 				<div class="step-area map-info">
 					<ol>
 						<li><span class="step-num">STEP 1</span> <span

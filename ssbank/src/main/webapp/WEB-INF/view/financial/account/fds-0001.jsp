@@ -54,8 +54,8 @@ function saDetail(account){
                 <td>${dedto.lastTrDate}</td>
                 <td>${dedto.balance}</td>
                 <td>
-                    <a href="#" class="btn-type-gray medium">조회</a>
-                    <a href="javascript:location.href='<%=cp%>/personal/transaction'" class="btn-type-blue1 medium">이체</a>
+                    <a href='<%=cp%>/personal/lookupDetailAccount?accountNo="${dedto.accountNo}"' class="btn-type-gray medium">조회</a>
+                    <a href='<%=cp%>/personal/transaction?accountNo="${dedto.accountNo}"' class="btn-type-blue1 medium">이체</a>
                 </td>
             </tr>
            </c:forEach>
@@ -95,8 +95,8 @@ function saDetail(account){
                 <td>${saving.lastTrDate }</td>
                 <td>${saving.balance }</td>
                 <td>
-                    <a href="#" class="btn-type-gray medium">조회</a>
-                    <a href="#" class="btn-type-blue1 medium">이체</a>
+                    <a href='<%=cp%>/personal/lookupDetailAccount?accountNo="${saving.accountNo }"' class="btn-type-gray medium">조회</a>
+                    <a href='<%=cp%>/personal/transaction?accountNo="${saving.accountNo }"' class="btn-type-blue1 medium">이체</a>
                 </td>
             </tr>
            </c:forEach>

@@ -1,6 +1,7 @@
 package com.ssb.sale;
 
 public class Sale {
+	private int modeIdx;
 	private int saleIdx,listNum;
 	private String addr1,addr2,zipCode;
 	private Double area,totalArea;
@@ -16,6 +17,22 @@ public class Sale {
 	private String categoryName;
 	private Integer memberIdx2;
 	private String typeName;
+	
+	private String city;
+	private int cnt;
+	
+	public String getCity() {
+		return city;
+	}
+	public void setCity(String city) {
+		this.city = city;
+	}
+	public int getCnt() {
+		return cnt;
+	}
+	public void setCnt(int cnt) {
+		this.cnt = cnt;
+	}
 	public int getSaleIdx() {
 		return saleIdx;
 	}
@@ -160,7 +177,12 @@ public class Sale {
 	public void setTypeName(String typeName) {
 		this.typeName = typeName;
 	}
-	
+	public int getModeIdx() {
+		return modeIdx;
+	}
+	public void setModeIdx(int modeIdx) {
+		this.modeIdx = modeIdx;
+	}
 	
 	
 }
