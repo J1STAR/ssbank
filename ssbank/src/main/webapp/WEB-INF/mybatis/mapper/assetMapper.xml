@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="assetMapper">
+
+
+<select id="assetList" parameterType="map" resultType="com.ssb.assetManagement.AssetManage">
+
+	select  acC.categoryName ,trunc(ratio_to_report(acB.amount)over()*100,2) as percent
+	from accountBook acB
+    join actype ac on ac.CLASSIDX=acB.CLASSIDX
+    join acbCategory acC on acC.CATEGORYIDX=acB.CATEGORYIDX
+    where memberIdx=#{memberIdx}
+</select>
+
+
+<select id="assetDateList" parameterType="map" resultType="com.ssb.assetManagement.AssetManage">
+	
+	select acB.accountBookDate,acB.amount
+    from accountBook acB
+    where memberIdx=#{memberIdx}
+    order by accountbookdate
+
+</select>
+
+
+<select id="carBookDateList"  parameterType="map" resultType="com.ssb.assetManagement.AssetManage">
+
+	SELECT totalDistance, driveDate
+	FROM distance d
+    LEFT OUTER JOIN carAcBook cab ON d.carAcBookIdx = cab.carAcBookIdx
+    LEFT OUTER JOIN memberInfo mi ON cab.MEMBERIDX = mi.MEMBERIDX
+	WHERE mi.memberIdx = #{memberIdx}
+	order by driveDate
+	
+</select>
+
+
+<select id="carOiling"  parameterType="map" resultType="com.ssb.assetManagement.AssetManage">
+
+   select o.oilAmount,o.amount,o.oilingDate
+     from oiling o
+     join carAcBook c on c.caracbookidx=o.caracbookIdx
+     join memberInfo m on m.memberIdx=c.MEMBERIDX
+     where m.memberIdx=#{memberIdx}
+     order by o.oilingdate
+	
+</select>
+</mapper>

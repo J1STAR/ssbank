@@ -7,23 +7,7 @@
 			String cp = request.getContextPath();
 		%>
 		
-	<script src='{% static "js/jquery-1.11.3.min.js" %}'></script>
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-		
-		
-
-<form name="form" id="form" method="post">
-	표시건수 : <input type="text" id="strSZ" name="strSZ" value="20" /> 페이지 :
-	<input type="text" id="strPAGE" name="strPAGE" value="1" /> 공고명 : <input
-		type="text" id="strTITLE" name="strTITLE" value="" /> 공고유형 : <input
-		type="text" id="strAISTPCD" name="strAISTPCD" value="" /> 지역 : <input
-		type="text" id="strAREA" name="strAREA" value="" /> 공고상태 : <input
-		type="text" id="strSTAT" name="strSTAT" value="" /> <input
-		type="button" onClick="getAddr();" value="검색" />
-	<div id="list"></div>
-</form>
-
 
 
 <script language="javascript">
@@ -134,5 +118,23 @@ getAddr();
 		$("#list").html(htmlStr);
 		}
 </script>
+
+
+		
+
+		
+<form name="form" id="form" method="post">
+
+	표시건수 : <input type="text" id="strSZ" name="strSZ" value="20" /> 페이지 :
+	<input type="text" id="strPAGE" name="strPAGE" value="1" /> 공고명 : <input
+		type="text" id="strTITLE" name="strTITLE" value="" /> 공고유형 : <input
+		type="text" id="strAISTPCD" name="strAISTPCD" value="" /> 지역 : <input
+		type="text" id="strAREA" name="strAREA" value="" /> 공고상태 : <input
+		type="text" id="strSTAT" name="strSTAT" value="" /> <input
+		type="button" onClick="getAddr();" value="검색" />
+
+	<div id="list"></div>
+
+</form>
 
 

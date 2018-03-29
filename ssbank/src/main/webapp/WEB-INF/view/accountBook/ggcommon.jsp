@@ -7,6 +7,72 @@
 %>
 
 <script type="text/javascript">
+	
+$(function(){
+	    var date = new Date();
+		var year = date.getFullYear();
+		var month = date.getMonth()+1;
+		var lastDay = (new Date(year, month, 0)).getDate();
+		
+		if(month<10) month="0"+month
+		
+		var startDate=year+"-"+month+"-"+"01";
+		var endDate=year+"-"+month+"-"+lastDay;
+		
+		$("#resultDate").attr("data-start", startDate);
+		$("#resultDate").attr("data-end", endDate);
+		
+		var s=startDate + "~" + endDate;
+		$("#resultDate").html(s);
+});
+	
+function monthMove(m) {
+	var startDate=$("#resultDate").attr("data-start");
+	var endDate=$("#resultDate").attr("data-end");
+	
+	var ss = startDate.split("-");
+	
+	var year = parseInt(ss[0]);
+	var month = parseInt(ss[1])+m;
+	if(month>12) {
+		year++;
+		month=1;
+	} else if(month < 1) {
+		year--;
+		month=12;
+	}
+	var lastDay = (new Date(year, month, 0)).getDate();
+	if(month<10) month="0"+month
+	
+	var startDate=year+"-"+month+"-"+"01";
+	var endDate=year+"-"+month+"-"+lastDay;
+	
+	$("#resultDate").attr("data-start", startDate);
+	$("#resultDate").attr("data-end", endDate);
+	
+	var s=startDate + "~" + endDate;
+	$("#resultDate").html(s);
+	
+   var type = "1";
+   $("#accountBookMenu ul li").each(function(){
+	   if($(this).hasClass("active")) {
+		   type=$(this).attr("data-productType");
+		   return;
+	   }
+   });
+	if(type=="1") {
+		// 지출
+		funcExpense();
+	} else if(type=="2") {
+		// 수입
+		funcIncome();
+	} else if(type=="3") {
+		// 달력
+		funcCalendar();
+	}   
+   
+}
+	
 $(function(){
 	funcExpense(); // 처음 지출 출력
 	$("#accountBookMenu ul li").click(function(){
@@ -26,7 +92,7 @@ $(function(){
 			funcIncome();
 		} else if(type=="3") {
 			// 달력
-			funcCaldendar();
+			funcCalendar();
 		}
 	});
 	
@@ -35,8 +101,11 @@ $(function(){
 
 function funcExpense() {
 	// 지출
+	var startDate=$("#resultDate").attr("data-start");
+	var endDate=$("#resultDate").attr("data-end");
+	
 	var url="<%=cp%>/acBookNcarBook/expense";
-	var query="t="+new Date().getTime();
+	var query="startDate="+startDate+"&endDate="+endDate;
 	
 	$.ajax({
 		type:"GET"
@@ -55,8 +124,11 @@ function funcExpense() {
 
 function funcIncome() {
 	// 수입
+	var startDate=$("#resultDate").attr("data-start");
+	var endDate=$("#resultDate").attr("data-end");
+	
 	var url="<%=cp%>/acBookNcarBook/income";
-	var query="t="+new Date().getTime();
+	var query="startDate="+startDate+"&endDate="+endDate;
 	
 	$.ajax({
 		type:"GET"
@@ -65,6 +137,24 @@ function funcIncome() {
 		,success:function(data){
 			$("#accountBookContent").html(data);
 			datepickerView();
+		}
+	    ,error:function(e) {
+	    	console.log(e.responseText);
+	    }
+	});	
+}
+
+function funcCalendar() {
+	// 수입
+	var url="<%=cp%>/acBookNcarBook/calendar";
+	var query="t="+new Date().getTime();
+	
+	$.ajax({
+		type:"GET"
+		,url:url
+		,data:query
+		,success:function(data){
+			$("#accountBookContent").html(data);
 		}
 	    ,error:function(e) {
 	    	console.log(e.responseText);
@@ -195,7 +285,7 @@ $("body").on('click', "#addRowBtn", function(){
     	    	   }else if(type=="2") {
     	    		   funcIncome();
     	    	   }else if(type=="3"){
-    	    		   funcCaldendar();
+    	    		   funcCalendar();
     	    	   }
     		}
     	    ,error:function(e) {
@@ -255,7 +345,7 @@ $("body").on('click', "#addRowBtn", function(){
     	    	   }else if(type=="2") {
     	    		   funcIncome();
     	    	   }else if(type=="3"){
-    	    		   funcCaldendar();
+    	    		   funcCalendar();
     	    	   }
     		}
     	    ,error:function(e) {
@@ -299,7 +389,7 @@ $("body").on('click', "#addRowBtn", function(){
         	    	   }else if(type=="2") {
         	    		   funcIncome();
         	    	   }else if(type=="3"){
-        	    		   funcCaldendar();
+        	    		   funcCalendar();
         	    	   }
         		}
         	    ,error:function(e) {
@@ -307,12 +397,11 @@ $("body").on('click', "#addRowBtn", function(){
         	    }
         	});	//ajax 종료   
     	});
-    	
-    	
-    	
     });// 삭제 종료
 
-    //달력보기
+    
+    
+    //날짜 선택 달력보기
     function datepickerView() {
     	$("td:nth-child(2) .ACBtext").datepicker({
     		showOn:"button"
@@ -352,11 +441,11 @@ $("body").on('click', "#addRowBtn", function(){
 		<div class="page-con">
 			<h1>가계부 쓰기</h1>
 			<div class="date-wrap">
-				<a href="#" class="btn arrow-left"></a> <span>2018.03.01 ~ 2018.03.31</span> <a href="#" class="btn arrow-right"></a>
+				<a href="#" onclick="monthMove(-1)" class="btn arrow-left"></a> <span id="resultDate" data-start="" data-end=""></span> <a href="#" onclick="monthMove(1)" class="btn arrow-right"></a>
 			</div>
 			<h2>가계부 요약</h2>
 			<div class="account-area mb30">
-				<div class="graph-area">그래프이미지영역</div>
+				<div class="graph-area" id="donutGraph">그래프이미지영역</div>
 				<div class="account-view">
 					<ul>
 						<li class="income-area">
@@ -407,9 +496,3 @@ $("body").on('click', "#addRowBtn", function(){
 
 	</div>
 </div>
-
-
-<!--자바스크립트-->
-<script type="text/javascript">
-	
-</script>
