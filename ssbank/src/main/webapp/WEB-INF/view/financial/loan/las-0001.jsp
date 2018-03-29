@@ -35,22 +35,27 @@
 		        </thead>
 		        
 		        <tbody>
-		        <c:forEach var="loan" items="${loanList}">
+		        <c:forEach	var="loan" items="${loanList}">
 		            <tr>
+		           
 		                <td>${loan.productName}</td>
 		                <td><a href="#">${loan.accountNo}</a></td>
 		                <td>${loan.createDate}</td>
 		                <td>${loan.lastDate}</td>
 		                <td>${loan.lendMoney}</td>
-		                <td name="">837,770</td>
+		                <td>${loan.balance}</td>
 		                <td>${loan.interestDate}</td>
 		                <td>
-		                    <a href="#" class="btn-type-gray medium">이자조회</a>
-		                    <a href="#" class="btn-type-blue1 medium">납부</a>
+		                    <a href='<%=cp%>/loan/repayList?accountNo="${loan.accountNo}"' class="btn-type-gray medium">조회</a>
+		                    <a href='<%=cp%>/personal/transaction?accountNo="${loan.accountNo}"' class="btn-type-blue1 medium">납부</a>
 		                </td>
 		            </tr>
 		            </c:forEach>
 		        </tbody>
 		    </table>
-		</div>
+		    </div>
+	<div class="btns">
+    <a onclick="javascript:location.href='<%=cp%>/financial/loan/excel';" class="btn-type-gray medium mt20 fl">엑셀다운</a>
+	</div>
+		
 </div>

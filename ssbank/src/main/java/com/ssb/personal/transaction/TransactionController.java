@@ -42,6 +42,22 @@ public class TransactionController {
 		return model;
 	}
 	
+	@RequestMapping(value="/transaction/transactionRepaySubmit", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> transactionRepaySubmit(@RequestParam Map<String, Object> map){
+		
+		int result = 0;
+		try {
+			result = trService.transactionRepaySubmit(map);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		Map<String, Object> model = new HashMap<>();
+		model.put("result", result);
+		return model;
+	}
+	
 	@RequestMapping(value="/transaction/transactionList", method=RequestMethod.POST)
 	public String transactionList(@RequestParam Map<String, Object> map, HttpServletRequest req, Model model){
 		

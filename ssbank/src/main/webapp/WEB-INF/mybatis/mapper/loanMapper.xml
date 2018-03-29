@@ -46,12 +46,21 @@
 	<select id="loanList" parameterType="map" resultType="com.ssb.financial.loan.Loan">
 	SELECT productName,a.accountNo,TO_CHAR((tr.trDate),'YYYY-MM-DD') createDate,
 	TO_CHAR((tr.trDate)+364,'YYYY-MM-DD') lastDate,amount AS lendMoney
-	,TO_CHAR(TO_DATE(tr.trDate+45),'dd')interestDate,l.interest
+	,TO_CHAR(TO_DATE(tr.trDate+45),'dd')interestDate,l.interest, getCurrentBalance(a.accountNo) AS balance
 	FROM account a  JOIN transaction t ON a.accountNo=t.accountNo 
                 JOIN product p ON a.productIdx = p.productIdx
                 JOIN trDetail tr ON t.trDetailIdx = tr.trDetailIdx
                 JOIN loanproduct l ON a.productIdx = l.productIdx
 	WHERE memberIdx=#{memberIdx} AND a.productIdx=3 AND ttype=0 AND a.status=1
 	</select>	
-			
+	
+	<insert id="repayLoan" parameterType="com.ssb.financial.loan.Loan"
+			statementType="CALLABLE"
+			useGeneratedKeys="false">
+			{call pRepayLoan(
+			#{acountNo2,jdbcType=VARCHAR,mode=IN},
+			#{amount,jdbcType=INTEGER,mode=IN}
+			)
+		}	
+	</insert>
 </mapper>

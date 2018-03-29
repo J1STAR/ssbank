@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ssb.common.dao.CommonDAO;
-import com.ssb.financial.account.Account;
 
 @Service("loan.loanService")
 public class LoanServiceImpl implements LoanService{
@@ -80,5 +79,29 @@ public class LoanServiceImpl implements LoanService{
 		}
 		return dto;
 	}
+
+	@Override
+	public int repay(Loan dto) {
+		int result=0;
+		try {
+			dao.callUpdateProcedure("loan.repayLoan", dto);
+			result=1;
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return result;
+	}
+
+	@Override
+	public List<Loan> repayList(Map<String, Object> map) {
+		List<Loan> list = null;
+		try {
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return list;
+	}
+
 
 }
