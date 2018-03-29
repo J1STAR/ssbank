@@ -1,8 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="accountBook">
+<mapper namespace="carAcBook">
 	
+	<select id="myCarList" parameterType="map"
+		resultType="com.ssb.carAcBook.CarAcBook">
+		SELECT * FROM ( SELECT myCarIdx, cm.modelNo, modelName
+		FROM myCar mc JOIN carModel cm ON mc.myCarIdx = cm.myCarIdx
+		WHERE memberIdx = 32
+		ORDER BY myCarIdx ASC
+		)
+	</select>
+	
+	<select id="myRecordList" parameterType="map"
+		resultType="com.ssb.carAcBook.CarAcBook">
+		SELECT * FROM ( SELECT oilingIdx, oilAmount, o.place oilPlace, o.amount oilAmount, TO_CHAR(oilingDate, 'YYYY-MM-DD'),
+						distanceIdx, totalDistance, TO_CHAR(driveDate, 'YYYY-MM-DD'),
+						mainIdx, maintenance, m.place mainPlace, m.amount mainAmount, TO_CHAR(mainDate, 'YYYY-MM-DD')
+		FROM carAcBook c, oiling o, distance d, maintenance m
+		WHERE c.carAcBookIdx=o.carAcBookIdx AND o.carAcBookIdx=d.carAcBookIdx AND d.carAcBookIdx=m.carAcBookIdx AND c.memberIdx = 32
+		ORDER BY oilingDate ASC, driveDate ASC, mainDate ASC
+		)
+	</select>
+	
+	<select id="carModelList" resultType="com.ssb.carAcBook.CarAcBook">
+		SELECT * FROM carModel
+	</select>
+	
+	<insert id="insertMyCar" parameterType="com.ssb.carAcBook.CarAcBook">
+		INSERT INTO myCar(myCarIdx, memberIdx, modelNo, year, trans, fuelType, buyYear)
+		VALUES
+		(account_seq.NEXTVAL, 32, #{modelNo}, #{year}, #{trans}, #{fuelType}, #{buyYear})
+	</insert>
+	
+<!-- 	
 	<select id="expenseList" parameterType="map"
 		resultType="com.ssb.accountBook.AccountBook">
 		SELECT * FROM ( SELECT acBookIdx, TO_CHAR(accountBookDate, 'YYYY-MM-DD') accountBookDate,
@@ -32,7 +63,7 @@
 		FROM accountBook WHERE memberIdx = #{memberIdx} ORDER BY accountBookDate ASC
 		)
 	</select>
-	
+ -->	
 	<insert id="insertAccountBook" parameterType="com.ssb.accountBook.AccountBook">
 		INSERT INTO accountBook(acBookIdx, accountBookDate, content, amount, categoryIdx, classIdx, memberIdx)
 		VALUES

@@ -16,11 +16,10 @@
 				<div class="cal-cont-wrap">
 					<div class="tab-wrap blue item5">
 						<ul>
-							<li class="active"><a href="cal-0001.html">적금</a></li>
-							<li class=""><a href="cal-0002.html">예금</a></li>
-							<li class=""><a href="cal-0003.html">대출</a></li>
-							<li class=""><a href="cal-0004.html">환율</a></li>
-							<li class=""><a href="cal-0005.html">날짜</a></li>
+							<li class="active"><a href="<%=cp%>/calc/saving">적금</a></li>
+							<li class=""><a href="<%=cp%>/calc/deposit">예금</a></li>
+							<li class=""><a href="<%=cp%>/calc/loan">대출</a></li>
+							<li class=""><a href="<%=cp%>/calc/exchange">환율</a></li>
 						</ul>
 					</div>
 					<h2>적금 / 목돈모으기</h2>
@@ -55,18 +54,9 @@
 													<input type="radio" id="calcu-01-1" name="radioInput" value="1" checked>
 													<label for="calcu-01-1">일반</label>
 												</div>
-												<div class="item-radio">
-													<input type="radio" id="calcu-01-2" name="radioInput" value="2">
-													<label for="calcu-01-2">법인</label>
-												</div>
-												<div class="item-radio">
-													<input type="radio" id="calcu-01-3" name="radioInput" value="3">
-													<label for="calcu-01-3">비과세</label>
-												</div>
 												<div class="item-select">
 													<select name="rateType" id="rateType">
 														<option value="1">단리</option>
-														<option value="2">월복리</option>
 													</select>
 												</div>
 											</td>

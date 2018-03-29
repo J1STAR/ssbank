@@ -40,7 +40,7 @@
 	<select id="totalLoan" parameterType="map" resultType="INTEGER">
 	SELECT SUM(AMOUNT) 
 	FROM transaction t JOIN account a ON t.accountNo=a.accountNo 
-	WHERE t.ttype=0 AND a.memberIdx=#{memberIdx} AND a.productIdx=3
+	WHERE t.ttype=0 AND a.memberIdx=#{memberIdx} AND a.productIdx=3 AND a.status=1
 	</select>
 	
 	<select id="loanList" parameterType="map" resultType="com.ssb.financial.loan.Loan">
@@ -63,4 +63,10 @@
 			)
 		}	
 	</insert>
+	<select id="repayList" parameterType="map" resultType="com.ssb.financial.loan.Loan">
+		SELECT 
+		TO_CHAR(repayDate,'YYYY-MM-DD')repayDate,principal,interest,repayPrinciple,repayInterest
+		FROM repayLoan WHERE accountNo=#{accountNo}
+	</select>
+	
 </mapper>
