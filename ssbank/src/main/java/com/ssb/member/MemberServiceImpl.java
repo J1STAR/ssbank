@@ -1,8 +1,12 @@
 package com.ssb.member;
 
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.Iterator;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,6 +15,7 @@ import com.ssb.common.dao.CommonDAO;
 
 @Service("member.MemberService")
 public class MemberServiceImpl implements MemberService {
+	
 	@Autowired
 	private CommonDAO dao;
 
@@ -58,6 +63,7 @@ public class MemberServiceImpl implements MemberService {
 				}
 			}
 			dao.insertData("member.insertMember",dto);
+			
 		} catch (Exception e) {
 			throw e;
 		}
@@ -161,4 +167,18 @@ public class MemberServiceImpl implements MemberService {
 		return result;
 	}
 
+	@Override
+	public String memberSubmitEmail(Map<String, Object> map) throws Exception {
+		String userId = null;
+		try {
+			dao.callSelectOneProcedureMap("member.memberSubmitEmail", map);
+			
+			userId = (String) map.get("userId");
+		} catch (Exception e) {
+		}
+		return userId;
+	}
+
+	
+	
 }

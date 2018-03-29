@@ -28,6 +28,7 @@
 			
 			<intercept-url pattern="/member/login" access="permitAll" />
 			<intercept-url pattern="/member/submitOK" access="permitAll" />
+			<intercept-url pattern="/member/memberSubmitEmail-*" access="permitAll" />
 			<intercept-url pattern="/member/memberJoin*" access="permitAll" />
 			<intercept-url pattern="/member/memberModi*" access="hasAnyRole('ROLE_USER, ROLE_ADMIN')" />
 

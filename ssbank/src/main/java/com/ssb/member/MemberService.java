@@ -9,6 +9,7 @@ public interface MemberService {
 	public Map<String, Object> readMemberInfo(String memberIdx);
 	
 	public void insertMember(Member dto) throws Exception;
+	public String memberSubmitEmail(Map<String, Object> map) throws Exception;
 	
 	public void updateMember(Member dto) throws Exception;
 	public int updateLastLogin(String userId);
