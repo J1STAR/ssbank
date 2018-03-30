@@ -46,39 +46,45 @@ public class AccountBookController {
 		model.addAttribute("inTot", df.format(incomeTot));
 		model.addAttribute("total", df.format(total));
 
-		return ".acBookNcarBook.accountBook.ggcommon";
+		return ".accountBook.ggcommon";
 	}
 
 	// 지출. AJAX
 	@RequestMapping(value = "/acBookNcarBook/expense")
-	public String accountBookExpense(HttpSession session, Model model) {
+	public String accountBookExpense(
+			String startDate, String endDate,
+			HttpSession session, Model model) {
 		SessionInfo info = (SessionInfo) session.getAttribute("member");
 		Map<String, Object> map = new HashMap<>();
 
 		map.put("memberIdx", info.getMemberIdx());
+		map.put("startDate", startDate);
+		map.put("endDate", endDate);
 
 		List<AccountBook> expenseList = service.expenseList(map);
-		AccountBook dto = null;
 
 		model.addAttribute("expenseList", expenseList);
 
-		return "acBookNcarBook/accountBook/expense";
+		return "accountBook/expense";
 	}
 
 	// 수입. AJAX
 	@RequestMapping(value = "/acBookNcarBook/income")
-	public String accountBookIncome(HttpSession session, Model model) {
+	public String accountBookIncome(
+			String startDate, String endDate,
+			HttpSession session, Model model) {
 		SessionInfo info = (SessionInfo) session.getAttribute("member");
 		Map<String, Object> map = new HashMap<>();
 
 		map.put("memberIdx", info.getMemberIdx());
+		map.put("startDate", startDate);
+		map.put("endDate", endDate);
 
 		List<AccountBook> incomeList = service.incomeList(map);
-		AccountBook dto = null;
 
 		model.addAttribute("incomeList", incomeList);
 
-		return "acBookNcarBook/accountBook/income";
+		return "accountBook/income";
 	}
 
 	// 달력. AJAX
@@ -90,11 +96,10 @@ public class AccountBookController {
 		map.put("memberIdx", info.getMemberIdx());
 
 		List<AccountBook> calendarList = service.calendarList(map);
-		AccountBook dto = null;
 
 		model.addAttribute("calendarList", calendarList);
 
-		return "acBookNcarBook/accountBook/calendar";
+		return "accountBook/calendar";
 	}
 	
 	//AJAX 입력
@@ -146,22 +151,5 @@ public class AccountBookController {
 		Map<String, Object> model = new HashMap<>();
 		model.put("state", state);
 		return model;
-	}
-
-	// 차계부
-	@RequestMapping(value = "/acBookNcarBook/carAcBook", method = RequestMethod.GET)
-	public String carAcBook(HttpSession session, Model model) {
-
-		SessionInfo info = (SessionInfo) session.getAttribute("member");
-		Map<String, Object> map = new HashMap<>();
-
-		map.put("memberIdx", info.getMemberIdx());
-		System.out.println(info.getMemberIdx());
-
-		//List<AccountBook> listAll = service.listAllAccountBook(map);
-
-		//model.addAttribute("listAll", listAll);
-
-		return ".acBookNcarBook.carAcBook.write";
 	}
 }

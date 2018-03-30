@@ -35,10 +35,21 @@
 				#{zipCode, jdbcType=VARCHAR, mode=IN},
 				#{tel, jdbcType=VARCHAR, mode=IN},
 				#{userId, jdbcType=VARCHAR, mode=IN},
-				#{userPwd, jdbcType=VARCHAR, mode=IN}
+				#{userPwd, jdbcType=VARCHAR, mode=IN},
+				#{uuid, jdbcType=VARCHAR, mode=IN}
 			)
 		}
 	</insert>
+	
+	<select id="memberSubmitEmail" parameterType="map" 
+	statementType="CALLABLE">
+		{
+			CALL pMemberSubmitEmail(
+				#{uuid, jdbcType=VARCHAR, mode=IN},
+				#{userId, jdbcType=VARCHAR, mode=OUT}
+			)
+		}
+	</select>
 	
 	<update id="updateMember" parameterType="com.ssb.member.Member" statementType="CALLABLE"
 		useGeneratedKeys="false">
@@ -61,7 +72,7 @@
     </update>
     
     <delete id="deleteMember" parameterType="String">
-    	DELETE FROM member WHERE userId=#{userId}
+    		DELETE FROM member WHERE userId=#{userId}
     </delete>
     
     <!-- 권한테이블 -->

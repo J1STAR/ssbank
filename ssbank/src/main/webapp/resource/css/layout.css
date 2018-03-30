@@ -121,7 +121,7 @@ table[name=transactionList] td.negative { color: red; }
 
 /* 방민주 css */
 .info-area .box-agree li.fdn {height: 50px;line-height: 50px}
-
+.result-box .mj {font-family:'nanumSB';fornt-weight:400;}
 
 
 
@@ -158,13 +158,27 @@ td div select[class="slt"] {
 	border: none;
 }
 
-.table-wrap .table-hori td { 텍스트박스를 감싸는 td
+.table-wrap .table-hori td { 
 	height: 20px;
 	padding : 0px;
 	border-right: 1px solid #ddd;
 }
 
-/* 끝 */
+.box-wrap .box-area.record {
+	float: left;
+	position: relative;
+	width: 50%;
+}
 
-/* 입력할 값을 위한 박스들에 대한 CSS*/
-/* 끝 */
+.box-wrap .box-area dl.record {
+	height: 110px;
+}
+
+.box-wrap .box-area dl.record dt {
+	font-size: 30px;
+}
+
+.box-wrap .box-area dl.record dd a {
+	float: right;
+	font-size: 15px;
+}

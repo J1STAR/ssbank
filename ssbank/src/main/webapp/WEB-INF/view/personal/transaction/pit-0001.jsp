@@ -143,7 +143,7 @@
 					});
 					
 					var $tgAcc = $("select[name=accountNo]")
-					if( ${accountNo == ""} ){
+					if( ${accountNo == null} ){
 						$tgAcc.find('option:eq(0)').attr("selected", "selected");
 					} else {
 						$tgAcc.find('option[value=${accountNo}]').attr("selected", "selected");

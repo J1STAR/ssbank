@@ -41,7 +41,6 @@ public class AccountController {
 		List<Account> saving = service.savinglistAllAccount(map);
 		Account deTot = service.deTotalBalance(map);
 		Account saTot = service.saTotalBalance(map);
-		System.out.println("account :"+deposit);
 		// 계좌리스트
 		model.addAttribute("deposit", deposit);
 		model.addAttribute("saving", saving);
@@ -57,7 +56,6 @@ public class AccountController {
 	public String deDetail(@RequestParam String accountNo, Model model) {
 		Account dto = null;
 		dto = service.detailDepositAccount(accountNo);
-		System.out.println("controller" + dto.toString());
 		model.addAttribute("dto", dto);
 		return ".financial.account.fds-0002";
 	}
@@ -163,7 +161,6 @@ public class AccountController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("accountNo", accountNo);
 		int balance = service.accountBalance(map);
-		System.out.println(balance);
 		// 데이터 보내기
 		Map<String, Object> model = new HashMap<>();
 		model.put("balance", balance);

@@ -21,7 +21,7 @@ public class MainController {
 	}
 	
 	@RequestMapping(value="/personal/lookupDetailAccount", method=RequestMethod.GET)
-	public String loopUpDetailAccountForm(@RequestParam(defaultValue="") String accountNo, Model model) {
+	public String loopUpDetailAccountForm(String accountNo, Model model) {
 		
 		model.addAttribute("accountNo", accountNo);
 		
@@ -33,7 +33,7 @@ public class MainController {
 	}
 	
 	@RequestMapping(value="/personal/transaction", method=RequestMethod.GET)
-	public String transactionForm(@RequestParam(defaultValue="") String accountNo, Model model) {
+	public String transactionForm(String accountNo, Model model) {
 		
 		model.addAttribute("accountNo", accountNo);
 		

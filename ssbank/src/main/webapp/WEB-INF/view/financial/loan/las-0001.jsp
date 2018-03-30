@@ -30,7 +30,6 @@
 		            <th scope="col">만기일</th>
 		            <th scope="col">대출신청금액</th>
 		            <th scope="col">대출잔액</th>
-		            <th scope="col">이자납입일</th>
 		            <th scope="col">거래구분</th>
 		        </thead>
 		        
@@ -44,9 +43,8 @@
 		                <td>${loan.lastDate}</td>
 		                <td>${loan.lendMoney}</td>
 		                <td>${loan.balance}</td>
-		                <td>${loan.interestDate}</td>
 		                <td>
-		                    <a href='<%=cp%>/loan/repayList?accountNo="${loan.accountNo}"' class="btn-type-gray medium">조회</a>
+		                    <a href='<%=cp%>/loan/repayList?accountNo=${loan.accountNo}' class="btn-type-gray medium">조회</a>
 		                    <a href='<%=cp%>/personal/transaction?accountNo="${loan.accountNo}"' class="btn-type-blue1 medium">납부</a>
 		                </td>
 		            </tr>
