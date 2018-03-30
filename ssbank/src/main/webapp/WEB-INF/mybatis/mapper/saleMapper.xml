@@ -82,31 +82,35 @@
 			)group By city order by city
 	</select>
 	
-<!-- 	<select id="listSaleMode" parameterType="map"
+	<select id="listSaleMode" parameterType="map"
 	            resultType="com.ssb.sale.Sale">
 		SELECT * FROM (
 		    SELECT ROWNUM rnum, tb.* FROM (
 			     SELECT saleIdx,addr2 , categoryName, maxAmount,TO_CHAR(tradeDate, 'YYYY-MM-DD') tradeDate,typeName		     
-			     ,room,totalArea,layer,tLayer,status,addr1
+			     ,room,totalArea,layer,tLayer,status,addr1,modeIdx
 			        FROM sale s
 			        LEFT OUTER JOIN saleType sT ON s.categoryIdx = sT.categoryIdx
 			        LEFT OUTER JOIN saleTradeType sTT ON s.typeIdx = sTT.typeIdx
                     <where>
                          <if test="searchValue != null and searchValue != ''">
 			                  <include refid="where-sale"/>
+			             AND 
 		                 </if>
-		                 AND 
-	                </where>
-	                
-	                <if test="modeType==1 ">
-	                     modeIdx=1
-	                </if>
-	                <if test="modeType==2 ">
-	                     modeIdx=2
-	                </if>	                
+		                 </where>
+		                  <if test="modeType==1 ">
+	                    	 modeIdx=1
+	              		  </if>	                
+	                	<if test="modeType==2">
+	                     	 modeIdx=2
+	               		 </if>		        
+		                   
 	<![CDATA[
 	        ) tb WHERE ROWNUM <= #{end}
 	    ) WHERE rnum >= #{start} 
 	]]>
-	</select> -->
+	           
+	                
+	            
+   
+	</select>
 </mapper>

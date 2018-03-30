@@ -25,6 +25,9 @@ public class Member {
 	// MemberAuthority
 	private String authority;
 
+	// MemberEmailAuthUUID
+	private String uuid; 
+	
 	public int getMemberIdx() {
 		return memberIdx;
 	}
@@ -199,6 +202,14 @@ public class Member {
 
 	public void setUserName(String userName) {
 		this.userName = userName;
+	}
+
+	public String getUuid() {
+		return uuid;
+	}
+
+	public void setUuid(String uuid) {
+		this.uuid = uuid;
 	}
 	
 	

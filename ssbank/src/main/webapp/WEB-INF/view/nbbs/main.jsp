@@ -6,6 +6,26 @@
    String cp = request.getContextPath();
 %>
 
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>spring</title>
+
+<link rel="stylesheet" href="<%=cp%>/resource/css/style.css" type="text/css">
+<style type="text/css">
+.board-container{
+	width: 700px;
+	margin:30px auto;
+}
+
+.board-container .title {
+    font-weight: bold;
+    font-size:15px;
+    margin-bottom:10px;
+    font-family: "맑은 고딕", 나눔고딕, 돋움, sans-serif;
+}
+</style>
 
 <script type="text/javascript" src="<%=cp%>/resource/jquery/js/jquery-1.12.4.min.js"></script>
 <script type="text/javascript" src="<%=cp%>/resource/jquery/js/jquery.form.js"></script>
@@ -192,11 +212,21 @@ function deleteBoard(num, saveFilename) {
 }
 </script>
 
+</head>
 
-<div class="content">
-
+<body>
 <div class="board-container">
+	<div id="board-header">
+		<table style="width: 100%; border-spacing: 0px;">
+			<tr height="45">
+				<td align="left" class="title">
+					<h3><span>|</span> 게시판</h3>
+				</td>
+			</tr>
+		</table>
+	</div>
 	<div id="board-body"></div>
  </div>
+</body>
 
-</div>
+</html>

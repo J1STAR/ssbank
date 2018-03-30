@@ -9,12 +9,12 @@
 <h1>의뢰 상세 현황</h1>
 <div class="tab-wrap blue item2">
     <ul class="tabs">
-        <li class="active" data-modeType="1">매수</li>
-        <li data-modeType="2">매도</li>
+        <li rel="tab1" class="active" data-modeType="1">매수</li>
+        <li rel="tab2" data-modeType="2">매도</li>
     </ul>
     <div class="tab_container">
-				<div id="tab1" class="tab_content"></div>
-				<div id="tab2" class="tab_content"></div>
+				<div id="tab1" class="tab_content">aa</div>
+				<div id="tab2" class="tab_content">bb</div>
 	</div>
 </div>
 </div>
@@ -32,6 +32,9 @@ $(function(){
 		});
 		
 		$(this).addClass("active");
+		$(".tab_content").hide()
+		var activeTab = $(this).attr("rel");
+		$("#" + activeTab).fadeIn()
 		
 		listPage(1);
 	});
@@ -48,7 +51,7 @@ function listPage(modeIdx) {
 	   
 	   var url="<%=cp%>/sale/saleList";
 	 
-	   var query="&modeType="+modeType+"&modeIdx="+modeIdx;
+	   var query="&modeIdx="+modeIdx;
 	   
 	   $.ajax({
 		  type:"GET"

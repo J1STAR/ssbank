@@ -96,7 +96,7 @@ public class LoanServiceImpl implements LoanService{
 	public List<Loan> repayList(Map<String, Object> map) {
 		List<Loan> list = null;
 		try {
-			
+			list=dao.selectList("loan.repayList",map);
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
