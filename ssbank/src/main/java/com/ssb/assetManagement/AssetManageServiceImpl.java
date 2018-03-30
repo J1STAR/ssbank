@@ -60,6 +60,28 @@ public class AssetManageServiceImpl implements AssetManagerService{
 		return list;
 	}
 
+	@Override
+	public List<AssetManage> myAsset(Map<String, Object> map) {
+		List<AssetManage>list=null;
+		try {
+			list=dao.selectList("assetMapper.myAsset",map);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return list;
+	}
+
+	@Override
+	public List<AssetManage> myAssetList(Map<String, Object> map) {
+		List<AssetManage>list=null;
+		try {
+			list=dao.selectList("assetMapper.myAssetList",map);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return list;
+	}
+
 
 
 }

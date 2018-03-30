@@ -14,20 +14,20 @@
 
 #container {
 	height: 400px;
-	max-width: 800px;
+	max-width: 1000px;
 	margin: 0 auto;
 }
 
 /* Link the series colors to axis colors */
 .highcharts-color-0 {
-	fill: #7bc8ec;
-	stroke: #7bc8ec;
+	fill: #ec79cb;
+	stroke: #ec79cb;
 }
 .highcharts-axis.highcharts-color-0 .highcharts-axis-line {
-	stroke: #7bc8ec;
+	stroke: #ec79cb;
 }
 .highcharts-axis.highcharts-color-0 text {
-	fill: #7bc8ec;
+	fill: #ec79cb;
 }
 .highcharts-color-1 {
 	fill: #e6ec7a;
@@ -70,21 +70,27 @@ $(document).ready(function(){
 	            text: 'Daily Distance'
 	        },
 	        subtitle: {
-	            text: 'unit : km'
+	            text: 'km'
 	        },
 	        plotOptions: {
-	            column: {
-	                depth: 25
-	            }
-	        },
-	        series:tt
-		});
-		
-	});
-});
 
-$(function(){
-	var url="<%=cp%>/assetManage/carOiling";
+	            
+				column : {
+						dataLabels : {
+							enabled : true
+						},
+						enableMouseTracking : true,
+						depth : 40
+					}
+				},
+				series : tt
+			});
+
+		});
+	});
+
+	$(function() {
+		var url = "<%=cp%>/assetManage/carOiling";
 	$.getJSON(url, function (csv) {
 		Highcharts.chart('container', {
 
@@ -103,24 +109,30 @@ $(function(){
 		    yAxis: [{
 		        className: 'highcharts-color-0',
 		        title: {
-		            text: '주유량'
+		            text: '주유량(ℓ)'
 		        }
 		    }, {
 		        className: 'highcharts-color-1',
 		        opposite: true,
 		        title: {
-		            text: '주유금액'
+		            text: '주유금액(원)'
 		        }
 		    }],
 
 		    plotOptions: {
 		        column: {
-		            borderRadius: 5
-		        }
+			        	dataLabels : {
+							enabled : true
+						},
+						enableMouseTracking : true,
+						borderRadius: 10
+					}
 		    },
 		    series: [{
+		    	name:'주유량(ℓ)',
 		    	data:csv[0].data1
 		    },{
+		    	name:'주유금액(원)',
 		    	data:csv[0].data2,
 		    	yAxis:1
 		    }]
@@ -129,6 +141,7 @@ $(function(){
 });
 </script>
 <div class="content">
-<div id="chart" style="min-width: 300px; height: 400px; margin: 0 auto"></div>
-<div id="container"></div>
+<h1>차계부관리</h1>
+<div id="chart" style="min-width: 300px; height: 400px; margin: 0 auto" ></div>
+<div id="container" ></div>
 </div>

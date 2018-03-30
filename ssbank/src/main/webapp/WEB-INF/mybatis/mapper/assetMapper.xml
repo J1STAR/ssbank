@@ -41,9 +41,27 @@
    select o.oilAmount,o.amount,o.oilingDate
      from oiling o
      join carAcBook c on c.caracbookidx=o.caracbookIdx
-     join memberInfo m on m.memberIdx=c.MEMBERIDX
-     where m.memberIdx=#{memberIdx}
+     join memberInfo m on m.memberIdx=c.MEMBERIDX 
+     where m.memberIdx=#{memberIdx} and 
+     	o.oilingDate between trunc(sysdate,'mm') and add_months(trunc(sysdate,'mm'),1)
      order by o.oilingdate
-	
+</select>
+<select id="myAsset"  parameterType="map" resultType="com.ssb.assetManagement.AssetManage">
+
+SELECT SUM(GETCURRENTBALANCE(ac.accountNo)) balance,pd.productName
+FROM account ac 
+left outer join product pd on ac.productIdx=pd.productIdx
+WHERE memberIdx = #{memberIdx}
+GROUP BY pd.productName
+</select>
+
+<select id="myAssetList"  parameterType="map" resultType="com.ssb.assetManagement.AssetManage">
+
+
+	select  acC.categoryName ,trunc(ratio_to_report(acB.amount)over()*100,2) as percent
+	from accountBook acB
+    join actype ac on ac.CLASSIDX=acB.CLASSIDX
+    join acbCategory acC on acC.CATEGORYIDX=acB.CATEGORYIDX
+    where memberIdx=#{memberIdx}
 </select>
 </mapper>

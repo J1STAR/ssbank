@@ -9,12 +9,12 @@
 <h1>의뢰 상세 현황</h1>
 <div class="tab-wrap blue item2">
     <ul class="tabs">
-        <li rel="tab1" class="active" data-modeType="1">매수</li>
-        <li rel="tab2" data-modeType="2">매도</li>
+        <li rel="tab1" class="active" data-modeType="1">매도</li>
+        <li rel="tab2" data-modeType="2">매수</li>
     </ul>
     <div class="tab_container">
-				<div id="tab1" class="tab_content">aa</div>
-				<div id="tab2" class="tab_content">bb</div>
+				<div id="tab1" class="tab_content"></div>
+				<div id="tab2" class="tab_content"></div>
 	</div>
 </div>
 </div>
@@ -36,7 +36,7 @@ $(function(){
 		var activeTab = $(this).attr("rel");
 		$("#" + activeTab).fadeIn()
 		
-		listPage(1);
+		listPage($(this).attr("data-modeType"));
 	});
 });
 

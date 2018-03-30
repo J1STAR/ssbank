@@ -71,7 +71,7 @@
 						</dl>
 					</div>
 				</div>
-				<h2>자산관리 이용하기</h2>
+				<h2>매물올리기 이용하기</h2>
 				<div class="step-area map-info">
 					<ol>
 						<li><span class="step-num">STEP 1</span> <span
