@@ -15,12 +15,12 @@
 			<table class="table-verti board">
 				<caption>자산관리 게시판</caption>
 				<colgroup>
-					<col style="width:12%;"/>
-					<col style="width:auto;"/>
-					<col style="width:12%;"/>
 					<col style="width:15%;"/>
-					<col style="width:12%;"/>
-					<col style="width:5%;"/>
+					<col style="width:20%;"/>
+					<col style="width:15%;"/>
+					<col style="width:20%;"/>
+					<col style="width:15%;"/>
+					<col style="width:20%;"/>
 				</colgroup>
 				<tbody>
 					<tr>
