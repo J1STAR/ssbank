@@ -16,6 +16,7 @@
 				<div class="cal-cont-wrap">
 					<div class="tab-wrap blue item5">
 						<ul>
+<<<<<<< HEAD
 							<li class="active"><a href="<%=cp%>/calc/saving">적금</a></li>
 							<li class=""><a href="<%=cp%>/calc/deposit">예금</a></li>
 							<li class=""><a href="<%=cp%>/calc/loan">대출</a></li>
@@ -57,6 +58,59 @@
 												<div class="item-select">
 													<select name="rateType" id="rateType">
 														<option value="1">단리</option>
+=======
+							<li class="active"><a href="cal-0001.html">적금</a></li>
+							<li class=""><a href="cal-0002.html">예금</a></li>
+							<li class=""><a href="cal-0003.html">대출</a></li>
+							<li class=""><a href="cal-0004.html">환율</a></li>
+							<li class=""><a href="cal-0005.html">날짜</a></li>
+						</ul>
+					</div>
+					<h2>적금 / 목돈모으기</h2>
+					<span class="sub-text">기간과 월적립액, 이자율을 입력하시면 만기지급액이 계산됩니다.</span>
+					<div class="cal-cont-area">
+						<div class="cal-box box">
+							<h3>계산정보</h3>
+							<div class="table-wrap">
+								<table class="table-verti">
+									<caption>적금계산</caption>
+									<colgroup>
+										<col style="width:20%;"/>
+										<col style="width:*;"/>
+									</colgroup>
+									<tbody>
+										<tr>
+											<th scope="col">월적립액</th>
+											<td scope="col"><input type="text" id="amountInput" placeholder="0"> <span class="bold">만원</span> <span class="sub">(1만원 이상 ~ 1,000만원 이하)</span><span class="input-num">일백만원</span></td>
+										</tr>
+										<tr>
+											<th>적립기간</th>
+											<td><input type="text" id="termInput" placeholder="0"> <span class="bold">개월</span> <span class="sub">(12개월 이상 ~ 360개월 이하)</span></td>
+										</tr>
+										<tr>
+											<th>이자율</th>
+											<td><input type="text" id="rateInput" placeholder="0"> <span class="bold">%</span> <span class="sub">(최대 10.0%)</span></td>
+										</tr>
+										<tr>
+											<th>이자계산법</th>
+											<td>
+												<div class="item-radio">
+													<input type="radio" id="calcu-01-1" name="radioInput" value="1" checked>
+													<label for="calcu-01-1">일반</label>
+												</div>
+												<div class="item-radio">
+													<input type="radio" id="calcu-01-2" name="radioInput" value="2">
+													<label for="calcu-01-2">법인</label>
+												</div>
+												<div class="item-radio">
+													<input type="radio" id="calcu-01-3" name="radioInput" value="3">
+													<label for="calcu-01-3">비과세</label>
+												</div>
+												<div class="item-select">
+													<select name="rateType" id="rateType">
+														<option value="1">단리</option>
+														<option value="2">월복리</option>
+>>>>>>> branch 'master' of https://github.com/J1STAR/ssbank.git
 													</select>
 												</div>
 											</td>

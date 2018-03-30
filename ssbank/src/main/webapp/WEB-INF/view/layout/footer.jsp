@@ -9,9 +9,13 @@
 		<div class="side-bar">
 			<ul>
 <<<<<<< HEAD
+<<<<<<< HEAD
 				<li><a href="<%=cp%>/calc/saving">계산기</a></li>
 =======
 				<li><a href="<%= cp %>/calc/saving">계산기</a></li>
+>>>>>>> branch 'master' of https://github.com/J1STAR/ssbank.git
+=======
+				<li><a href="#">계산기</a></li>
 >>>>>>> branch 'master' of https://github.com/J1STAR/ssbank.git
 				<li><a href="#">위치찾기</a></li>
 				<li><a href="#">문의하기</a></li>
