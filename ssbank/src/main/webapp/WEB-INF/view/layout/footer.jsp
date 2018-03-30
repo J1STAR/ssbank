@@ -8,7 +8,7 @@
 	<aside>
 		<div class="side-bar">
 			<ul>
-				<li><a href="#">계산기</a></li>
+				<li><a href="<%=cp%>/calc/saving">계산기</a></li>
 				<li><a href="#">위치찾기</a></li>
 				<li><a href="#">문의하기</a></li>
 				<li>

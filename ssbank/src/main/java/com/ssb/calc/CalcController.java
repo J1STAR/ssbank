@@ -11,4 +11,24 @@ public class CalcController {
 	public String calcMenu1() {
 		return ".calc.cal-0001";
 	}
+	
+	@RequestMapping(value="/calc/deposit")
+	public String calcMenu2() {
+		return ".calc.cal-0002";
+	}
+	
+	@RequestMapping(value="/calc/loan")
+	public String calcMenu3() {
+		return ".calc.cal-0003";
+	}
+	
+	@RequestMapping(value="/calc/rate")
+	public String calcMenu4() {
+		return ".calc.cal-0004";
+	}
+	
+	@RequestMapping(value="/calc/date")
+	public String calcMenu5() {
+		return ".calc.cal-0005";
+	}
 }
