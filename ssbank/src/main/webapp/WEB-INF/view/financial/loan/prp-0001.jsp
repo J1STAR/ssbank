@@ -54,11 +54,12 @@
 		        <tbody>
 		            <tr>
 		                <th>대출계좌번호</th>
-		                <td><input type="text" name="accountNo2" class=""></td>
+		                <td><input type="text" name="accountNo2" class=""  readonly="readonly"></td>
 		            </tr>
 		            <tr>
 		                <th>이체금액</th>
-		                <td><input type="text" name="amount" class=""></td>
+		                <td><input type="text" name="amount" class=""><span>${payment}</span></td>
+		               
 		            </tr>
 		            <tr>
 		                <th>내통장 메모</th>
@@ -76,8 +77,7 @@
 
 <script>
 	$(function(){
-		
-		/* 이체 페이지 초기화 */
+		/* 이체 페이지 초기o화 */
 		transactionInit();
 		
 		/* 이체 */
@@ -101,9 +101,9 @@
 	});
 	
 	function transactionInit(){
+		$("input[name=accountNo2]").val(${accountNo});
 		
 		$("input[name=accountPwd]").val("");
-		$("input[name=accountNo2]").val("");
 		$("input[name=amount]").val("");
 		$("input[name=content]").val("");
 		

@@ -5,7 +5,6 @@ import java.util.Map;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
-import org.apache.tiles.request.velocity.autotag.VelocityUtil;
 import org.apache.velocity.app.VelocityEngine;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -17,10 +16,10 @@ import org.springframework.ui.velocity.VelocityEngineUtils;
 public class MailServiceImpl implements MailService {
 
 	@Autowired
-	JavaMailSender mailSender;
+	public JavaMailSender mailSender;
 
 	@Autowired
-	VelocityEngine velocityEngine;
+	public VelocityEngine velocityEngine;
 
 	public void sendEmail(Mail mail) {
 		MimeMessage mimeMessage = mailSender.createMimeMessage();
