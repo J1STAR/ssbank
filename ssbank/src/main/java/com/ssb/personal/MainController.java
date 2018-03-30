@@ -47,8 +47,8 @@ public class MainController {
 		if(accountNo != null && accountNo.charAt(3) == '3') {
 			Map<String, Object> map = new HashMap<>();
 			map.put("accountNo", accountNo);
-			Loan dto=service.loanPayment(map);
-			model.addAttribute("payment",dto.getPayment());
+			int payment=service.loanPayment(map);
+			model.addAttribute("payment",payment);
 			return ".financial.loan.prp-0001";
 		} else {
 			return ".personal.transaction.pit-0001";

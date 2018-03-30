@@ -104,14 +104,14 @@ public class LoanServiceImpl implements LoanService{
 	}
 
 	@Override
-	public Loan loanPayment(Map<String, Object> map) {
-		Loan dto=null;
+	public int loanPayment(Map<String, Object> map) {
+		int result=0;
 		try {
-			dto=dao.selectOne("loan.loanPayment",map);
+			result=dao.selectOne("loan.loanPayment",map);
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
-		return dto;
+		return result;
 	}
 
 
