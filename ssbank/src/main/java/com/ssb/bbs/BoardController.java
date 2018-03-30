@@ -14,4 +14,14 @@ public class BoardController {
 	public String boardList() {
 		return ".bbs.list";
 	}
+	
+	@RequestMapping(value="bbs/created")
+	public String createForm() {
+		return ".bbs.created";
+	}
+	
+	@RequestMapping(value="bbs/article")
+	public String article() {
+		return ".bbs.article";
+	}
 }

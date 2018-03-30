@@ -2,13 +2,25 @@ package com.ssb.bbs;
 
 public class Board {
 
-	public int num;
-	public String subject;
-	public String created;
-	public String content;
-	public String userId;
+	private int num, listNum, hitCount;
+	private String subject;
+	private String created;
+	private String content;
+	private String userId;
 
 	
+	public int getListNum() {
+		return listNum;
+	}
+	public void setListNum(int listNum) {
+		this.listNum = listNum;
+	}
+	public int getHitCount() {
+		return hitCount;
+	}
+	public void setHitCount(int hitCount) {
+		this.hitCount = hitCount;
+	}
 	public String getCreated() {
 		return created;
 	}
