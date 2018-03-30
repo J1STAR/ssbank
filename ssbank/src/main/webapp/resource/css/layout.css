@@ -25,9 +25,16 @@
 .asset1 .tab1 .tab1-2 .btn-type-blue1.medium{display: block; margin: 0 20px; margin-top: 200px;}
 .asset1 .tab2 .tab2-2 .btn-type-blue1.medium{display: block; margin: 0 20px; margin-top: 200px; }
 .asset1 .tab3 .tab3-2 .btn-type-blue1.medium{display: block; margin: 0 20px; margin-top: 200px; }
+.assetpie {border:1px soild #ddd;}  
 /* .asset2  { height:340px; border:1px solid #ddd; margin:20px 0; } */
 .table-wrap .pie3dContainer {border: 1px solid #ddd;}
 .table-wrap .chart2 {border:1px solid #ddd;}
+.table-wrap .cyTable td { overflow:hidden; text-overflow:ellipsis; word-break: break-all; }
+
+
+
+
+
 /* 장한별 css */
 .menu-wrap.depth-two .menu-area  { width: 100%; padding: 0;}
 .menu-wrap.depth-two .menu-area li { top: 0px; padding-right: 0px; }

@@ -13,7 +13,7 @@
 				<h2>자산관리 현황</h2>
 			</div>
 			<div class="tab1-2">
-				<a href="#" class="btn-type-blue1 medium">자산 관리</a>
+				<a href="<%=cp %>/assetManage/myAsset" class="btn-type-blue1 medium">자산 관리</a>
 			</div>
 		</div>
 		<div class="tab2">

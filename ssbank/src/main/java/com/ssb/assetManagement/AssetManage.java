@@ -14,7 +14,23 @@ public class AssetManage {
 	public String driveDate;
 	public int oilAmount;
 	public String oilingDate;
+	public int balance;
+	public String productName;
 	
+	
+	
+	public String getProductName() {
+		return productName;
+	}
+	public void setProductName(String productName) {
+		this.productName = productName;
+	}
+	public int getBalance() {
+		return balance;
+	}
+	public void setBalance(int balance) {
+		this.balance = balance;
+	}
 	public int getOilAmount() {
 		return oilAmount;
 	}

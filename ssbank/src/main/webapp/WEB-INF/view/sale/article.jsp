@@ -70,6 +70,6 @@
 				    </td> --%>
 </div>
  <div class="btns">
-	<a href="#" class="btn-type-blue1 medium mt20 fr" onclick="listPage(1);return false;">리스트</a>
+	<a href="#" class="btn-type-blue1 medium mt20 fr" onclick="listPage($('li[rel^=tab].active').attr('data-modeType')); return false;">리스트</a>
 </div>
 

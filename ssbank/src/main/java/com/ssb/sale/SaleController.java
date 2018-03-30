@@ -143,7 +143,7 @@ public class SaleController {
 	}
 	@RequestMapping(value = "/sale/chy-0001")
 	public String cheongYaklist() {
-		return "/sale/chy-0001";
+		return ".sale.chy-0001";
 	}
 
 	@RequestMapping(value = "/sale/raa-0005", method=RequestMethod.GET)
@@ -165,7 +165,7 @@ public class SaleController {
 		
 			service.insertSale(dto);
 		
-		return "redirect:/sale/raa-0001";
+		return ".sale.raa-0006";
 	}
 	
 	@RequestMapping(value="/sale/update", method=RequestMethod.GET)

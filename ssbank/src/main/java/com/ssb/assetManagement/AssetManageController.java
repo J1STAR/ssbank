@@ -39,6 +39,11 @@ public class AssetManageController {
 		
 		return ".assetManage.carbook";
 	}
+	@RequestMapping(value="/assetManage/myAsset")
+	public String myAsset() throws Exception{
+		
+		return ".assetManage.myAsset";
+	}
 	
 	
 	@RequestMapping(value="/assetManage/pie3d", produces="application/json; charset=utf-8")
@@ -114,7 +119,7 @@ public class AssetManageController {
 		JSONArray arr=new JSONArray();
 		
 		JSONObject ob=new JSONObject();
-		ob.put("name", "지출");
+		ob.put("name", "날짜");
 		
 		JSONArray ja=new JSONArray();
 		
@@ -152,6 +157,64 @@ public class AssetManageController {
 		}
 		ob.put("data1", ja);
 		ob.put("data2", ja2);
+		arr.add(ob);
+		
+		return arr.toString();
+	}
+	@RequestMapping(value="/assetManage/myAsset", produces="application/json; charset=utf-8")
+	@ResponseBody
+	public String myAsset(HttpSession session) throws Exception {	
+		
+		SessionInfo info=(SessionInfo)session.getAttribute("member");
+		
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("memberIdx",info.getMemberIdx());
+		
+		List<AssetManage> list = service.myAsset(map);
+		
+		
+		JSONArray arr=new JSONArray();
+		
+		JSONObject ob=new JSONObject();
+		ob.put("name", "날짜");
+		
+		JSONArray ja=new JSONArray();
+		for(AssetManage dto:list) {
+			ja.add("['"+dto.getProductName()+"',"+dto.getBalance()+"]");
+
+		}
+		ob.put("data", ja);
+		arr.add(ob);
+		
+		return arr.toString();
+	}
+	@RequestMapping(value="/assetManage/myAssetList", produces="application/json; charset=utf-8")
+	@ResponseBody
+	public String myAssetList(HttpSession session) throws Exception {	
+		
+		SessionInfo info=(SessionInfo)session.getAttribute("member");
+		
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("memberIdx",info.getMemberIdx());
+		
+		List<AssetManage> list = service.myAssetList(map);
+		
+		JSONArray arr=new JSONArray();
+		
+		JSONObject ob=new JSONObject();
+	
+		ob.put("name", "비율");
+		
+		
+		JSONArray ja=new JSONArray();
+		for(AssetManage dto:list) {
+			ja.add("['"+dto.getCategoryName()+"',"+dto.getPercent()+"]");
+
+		}
+		ob.put("data", ja);
+
 		arr.add(ob);
 		
 		return arr.toString();

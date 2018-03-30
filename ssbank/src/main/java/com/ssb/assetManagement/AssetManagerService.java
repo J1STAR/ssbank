@@ -10,4 +10,6 @@ public interface AssetManagerService {
 	public List<AssetManage> assetDateList(Map<String, Object> map);
 	public List<AssetManage> carBookDateList(Map<String, Object> map);
 	public List<AssetManage> carOiling(Map<String, Object> map);
-	}
+	public List<AssetManage> myAsset(Map<String, Object> map);
+	public List<AssetManage> myAssetList(Map<String, Object> map);
+}

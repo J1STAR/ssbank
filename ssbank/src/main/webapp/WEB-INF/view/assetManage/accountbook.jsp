@@ -80,7 +80,7 @@ $(document).ready(function(){
 				}
 			},
 	        title: {
-	            text: '날짜별 금액'
+	            text: '날짜별 금액(원)'
 	        },
 	        subtitle: {
 	            text: 'daily spend money'
