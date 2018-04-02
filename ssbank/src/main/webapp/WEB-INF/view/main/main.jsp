@@ -138,7 +138,7 @@
 							<li>정말 손쉽게</li>
 							<li>연 3%</li>
 						</ul>
-						<a href="<%=cp %>/ssbank/financial/product/detail?productIdx=1">더 알아보기</a>
+						<a href="<%=cp%>/financial/product/detail?productIdx=1">더 알아보기</a>
 					</div>
 					<div class="item item-02">
 						<ul>
@@ -148,7 +148,7 @@
 							<li>연 5%</li>	
 							<li>(12개월기준)</li>	
 						</ul>
-						<a href="<%=cp %>/ssbank/financial/product/detail?productIdx=1">더 알아보기</a>
+						<a href="<%=cp%>/financial/product/detail?productIdx=1">더 알아보기</a>
 					</div>
 					<div class="item item-03">
 						<ul>
@@ -158,7 +158,7 @@
 							<li>연 3%</li>
 							<li>(최저)</li>
 						</ul>
-						<a href="<%=cp %>/ssbank/financial/product/detail?productIdx=3">더 알아보기</a>
+						<a href="<%=cp%>/financial/product/detail?productIdx=3">더 알아보기</a>
 					</div>
 				</div>
 			</section>
