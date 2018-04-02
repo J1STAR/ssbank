@@ -81,5 +81,11 @@
 		<!-- 에러 발생시 로그 출력 -->
     	<property name="warnLogCategory" value="ERROR"/>
     </bean>
-
+    
+    <!-- 웹소켓 -->
+	<websocket:handlers>
+		<websocket:mapping handler="mySocketHandler" path="/chat.msg"/>
+	</websocket:handlers>
+	<bean id="mySocketHandler" class="com.ssb.liveCounsel.MySocketHandler"/>
+	
 </beans>
