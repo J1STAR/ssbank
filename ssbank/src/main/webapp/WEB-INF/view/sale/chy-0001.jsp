@@ -119,6 +119,7 @@
 				<col style="width: 10%" />
 				<col style="width: 10%" />
 				<col style="width: 10%" />
+				<col style="width: 10%" />
 				<col style="width: auto%" />
 			</colgroup>
 			<thead>
@@ -138,11 +139,11 @@
 	</div>
 	<div class="search-wrap mt40">
 	<form name="form" id="form" method="post">
-		표시건수 : <input type="text" id="strSZ" name="strSZ" value="5" style="width:100px;" /> &#9;
-		페이지    : <input type="text" id="strPAGE" name="strPAGE" value="1"  style="width:100px;" />&#9; 공고명 : 
-		<input type="text" id="strTITLE" name="strTITLE" value=""  style="width:100px;"/>&#9; 공고유형 : 
+		표시건수 : <input type="text" id="strSZ" name="strSZ" value="5" style="width:100px;" /> &nbsp;
+		페이지    : <input type="text" id="strPAGE" name="strPAGE" value="1"  style="width:100px;" />&nbsp; 공고명 : 
+		<input type="text" id="strTITLE" name="strTITLE" value=""  style="width:100px;"/>&nbsp; 공고유형 : 
 			<input type="text" id="strAISTPCD" name="strAISTPCD" value="" style="width:200px;"/><br> 지역 : 
-			<input type="text" id="strAREA" name="strAREA" value="" /> &#9;공고상태 : 
+			<input type="text" id="strAREA" name="strAREA" value="" />&nbsp;공고상태 : 
 			<input type="text" id="strSTAT" name="strSTAT" value="" /> 
 			<input type="button" onClick="getAddr();" value="검색" />
 	</form>
