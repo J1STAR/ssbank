@@ -42,7 +42,7 @@
             
             <intercept-url pattern="/personal/**" access="hasRole('ROLE_USER')"/>
             
-            <intercept-url pattern="/sale/**" access="hasRole('ROLE_USER')"/>
+            <intercept-url pattern="/sale/**" access="hasAnyRole('ROLE_USER, ROLE_ADMIN')"/>
             
             <!-- 이미지, javascript, css등 -->
 			<intercept-url pattern="/resource/**" access="permitAll" />
