@@ -36,7 +36,7 @@ public class BoardController {
 	
 	@RequestMapping(value="/nbbs")
 	public String board() throws Exception {
-		return "nbbs/main";
+		return ".nbbs.main";
 	}
 
 	@RequestMapping(value="/nbbs/list")

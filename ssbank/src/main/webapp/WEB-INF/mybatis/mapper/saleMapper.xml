@@ -78,8 +78,9 @@
 	<select id="cityCount" resultType="com.ssb.sale.Sale" >
 			select city, count(*) cnt from (
 		   	select substr(addr1,1,instr(addr1,' ',1,2)) city
-		    from sale
-			)group By city order by city
+		    from sale 
+		    where modeIdx=1
+			)group By city order by city 
 	</select>
 	
 	<select id="listSaleMode" parameterType="map"
