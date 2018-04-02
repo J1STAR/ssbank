@@ -5,7 +5,8 @@
 <%
 	String cp=request.getContextPath();
 
-String wsURL = "ws://"+request.getServerName()+":"+request.getServerPort()+cp+"/chat.msg";
+	String wsURL = "ws://"+request.getServerName()+":"+request.getServerPort()+cp+"/chat.msg";
+	
 %>
 <script type="text/javascript">
 //존재하지 않는 JSON값을 get 하거나 script에 오류가 있으면 socket가 종료됨 
@@ -534,9 +535,9 @@ function writeToScreen(message) {
 		                <span style="font-weight: 600;">＞</span>
 		                <span style="font-weight: 600; font-family: 나눔고딕, 맑은 고딕, 돋움; color: #424951;">채팅방 리스트</span>
 		            </div>
-		            <div id="roomListContainer"></div>
+		            <div id="roomListContainer" style="font-size: 20px;"></div>
 		            <div style="clear: both; padding-top: 5px;">
-		                <a type="button" id="btnRoomAdd"  class="btn-type-gray1 medium">채팅방 만들기</a>
+		                <a type="button" id="btnRoomAdd"  class="btn-type-gray1 medium">채팅방 만들기</a><br>
 		               	<br>
 		                <a type="button" id="btnRoomJoin"  class="btn-type-gray1 medium">채팅방 들어가기</a>
 		            </div>
