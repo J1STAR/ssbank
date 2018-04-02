@@ -57,7 +57,7 @@
 						</c:forEach>
 					</table>
 				</div>
-				<div class="btns">
+				<div class="btns" style="width: 10%; float: left;">
 					<a href="javascript:location.href='<%=cp%>/customer/noticeBoard/noticeList';" class="btn-type-gray medium mt20 fl">새로고침</a>
 				</div>
 				<c:if test="${sessionScope.member.userId == 'admin' }">				    

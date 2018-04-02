@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import com.ssb.common.FileManager;
 import com.ssb.common.dao.CommonDAO;
-import com.ssb.newsBoard.NewsBoard;
 
 @Service("customerManageService.boardService")
 public class BoardServiceImpl implements BoardService{
@@ -121,19 +120,12 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
-	public int deleteBoard(int boardIdx, String pathname, String userId) {
+	public int deleteBoard(int boardIdx) {
 		int result = 0;
 		try {
-			Board dto = readBoard(boardIdx);
-			if(dto == null || (!userId.equals("admin") && !userId.equals(dto.getUserId())))
-				return result;
-			
-			dao.deleteData("customerManageService.deleteBoard", boardIdx);
-			result = 1;
+			result=dao.deleteData("customerManageService.deleteBoard", boardIdx);
 		} catch (Exception e) {
 		}
 		return result;
 	}
-	
-	
 }

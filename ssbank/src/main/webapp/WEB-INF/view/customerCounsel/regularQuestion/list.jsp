@@ -5,12 +5,17 @@
 <%
 	String cp=request.getContextPath();
 %>
-
-	<h1>자주하는 질문</h1>
-			<div class="page-con">
+	<h1>고객의 소리</h1>
+		<div class="box-blue-area">
+		    <dl>
+		       <dt>1:1 문의 공간 입니다.</dt>
+		    </dl>
+		</div>
+		<div>
 				<div class="table-num">
 					<th>${dataCount}개(${page}/${total_page} 페이지)</th>
 				</div>
+				
 				<div class="table-wrap">
 					<table class="table-hori board">
 						<caption>게시판</caption>
@@ -20,30 +25,30 @@
 							<col style="width:10%"/>
 							<col style="width:12%"/>
 							<col style="width:9%"/>
-							<col style="width:7%;"/>
 						</colgroup>
 						<thead>
 							<th scope="col">No</th>
 							<th scope="col">제목</th>
+							<th scope="col">구분</th>
 							<th scope="col">작성자</th>
 							<th scope="col">작성일</th>
-							<th scope="col">조회수</th>
 						</thead>
 						<c:forEach var="dto" items="${list}">
 							<tbody>
 								<tr>
-									<td>${dto.listNum}</td>
+									<td>${dto.num}</td>
 									<td>
-										<a href="javascript:articleBoard('${dto.boardIdx}', '${pageNo}');">${dto.subject}</a>
+										<a href="javascript:articleBoard('${dto.memberIdx}', '${pageNo}');">${dto.subject}</a>
 									</td>
-									<td>${dto.userName}</td>
-									<td>${dto.createDate}</td>
-									<td>${dto.hitCount}</td>
+									<td>${info.getCategory}</td>
+									<td>${info.getUserName}</td>
+									<td>${dto.created}</td>
 								</tr>
 							</tbody>
 						</c:forEach>
 					</table>
 				</div>
+				
 				<div class="btns" style="width: 10%; float: left;">
 					<a onclick="reloadBoard();" class="btn-type-gray medium mt20 fl">새로고침</a>
 				</div>	
@@ -62,15 +67,18 @@
 				<div class="search-wrap mt40">
 					<form name="searchForm" action="" method="post">
 					<div class="item-select">
-						<select id="searchKey" name="searchKey" class="selectField">
-							<option>제목</option>
-							<option>작성자</option>
-							<option>내용</option>
-							<option>등록일</option>
+						<select name="searchKey" class="selectField" id="searchKey">
+							<option value="subject">제목</option>
+							<c:if test="${sessionScore.member.userId=='admin'}">
+								<option value="userName">작성자</option>
+							</c:if>
+							<option value="content">내용</option>
+							<option value="created">등록일</option>
 						</select>
 					</div>
 					<input type="text" name="searchValue" class="boxTF">
 					<a onclick="searchList()" class="btn-type-gray medium">검색</a>
 				</form>
 				</div>
-			</div>
+		</div>
+</div>

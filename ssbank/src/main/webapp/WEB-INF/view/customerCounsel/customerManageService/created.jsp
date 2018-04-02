@@ -5,37 +5,9 @@
 <%
 	String cp=request.getContextPath();
 %>
-<script type="text/javascript">
-    function sendOk() {
-        var f = document.boardForm;
-
-    	var str = f.subject.value;
-        if(!str) {
-            alert("제목을 입력하세요. ");
-            f.subject.focus();
-            return;
-        }
-
-    	str = f.content.value;
-        if(!str) {
-            alert("내용을 입력하세요. ");
-            f.content.focus();
-            return;
-        }
-
-    	f.action="<%=cp%>/customerCounsel/customerManageService/${mode}";
-
-        f.submit();
-    }
-</script>
-<div class="content">
-	<div class="table-wrap">
-		<div class="body-container" style="width: 700px;">
-		    <div class="body-title">
-		        <h3><span style="font-family: Webdings">2</span> 게시판 </h3>
-		    </div>
+	<h1>자주하는 질문</h1>
 		    
-		    	<div>
+		    	<div class="page-con">
 					<form name="boardForm" method="post" enctype="multipart/form-data">
 					  <table style="width: 100%; margin: 20px auto 0px; border-spacing: 0px; border-collapse: collapse;">
 					  <tr align="left" height="40" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;"> 
@@ -65,18 +37,15 @@
 					  <table style="width: 100%; margin: 0px auto; border-spacing: 0px;">
 					     <tr height="45"> 
 					      <td align="center" >
-					        <a class="btn-type-blue1 medium" onclick="sendOk();">${mode=='update'?'수정완료':'등록하기'}</a>
+					        <a class="btn-type-blue1 medium" onclick="sendOk('${mode}', '${pageNo}');">${mode=='update'?'수정완료':'등록하기'}</a>
 					        <a class="btn-type-blue1 medium">다시입력</a>
-					        <a class="btn-type-blue1 medium" onclick="javascript:location.href='<%=cp%>/customerCounsel/customerManageService/list';">${mode=='update'?'수정취소':'등록취소'}</a>
+					        <a class="btn-type-blue1 medium" onclick="sendCancel('${pageNo}');">${mode=='update'?'수정취소':'등록취소'}</a>
 					         <c:if test="${mode=='update'}">
 					         	 <input type="hidden" name="boardIdx" value="${dto.boardIdx}">
-					        	 <input type="hidden" name="page" value="${page}">
+					        	 <input type="hidden" name="page" value="${pageNo}">
 					        </c:if>
 					      </td>
 					    </tr>
 					  </table>
 					</form>
 		    </div>
-		 </div>
-    </div>
-</div>

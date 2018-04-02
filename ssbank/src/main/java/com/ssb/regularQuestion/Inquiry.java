@@ -1,16 +1,23 @@
 package com.ssb.regularQuestion;
 
 public class Inquiry {
-	private int num, memberIdx, type, parent, state;
+	private int num, type, parent, state, memberIdx;
 	private int phoneRecv, emailRecv;
-	private String category, subject, content, created;
+	private String category, subject, content, created, userId, userName;
 	
 	
-	public int getNum() {
-		return num;
+	
+	public String getUserName() {
+		return userName;
 	}
-	public void setNum(int num) {
-		this.num = num;
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+	public String getUserId() {
+		return userId;
+	}
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 	public int getMemberIdx() {
 		return memberIdx;
@@ -18,6 +25,13 @@ public class Inquiry {
 	public void setMemberIdx(int memberIdx) {
 		this.memberIdx = memberIdx;
 	}
+	public int getNum() {
+		return num;
+	}
+	public void setNum(int num) {
+		this.num = num;
+	}
+	
 	public int getType() {
 		return type;
 	}
