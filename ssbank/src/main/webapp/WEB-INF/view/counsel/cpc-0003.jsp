@@ -33,12 +33,6 @@
 	      </td>
 	  </tr>
 
-	  <tr align="left" height="40" style="border-bottom: 1px solid #cccccc;">
-	      <td width="100" bgcolor="#eeeeee" style="text-align: center;">패스워드</td>
-	      <td style="padding-left:10px;"> 
-	           <input type="password" name="boardPwd" id="boardPwd" size="35" maxlength="7" class="boxTF">&nbsp;(게시물 수정 및 삭제시 필요 !!!)
-	       </td>
-	  </tr> 
 	  </table>
 	
 	  <table style="width: 80%; margin: 0px auto; border-spacing: 0px;">

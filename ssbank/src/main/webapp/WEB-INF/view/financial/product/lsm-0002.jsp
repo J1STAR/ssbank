@@ -25,7 +25,7 @@ function counsel(categoryIdx){
     <table class="table-verti half">
         <caption>예금상품상세</caption>
         <colgroup>
-            <col style="width:20%;"/>
+            <col style="width:30%;"/>
             <col style="width:*;"/>
         </colgroup>
         <tbody>

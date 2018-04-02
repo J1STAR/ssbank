@@ -3,7 +3,6 @@ package com.ssb.counsel;
 public class Counsel {
 	
 	private int boardIdx;
-	private String boardPwd;
 	private int categoryIdx;
 	private int memberIdx;
 	private String subject;
@@ -31,12 +30,7 @@ public class Counsel {
 	public void setReplyCount(int replyCount) {
 		this.replyCount = replyCount;
 	}
-	public String getBoardPwd() {
-		return boardPwd;
-	}
-	public void setBoardPwd(String boardPwd) {
-		this.boardPwd = boardPwd;
-	}
+	
 	public String getCreateDate() {
 		return createDate;
 	}
