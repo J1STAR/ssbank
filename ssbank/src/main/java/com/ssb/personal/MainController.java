@@ -11,15 +11,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.ssb.financial.loan.Loan;
 import com.ssb.financial.loan.LoanService;
-import com.ssb.personal.transaction.Transaction;
+import com.ssb.personal.account.AccountService;
 
 @Controller("personal.mainController")
 public class MainController {
 	
 	@Autowired
 	private LoanService service;
+	
+	@Autowired
+	private AccountService acService;
 	
 	@RequestMapping(value="/personal/lookupAccount", method=RequestMethod.GET)
 	public String loopUpAccountForm() {
@@ -61,11 +63,17 @@ public class MainController {
 		
 		model.addAttribute("trStatus", status);
 
-		model.addAttribute("sendAccount", map.get("accountNo"));
-		model.addAttribute("recvAccount", map.get("accountNo2"));
+		if( map.get("accountNo") != null ) 
+			model.addAttribute("sendAccount", map.get("accountNo"));
+		
+		if( map.get("accountNo2") != null ) 
+			model.addAttribute("recvAccount", map.get("accountNo2"));
+		
 		model.addAttribute("amount", map.get("amount"));
-		if( status.equals("1") ) {
-			model.addAttribute("currBalance", Integer.parseInt((String)map.get("balance")) - Integer.parseInt((String)map.get("amount")));
+		if( status.equals("1") && map.get("accountNo") != null ) {
+			model.addAttribute("currBalance", acService.getAccountBalance((String)map.get("accountNo")));
+		} else if (status.equals("1") && map.get("accountNo") == null) {
+			model.addAttribute("currBalance", acService.getAccountBalance((String)map.get("accountNo2")));
 		}
 
 		return ".personal.transaction.pit-0002";

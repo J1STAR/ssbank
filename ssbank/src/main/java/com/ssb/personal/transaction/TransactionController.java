@@ -42,6 +42,20 @@ public class TransactionController {
 		return model;
 	}
 	
+	@RequestMapping(value="/transaction/transactionATMSubmit", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> transactionATMSubmit(@RequestParam Map<String, Object> map) {
+		
+		int result;
+		
+		result = trService.transactionATMSubmit(map);
+		
+		Map<String, Object> model = new HashMap<>();
+		model.put("result", result);
+		
+		return model;
+	}
+	
 	@RequestMapping(value="/transaction/transactionRepaySubmit", method=RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> transactionRepaySubmit(@RequestParam Map<String, Object> map){

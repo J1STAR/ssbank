@@ -62,6 +62,13 @@ public class MemberServiceImpl implements MemberService {
 					}
 				}
 			}
+			
+			// 주민등록번호
+			if(dto.getSsn1() !=null &&dto.getSsn1().length()!=0) {
+				if(dto.getSsn2() !=null &&dto.getSsn2().length()!=0) {
+					dto.setSsn(dto.getSsn1()+"-"+dto.getSsn2());
+				}
+			}
 			dao.insertData("member.insertMember",dto);
 			
 		} catch (Exception e) {

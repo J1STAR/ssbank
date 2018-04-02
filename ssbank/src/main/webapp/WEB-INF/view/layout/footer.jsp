@@ -44,6 +44,7 @@
 		</div>
 	</footer>
 	<script>
+	
 		/* DatePicker를 통한 날짜 입력 */
 		$(function(){
 			
@@ -67,4 +68,10 @@
 			});
 			
 		});
+		
+		function allInputTrim() {
+			$('input').val(function(_, value) {
+			   return $.trim(value);
+			});
+		}
 	</script>

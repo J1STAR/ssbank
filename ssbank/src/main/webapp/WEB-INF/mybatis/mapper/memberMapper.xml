@@ -36,6 +36,7 @@
 				#{tel, jdbcType=VARCHAR, mode=IN},
 				#{userId, jdbcType=VARCHAR, mode=IN},
 				#{userPwd, jdbcType=VARCHAR, mode=IN},
+				#{ssn, jdbcType=VARCHAR, mode=IN},
 				#{uuid, jdbcType=VARCHAR, mode=IN}
 			)
 		}
@@ -58,7 +59,6 @@
 				#{zipCode, jdbcType=VARCHAR, mode=IN},
 				#{addr1, jdbcType=VARCHAR, mode=IN},
 				#{addr2, jdbcType=VARCHAR, mode=IN},
-				#{birth, jdbcType=VARCHAR, mode=IN},
 				#{tel, jdbcType=VARCHAR, mode=IN},
 				#{userPwd, jdbcType=VARCHAR, mode=IN},
 				#{memberIdx, jdbcType=INTEGER, mode=IN}
