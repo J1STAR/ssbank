@@ -3,8 +3,6 @@ package com.ssb.customerManageService;
 import java.util.List;
 import java.util.Map;
 
-import com.ssb.newsBoard.NewsBoard;
-
 public interface BoardService {
 	public int insertBoard(Board dto, String pathname);
 	public List<Board> listBoard(Map<String, Object> map);
@@ -15,5 +13,5 @@ public interface BoardService {
 	public Board preReadBoard(Map<String, Object> map);
 	public Board nextReadBoard(Map<String, Object>map);
 	public int updateBoard(Board dto, String pathname);
-	public int deleteBoard(int boardIdx, String pathname, String userId);
+	public int deleteBoard(int boardIdx);
 }

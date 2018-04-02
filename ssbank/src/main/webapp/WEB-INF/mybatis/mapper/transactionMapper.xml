@@ -16,6 +16,16 @@
 		}
 	</insert>
 	
+	<insert id="transactionATMSubmit" parameterType="map" statementType="CALLABLE" useGeneratedKeys="false">
+	{
+		CALL pTransactionATM(
+			#{accountNo2, jdbcType=VARCHAR, mode=IN},
+			#{amount, jdbcType=INTEGER, mode=IN},
+			#{content, jdbcType=VARCHAR, mode=IN},
+			#{result, jdbcType=INTEGER, mode=OUT}
+		)
+	</insert>
+	
 	
 	<insert id="transactionRepaySubmit" parameterType="map" statementType="CALLABLE"
 		useGeneratedKeys="false">

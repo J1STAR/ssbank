@@ -25,6 +25,7 @@
 			<!-- 모든 접근자를 항상 승인 -->
 			<intercept-url pattern="/index.jsp" access="permitAll" />
 			<intercept-url pattern="/guide.jsp" access="permitAll" />
+			<intercept-url pattern="/atm" access="permitAll" />
 			
 			<intercept-url pattern="/member/login" access="permitAll" />
 			<intercept-url pattern="/member/submitOK" access="permitAll" />
@@ -41,7 +42,7 @@
             
             <intercept-url pattern="/personal/**" access="hasRole('ROLE_USER')"/>
             
-            <intercept-url pattern="/sale/**" access="hasRole('ROLE_USER')"/>
+            <intercept-url pattern="/sale/**" access="hasAnyRole('ROLE_USER, ROLE_ADMIN')"/>
             
             <!-- 이미지, javascript, css등 -->
 			<intercept-url pattern="/resource/**" access="permitAll" />

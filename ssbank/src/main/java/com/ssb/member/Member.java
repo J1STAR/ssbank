@@ -20,7 +20,7 @@ public class Member {
 	private int investScore;
 	
 	// MemberInfo2
-	private String ssn;
+	private String ssn,ssn1,ssn2;
 	
 	// MemberAuthority
 	private String authority;
@@ -210,6 +210,22 @@ public class Member {
 
 	public void setUuid(String uuid) {
 		this.uuid = uuid;
+	}
+
+	public String getSsn1() {
+		return ssn1;
+	}
+
+	public void setSsn1(String ssn1) {
+		this.ssn1 = ssn1;
+	}
+
+	public String getSsn2() {
+		return ssn2;
+	}
+
+	public void setSsn2(String ssn2) {
+		this.ssn2 = ssn2;
 	}
 	
 	

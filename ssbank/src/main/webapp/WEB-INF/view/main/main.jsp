@@ -82,7 +82,7 @@
 			<h2>주요 서비스</h2>
 			<a href="#" class="btn-more">더보기</a>
 			<ul>
-				<li><a href="#">예/적금신규</a></li>
+				<li><a href="<%=cp %>/financial/product">예/적금신규</a></li>
 				<li><a href="#">자동이체</a></li>
 				<li><a href="#">인터넷환전</a></li>
 				<li><a href="#">환율조회</a></li>
@@ -104,9 +104,9 @@
 					</div>
 					<div id="tab2" class="tab_content">
 						<ul>
-							<li><a href="#">왜 눌렀똥?</a><span>2018.02.14</span></li>
-							<li><a href="#">메롱메롱</a><span>2018.02.14</span></li>
-							<li><a href="#">우헤헤헤헤ㅔ 졸려ㅕㅕ</a><span>2018.02.14</span></li>
+							<li><a href="#">Test1</a><span>2018.02.14</span></li>
+							<li><a href="#">Test2</a><span>2018.02.14</span></li>
+							<li><a href="#">Test3</a><span>2018.02.14</span></li>
 						</ul>
 					</div>
 				</div>
@@ -119,7 +119,7 @@
 				</h3>
 				<div class="btn-wrap">
 					<ul>
-						<li><a href="#">매물 및 시세</a></li>
+						<li><a href="<%=cp%>/sale/raa-0001">매물 및 시세</a></li>
 						<li><a href="#">지역소개</a></li>
 						<li><a href="#">부동산통계</a></li>
 						<li><a href="#">청약넣기</a></li>
@@ -133,32 +133,32 @@
 				<div class="owl-carousel owl-theme slider">
 					<div class="item item-01">
 						<ul>
-							<li>쌍용뱅크 입출금 통장</li>
+							<li>쌍용뱅크 예금</li>
 							<li>까다로운 계좌개설도</li>
 							<li>정말 손쉽게</li>
-							<li>연 0.10%</li>
+							<li>연 3%</li>
 						</ul>
-						<a href="#">더 알아보기</a>
+						<a href="<%=cp%>/financial/product/detail?productIdx=1">더 알아보기</a>
 					</div>
 					<div class="item item-02">
 						<ul>
-							<li>쌍용뱅크 정기예금</li>
+							<li>쌍용뱅크 적금</li>
 							<li>실시간 이자로</li>	
 							<li>돈모으는 재미가 쏠쏠</li>	
-							<li>연 2.20%</li>	
+							<li>연 5%</li>	
 							<li>(12개월기준)</li>	
 						</ul>
-						<a href="#">더 알아보기</a>
+						<a href="<%=cp%>/financial/product/detail?productIdx=1">더 알아보기</a>
 					</div>
 					<div class="item item-03">
 						<ul>
 							<li>쌍용뱅크 전월세보증금 대출</li>
 							<li>전월세 보증금도</li>
 							<li>정말 간편하게</li>
-							<li>연 2.82%</li>
+							<li>연 3%</li>
 							<li>(최저)</li>
 						</ul>
-						<a href="#">더 알아보기</a>
+						<a href="<%=cp%>/financial/product/detail?productIdx=3">더 알아보기</a>
 					</div>
 				</div>
 			</section>

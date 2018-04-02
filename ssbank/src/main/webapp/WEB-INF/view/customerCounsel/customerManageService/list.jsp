@@ -5,14 +5,7 @@
 <%
 	String cp=request.getContextPath();
 %>
-<script type="text/javascript">
-	function searchList() {
-		var f=document.searchForm;
-		f.submit();
-	}
-</script>
 
-<div class="content">
 	<h1>자주하는 질문</h1>
 			<div class="page-con">
 				<div class="table-num">
@@ -41,7 +34,7 @@
 								<tr>
 									<td>${dto.listNum}</td>
 									<td>
-										<a href="${articleUrl}&boardIdx=${dto.boardIdx}">${dto.subject}</a>
+										<a href="javascript:articleBoard('${dto.boardIdx}', '${pageNo}');">${dto.subject}</a>
 									</td>
 									<td>${dto.userName}</td>
 									<td>${dto.createDate}</td>
@@ -51,13 +44,12 @@
 						</c:forEach>
 					</table>
 				</div>
-				<div class="btns">
-					<a href="javascript:location.href='<%=cp%>/customerCounsel/customerManageService/list';" class="btn-type-gray medium mt20 fl">새로고침</a>
+				<div class="btns" style="width: 10%; float: left;">
+					<a onclick="reloadBoard();" class="btn-type-gray medium mt20 fl">새로고침</a>
 				</div>	
 				<div class="btns">	
 					<c:if test="${sessionScope.member.userId == 'admin'}">
-						<%-- <a href="javascript:location.href='<%=cp%>/customer/newsBoard/writeNews';" class="btn-type-blue1 medium mt20 fr">글올리기</a> --%>
-						<a href="javascript:location.href='<%=cp%>/customerCounsel/customerManageService/write';" class="btn-type-blue1 medium mt20 fr">글올리기</a>
+						<a onclick="insertForm();" class="btn-type-blue1 medium mt20 fr">글올리기</a>
 					</c:if>
 				</div>
 				
@@ -68,9 +60,9 @@
 					</ul>
 				</div>
 				<div class="search-wrap mt40">
-					<form name="searchForm" action="<%=cp%>/customerCounsel/customerManageService/list" method="post">
+					<form name="searchForm" action="" method="post">
 					<div class="item-select">
-						<select name="" class="">
+						<select id="searchKey" name="searchKey" class="selectField">
 							<option>제목</option>
 							<option>작성자</option>
 							<option>내용</option>
@@ -82,4 +74,3 @@
 				</form>
 				</div>
 			</div>
-</div>

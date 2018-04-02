@@ -14,8 +14,10 @@
 				<dt>${trStatus == "0" ? "이체 실패" : "이체 성공"}</dt>	
 				<dd>
 					<ul>
-						<li>보낸 사람 이름 : ${sessionScope.member.userName }</li>
-						<li>보내는 계좌 : ${sendAccount }</li>
+						<c:if test="${sendAccount != null }">
+							<li>보낸 사람 이름 : ${sessionScope.member.userName }</li>
+							<li>보내는 계좌 : ${sendAccount }</li>
+						</c:if>
 						<li>받는 계좌 : ${recvAccount }</li>
 						<li>금액 : ${amount }</li>
 						<c:if test="${trStatus != '0'}">

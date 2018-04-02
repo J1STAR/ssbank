@@ -36,8 +36,8 @@ public class Board {
 		return memberIdx;
 	}
 
-	public void setMemberIdx(int memberIdx) {
-		this.memberIdx = memberIdx;
+	public void setMemberIdx(int i) {
+		this.memberIdx = i;
 	}
 
 	public String getUserId() {

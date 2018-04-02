@@ -190,6 +190,8 @@
 	}
 	
 	function transactionSubmit(){
+		allInputTrim();
+		
 		var url = "<%=cp%>/transaction/transactionSubmit";
 		var trQuery = $("form[name=transactionTable]").serialize();
 

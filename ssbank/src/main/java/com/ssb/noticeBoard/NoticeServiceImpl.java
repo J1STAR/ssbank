@@ -46,10 +46,6 @@ public class NoticeServiceImpl implements NoticeService{
 					}
 				}
 			}
-					
-					
-				
-			
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}

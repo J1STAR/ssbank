@@ -3,6 +3,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="personalAccount">
 	
+	<select id="getAccountBalance" parameterType="String" resultType="Integer">
+		SELECT getCurrentBalance(#{accountNo}) balance FROM dual
+	</select>
+	
 	<select id="lookupAccount" parameterType="map" resultType="map">
 		SELECT p.PRODUCTNAME, ac.accountNo, TO_CHAR(ac.createDate, 'YYYY-MM-DD HH24:MI:SS') createDate, TO_CHAR(trd.trDate, 'YYYY-MM-DD HH24:MI:SS') trDate, balance, status
 	    FROM ACCOUNT ac
