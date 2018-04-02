@@ -5,10 +5,19 @@
 <%
 	String cp=request.getContextPath();
 %>
+<script>
+$(window).load(function(){
+	var total = 0;
+	$.each($("td[name=balance]"),function(){
+		total += parseInt($(this).html());
+	});
+	$("#total").html(total);
+});
+</script>
 <div class="content">
 	<br>
 	<h1>대출</h1>
-	<h2>대출신청 (약정)잔액 : ${totalLoan}원 | 대출 총잔액 : 원</h2>
+	<h2>대출신청 (약정)잔액 : ${totalLoan}원 | 대출 총잔액 : <span id="total">-</span> 원</h2>
 		<br>
 		<div class="table-wrap">
 		    <table class="table-hori">
@@ -38,11 +47,11 @@
 		            <tr>
 		           
 		                <td>${loan.productName}</td>
-		                <td><a href="#">${loan.accountNo}</a></td>
+		                <td><a href='<%=cp%>/personal/transaction?accountNo="${loan.accountNo}"'>${loan.accountNo}</a></td>
 		                <td>${loan.createDate}</td>
 		                <td>${loan.lastDate}</td>
 		                <td>${loan.lendMoney}</td>
-		                <td>${loan.balance}</td>
+		                <td name="balance">${loan.balance}</td>
 		                <td>
 		                    <a href='<%=cp%>/loan/repayList?accountNo=${loan.accountNo}' class="btn-type-gray medium">조회</a>
 		                    <a href='<%=cp%>/personal/transaction?accountNo="${loan.accountNo}"' class="btn-type-blue1 medium">납부</a>

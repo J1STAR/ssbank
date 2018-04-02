@@ -37,8 +37,16 @@ public class Loan {
 		private int principal;
 		private int repayPrinciple;
 		private int repayInterest;
+		private int payment;
 		
 		
+		
+		public int getPayment() {
+			return payment;
+		}
+		public void setPayment(int payment) {
+			this.payment = payment;
+		}
 		public String getRepayDate() {
 			return repayDate;
 		}

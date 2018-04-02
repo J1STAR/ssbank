@@ -239,7 +239,7 @@ $(document).ready(function() {
 			for(var i=1;i<=period;i++){
 				result1 =
 					result1+
-					parseInt(((money*10000)*(i-1))/period*(rate/12/100));
+					parseInt(((money*10000)*(i))/period*(rate/12/100));
 			}
 			 result2 = parseInt((money*10000)/period)+parseInt((money*10000)*(rate/12/100));
 		     result3 = parseInt((money*10000)/period)+parseInt((money*10000)/period*(rate/12/100));

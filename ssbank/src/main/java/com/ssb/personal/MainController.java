@@ -1,7 +1,9 @@
 package com.ssb.personal;
 
+import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -9,10 +11,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.ssb.financial.loan.Loan;
+import com.ssb.financial.loan.LoanService;
 import com.ssb.personal.transaction.Transaction;
 
 @Controller("personal.mainController")
 public class MainController {
+	
+	@Autowired
+	private LoanService service;
 	
 	@RequestMapping(value="/personal/lookupAccount", method=RequestMethod.GET)
 	public String loopUpAccountForm() {
@@ -38,6 +45,10 @@ public class MainController {
 		model.addAttribute("accountNo", accountNo);
 		
 		if(accountNo != null && accountNo.charAt(3) == '3') {
+			Map<String, Object> map = new HashMap<>();
+			map.put("accountNo", accountNo);
+			int payment=service.loanPayment(map);
+			model.addAttribute("payment",payment);
 			return ".financial.loan.prp-0001";
 		} else {
 			return ".personal.transaction.pit-0001";
