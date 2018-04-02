@@ -69,4 +69,10 @@
 		FROM repayLoan WHERE accountNo=#{accountNo}
 	</select>
 	
+	<select id="loanPayment" parameterType="map" resultType="INTEGER">
+		SELECT (SUM(principal)+SUM(interest)-SUM(repayprinciple)-SUM(repayinterest)) AS payment FROM repayLoan
+		WHERE 	<![CDATA[ TO_CHAR(REPAYDATE,'YYYY-MM-DD') < TO_CHAR(SYSDATE,'YYYY-MM-DD') ]]> 
+		AND accountNo=#{accountNo} AND status=0
+	</select>
+	
 </mapper>

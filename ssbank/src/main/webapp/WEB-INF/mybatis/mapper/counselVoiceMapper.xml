@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="customerVoice">
+	
+	<select id="seq" resultType="Integer">
+		SELECT board_seq.NEXTVAL FROM dual
+	</select>
+	
+	<insert id="insertBoard" parameterType="com.ssb.customerVoice.CounselVoice">
+		INSERT INTO board(boardIdx, categoryIdx, memberIdx, subject, content, createDate, hitCount)
+					VALUES(board_seq.nextval, #{categoryIdx}, #{memberIdx}, #{subject}, #{content}, SYSDATE, 0)
+	</insert>
+	
+	<select id="listCategory" resultType="com.ssb.customerVoice.CounselVoice">
+		SELECT categoryIdx FROM boardtype
+	</select>
+	
+	<select id="readBoard" parameterType="Integer" resultType="com.ssb.customerVoice.CounselVoice">
+		SELECT
+				b.boardIdx,
+				m1.memberIdx,
+				m2.lastName || m2.firstName userName,
+				categoryIdx,
+				subject,
+				content,
+				TO_CHAR(b.createDate,
+				'YYYY-MM-DD') createDate,
+				hitCount
+			FROM board b
+			JOIN member m1 ON b.memberIdx = m1.memberIdx
+			JOIN memberInfo m2 ON b.memberIdx = m2.memberIdx
+			WHERE boardIdx = #{boardIdx}
+	</select>
+	
+	<sql id="where-list">
+		<if test="searchKey=='userName'">
+			userName = #{searchValue}
+		</if>
+		<if test="searchKey=='subject'">
+			INSTR(subject, #{searchValue}) &gt; 0
+		</if>
+		<if test="searchKey=='content'">
+			DBMS_LOB.INSTR(content, #{searchValue}) &gt; 0
+		</if>
+		<if test="searchKey=='created'">
+			(TO_CHAR(b.createDate, 'YYYY-MM-DD') = #{searchValue}
+				OR TO_CHAR(b.createDate, 'YYYY-MM-DD') = #{searchValue})
+		</if>
+	</sql>
+	
+	<select id="dataCount" resultType="Integer" parameterType="map">
+		SELECT NVL(COUNT(*), 0)
+			FROM board b
+			JOIN member m1 ON b.memberIdx = m1.memberIdx
+			JOIN memberInfo m2 ON b.memberIdx = m2.memberIdx
+		<where>
+			categoryIdx = #{categoryIdx}
+			<if test="searchValue != null and searchValue != ''">
+				<include refid="where-list"/>
+			</if>
+		</where>
+	</select>
+	
+	
+	
+	<select id="listBoard" parameterType="map" resultType="com.ssb.customerVoice.CounselVoice">
+	SELECT * FROM (
+		SELECT ROWNUM rnum, tb.* FROM (
+			SELECT
+				b.boardIdx,
+				b.memberIdx,
+				m1.userId,
+				m2.lastName || m2.firstName userName,
+				categoryIdx,
+				subject,
+				TO_CHAR(b.createDate, 'YYYY-MM-DD') createDate,
+				hitCount
+				FROM board b
+				JOIN member m1 ON b.memberIdx = m1.memberIdx
+				JOIN memberInfo m2 ON b.memberIdx = m2.memberIdx
+				LEFT OUTER JOIN (
+					SELECT 
+					boardIdx,
+					COUNT(*) replyCount
+					FROM boardReply
+					GROUP BY boardIdx
+				) c ON b.boardIdx = c.boardIdx
+				<where>
+					categoryIdx = #{categoryIdx}
+					<if test="searchValue != null and searchValue != ''">
+						AND
+						<include refid="where-list"/>
+					</if>
+				</where>
+				ORDER BY boardIdx DESC
+<![CDATA[				
+		) tb WHERE ROWNUM <= #{end}
+	) WHERE rnum >= #{start}
+]]>	
+	</select>
+	
+	<update id="updateHitCount" parameterType="Integer">
+		UPDATE board SET hitCount = hitCount + 1 WHERE boardIdx = #{boardIdx}
+	</update>
+	
+	<delete id="deleteBoard" parameterType="map">
+		DELETE FROM board WHERE boardIdx = #{boardIdx}
+	</delete>
+	
+	<select id="listReply" parameterType="map" resultType="com.ssb.customerVoice.ReplyVoice">
+		SELECT * FROM (
+			SELECT ROWNUM rnum, tb.* FROM (
+				SELECT 
+				r.replyIdx, 
+				r.memberIdx,
+				r.boardIdx,
+				m2.lastName || m2.firstName userName,
+				r.content,
+				r.createDate
+				FROM boardReply r
+				JOIN memberInfo m2 ON r.memberIdx = m2.memberIdx
+				LEFT OUTER JOIN (
+					SELECT answer, COUNT(*) answerCount
+					FROM boardReply WHERE answer != 0 GROUP BY answer
+				) a ON r.replyIdx = a.answer
+				WHERE r.boardIdx = #{boardIdx} AND r.answer = 0
+				ORDER BY r.replyIdx DESC
+<![CDATA[		
+			) tb WHERE ROWNUM <= #{end}
+		) WHERE rnum >= #{start}
+]]>		
+	</select>
+	
+	<select id="replyCount" parameterType="map" resultType="Integer">
+		SELECT NVL(COUNT(*), 0) FROM boardReply
+				WHERE boardIdx = #{boardIdx} AND answer = 0
+	</select>
+	
+	<insert id="insertReply" parameterType="com.ssb.customerVoice.ReplyVoice">
+	INSERT INTO boardReply (replyIdx, memberIdx, boardIdx, content, createDate, answer) VALUES
+					(BOARDREPLY_seq.NEXTVAL, #{memberIdx}, #{boardIdx}, #{content}, SYSDATE, #{answer})
+	</insert>
+	
+	<delete id="deleteReply" parameterType="map">
+	DELETE boardReply WHERE
+	<if test="mode=='reply'">
+		replyIdx IN (
+			SELECT replyIdx FROM boardReply
+				START WITH replyIdx = #{replyIdx}
+				CONNECT BY PRIOR replyIdx = answer)
+	</if>
+	<if test="mode==answer">
+	replyIdx = #{replyIdx}
+	</if>
+	</delete>
+	
+	<delete id="deleteBoardReply" parameterType="map">
+	 DELETE boardReply WHERE boardIdx=#{boardIdx}
+	</delete>
+	
+</mapper>

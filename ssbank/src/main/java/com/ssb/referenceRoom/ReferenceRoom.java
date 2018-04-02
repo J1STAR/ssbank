@@ -7,7 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class ReferenceRoom {
 	private int listNum, boardIdx, categoryIdx, memberIdx;
 	private String userId, userName, categoryName;
-	private String subject, content, creadteDate;
+	private String subject, content, createDate;
 	private int hitCount, notice;
 	
 	private String saveFileName;
@@ -92,12 +92,12 @@ public class ReferenceRoom {
 		this.content = content;
 	}
 
-	public String getCreadteDate() {
-		return creadteDate;
+	public String getCreateDate() {
+		return createDate;
 	}
 
-	public void setCreadteDate(String creadteDate) {
-		this.creadteDate = creadteDate;
+	public void setCreateDate(String creadteDate) {
+		this.createDate = creadteDate;
 	}
 
 	public int getHitCount() {

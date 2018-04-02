@@ -5,47 +5,6 @@
 <%
 	String cp=request.getContextPath();
 %>
-<script type="text/javascript">
-function deleteBoard() {
-<c:if test="${sessionScope.member.userId == 'admin' }">
-	var boardIdx = "${dto.boardIdx}";
-	var page = "${page}";
-	var query = "boardIdx="+boardIdx+"&page="+page;
-	var url = "<%=cp%>/customerCounsel/customerManageService/delete?" + query;
-
-	if(confirm("위 자료를 삭제 하시 겠습니까 ? ")) {
-			location.href=url;
-	}
-</c:if>    
-<c:if test="${sessionScope.member.userId == 'admin' }">
-	alert("게시물을 삭제할 수  없습니다.");
-</c:if>
-} 
-
-function updateBoard() {
-<c:if test="${dto.userId == sessionScope.member.userId || sessionScope.member.userId == 'admin' }">
-	var boardIdx = "${dto.boardIdx}";
-	var page = "${page}";
-	var query = "boardIdx="+boardIdx+"&page="+page;
-	var url = "<%=cp%>/customerCounsel/customerManageService/update?" + query;
-
-	location.href=url;
-</c:if>
-
-<c:if test="${dto.userId == sessionScope.member.userId || sessionScope.member.userId == 'admin' }">
-	alert("게시물을 수정할 수  없습니다.");
-</c:if>
-}
-</script>
-
-<script type="text/javascript">
-//로그인 화면
-function login() {
-	location.href="<%=cp%>/member/login";	
-}
-
-</script> 
-
 <div class="content">
 	
 	<h1>뉴스</h1>
@@ -77,7 +36,7 @@ function login() {
 			    <td colspan="2" align="left" style="padding-left: 5px;">
 			       이전글 :
 			         <c:if test="${not empty preReadDto}">
-			              <a href="<%=cp%>/customerCounsel/customerManageService/article?${query}&boardIdx=${preReadDto.boardIdx}">${preReadDto.subject}</a>
+			              <a href="javascript:articleBoard('${preReadDto.boardIdx}', '${pageNo}');">${preReadDto.subject}</a>
 			        </c:if>
 			</tr>
 			
@@ -85,7 +44,7 @@ function login() {
 			    <td colspan="2" align="left" style="padding-left: 5px;">
 			       다음글 :
 			         <c:if test="${not empty nextReadDto}">
-			              <a href="<%=cp%>/customerCounsel/customerManageService/article?${query}&boardIdx=${nextReadDto.boardIdx}">${nextReadDto.subject}</a>
+			              <a href="javascript:articleBoard('${nextReadDto.boardIdx}', '${pageNo}');">${nextReadDto.subject}</a>
 			        </c:if>
 			    </td>
 			</tr>
@@ -95,15 +54,15 @@ function login() {
 				<tr height="45">
 				    <td align="left">
 				       <c:if test="${dto.userId == sessionScope.member.userId || sessionScope.member.userId == 'admin' }">				    
-				          <a class="btn-type-blue1 medium" onclick="updateBoard();">수정</a>
+				          <a class="btn-type-blue1 medium" onclick="updateForm('${dto.boardIdx}', '${pageNo}');">수정</a>
 				       </c:if>
 				       <c:if test="${sessionScope.member.userId == 'admin' }">				    
-				          <a class="btn-type-gray1 medium" onclick="deleteBoard();">삭제</a>
+				          <a class="btn-type-gray1 medium" onclick="deleteBoard('${dto.boardIdx}', '${pageNo}');">삭제</a>
 				       </c:if>
 				    </td>
 				
 				    <td align="right">
-				        <a class="btn-type-blue1 medium" onclick="javascript:location.href='<%=cp%>/customerCounsel/customerManageService/list?${query}';">리스트</a>
+				        <a class="btn-type-blue1 medium" onclick="listPage('${pageNo}')">리스트</a>
 				    </td>
 				</tr>
 			</table>

@@ -103,5 +103,16 @@ public class LoanServiceImpl implements LoanService{
 		return list;
 	}
 
+	@Override
+	public int loanPayment(Map<String, Object> map) {
+		int result=0;
+		try {
+			result=dao.selectOne("loan.loanPayment",map);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return result;
+	}
+
 
 }

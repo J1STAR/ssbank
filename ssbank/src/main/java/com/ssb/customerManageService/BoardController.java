@@ -1,4 +1,4 @@
-package com.ssb.customerManageService;
+/*package com.ssb.customerManageService;
 
 import java.io.File;
 import java.net.URLDecoder;
@@ -236,3 +236,4 @@ public class BoardController {
 	
 	
 }
+*/

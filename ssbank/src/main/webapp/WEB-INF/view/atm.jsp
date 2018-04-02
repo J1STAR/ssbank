@@ -22,7 +22,7 @@
 		            <tr>
 		                <th scope="col">입금계좌번호</th>
 		                <td scope="col">
-							<input type="text" name="accountNo" class="">
+							<input type="text" name="accountNo2" class="">
 						</td>
 		            </tr>
 		        </tbody>
@@ -49,8 +49,39 @@
 	    </form>
 	    <div class="btn-area">
 		    <a href="javascript:history.back()" class="btn-type-gray1 big">취소</a>
-		    <a href="" id="depositConfirm" class="btn-type-blue1 big">확인</a>
+		    <a href="#" id="depositConfirm" class="btn-type-blue1 big">확인</a>
 		</div>
 	</div>
 	
 </div>
+
+<script>
+
+	$(function(){
+		$("#depositConfirm").click(function(event){
+			event.preventDefault();
+			
+			atmDepositToAccount();
+		});
+	});
+	
+	function atmDepositToAccount(){
+		allInputTrim();
+		
+		var url = "<%=cp%>/transaction/transactionATMSubmit";
+		var query = $("form[name=depositTable]").serialize();
+		
+		$.ajax({
+			url		:	url,
+			type		:	"POST",
+			data		:	query,
+			dataType	:	"json",
+			success	:	function(data) {
+				var f = document.depositTable;
+				f.action = "<%=cp%>/personal/transaction-"+ data.result;
+				f.submit();
+			}
+		})
+	}
+	
+</script>

@@ -17,4 +17,5 @@ public interface LoanService {
 	//대출 상환
 	public int repay(Loan dto);
 	public List<Loan> repayList(Map <String, Object> map);
+	public int loanPayment(Map <String, Object> map);
 }

@@ -15,6 +15,19 @@ public class AccountServiceImpl implements AccountService{
 	private CommonDAO dao;
 	
 	@Override
+	public int getAccountBalance(String accountNo) {
+		int balance = 0;
+		
+		try {
+			balance = dao.selectOne("personalAccount.getAccountBalance",accountNo);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		return balance;
+	}
+	
+	@Override
 	public List<Map<String, Object>> lookupAccount(Map<String, Object> map) {
 		
 		List<Map<String, Object>> listAccount = null;
