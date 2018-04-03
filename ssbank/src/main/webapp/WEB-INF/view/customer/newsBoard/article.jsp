@@ -8,7 +8,7 @@
 <!-- nib-0001 -->
 <script type="text/javascript">
 function deleteBoard() {
-<c:if test="${sessionScope.member.userId == 'admin' }">
+<c:if test="${dto.userId == sessionScope.member.userId || sessionScope.member.userId == 'admin' }">
 	var boardIdx = "${dto.boardIdx}";
 	var page = "${page}";
 	var query = "boardIdx="+boardIdx+"&page="+page;
@@ -18,7 +18,7 @@ function deleteBoard() {
 			location.href=url;
 	}
 </c:if>    
-<c:if test="${sessionScope.member.userId == 'admin' }">
+<c:if test="${dto.userId == sessionScope.member.userId || sessionScope.member.userId == 'admin' }">
 	alert("게시물을 삭제할 수  없습니다.");
 </c:if>
 } 
