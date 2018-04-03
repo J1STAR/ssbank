@@ -179,7 +179,7 @@
 	</select>
 	
 	<delete id="deleteFile" parameterType="map">
-	DELETE FROM boardfile WHERE ${field}=#{fileIdx}
+	DELETE FROM boardfile WHERE ${field}=#{value}
 	</delete>
 	
 	
