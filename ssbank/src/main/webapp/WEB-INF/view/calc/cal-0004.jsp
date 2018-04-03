@@ -9,7 +9,7 @@
 		$(function(){
 			
 			$(".ui-datepicker-trigger").css({
-				position:"absolute", width:"30px", height:"60px"
+				position:"absolute", width:"20px", height:"60px"
 			});
 			
 		});

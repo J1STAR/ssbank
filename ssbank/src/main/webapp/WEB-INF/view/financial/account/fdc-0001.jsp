@@ -76,7 +76,7 @@ $(function(){
     <table class="table-verti half">
         <caption>통장해지</caption>
         <colgroup>
-            <col style="width:20%;"/>
+            <col style="width:35%;"/>
             <col style="width:*;"/>
         </colgroup>
         <tbody>
