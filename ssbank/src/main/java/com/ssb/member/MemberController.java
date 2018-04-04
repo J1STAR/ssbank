@@ -91,8 +91,6 @@ public class MemberController {
 	@RequestMapping(value="/member/submitOK")
 	public String submitOKForm(HttpSession session, Member dto, @RequestParam String mode, Model model) {
 		
-		dto.setUserName(dto.getLastName() + dto.getFirstName());
-		
 		model.addAttribute("dto", dto);
 		model.addAttribute("mode", mode);
 		
