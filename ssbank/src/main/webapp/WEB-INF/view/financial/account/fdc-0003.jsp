@@ -41,7 +41,7 @@ function sendOk(accountNo){
     <table class="table-verti half">
         <caption>해지계좌 계좌이체</caption>
         <colgroup>
-            <col style="width:20%;"/>
+            <col style="width:35%;"/>
             <col style="width:*;"/>
         </colgroup>
         <tbody>

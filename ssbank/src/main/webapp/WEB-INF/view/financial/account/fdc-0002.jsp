@@ -82,7 +82,7 @@ $(function(){
 		<table class="table-verti half">
 			<caption>해지계좌 비밀번호 확인</caption>
 			<colgroup>
-				<col style="width: 20%;" />
+				<col style="width: 35%;" />
 				<col style="width: *;" />
 			</colgroup>
 			<tbody>

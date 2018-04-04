@@ -58,7 +58,7 @@
 		            </tr>
 		            <tr>
 		                <th>이체금액</th>
-		                <td><input type="text" name="amount" class=""><span>${payment}</span></td>
+		                <td><input type="text" name="amount" class=""><span> 납부 금액 : ${payment} 원 </span></td>
 		               
 		            </tr>
 		            <tr>

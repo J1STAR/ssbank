@@ -279,7 +279,7 @@ public class ReferenceRoomController {
 		
 		Map<String, Object> map=new HashMap<String, Object>();
 		map.put("field", "fileIdx");
-		map.put("fileIdx", fileIdx);
+		map.put("value", fileIdx);
 		service.deleteFile(map);
 		
    	    // 작업 결과를 json으로 전송

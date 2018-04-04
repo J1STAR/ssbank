@@ -38,8 +38,8 @@
  	</select>
  	
  	<insert id="insertBoard" parameterType="com.ssb.counsel.Counsel">
- 	 INSERT INTO board(boardIdx,categoryIdx,memberIdx,subject,content,hitCount,createDate,boardPwd)
-  			VALUES(BOARD_SEQ.NEXTVAL,#{categoryIdx},#{memberIdx},#{subject},#{content},0,SYSDATE,#{boardPwd})
+ 	 INSERT INTO board(boardIdx,categoryIdx,memberIdx,subject,content,hitCount,createDate)
+  			VALUES(BOARD_SEQ.NEXTVAL,#{categoryIdx},#{memberIdx},#{subject},#{content},0,SYSDATE)
  	</insert>
  	
  	<select id="replyCount" parameterType="map" resultType="Integer">

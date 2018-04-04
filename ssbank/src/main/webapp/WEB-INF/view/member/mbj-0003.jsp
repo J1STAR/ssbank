@@ -36,11 +36,11 @@
 		</div>
 		<div class="box-complete-area">
 			<dl>
-				<dt>회원 ${mode == "created" || mode == 'mailOk' ? "가입" : "정보 수정"}이 완료되었습니다.</dt>	
+				<dt>회원 ${mode == "created" || mode == "mailOk" ? "가입" : "정보 수정"}이 완료되었습니다.</dt>	
 				<dd>
 					<ul>
-						<li>${dto.userName }님의 ${mode == "created" || mode == 'mailOk' ? "회원가입" : "정보 수정"}이 정상적으로 처리되었습니다.</li>
-						<li>${mode == "upadte" || mode =="mailOk" ? "메인화면으로 이동하여 로그인 하시기 바랍니다." : "이메일을 통해 회원가입을 완료해주세요."}</li>
+						<li>${mode == "created" || mode =="mailOk" ? dto.lastName.concat(dto.firstName) : dto.userName}님의 ${mode == "created" || mode == 'mailOk' ? "회원가입" : "정보 수정"}이 정상적으로 처리되었습니다.</li>
+						<li>${mode == "update" || mode =="mailOk" ? "메인화면으로 이동하여 로그인 하시기 바랍니다." : "이메일을 통해 회원가입을 완료해주세요."}</li>
 					</ul>
 				</dd>
 			</dl>
