@@ -39,7 +39,7 @@
         </table>
      </div>  
     <div class="btns">
-      	<a href="javascript:reloadBoard();" class="btn-type-gray medium mt20 fl">새로고침</a>
+      	<a href="javascript:counselList(${categoryIdx},1);" class="btn-type-gray medium mt20 fl">새로고침</a>
         <a href="javascript:insertBoard(${categoryIdx});" class="btn-type-blue1 medium mt20 fr">글올리기</a>
     </div>
     <div class="page-nav">

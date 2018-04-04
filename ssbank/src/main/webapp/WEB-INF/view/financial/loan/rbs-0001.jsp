@@ -29,8 +29,10 @@
         <dt>안내 및 유의사항</dt>    
         <dd>
             <ul>
-                <li>입력하신 개인정보는 본인확인용으로 사용되며, 회원가입 완료 전까지 저장되지 않습니다.</li>
-                <li>이메일 정보는 회원가입 본인인증 및 비밀번호 찾기 시 사용되오니 반드시 유효한 이메일 주소를 입력하여 주시기 바랍니다.</li>
+                <li>지나친 대출은 가계를 위협할 수 있습니다.</li>
+                <li>대출취급 시, 고객님 부담으로 인지세(50%)의 부대비용이 발생할 수 있습니다.</li>
+                <li>금융기간 신용관리대상자 등 여신부적격자에 대하여 대출이 제한될 수 있습니다.</li>
+                <li>인터넷 및 모바일에서의 대출신청은 통합하여 1일1회,3개월 5회 가능하며 대출 신청 결과는 신청 당일만 유효합니다.</li>
             </ul>
         </dd>
     </dl>
@@ -38,12 +40,12 @@
 
 
 <div class="info-area mb10">
-    <span class="info-area-tit">쌍용은행 홈페이지 회원 서비스 이용약관</span>
+    <span class="info-area-tit">ssb대출 금융상품 가입 이용약관</span>
     <a href="#" class="btn-type-gray medium fr">보기</a>
     <div class="box-agree">
         <ul>
             <li>
-                <span class="box-agree-tit">홈페이지 회원 서비스 이용약관에 동의하십니까?</span>
+                <span class="box-agree-tit">ssb대출 금융상품 가입 동의하십니까?</span>
                 <div class="item-checkbox">
                     <input type="checkbox" id="rbs0001-01">
                     <label for="rbs0001-01">예, 동의합니다</label>

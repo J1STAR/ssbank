@@ -18,4 +18,7 @@ public interface SaleService {
 	public int insertSaleGain(Sale dto);
 	public List<Sale> cityCount();
 	public List<Sale> listSaleMode(Map<String, Object>map);
+	public int totalDataCount(Map<String, Object> map);
+	public int sellDataCount(Map<String, Object> map);
+	public int buyDataCount(Map<String, Object> map);
 }

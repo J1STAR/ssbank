@@ -164,7 +164,7 @@ public class ReferenceRoomServiceImpl implements ReferenceRoomService{
 			
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("field", "boardIdx");
-			map.put("boardIdx", boardIdx);
+			map.put("value", boardIdx);
 			deleteFile(map);
 			
 			result = dao.deleteData("referenceRoom.deleteReferenceRoom", boardIdx);

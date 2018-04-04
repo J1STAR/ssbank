@@ -18,7 +18,7 @@
 	
 	select acB.accountBookDate,acB.amount
     from accountBook acB
-    where memberIdx=#{memberIdx}
+    where acB.classIdx=-1 and memberIdx=#{memberIdx}
     order by accountbookdate
 
 </select>
@@ -26,12 +26,13 @@
 
 <select id="carBookDateList"  parameterType="map" resultType="com.ssb.assetManagement.AssetManage">
 
-	SELECT totalDistance, driveDate
+	SELECT totalDistance, d.driveDate
 	FROM distance d
     LEFT OUTER JOIN carAcBook cab ON d.carAcBookIdx = cab.carAcBookIdx
     LEFT OUTER JOIN memberInfo mi ON cab.MEMBERIDX = mi.MEMBERIDX
-	WHERE mi.memberIdx = #{memberIdx}
-	order by driveDate
+	WHERE mi.memberIdx = #{memberIdx} and
+	d.driveDate between trunc(sysdate,'mm') and add_months(trunc(sysdate,'mm'),1)
+	order by d.driveDate
 	
 </select>
 

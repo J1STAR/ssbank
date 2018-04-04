@@ -22,13 +22,10 @@ public class CalcController {
 		return ".calc.cal-0003";
 	}
 	
-	@RequestMapping(value="/calc/rate")
+	@RequestMapping(value="/calc/exchange")
 	public String calcMenu4() {
 		return ".calc.cal-0004";
 	}
 	
-	@RequestMapping(value="/calc/date")
-	public String calcMenu5() {
-		return ".calc.cal-0005";
-	}
+
 }

@@ -8,10 +8,10 @@
 	<p><b>가입해주셔서 감사합니다. 아래 링크를 클릭하여 회원가입을 완료해주세요.</b></p>
 	<p>Thanks</p>
 	<p>
-		<a href="http://localhost:9090/ssbank/member/memberSubmitEmail-${uuid}" 
+		<a href="http://j1star.ddns.net/ssbank/member/memberSubmitEmail-${uuid}" 
 			target="_blank" 
 			style="min-width:196px;border-top:13px solid;border-bottom:13px solid;border-right:24px solid;border-left:24px solid;border-color:#2ea664;border-radius:4px;background-color:#2ea664;color:#ffffff;font-size:18px;line-height:18px;word-break:break-word;display:inline-block;text-align:center;font-weight:900;text-decoration:none!important"
-			data-saferedirecturl="https://www.google.com/url?hl=ko&amp;q=http://localhost:9090/ssbank/member/memberSubmitEmail-${uuid}&amp;source=gmail&amp;ust=1522371023444000&amp;usg=AFQjCNECgZUm6ZeruJDpsVfFqKchucjLig">
+			data-saferedirecturl="https://www.google.com/url?hl=ko&amp;q=http://j1star.ddns.net/ssbank/member/memberSubmitEmail-${uuid}&amp;source=gmail&amp;ust=1522371023444000&amp;usg=AFQjCNECgZUm6ZeruJDpsVfFqKchucjLig">
 					<span class="il">Confirm</span> Email Address
 		</a>
 	</p>

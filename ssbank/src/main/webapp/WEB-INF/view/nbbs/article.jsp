@@ -74,3 +74,42 @@
     </td>
 </tr>
 </table>
+
+
+
+<!--  -->
+<div class="table-wrap">
+    <table class="table-verti half">
+        <caption>회원가입 완료</caption>
+        <colgroup>
+            <col style="width:20%;"/>
+            <col style="width:*;"/>
+        </colgroup>
+        <tbody>
+            <tr>
+                <th scope="col">성명</th>
+                <td scope="col">ooo</td>
+            </tr>
+            <tr>
+                <th>제목</th>
+                <td>${dto.subject}</td>
+            </tr>
+            <tr>
+            	<th>
+            	</th>
+            </tr>
+              <tr>
+            	<th>
+            	</th>
+            </tr>
+              <tr>
+            	<th>
+            	</th>
+            </tr>
+              <tr>
+            	<th>
+            	</th>
+            </tr>
+        </tbody>
+    </table>
+</div>

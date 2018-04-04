@@ -29,8 +29,8 @@
         <dt>안내 및 유의사항</dt>    
         <dd>
             <ul>
-                <li>입력하신 개인정보는 본인확인용으로 사용되며, 회원가입 완료 전까지 저장되지 않습니다.</li>
-                <li>이메일 정보는 회원가입 본인인증 및 비밀번호 찾기 시 사용되오니 반드시 유효한 이메일 주소를 입력하여 주시기 바랍니다.</li>
+                <li>ssb 금융상품은 회원본인만 가입이 가능하며, 본인이 아닐 경우 법 위반이 될 수 있습니다.</li>
+                <li>아래 이용약관에 동의를 해야 다음 단계로 넘어 갈 수 있습니다.</li>
             </ul>
         </dd>
     </dl>
@@ -38,12 +38,12 @@
 
 
 <div class="info-area mb10">
-    <span class="info-area-tit">쌍용은행 홈페이지 회원 서비스 이용약관</span>
+    <span class="info-area-tit">SSb 금용상품 서비스 가입 약관</span>
     <a href="#" class="btn-type-gray medium fr">보기</a>
     <div class="box-agree">
         <ul>
             <li>
-                <span class="box-agree-tit">홈페이지 회원 서비스 이용약관에 동의하십니까?</span>
+                <span class="box-agree-tit">SSb 금용상품 서비스 가입 약관에 동의하십니까?</span>
                 <div class="item-checkbox">
                     <input type="checkbox" id="fdn0001-01">
                     <label for="fdn0001-01">예, 동의합니다</label>

@@ -133,11 +133,6 @@ function sendBoard(mode,categoryIdx){
 		return;
 	}
 
-	if(! f.boardPwd.value) {
-		alert('패스워드를 입력 하세요. ');
-		f.boardPwd.focus();
-		return;
-	}
 	
 	if(mode=="created") {
 		pageNo=1;

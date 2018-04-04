@@ -195,25 +195,27 @@
 		var url = "<%=cp%>/transaction/transactionSubmit";
 		var trQuery = $("form[name=transactionTable]").serialize();
 
-		$.ajax({
-			url		: url,
-			type		: "POST",
-			data		: trQuery,
-			dataType	: "json",
-			async	: false,
-			success	: function(data){
-				
-				if(pwdCheck() == true){
+		if(pwdCheck() == true){
+			$.ajax({
+				url		: url,
+				type		: "POST",
+				data		: trQuery,
+				dataType	: "json",
+				async	: false,
+				success	: function(data){
+					
 					transactionResult(data.result);
-				} else {
-					transactionResult(0);
+					
+				},
+				error	: function(e){
+					console.log("err");
 				}
-				
-			},
-			error	: function(e){
-				console.log("err");
-			}
-		});
+			});
+			
+		} else {
+			transactionResult(0);
+		}
+		
 	}
 	
 	function transactionResult(result){

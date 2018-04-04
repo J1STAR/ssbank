@@ -10,28 +10,49 @@
 .imgLayout.bold span {font-family:'nanumSB'; font-weight: 700; font-size: 20px;}
 .asset1  { height:340px; padding-top: 50px;}
 .asset1:after  {content:''; display:block; clear:both;}
-.asset1 .tab1 {width:32%; height:340px; float:left; border:1px solid #ddd; box-sizing: border-box; }
-.asset1 .tab2 {width:32%; height:340px; float:left; margin-left:2%; border:1px solid #ddd; box-sizing: border-box; }
-.asset1 .tab3 {width:32%; height:340px; float:left; margin-left:2%; border:1px solid #ddd; box-sizing: border-box; }
+.asset1 .tab1 {width:32%; height:340px; float:left; border:1px solid #ddd; box-sizing: border-box; border-radius: 20%;}
+.asset1 .tab2 {width:32%; height:340px; float:left; margin-left:2%; border:1px solid #ddd; box-sizing: border-box; border-radius: 20%; }
+.asset1 .tab3 {width:32%; height:340px; float:left; margin-left:2%; border:1px solid #ddd; box-sizing: border-box; border-radius: 20%;}
 .asset1 .tab1-1 {height: 78px; border:1px solid #ddd; background-color: #80bfff;}
 .asset1 .tab1-2 {height: 258px; border:1px solid #ddd; background-color: #b3d9ff;}
 .asset1 .tab2-1 {height: 78px; border:1px solid #ddd; background-color: #66ffff;}
-.asset1 .tab2-2 {height: 258px; border:1px solid #ddd; background-color: #b3ffff;}
+.asset1 .tab2-2 {height: 258px; border:1px solid #ddd; background-color: #d1ffff}
 .asset1 .tab3-1 {height: 78px; border:1px solid #ddd; background-color: #ffb366;}
 .asset1 .tab3-2 {height: 258px; border:1px solid #ddd; background-color: #ffd9b3;}
-.asset1 .tab1 .tab1-1 h2 {text-align:center;}
-.asset1 .tab2 .tab2-1 h2 {text-align:center;}
-.asset1 .tab3 .tab3-1 h2 {text-align:center;}
-.asset1 .tab1 .tab1-2 .btn-type-blue1.medium{display: block; margin: 0 20px; margin-top: 200px;}
-.asset1 .tab2 .tab2-2 .btn-type-blue1.medium{display: block; margin: 0 20px; margin-top: 200px; }
-.asset1 .tab3 .tab3-2 .btn-type-blue1.medium{display: block; margin: 0 20px; margin-top: 200px; }
+.asset1 .tab1 .tab1-1 h2 {text-align:center; font-family:'nanumSB';}
+.asset1 .tab2 .tab2-1 h2 {text-align:center; font-family:'nanumSB';}
+.asset1 .tab3 .tab3-1 h2 {text-align:center; font-family:'nanumSB';}
+.asset1 .tab1 .tab1-2 .btn-type-blue1.medium{display: block; margin: 0 20px; margin-top: 200px; background-color:#80c0ff; }
+.asset1 .tab2 .tab2-2 .btn-type-blue1.medium{display: block; margin: 0 20px; margin-top: 200px; background-color:#a7cccc;}
+.asset1 .tab3 .tab3-2 .btn-type-blue1.medium{display: block; margin: 0 20px; margin-top: 200px; background-color:#ccad8f;}
 .assetpie {border:1px soild #ddd;}  
 /* .asset2  { height:340px; border:1px solid #ddd; margin:20px 0; } */
 .table-wrap .pie3dContainer {border: 1px solid #ddd;}
 .table-wrap .chart2 {border:1px solid #ddd;}
 .table-wrap .cyTable td { overflow:hidden; text-overflow:ellipsis; word-break: break-all; }
 
-
+.saleInfoTable {
+  border-collapse: collapse;
+}
+.saleInfoTable td, .saleInfoTable th {
+  border: 3px solid #387CD1;
+}
+.saleInfoTable tr:first-child th,
+.saleInfoTable tr:first-child td {
+  border-top: 0;
+}
+.saleInfoTable tr:last-child th,
+.saleInfoTable tr:last-child td {
+  border-bottom: 0;
+}
+.saleInfoTable tr td:first-child,
+.saleInfoTable tr th:first-child {
+  border-left: 0;
+}
+.saleInfoTable tr td:last-child,
+.saleInfoTable tr th:last-child {
+  border-right: 0;
+}
 
 
 
