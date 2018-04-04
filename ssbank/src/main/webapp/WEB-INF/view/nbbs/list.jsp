@@ -5,7 +5,7 @@
 	<%
 	   String cp = request.getContextPath();
 	%>
-
+	<h1>고객&nbsp;후기게시판</h1>
 	<div class="table-wrap">
 		<table class="table-hori board">
 			<caption>게시판</caption>

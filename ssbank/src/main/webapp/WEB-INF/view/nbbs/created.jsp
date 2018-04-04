@@ -7,22 +7,6 @@
 %>
 
 
-
-  <table style="width: 100%; margin: 0px auto; border-spacing: 0px;">
-     <tr height="45"> 
-      <td align="center" >
-        <button type="button" class="btn" onclick="sendBoard('${mode}');">${mode=='created'?'등록하기':'수정완료'}</button>
-        <button type="reset" class="btn">다시입력</button>
-        <button type="button" class="btn" onclick="listPage(pageNo);">${mode=='created'?'등록취소':'수정취소'}</button>
-        <c:if test="${mode=='update'}">
-            <input type="hidden" name="num" value="${dto.num}">
-            <input type="hidden" name="saveFilename" value="${dto.saveFilename}">
-            <input type="hidden" name="originalFilename" value="${dto.originalFilename}">
-        </c:if>
-	  </td>
-    </tr>
-  </table>
-
 <form name="boardForm" enctype="multipart/form-data">
 <h1>게시판 수정</h1>
 <div class="table-wrap">
@@ -40,7 +24,7 @@
             </tr>
             <tr>
                 <th>제&nbsp;&nbsp;&nbsp;&nbsp;목</th>
-                <td><input type="text" name="name" id="name" size="35" maxlength="20" class="boxTF" value="${dto.name}"></td>
+                <td><input type="text" name="subject" id="subject" size="35" maxlength="20" class="boxTF" value="${dto.subject}"></td>
             </tr>
             <tr>
             	<th>작성자</th>
@@ -63,19 +47,16 @@
         </tbody>       
    		 </table>
    		 </div>
-      <table class="table-verti">
-     <tr> 
-      <td align="center" >
-        <button type="button" class="btn" onclick="sendBoard('${mode}');">${mode=='created'?'등록하기':'수정완료'}</button>
-        <button type="reset" class="btn">다시입력</button>
-        <button type="button" class="btn" onclick="listPage(pageNo);">${mode=='created'?'등록취소':'수정취소'}</button>
+
+
         <c:if test="${mode=='update'}">
             <input type="hidden" name="num" value="${dto.num}">
             <input type="hidden" name="saveFilename" value="${dto.saveFilename}">
             <input type="hidden" name="originalFilename" value="${dto.originalFilename}">
         </c:if>
-	  </td>
-    </tr>
-  </table>
-</div>
+   <div class="btns">
+        <a href="#" class="btn-type-gray medium mt20 fl" onclick="sendBoard('${mode}');">${mode=='created'?'등록하기':'수정완료'}</a>
+        <a href="#" class="btn-type-blue1 medium mt20 fr" onclick="insertBoard()">다시입력</a>
+        <a href="#" class="btn-type-blue1 medium mt20 fr" onclick="listPage(pageNo);">${mode=='created'?'등록취소':'수정취소'}</a>
+    </div>
 </form>

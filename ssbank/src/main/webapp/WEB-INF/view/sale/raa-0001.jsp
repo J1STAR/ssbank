@@ -188,8 +188,8 @@ function articleView(saleIdx) {
 
 	function loadMap() {
 		map = new naver.maps.Map('map', {
-			center : new naver.maps.LatLng(37.5332116, 126.8067516),
-			zoom : 10
+			center : new naver.maps.LatLng(37.566504, 126.977943),
+			zoom : 6
 		});
 	}
 

@@ -31,6 +31,21 @@
 	   </where>   
 	</select>
 	
+	<select id="totalDataCount" parameterType="map" resultType="Integer">
+	SELECT NVL(COUNT(*), 0)
+	FROM sale 
+	</select>
+	<select id="sellDataCount" parameterType="map" resultType="Integer">
+	SELECT NVL(COUNT(*), 0)
+	FROM sale 
+	WHERE modeIdx=1
+	</select>
+	<select id="buyDataCount" parameterType="map" resultType="Integer">
+	SELECT NVL(COUNT(*), 0)
+	FROM sale 
+	WHERE modeIdx=2
+	</select>
+	
 	<select id="listSale" parameterType="map"
 	            resultType="com.ssb.sale.Sale">
 		SELECT * FROM (

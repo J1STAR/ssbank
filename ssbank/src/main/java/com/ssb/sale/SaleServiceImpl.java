@@ -151,4 +151,37 @@ public class SaleServiceImpl implements SaleService {
 		return list;
 	}
 
+	@Override
+	public int totalDataCount(Map<String, Object> map) {
+		int result = 0;
+		try {
+			result = dao.selectOne("sale.totalDataCount", map);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return result;
+	}
+
+	@Override
+	public int sellDataCount(Map<String, Object> map) {
+		int result = 0;
+		try {
+			result = dao.selectOne("sale.sellDataCount", map);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return result;
+	}
+
+	@Override
+	public int buyDataCount(Map<String, Object> map) {
+		int result = 0;
+		try {
+			result = dao.selectOne("sale.buyDataCount", map);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return result;
+	}
+
 }

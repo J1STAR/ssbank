@@ -190,7 +190,6 @@ function deleteBoard(num, saveFilename) {
 </script>
 
 <div class="content">
-<h1>게 시 판</h1>
 <div class="table-num">${dataCount}개(${pageNo}/${total_page}페이지)</div>
 <div id="board-body"></div>
 </div>

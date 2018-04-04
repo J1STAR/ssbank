@@ -134,7 +134,22 @@ public class SaleController {
 	}
 
 	@RequestMapping(value = "/sale/raa-0002")
-	public String saleSoldMain() {
+	public String saleSoldMain(Model model) throws Exception{
+
+
+		int dataCount = 0;
+		int sellDataCount=0;
+		int buyDataCount=0;
+		
+
+		Map<String, Object> map = new HashMap<String, Object>();
+		dataCount = service.totalDataCount(map);
+		sellDataCount =service.sellDataCount(map);
+		buyDataCount =service.buyDataCount(map);
+		model.addAttribute("dataCount", dataCount);
+		model.addAttribute("sellDataCount", sellDataCount);
+		model.addAttribute("buyDataCount", buyDataCount);
+		
 		return ".sale.raa-0002";
 	}
 	@RequestMapping(value = "/sale/raa-0003")

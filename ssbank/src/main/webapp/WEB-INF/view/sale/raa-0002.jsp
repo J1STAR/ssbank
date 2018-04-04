@@ -53,16 +53,16 @@
 							<div class="inquiry-num">
 								<dl>
 									<dt>
-										<span>총의뢰수</span> <span>${dataCount}</span>
+										<span>총의뢰수</span><span>&nbsp;${dataCount}</span>
 									</dt>
 									<dd>
 										<ul>
-											<li><span class="tit">내놓기</span> <span class="type-gray">의뢰중</span>
-												<span class="type-white">30</span> <span class="type-gray">접수</span>
-												<span class="type-white">5</span></li>
-											<li><span class="tit">찾아주세요</span> <span
-												class="type-gray">의뢰중</span> <span class="type-white">30</span>
-												<span class="type-gray">접수</span> <span class="type-white">5</span>
+											<li><span class="tit"><a href="<%=cp%>/sale/raa-0005?mode=created">내놓기</a></span> <span class="type-gray">의뢰중</span>
+												<span class="type-white">${sellDataCount}</span> <span class="type-gray">접수</span>
+												<span class="type-white">${sellDataCount}</span></li>
+											<li><span class="tit"><a href="<%=cp%>/sale/raa-0005?mode=gain">찾아주세요</a></span> <span
+												class="type-gray">의뢰중</span> <span class="type-white">${buyDataCount}</span>
+												<span class="type-gray">접수</span> <span class="type-white">${buyDataCount}</span>
 											</li>
 										</ul>
 									</dd>

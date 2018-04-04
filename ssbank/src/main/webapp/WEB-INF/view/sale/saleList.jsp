@@ -16,7 +16,7 @@
 		<thead>
 		<tr>
 			<th>내용</th>
-			<th>매매유무</th>
+			<th>매매&Tab;희망일</th>
 			<th>상세내용</th>
 		</tr>
 		<thead>
@@ -35,8 +35,8 @@
 					</td>
 					<td name="tradeDate">${dto.tradeDate}</td>
 					<td name="saleInfo">${dto.typeName}&Tab;방${dto.room}개<br>
-						${dto.layer}층&sol;${dto.tLayer}층<br> ${dto.status}<br> <span
-						class="mapAddr">${dto.addr1}</span>
+						${dto.layer}층&sol;${dto.tLayer}층<br> ${dto.status}<br> 
+						<span class="mapAddr">${dto.addr1}</span>
 					</td>
 				</tr>
 
