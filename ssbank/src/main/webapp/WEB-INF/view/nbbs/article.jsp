@@ -6,110 +6,68 @@
    String cp = request.getContextPath();
 %>
 
-<table style="width: 100%; margin: 20px auto 0px; border-spacing: 0px; border-collapse: collapse;">
-<tr height="35" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;">
-    <td colspan="2" align="center">
-	   ${dto.subject}
-    </td>
-</tr>
 
-<tr height="35" style="border-bottom: 1px solid #cccccc;">
-    <td width="50%" align="left" style="padding-left: 5px;">
-       이름 : ${dto.name}
-    </td>
-    <td width="50%" align="right" style="padding-right: 5px;">
-        ${dto.created} | 조회 ${dto.hitCount}
-    </td>
-</tr>
 
-<tr style="border-bottom: 1px solid #cccccc;">
-  <td colspan="2" align="left" style="padding: 10px 5px;" valign="top" height="200">
-      ${dto.content}
-   </td>
-</tr>
 
-<tr height="35" style="border-bottom: 1px solid #cccccc;">
-    <td colspan="2" align="left" style="padding-left: 5px;">
-    첨부 : 
-	   <c:if test="${not empty dto.saveFilename}">
-	         <a href="<%=cp%>/nbbs/download?num=${dto.num}">${dto.originalFilename}</a>
-       </c:if>
-    </td>
-</tr>
-
-<tr height="35" style="border-bottom: 1px solid #cccccc;">
-    <td colspan="2" align="left" style="padding-left: 5px;">
-       이전글 :
-    <c:if test="${not empty preReadDto}">
-              <a href="javascript:articleBoard('${preReadDto.num}');">${preReadDto.subject}</a>
-	</c:if>
-    </td>
-</tr>
-
-<tr height="35" style="border-bottom: 1px solid #cccccc;">
-    <td colspan="2" align="left" style="padding-left: 5px;">
-    다음글 :
-    <c:if test="${not empty nextReadDto}">
-              <a href="javascript:articleBoard('${nextReadDto.num}');">${nextReadDto.subject}</a>
-	</c:if>
-    </td>
-</tr>
-
-<tr height="30">
-   <td colspan="2" align="right">
-       From : ${dto.ipAddr}
-   </td>
-</tr>
-</table>
-
-<table style="width: 100%; margin: 0px auto 20px; border-spacing: 0px;">
-<tr height="45">
-    <td width="300" align="left">
-        <button type="button" class="btn" onclick="updateBoard('${dto.num}');">수정</button>
-        <button type="button" class="btn" onclick="deleteBoard('${dto.num}', '${dto.saveFilename}');">삭제</button>
-    </td>
-
-    <td align="right">
-        <button type="button" class="btn" onclick="listPage(pageNo);">리스트</button>
-    </td>
-</tr>
-</table>
 
 
 
 <!--  -->
+<div class="content">
+<div class="table-num">  ${dto.created}</div>
+<div class="table-num"> ${dto.hitCount}</div>
+<h1>게시글 상세</h1>
 <div class="table-wrap">
-    <table class="table-verti half">
-        <caption>회원가입 완료</caption>
+    <table class="table-verti">
+        <caption>글 상세</caption>
         <colgroup>
             <col style="width:20%;"/>
             <col style="width:*;"/>
         </colgroup>
         <tbody>
             <tr>
-                <th scope="col">성명</th>
-                <td scope="col">ooo</td>
+                <th scope="col">분류</th>
+                <td scope="col">내용</td>
             </tr>
             <tr>
                 <th>제목</th>
                 <td>${dto.subject}</td>
             </tr>
+      		<tr>
+                <th>이름</th>
+                <td>${dto.name}</td>
+            </tr>
             <tr>
-            	<th>
-            	</th>
+                <th>내용</th>
+                <td>${dto.content}</td>
             </tr>
-              <tr>
-            	<th>
-            	</th>
-            </tr>
-              <tr>
-            	<th>
-            	</th>
-            </tr>
-              <tr>
-            	<th>
-            	</th>
+            <tr>
+                <th>첨부</th>
+                <td><c:if test="${not empty dto.saveFilename}">
+	         <a href="<%=cp%>/nbbs/download?num=${dto.num}">${dto.originalFilename}</a>
+       </c:if></td>
             </tr>
         </tbody>
     </table>
+    From : ${dto.ipAddr}
 </div>
+  <div class="btns">       
+           
+    <c:if test="${not empty preReadDto}">
+              <a href="javascript:articleBoard('${preReadDto.num}');" class="btn-type-gray medium mt20 fl"> 이전글 :${preReadDto.subject}</a>
+	</c:if>
+    </div>
+      <div class="btns">       
+
+    <c:if test="${not empty nextReadDto}">
+              <a href="javascript:articleBoard('${nextReadDto.num}');" class="btn-type-gray medium mt20 fl">다음글 :${nextReadDto.subject}</a>
+	</c:if>
+    </div>
+  <div class="btns">       
+        <a href="#" class="btn-type-gray medium mt20 fr"  onclick="listPage(pageNo);">리스트</a>
+    </div>
+    <div class="btn-area">
+   <a href="#" class="btn-type-gray big" onclick="updateBoard('${dto.num}');">수정</a>
+        <a href="#" class="btn-type-blue1 big" onclick="deleteBoard('${dto.num}', '${dto.saveFilename}');">삭제</a>  
+    </div>
+        </div>

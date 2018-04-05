@@ -54,9 +54,12 @@
             <input type="hidden" name="saveFilename" value="${dto.saveFilename}">
             <input type="hidden" name="originalFilename" value="${dto.originalFilename}">
         </c:if>
-   <div class="btns">
-        <a href="#" class="btn-type-gray medium mt20 fl" onclick="sendBoard('${mode}');">${mode=='created'?'등록하기':'수정완료'}</a>
-        <a href="#" class="btn-type-blue1 medium mt20 fr" onclick="insertBoard()">다시입력</a>
-        <a href="#" class="btn-type-blue1 medium mt20 fr" onclick="listPage(pageNo);">${mode=='created'?'등록취소':'수정취소'}</a>
+   <div class="btns">       
+        <a href="#" class="btn-type-gray medium mt20 fl" onclick="insertBoard()">다시입력</a>  
+    </div>
+    <div class="btn-area">
+    <a href="#" class="btn-type-gray big" onclick="listPage(pageNo);">${mode=='created'?'등록취소':'수정취소'}</a>
+    <a href="#" class="btn-type-blue1 big" onclick="sendBoard('${mode}');">${mode=='created'?'등록하기':'수정완료'}</a>
+     
     </div>
 </form>
