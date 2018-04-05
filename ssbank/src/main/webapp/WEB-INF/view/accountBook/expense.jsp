@@ -47,7 +47,7 @@
                 </td>
                 <td>
                     <input type="hidden" name="acBookIdx" value="${dto.acBookIdx}">
-                	<input type="text"  name="accountBookDate" class="ACBtext" value="${dto.accountBookDate}" size="10" style="width=100%;background: white;" readonly="readonly">  
+                	<input type="text"  name="accountBookDate" class="ACBtext" value="${dto.accountBookDate}" size="10" style="width=100%; background: white;" readonly="readonly">  
                 </td>
                 <td><input type="text" class="ACBtext" name="content" value="${dto.content}" size="10" style="width=100%"></td>
                 <td><input type="text" class="ACBtext" name="amount" value="${dto.amount}" size="10" style="width=100%"></td>

@@ -7,21 +7,8 @@
 %>
 
 <link rel="stylesheet" href="<%=cp%>/resource/css/tabs.css" type="text/css">
-<div class="body-container" style="width: 900px;">
-    <div class="body-title">
-        <h3><span style="font-family: Webdings">2</span> 일정관리 </h3>
-    </div>
-    
+<div class="body-container" style="width: 900px;">    
     <div>
-
-            <div style="clear: both;">
-	           <ul class="tabs">
-			       <li id="tab-month" data-tab="month">월별일정</li>
-			       <li id="tab-day" data-tab="day">상세일정</li>
-			       <li id="tab-year" data-tab="year">년도</li>
-			   </ul>
-		   </div>
-		
 		   <div id="tab-content" style="clear:both; padding: 20px 0px 0px;">
 		   
 		   		<table style="width: 840px; margin:0px auto; border-spacing: 0;" >
